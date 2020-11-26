@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 1042789618}
-  sceneToLoad: TestPlayScene
+  sceneToLoad: MenuScene
   slider: {fileID: 590772952}
   percentLoaded: {fileID: 1825295710}
 --- !u!4 &1042789620
