@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "349397428447",
+    "firebase_url": "https://ludo-d8fcb.firebaseio.com",
+    "project_id": "ludo-d8fcb",
+    "storage_bucket": "ludo-d8fcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349397428447:android:359077b9ebf4a8aa99a16a",
+        "android_client_info": {
+          "package_name": "com.heatwave.ludo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349397428447-eg6f9vjaosv9ah9j13m8s2bleqgm9072.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQI50Mc6x7D0-2Q2XWYKSv6_KWgVOkfLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349397428447-eg6f9vjaosv9ah9j13m8s2bleqgm9072.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "349397428447-ao53acc7a21jnau24nknojl3bm4briu1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.heatwave.ludo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
