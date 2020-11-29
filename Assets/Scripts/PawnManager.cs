@@ -12,9 +12,10 @@ public class PawnManager : MonoBehaviour
     public int steps;
 
     bool isMoving;
+ 
 
     void Update() {
-        if(!isMoving){
+        if(Input.GetKeyDown(KeyCode.Space) && !isMoving){
             steps = DiceNumberText.diceNumber;
             Debug.Log(steps);
 
@@ -25,7 +26,6 @@ public class PawnManager : MonoBehaviour
                 Debug.Log("Roled number is to high!");
             }
         }
-
         
     }
 
