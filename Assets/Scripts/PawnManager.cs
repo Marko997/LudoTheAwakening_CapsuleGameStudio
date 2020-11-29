@@ -16,7 +16,7 @@ public class PawnManager : MonoBehaviour
 
     void Update() {
         if(Input.GetKeyDown(KeyCode.Space) && !isMoving){
-            steps = DiceNumberText.diceNumber;
+            //steps need to be added
             Debug.Log(steps);
 
             if(routePosition+steps < currentRoute.childNodesList.Count){
