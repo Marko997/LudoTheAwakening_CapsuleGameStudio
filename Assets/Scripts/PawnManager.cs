@@ -12,11 +12,17 @@ public class PawnManager : MonoBehaviour
     public int steps;
 
     bool isMoving;
+
+    public int diceValue;
+
+    public DiceSide[] diceSides;
  
 
     void Update() {
+        
         if(Input.GetKeyDown(KeyCode.Space) && !isMoving){
-            //steps need to be added
+
+            steps = SideValueCheck();
             Debug.Log(steps);
 
             if(routePosition+steps < currentRoute.childNodesList.Count){
@@ -50,5 +56,16 @@ public class PawnManager : MonoBehaviour
 
     bool MoveToNextNode(Vector3 goal){
         return goal != (transform.position = Vector3.MoveTowards(transform.position,goal,2f*Time.deltaTime));
+    }
+
+    public int SideValueCheck(){
+        diceValue = 0;
+        foreach(DiceSide side in diceSides){
+            if(side.OnGround()){
+                diceValue = side.sideValue;
+                
+            }
+        }
+        return diceValue;
     }
 }
