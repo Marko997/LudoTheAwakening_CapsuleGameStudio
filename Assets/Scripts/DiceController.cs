@@ -36,7 +36,7 @@ public class DiceController : MonoBehaviour
         }
     }
 
-    void RollDice(){
+    public void RollDice(){
         if(!thrown && !hasLanded){
             thrown = true;
             rb.useGravity = true;
