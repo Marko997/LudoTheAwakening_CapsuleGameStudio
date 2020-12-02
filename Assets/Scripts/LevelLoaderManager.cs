@@ -15,6 +15,10 @@ public class LevelLoaderManager : MonoBehaviour
     void Start() 
     {
         loadingOperation = SceneManager.LoadSceneAsync(sceneToLoad);
+
+        //if token is present to main menu
+
+        //if not loging-register scene 
     }
 
     void Update()
