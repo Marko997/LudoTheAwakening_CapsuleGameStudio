@@ -1,39 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DiceController : MonoBehaviour
 {
-    Rigidbody rb;
+    public Rigidbody rb;
 
-    bool hasLanded;
-    bool thrown;
+    public bool hasLanded;
+    public bool thrown;
 
-    Vector3 initPosition;
+    public Vector3 initPosition;
 
     public int diceValue;
 
+    public DiceButton button;
+
     public DiceSide[] diceSides;
 
-    void Start() {
+    public void Start() {
         rb = GetComponent<Rigidbody>();
+        button = FindObjectOfType<DiceButton>();
         initPosition = transform.position;
         rb.useGravity = false;
     }
 
-    void Update() {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            RollDice();
-        }
+    public void Update() {
+        // if(button.pressed){
+        //     RollDice();
+        // }
 
-        if(rb.IsSleeping() && !hasLanded && thrown){
-            hasLanded = true;
-            rb.useGravity = false;
-            SideValueCheck();
+        // if(rb.IsSleeping() && !hasLanded && thrown){
+        //     hasLanded = true;
+        //     rb.useGravity = false;
+        //     SideValueCheck();
+  
 
-        }else if(rb.IsSleeping() && hasLanded && diceValue ==0){
-            RollAgain();
-        }
+        // }else if(rb.IsSleeping() && hasLanded && diceValue ==0){
+        //     RollAgain();
+        // }
     }
 
     public void RollDice(){
@@ -48,7 +53,7 @@ public class DiceController : MonoBehaviour
         }
     }
 
-    void Reset(){
+    public void Reset(){
         transform.position = initPosition;
         thrown = false;
         hasLanded = false;
@@ -56,7 +61,7 @@ public class DiceController : MonoBehaviour
 
     }
 
-    void RollAgain(){
+    public void RollAgain(){
         Reset();
         thrown = true;
         rb.useGravity = true;
@@ -69,14 +74,12 @@ public class DiceController : MonoBehaviour
         foreach(DiceSide side in diceSides){
             if(side.OnGround()){
                 diceValue = side.sideValue;
-                //Debug.Log(diceValue +" dnjabdahsbfjhabfjbjbajkfbk");
             }
         }
     }
 
-    public int DiceValue(){
-        return this.diceValue;
-    }
+
+    
 
 
 }

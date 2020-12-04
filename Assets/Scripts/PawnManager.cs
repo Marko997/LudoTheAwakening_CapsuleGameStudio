@@ -16,14 +16,35 @@ public class PawnManager : MonoBehaviour
     public int diceValue;
 
     public DiceSide[] diceSides;
+
+    public DiceButton button;
+
+    public DiceController dice;
+
+    private void Start() {
+        button = FindObjectOfType<DiceButton>();
+        dice = FindObjectOfType<DiceController>();
+    }
  
 
-    void Update() {
+    public void Update() {
         
-        if(Input.GetKeyDown(KeyCode.Space) && !isMoving){
+        if(button.pressed && !isMoving){
 
+            dice.RollDice();
             steps = SideValueCheck();
+            
             Debug.Log(steps);
+
+            if(dice.rb.IsSleeping() && !dice.hasLanded && dice.thrown){
+                dice.hasLanded = true;
+                dice.rb.useGravity = false;
+                dice.SideValueCheck();
+  
+
+            }else if(dice.rb.IsSleeping() && dice.hasLanded && dice.diceValue ==0){
+                dice.RollAgain();
+            }
 
             if(routePosition+steps < currentRoute.childNodesList.Count){
                 StartCoroutine(Move());
@@ -32,6 +53,8 @@ public class PawnManager : MonoBehaviour
                 Debug.Log("Roled number is to high!");
             }
         }
+
+        
         
     }
 
@@ -52,6 +75,7 @@ public class PawnManager : MonoBehaviour
         }
 
         isMoving = false;
+
     }
 
     bool MoveToNextNode(Vector3 goal){
