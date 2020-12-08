@@ -42,4 +42,8 @@ public class CommonRouteManager : MonoBehaviour
             }
         }
     }
+
+    public int RequestPosition(Transform nodeTransform){
+        return childNodesList.IndexOf(nodeTransform);
+    }
 }

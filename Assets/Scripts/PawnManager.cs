@@ -4,59 +4,86 @@ using UnityEngine;
 
 public class PawnManager : MonoBehaviour
 {
+    [Header("ROUTES")]   
+    public CommonRouteManager commonRoute;
+    public CommonRouteManager finalRoute;
 
-    public CommonRouteManager currentRoute;
+    public List<NodeManager> fullRoute = new List<NodeManager>();
+
+    [Header("NODES")]
+    public NodeManager startNode;
+    public NodeManager baseNode; //pawn house
+    public NodeManager currentNode;
+    public NodeManager goalNode;
 
     int routePosition;
+    int startNodeIndex;
 
-    public int steps;
+    int steps;
+    int doneSteps;
 
+    [Header("BOOLS")]
+    public bool isOut;
     bool isMoving;
+    bool hasTurn; // human input
 
-    public int diceValue;
-
-    public DiceSide[] diceSides;
+    [Header("SELECTOR")]
+    public GameObject selector;
 
     public DiceButton button;
 
-    public DiceController dice;
-
     private void Start() {
-        button = FindObjectOfType<DiceButton>();
-        dice = FindObjectOfType<DiceController>();
+        startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
+        CreateFullRoute();
+
     }
+
+    void CreateFullRoute(){
+        for(int i =0;i<commonRoute.childNodesList.Count-1;i++){
+            int tempPosition = startNodeIndex +i;
+            tempPosition %= commonRoute.childNodesList.Count;
+
+            fullRoute.Add(commonRoute.childNodesList[tempPosition].GetComponent<NodeManager>());
+        }
+
+        for(int i =0;i<finalRoute.childNodesList.Count;i++){
+        
+            fullRoute.Add(finalRoute.childNodesList[i].GetComponent<NodeManager>());
+        }
+    }
+
+    // public int steps;
+
+    // public bool isMoving;
+
+    // public int diceValue;
+
+    // public DiceSide[] diceSides;
+
+    
+
+    // public DiceController dice;
+
+    // private void Start() {
+    //     button = FindObjectOfType<DiceButton>();
+    //     dice = FindObjectOfType<DiceController>();
+    // }
  
 
     public void Update() {
         
         if(button.pressed && !isMoving){
 
-            dice.RollDice();
-            steps = SideValueCheck();
-            
-            Debug.Log(steps);
+            steps = Random.Range(1,7);
 
-            if(dice.rb.IsSleeping() && !dice.hasLanded && dice.thrown){
-                dice.hasLanded = true;
-                dice.rb.useGravity = false;
-                dice.SideValueCheck();
-  
-
-            }else if(dice.rb.IsSleeping() && dice.hasLanded && dice.diceValue ==0){
-                dice.RollAgain();
-            }
-
-            if(routePosition+steps < currentRoute.childNodesList.Count){
+            if(doneSteps + steps < fullRoute.Count){
                 StartCoroutine(Move());
-            }
-            else{
-                Debug.Log("Roled number is to high!");
+            }else{
+                Debug.Log("Number is to high!");
             }
         }
-
-        
-        
     }
+
 
     IEnumerator Move(){
         if(isMoving){
@@ -65,31 +92,35 @@ public class PawnManager : MonoBehaviour
         isMoving = true;
 
         while(steps>0){
-            Vector3 nextPos = currentRoute.childNodesList[routePosition+1].position;
-            while(MoveToNextNode(nextPos)){
+            routePosition++;
+
+            Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
+            
+            while(MoveToNextNode(nextPos,8f)){
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
             steps--;
-            routePosition++;
+            doneSteps++;
+            
         }
 
         isMoving = false;
 
     }
 
-    bool MoveToNextNode(Vector3 goal){
-        return goal != (transform.position = Vector3.MoveTowards(transform.position,goal,2f*Time.deltaTime));
+    bool MoveToNextNode(Vector3 goal, float speed){
+        return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
     }
 
-    public int SideValueCheck(){
-        diceValue = 0;
-        foreach(DiceSide side in diceSides){
-            if(side.OnGround()){
-                diceValue = side.sideValue;
+    // public int SideValueCheck(){
+    //     diceValue = 0;
+    //     foreach(DiceSide side in diceSides){
+    //         if(side.OnGround()){
+    //             diceValue = side.sideValue;
                 
-            }
-        }
-        return diceValue;
-    }
+    //         }
+    //     }
+    //     return diceValue;
+    // }
 }
