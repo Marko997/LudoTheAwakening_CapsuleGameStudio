@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PawnManager : MonoBehaviour
 {
+    public int pawnId;
     [Header("ROUTES")]   
     public CommonRouteManager commonRoute;
     public CommonRouteManager finalRoute;
@@ -104,6 +105,24 @@ public class PawnManager : MonoBehaviour
             doneSteps++;
             
         }
+        goalNode = fullRoute[routePosition];
+        //CHECK POSSIBLE KICK
+        if(goalNode.isTaken){
+            //KICK THE OTHER STONE
+        }
+
+        currentNode.pawn = null;
+        currentNode.isTaken = false;
+
+        goalNode.pawn = this;
+        goalNode.isTaken = true;
+
+        currentNode = goalNode;
+        goalNode = null;
+
+        //REPORT TO GAMEMANAGER
+        GameManager.instance.state = GameManager.States.ROLL_DICE;
+        //SWITCH THE PLAYER
 
         isMoving = false;
 
@@ -113,14 +132,90 @@ public class PawnManager : MonoBehaviour
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
     }
 
-    // public int SideValueCheck(){
-    //     diceValue = 0;
-    //     foreach(DiceSide side in diceSides){
-    //         if(side.OnGround()){
-    //             diceValue = side.sideValue;
-                
-    //         }
-    //     }
-    //     return diceValue;
-    // }
+    public bool ReturnIsOut(){
+        return isOut;
+    }
+
+    public void LeaveBase(){
+
+        steps = 1;
+        isOut = true;
+        routePosition = 0;
+        StartCoroutine(MoveOutFromBase());
+
+    }
+
+    IEnumerator MoveOutFromBase(){
+        if(isMoving){
+            yield break;
+        }
+        isMoving = true;
+
+        while(steps>0){
+
+            Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
+            
+            while(MoveToNextNode(nextPos,8f)){
+                yield return null;
+            }
+            yield return new WaitForSeconds(0.1f);
+            steps--;
+            doneSteps++;
+            
+        }
+        //update node
+        goalNode = fullRoute[routePosition];
+        //check for eating pawn
+        if(goalNode.isTaken){
+            //return to base node
+        }
+
+        goalNode.pawn = this;
+        goalNode.isTaken = true;
+        
+        currentNode = goalNode;
+        goalNode = null;
+
+        //report back to gamemanager
+        GameManager.instance.state = GameManager.States.ROLL_DICE;
+
+        isMoving = false;
+
+    }
+
+    public bool CheckPossibleMove(int diceNumber){
+
+        int tempPosition = routePosition + diceNumber;
+        if(tempPosition >= fullRoute.Count){
+
+            return false;
+
+        }
+        return !fullRoute[tempPosition].isTaken;
+    }
+
+    public bool CheckPossibleKick(int pawnID, int diceNumber){
+
+        int tempPosition = routePosition + diceNumber;
+        if(tempPosition >= fullRoute.Count){
+
+            return false;
+
+        }
+        if(fullRoute[tempPosition].isTaken){
+            
+            if(pawnID == fullRoute[tempPosition].pawn.pawnId){
+                return false;
+            }
+            return true;
+        }
+        return false;
+
+    }
+
+    public void StartTheMove(int diceNumber){
+        
+        steps = diceNumber;
+        StartCoroutine(Move());
+    }
 }

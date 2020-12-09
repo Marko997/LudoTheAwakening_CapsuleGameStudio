@@ -45,10 +45,11 @@ public class GameManager : MonoBehaviour
     }
 
     void RollDice(){
-        int diceNumber = Random.Range(1,7);
+        int diceNumber = 6;//Random.Range(1,7);
 
         if(diceNumber == 6){
             //check start node
+            CheckStartNode(diceNumber);
 
         }
         if(diceNumber <6){
@@ -60,6 +61,107 @@ public class GameManager : MonoBehaviour
     IEnumerator RollDiceDelay(){
         yield return new WaitForSeconds(2);
         RollDice();
+    }
+
+    void CheckStartNode(int diceNumber){
+        //is start node occupied
+        bool startNodeFull = false;
+        for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
+            if(playerList[activePlayer].allPawns[i].currentNode == playerList[activePlayer].allPawns[i].startNode){
+                startNodeFull = true;
+                break; //we found a match
+            }
+        }
+        if(startNodeFull){//moving
+            MoveAStone(diceNumber);
+            Debug.Log("The start node is full!");
+        }else{ //Leave base
+            for(int i = 0;i<playerList[activePlayer].allPawns.Length;i++){
+                if(!playerList[activePlayer].allPawns[i].ReturnIsOut()){
+    
+                    playerList[activePlayer].allPawns[i].LeaveBase();
+                    state = States.WAITING;
+                    return;
+                }
+                
+            }   
+            MoveAStone(diceNumber); 
+        }
+    }
+
+    void MoveAStone(int diceNumber){
+        List <PawnManager> movablePawns = new List<PawnManager>();
+        List <PawnManager> moveKickPawns = new List<PawnManager>();
+
+        //FILL THE LISTS
+        for(int i = 0;i<playerList[activePlayer].allPawns.Length;i++){
+            if(playerList[activePlayer].allPawns[i].ReturnIsOut()){
+                //CHECK FOR POSSIBLE KICK
+                if(playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].pawnId,diceNumber)){
+                    moveKickPawns.Add(playerList[activePlayer].allPawns[i]);
+                    continue;
+                }
+                //CHECK FOR POSSIBLE MOVE
+                if(playerList[activePlayer].allPawns[i].CheckPossibleMove(diceNumber)){
+                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
+                    
+                }
+            }
+        }
+        //PERFORM KICK IF POSSIBLE
+        if(moveKickPawns.Count>0){
+            int num = Random.Range(0,moveKickPawns.Count);
+            moveKickPawns[num].StartTheMove(diceNumber);
+            state = States.WAITING;
+            return;
+        }
+        //PERFORM MOVE IF POSSIBE
+        if(movablePawns.Count>0){
+            int num = Random.Range(0,movablePawns.Count);
+            movablePawns[num].StartTheMove(diceNumber);
+            state = States.WAITING;
+            return;
+        }
+        //NONE IS POSSIBLE
+        //SWITCH PLAYER
+        Debug.Log("Should switch player!");
+    }
+
+    IEnumerable SwitchPlayer(){
+        if(switchingPlayer){
+            yield break;
+        }
+        switchingPlayer = true;
+
+        yield return new WaitForSeconds(2);
+        //SET NEXT PLAYER
+        SetNextActivePlayer();
+
+        switchingPlayer = false;
+    }
+
+    void SetNextActivePlayer(){
+        activePlayer++;
+        activePlayer %= playerList.Count;
+
+        int available = 0;
+        for(int i=0;i<playerList.Count;i++){
+            if(!playerList[i].hasWon){
+                available++;
+            }
+        }
+
+        if(playerList[activePlayer].hasWon && available>1){
+            SetNextActivePlayer();
+            return;
+        }
+        else if(available<2){
+            //GAME OVER SCREEN
+            state = States.WAITING;
+            return;
+        }
+
+        state = States.ROLL_DICE;
     }
     
 
