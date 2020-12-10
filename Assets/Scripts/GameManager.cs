@@ -33,10 +33,11 @@ public class GameManager : MonoBehaviour
                 state = States.WAITING;
             break;
             case States.WAITING:
-
+                //IDLE
             break;
             case States.SWITCH_PLAYER:
-
+                StartCoroutine(SwitchPlayer());
+                state = States.WAITING;
             break;
             } 
         }
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     }
 
     void RollDice(){
-        int diceNumber = 6;//Random.Range(1,7);
+        int diceNumber = Random.Range(1,7);
 
         if(diceNumber == 6){
             //check start node
@@ -53,7 +54,9 @@ public class GameManager : MonoBehaviour
 
         }
         if(diceNumber <6){
-            //check for kick
+            //check for move
+            MoveAStone(diceNumber);
+
         }
         Debug.Log(diceNumber+"sadsadsadsa");
     }
@@ -124,10 +127,11 @@ public class GameManager : MonoBehaviour
         }
         //NONE IS POSSIBLE
         //SWITCH PLAYER
+        state = States.SWITCH_PLAYER;
         Debug.Log("Should switch player!");
     }
 
-    IEnumerable SwitchPlayer(){
+    IEnumerator SwitchPlayer(){
         if(switchingPlayer){
             yield break;
         }

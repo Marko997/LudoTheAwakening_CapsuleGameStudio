@@ -121,7 +121,7 @@ public class PawnManager : MonoBehaviour
         goalNode = null;
 
         //REPORT TO GAMEMANAGER
-        GameManager.instance.state = GameManager.States.ROLL_DICE;
+        GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
         //SWITCH THE PLAYER
 
         isMoving = false;
