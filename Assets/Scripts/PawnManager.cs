@@ -31,6 +31,10 @@ public class PawnManager : MonoBehaviour
     [Header("SELECTOR")]
     public GameObject selector;
 
+    //ARC MOVEMENT
+    float amplitude = 0.5f;
+    float timeForPointToPoint = 0f;
+
     public DiceButton button;
 
     private void Start() {
@@ -69,24 +73,8 @@ public class PawnManager : MonoBehaviour
     //     button = FindObjectOfType<DiceButton>();
     //     dice = FindObjectOfType<DiceController>();
     // }
- 
 
-    public void Update() {
-        
-        if(button.pressed && !isMoving){
-
-            steps = Random.Range(1,7);
-
-            if(doneSteps + steps < fullRoute.Count){
-                StartCoroutine(Move());
-            }else{
-                Debug.Log("Number is to high!");
-            }
-        }
-    }
-
-
-    IEnumerator Move(){
+    IEnumerator Move(int diceNumber){
         if(isMoving){
             yield break;
         }
@@ -97,10 +85,16 @@ public class PawnManager : MonoBehaviour
 
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
             
-            while(MoveToNextNode(nextPos,8f)){
+            Vector3 startPos = fullRoute[routePosition-1].gameObject.transform.position;
+
+            // while(MoveToNextNode(nextPos,8f)){
+            //     yield return null;
+            // }
+            while(MoveInArcToNextNode(startPos,nextPos,8f)){
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
+            timeForPointToPoint = 0;
             steps--;
             doneSteps++;
             
@@ -109,6 +103,7 @@ public class PawnManager : MonoBehaviour
         //CHECK POSSIBLE KICK
         if(goalNode.isTaken){
             //KICK THE OTHER STONE
+            goalNode.pawn.ReturnToBase();
         }
 
         currentNode.pawn = null;
@@ -121,8 +116,13 @@ public class PawnManager : MonoBehaviour
         goalNode = null;
 
         //REPORT TO GAMEMANAGER
-        GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
         //SWITCH THE PLAYER
+        if(diceNumber<6){
+            GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+        }else{
+            GameManager.instance.state = GameManager.States.ROLL_DICE;
+
+        }
 
         isMoving = false;
 
@@ -130,6 +130,16 @@ public class PawnManager : MonoBehaviour
 
     bool MoveToNextNode(Vector3 goal, float speed){
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
+    }
+
+    bool MoveInArcToNextNode(Vector3 startPos, Vector3 goalPosition, float speed){
+        
+        timeForPointToPoint += speed * Time.deltaTime;
+        Vector3 pawnPosition = Vector3.Lerp(startPos, goalPosition,timeForPointToPoint);
+        pawnPosition.y += amplitude * Mathf.Sin(Mathf.Clamp01(timeForPointToPoint)*Mathf.PI);
+
+        return goalPosition != (transform.position = Vector3.Lerp(transform.position, pawnPosition, timeForPointToPoint));
+
     }
 
     public bool ReturnIsOut(){
@@ -155,10 +165,16 @@ public class PawnManager : MonoBehaviour
 
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
             
-            while(MoveToNextNode(nextPos,8f)){
+            // while(MoveToNextNode(nextPos,8f)){
+            //     yield return null;
+            // }
+
+            Vector3 startPos = baseNode.gameObject.transform.position;
+            while(MoveInArcToNextNode(startPos,nextPos,5f)){
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
+            timeForPointToPoint = 0;
             steps--;
             doneSteps++;
             
@@ -168,6 +184,7 @@ public class PawnManager : MonoBehaviour
         //check for eating pawn
         if(goalNode.isTaken){
             //return to base node
+           goalNode.pawn.ReturnToBase();
         }
 
         goalNode.pawn = this;
@@ -216,6 +233,27 @@ public class PawnManager : MonoBehaviour
     public void StartTheMove(int diceNumber){
         
         steps = diceNumber;
-        StartCoroutine(Move());
+        StartCoroutine(Move(diceNumber));
+    }
+
+    public void ReturnToBase(){
+
+        StartCoroutine(ReturnEatenPawn());
+    }
+
+    IEnumerator ReturnEatenPawn(){
+
+        GameManager.instance.ReportTurnPossible(false);
+        routePosition = 0;
+        currentNode = null;
+        goalNode = null;
+        isOut = false;
+        doneSteps = 0;
+
+        Vector3 baseNodePos = baseNode.gameObject.transform.position;
+        while(MoveToNextNode(baseNodePos,100f)){
+            yield return null;
+        }
+        GameManager.instance.ReportTurnPossible(true);
     }
 }

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public int activePlayer;
 
     bool switchingPlayer;
+    bool turnPossible = true;
 
     void Awake() {
         instance = this;
@@ -29,16 +30,20 @@ public class GameManager : MonoBehaviour
         if(playerList[activePlayer].playerTypes == Entity.PlayerTypes.BOT){
             switch(state){
             case States.ROLL_DICE:
-                StartCoroutine(RollDiceDelay());
-                state = States.WAITING;
+                if(turnPossible){
+                    StartCoroutine(RollDiceDelay());
+                    state = States.WAITING;
+                }
             break;
             case States.WAITING:
                 //IDLE
             break;
             case States.SWITCH_PLAYER:
-                StartCoroutine(SwitchPlayer());
-                state = States.WAITING;
-            break;
+                if(turnPossible){
+                    StartCoroutine(SwitchPlayer());
+                    state = States.WAITING;
+                }
+                break;
             } 
         }
 
@@ -168,5 +173,8 @@ public class GameManager : MonoBehaviour
         state = States.ROLL_DICE;
     }
     
+    public void ReportTurnPossible(bool possible){
+        turnPossible = possible;
+    }
 
 }
