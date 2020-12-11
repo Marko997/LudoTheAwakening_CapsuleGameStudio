@@ -21,12 +21,19 @@ public class GameManager : MonoBehaviour
     bool switchingPlayer;
     bool turnPossible = true;
 
+    public GameObject rollButton;
+    int rolledHumanDice;
+
     void Awake() {
         instance = this;
     }
 
-    void Update() {
+    void Start() {
+        ActivateButton(false);
+    }
 
+    void Update() {
+        //CPU
         if(playerList[activePlayer].playerTypes == Entity.PlayerTypes.BOT){
             switch(state){
             case States.ROLL_DICE:
@@ -40,6 +47,29 @@ public class GameManager : MonoBehaviour
             break;
             case States.SWITCH_PLAYER:
                 if(turnPossible){
+                    StartCoroutine(SwitchPlayer());
+                    state = States.WAITING;
+                }
+                break;
+            } 
+        }
+        //HUMAN
+        if(playerList[activePlayer].playerTypes == Entity.PlayerTypes.HUMAN){
+            switch(state){
+            case States.ROLL_DICE:
+                if(turnPossible){
+                    //DEACTIVATE HIGHLIGHTS
+                    ActivateButton(true);
+                    state = States.WAITING;
+                }
+            break;
+            case States.WAITING:
+                //IDLE
+            break;
+            case States.SWITCH_PLAYER:
+                if(turnPossible){
+                    //DEACTIVATE BUTTON
+                    
                     StartCoroutine(SwitchPlayer());
                     state = States.WAITING;
                 }
@@ -177,4 +207,57 @@ public class GameManager : MonoBehaviour
         turnPossible = possible;
     }
 
+    public void ReportWinning(){
+        //SHOW UI
+        playerList[activePlayer].hasWon = true;
+    }
+
+//---------------------HUMAN INPUT ------------------------//
+
+    void ActivateButton(bool buttonOn){
+        rollButton.SetActive(buttonOn);
+    }
+
+    void DeactivateAllSelectors(){
+        for(int i = 0; i<playerList.Count;i++){
+            for(int j =0;j<playerList[i].allPawns.Length;j++){
+                playerList[i].allPawns[j].SetSelector(false);
+            }
+        }
+    }
+
+    //ON ROLL DICE BUTTON
+    public void HumanRollDice(){
+        ActivateButton(false);
+
+        //ROLL DICE
+        rolledHumanDice = Random.Range(1,7);
+
+        //MOVABLE PAWN LIST
+        List <PawnManager> movablePawns = new List<PawnManager>();
+
+        //FILL THE LISTS
+        for(int i = 0;i<playerList[activePlayer].allPawns.Length;i++){
+            if(playerList[activePlayer].allPawns[i].ReturnIsOut()){
+                //CHECK FOR POSSIBLE KICK
+                if(playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].pawnId,rolledHumanDice)){
+                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
+                    continue;
+                }
+                //CHECK FOR POSSIBLE MOVE
+                if(playerList[activePlayer].allPawns[i].CheckPossibleMove(rolledHumanDice)){
+                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
+                    
+                }
+            }
+        }
+    }
+
+
+
+
 }
+
+
+
+

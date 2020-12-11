@@ -41,6 +41,8 @@ public class PawnManager : MonoBehaviour
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
         CreateFullRoute();
 
+        SetSelector(false);
+
     }
 
     void CreateFullRoute(){
@@ -56,23 +58,6 @@ public class PawnManager : MonoBehaviour
             fullRoute.Add(finalRoute.childNodesList[i].GetComponent<NodeManager>());
         }
     }
-
-    // public int steps;
-
-    // public bool isMoving;
-
-    // public int diceValue;
-
-    // public DiceSide[] diceSides;
-
-    
-
-    // public DiceController dice;
-
-    // private void Start() {
-    //     button = FindObjectOfType<DiceButton>();
-    //     dice = FindObjectOfType<DiceController>();
-    // }
 
     IEnumerator Move(int diceNumber){
         if(isMoving){
@@ -116,6 +101,13 @@ public class PawnManager : MonoBehaviour
         goalNode = null;
 
         //REPORT TO GAMEMANAGER
+
+        //WIN CONDITION CHECK
+        if(WinCondition()){
+            GameManager.instance.ReportWinning();
+        }
+
+
         //SWITCH THE PLAYER
         if(diceNumber<6){
             GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
@@ -256,4 +248,24 @@ public class PawnManager : MonoBehaviour
         }
         GameManager.instance.ReportTurnPossible(true);
     }
+
+    bool WinCondition(){
+        for(int i=0; i< finalRoute.childNodesList.Count;i++){
+            if(!finalRoute.childNodesList[i].GetComponent<NodeManager>().isTaken){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //-------------------------HUMAN INPUT--------------------//
+
+    public void SetSelector(bool selectorOn){
+        
+        selector.SetActive(selectorOn);
+        //THIS IS FOR HAVING CLICK ABILITY
+        hasTurn = selectorOn;
+
+    }
+
 }
