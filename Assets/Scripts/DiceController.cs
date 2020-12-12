@@ -30,18 +30,20 @@ public class DiceController : MonoBehaviour
         //     RollDice();
         // }
 
-        // if(rb.IsSleeping() && !hasLanded && thrown){
-        //     hasLanded = true;
-        //     rb.useGravity = false;
-        //     SideValueCheck();
+        if(rb.IsSleeping() && !hasLanded && thrown){
+            hasLanded = true;
+            rb.useGravity = false;
+            rb.isKinematic = true;
+            SideValueCheck();
   
 
-        // }else if(rb.IsSleeping() && hasLanded && diceValue ==0){
-        //     RollAgain();
-        // }
+        }else if(rb.IsSleeping() && hasLanded && diceValue ==0){
+            RollAgain();
+        }
     }
 
     public void RollDice(){
+        Reset();
         if(!thrown && !hasLanded){
             thrown = true;
             rb.useGravity = true;
@@ -55,6 +57,7 @@ public class DiceController : MonoBehaviour
 
     public void Reset(){
         transform.position = initPosition;
+        rb.isKinematic = false;
         thrown = false;
         hasLanded = false;
         rb.useGravity = false;
@@ -74,6 +77,7 @@ public class DiceController : MonoBehaviour
         foreach(DiceSide side in diceSides){
             if(side.OnGround()){
                 diceValue = side.sideValue;
+                GameManager.instance.RollDice(diceValue);
             }
         }
     }

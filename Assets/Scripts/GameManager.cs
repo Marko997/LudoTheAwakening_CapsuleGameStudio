@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour
     bool turnPossible = true;
 
     public GameObject rollButton;
-    int rolledHumanDice;
+    [HideInInspector]public int rolledHumanDice;
+
+    public DiceController dice;
 
     void Awake() {
         instance = this;
@@ -80,25 +82,38 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void RollDice(){
-        int diceNumber = Random.Range(1,7);
+    void CPUDice(){
+        dice.RollDice();
+    }
 
-        if(diceNumber == 6){
-            //check start node
-            CheckStartNode(diceNumber);
+    public void RollDice(int _diceNumber){
+        int diceNumber = _diceNumber;//Random.Range(1,7);
 
+        if(playerList[activePlayer].playerTypes == Entity.PlayerTypes.BOT){
+            
+            if(diceNumber == 6){
+                //check start node
+                CheckStartNode(diceNumber);
+
+            }
+            if(diceNumber <6){
+                //check for move
+                MoveAStone(diceNumber);
+
+            }
         }
-        if(diceNumber <6){
-            //check for move
-            MoveAStone(diceNumber);
-
+        if(playerList[activePlayer].playerTypes == Entity.PlayerTypes.HUMAN){
+            rolledHumanDice = _diceNumber;
+            HumanRollDice();
         }
+
+        
         Debug.Log(diceNumber+"sadsadsadsa");
     }
 
     IEnumerator RollDiceDelay(){
         yield return new WaitForSeconds(2);
-        RollDice();
+        CPUDice();
     }
 
     void CheckStartNode(int diceNumber){
@@ -218,7 +233,7 @@ public class GameManager : MonoBehaviour
         rollButton.SetActive(buttonOn);
     }
 
-    void DeactivateAllSelectors(){
+    public void DeactivateAllSelectors(){
         for(int i = 0; i<playerList.Count;i++){
             for(int j =0;j<playerList[i].allPawns.Length;j++){
                 playerList[i].allPawns[j].SetSelector(false);
@@ -226,31 +241,89 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void HumanRoll(){
+        
+        dice.RollDice();
+        ActivateButton(false);
+    }
+
     //ON ROLL DICE BUTTON
     public void HumanRollDice(){
-        ActivateButton(false);
+        
 
         //ROLL DICE
-        rolledHumanDice = Random.Range(1,7);
+        //rolledHumanDice = Random.Range(1,7);
+        //rolledHumanDice = 6;
 
         //MOVABLE PAWN LIST
         List <PawnManager> movablePawns = new List<PawnManager>();
 
-        //FILL THE LISTS
-        for(int i = 0;i<playerList[activePlayer].allPawns.Length;i++){
-            if(playerList[activePlayer].allPawns[i].ReturnIsOut()){
-                //CHECK FOR POSSIBLE KICK
-                if(playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].pawnId,rolledHumanDice)){
-                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
-                    continue;
-                }
-                //CHECK FOR POSSIBLE MOVE
-                if(playerList[activePlayer].allPawns[i].CheckPossibleMove(rolledHumanDice)){
-                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
-                    
-                }
+        //START NODE FULL CHECK
+        //is start node occupied
+        bool startNodeFull = false;
+        for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
+            if(playerList[activePlayer].allPawns[i].currentNode == playerList[activePlayer].allPawns[i].startNode){
+                startNodeFull = true;
+                break; //we found a match
             }
         }
+
+        //NUMBER <6
+        if(rolledHumanDice < 6){
+
+            movablePawns.AddRange(PossiblePawns());
+
+        }
+
+        //NUMBER ==6 && !startnode
+        if(rolledHumanDice == 6 && !startNodeFull){
+            //INSIDE BASE CHECK
+            for(int i = 0; i < playerList[activePlayer].allPawns.Length; i++){
+                if(!playerList[activePlayer].allPawns[i].ReturnIsOut()){
+                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
+                }
+            }
+            //OUTSIDE CHECK
+            movablePawns.AddRange(PossiblePawns());
+        
+        //NUMBER == 6 && startnode
+        }else if(rolledHumanDice == 6 && startNodeFull){
+
+            movablePawns.AddRange(PossiblePawns());
+
+        }
+
+        //ACTIVATE ALL POSSIBLE SELECTORS
+        if(movablePawns.Count > 0){
+            for(int i=0; i< movablePawns.Count; i++){
+                movablePawns[i].SetSelector(true);
+            }
+        }else{
+            state = States.SWITCH_PLAYER;
+        }
+        
+
+        
+    }
+
+    List <PawnManager> PossiblePawns(){
+
+        List<PawnManager> tempList = new List<PawnManager>();
+        
+        for(int i=0; i < playerList[activePlayer].allPawns.Length; i++){
+                //MAKE SURE HE IS OUT ALREADY
+                if(playerList[activePlayer].allPawns[i].ReturnIsOut()){
+                    if(playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].pawnId,rolledHumanDice)){
+                        tempList.Add(playerList[activePlayer].allPawns[i]);
+                        continue;
+                    }
+                    if(playerList[activePlayer].allPawns[i].CheckPossibleMove(rolledHumanDice)){
+                        tempList.Add(playerList[activePlayer].allPawns[i]);
+                    }
+                }
+            }
+
+        return tempList;
     }
 
 

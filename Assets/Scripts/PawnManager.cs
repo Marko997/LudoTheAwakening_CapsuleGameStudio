@@ -268,4 +268,22 @@ public class PawnManager : MonoBehaviour
 
     }
 
+    void OnMouseDown(){
+
+        if(hasTurn){
+
+            if(!isOut){
+
+                LeaveBase();
+
+            }else{
+
+                StartTheMove(GameManager.instance.rolledHumanDice);
+            }
+            
+            GameManager.instance.DeactivateAllSelectors();
+        }
+        
+    }
+
 }
