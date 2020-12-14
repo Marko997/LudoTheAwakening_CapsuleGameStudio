@@ -26,9 +26,6 @@ public class DiceController : MonoBehaviour
     }
 
     public void Update() {
-        // if(button.pressed){
-        //     RollDice();
-        // }
 
         if(rb.IsSleeping() && !hasLanded && thrown){
             hasLanded = true;
@@ -47,7 +44,7 @@ public class DiceController : MonoBehaviour
         if(!thrown && !hasLanded){
             thrown = true;
             rb.useGravity = true;
-            rb.AddTorque(Random.Range(0,500),Random.Range(0,500),Random.Range(0,500));
+            rb.AddTorque(Random.Range(0,1000),Random.Range(0,1000),Random.Range(0,1000));
 
         
         }else if(thrown && hasLanded){

@@ -16,7 +16,7 @@ public class CommonRouteManager : MonoBehaviour
 
     void OnDrawGizmos()
     {
-       Gizmos.color = Color.green; 
+       //Gizmos.color = Color.green; 
        FillNodes();
        for( int i = 0; i<childNodesList.Count;i++){
 
@@ -25,7 +25,7 @@ public class CommonRouteManager : MonoBehaviour
            if(i>0)
            {
                Vector3 prev = childNodesList[i - 1].position;
-               Gizmos.DrawLine(prev,pos);
+               //Gizmos.DrawLine(prev,pos);
            }
 
        }
