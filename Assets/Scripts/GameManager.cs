@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
 
     void Start() {
         ActivateButton(false);
+
+        int randomPlayer = Random.Range(0, playerList.Count);
+        activePlayer = randomPlayer;
+        InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " starts first!");
     }
 
     void Update() {
@@ -107,8 +111,8 @@ public class GameManager : MonoBehaviour
             HumanRollDice();
         }
 
-        
-        Debug.Log(diceNumber+"sadsadsadsa");
+        InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " has rolled "+ _diceNumber);
+        //Debug.Log(diceNumber+"sadsadsadsa");
     }
 
     IEnumerator RollDiceDelay(){
@@ -178,7 +182,7 @@ public class GameManager : MonoBehaviour
         //NONE IS POSSIBLE
         //SWITCH PLAYER
         state = States.SWITCH_PLAYER;
-        Debug.Log("Should switch player!");
+        //Debug.Log("Should switch player!");
     }
 
     IEnumerator SwitchPlayer(){
@@ -215,6 +219,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        InfoText.instance.ShowMessage(playerList[activePlayer].playerName+ " has turn!");
         state = States.ROLL_DICE;
     }
     
