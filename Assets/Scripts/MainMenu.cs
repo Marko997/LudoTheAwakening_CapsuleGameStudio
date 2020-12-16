@@ -15,6 +15,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
 
     }
+    public void PlayGameVsCPU4Players(string sceneName){
+
+        SceneManager.LoadScene(sceneName);
+
+    }
     public void QuitGame(){
         Debug.Log("Quit");
         Application.Quit();
