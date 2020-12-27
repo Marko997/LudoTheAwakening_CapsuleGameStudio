@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VS CPU 4 players.unity
     guid: 3c961f4676d9ed941ab7095788ed5a3e
+  - enabled: 1
+    path: Assets/Scenes/PlayerMenuScene.unity
+    guid: f19f47d3a8698ab4d9a32ddebabaf9ae
   m_configObjects: {}

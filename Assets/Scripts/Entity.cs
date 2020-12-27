@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +14,6 @@ public class Entity : MonoBehaviour
         NO_PLAYER
     }
     public PlayerTypes playerTypes;
-public bool hasWon;
+    public bool hasWon;
 
 }
