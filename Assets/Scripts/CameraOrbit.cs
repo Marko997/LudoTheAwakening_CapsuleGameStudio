@@ -12,7 +12,7 @@ public class CameraOrbit : MonoBehaviour
 
     public float MouseSensitivity = 0.1f;
     public float ScrollSensitvity = 2f;
-    public float OrbitDampening = 10f;
+    public float OrbitDampening = 3f;
     public float ScrollDampening = 6f;
 
     public bool CameraDisabled = false;

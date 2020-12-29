@@ -32,7 +32,8 @@ public class PawnRotatorY : MonoBehaviour, IPointerUpHandler,IPointerDownHandler
 
                 if(touch.phase == TouchPhase.Moved){
 
-                        pawnHolder.Rotate(transform.rotation.x,-touch.deltaPosition.x,transform.rotation.z);
+                        pawnHolder.Rotate(0,-touch.deltaPosition.x,0);
+                        
                     
                     isMoving = true;
                 }
