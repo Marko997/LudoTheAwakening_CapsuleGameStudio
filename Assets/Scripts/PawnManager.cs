@@ -18,7 +18,7 @@ public class PawnManager : MonoBehaviour
     public NodeManager goalNode;
 
     int routePosition;
-    int startNodeIndex;
+    protected int startNodeIndex;
 
     int steps;
     int doneSteps;
@@ -45,7 +45,7 @@ public class PawnManager : MonoBehaviour
 
     }
 
-    void CreateFullRoute(){
+    protected void CreateFullRoute(){
         for(int i =0;i<commonRoute.childNodesList.Count-1;i++){
             int tempPosition = startNodeIndex +i;
             tempPosition %= commonRoute.childNodesList.Count;

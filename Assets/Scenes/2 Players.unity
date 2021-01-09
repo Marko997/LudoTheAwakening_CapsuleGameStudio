@@ -172,7 +172,7 @@ Transform:
   - {fileID: 1850371278}
   - {fileID: 1910309826}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &32165848 stripped
 GameObject:
@@ -303,7 +303,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &109516781 stripped
 GameObject:
@@ -635,7 +635,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -691,7 +691,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -834,7 +834,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -890,7 +890,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -1361,7 +1361,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -1417,7 +1417,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -1531,7 +1531,7 @@ Transform:
   - {fileID: 629271751}
   - {fileID: 2115609523}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &467481036 stripped
 Transform:
@@ -1737,6 +1737,52 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8155173213353401129}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &648403604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 648403606}
+  - component: {fileID: 648403605}
+  m_Layer: 0
+  m_Name: InputController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &648403605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648403604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a8f2de6bf134a444b3655c186319df9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 963194227}
+  target: {fileID: 926543794}
+  distanceToTarget: 10
+--- !u!4 &648403606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648403604}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8, y: 0.018000126, z: 16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &657135819 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2029307486537810311, guid: 8770042f7d09f654ca02afab7ff3c527,
@@ -1953,7 +1999,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 118.78999, y: 89.99999, z: 74.48599}
 --- !u!1 &714164445 stripped
 GameObject:
@@ -2077,7 +2123,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -2133,7 +2179,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -2257,7 +2303,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -2313,7 +2359,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -2561,6 +2607,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTaken: 0
   pawn: {fileID: 0}
+--- !u!1 &926543793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 926543794}
+  m_Layer: 0
+  m_Name: Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &926543794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926543793}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8, y: 0.73, z: 16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &930757418 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7877358839322177585, guid: 065048c25ef49a84d882c60a9000a092,
@@ -2987,7 +3063,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -3043,7 +3119,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -3388,7 +3464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 63.381004, y: 90.00001, z: 74.486}
 --- !u!1 &1042588996 stripped
 GameObject:
@@ -3587,7 +3663,7 @@ Transform:
   - {fileID: 227365789}
   - {fileID: 810786273}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1221542628 stripped
 MonoBehaviour:
@@ -3671,7 +3747,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -3727,7 +3803,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice
@@ -4440,7 +4516,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1515275274 stripped
 GameObject:
@@ -4546,7 +4622,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1597822351 stripped
 GameObject:
@@ -5056,18 +5132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTaken: 0
   pawn: {fileID: 0}
---- !u!114 &1930792800 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4510504708449512573, guid: 67497f372a9a57a4da5a837170b522d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 4510504706619581213}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50577d8fef4128f43951ea7f0c4cdc6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1933507619 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4727108608147764750, guid: c1df866e2ac3de546b449344faf01356,
@@ -5138,7 +5202,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1953223777 stripped
 GameObject:
@@ -5824,7 +5888,7 @@ PrefabInstance:
     - target: {fileID: 2868877613674537596, guid: 20b5e6a7c1e5dfc42afff4addbb926b7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2868877613674537596, guid: 20b5e6a7c1e5dfc42afff4addbb926b7,
         type: 3}
@@ -5860,7 +5924,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20b5e6a7c1e5dfc42afff4addbb926b7, type: 3}
 --- !u!1001 &4510504706619581213
@@ -5908,7 +5972,7 @@ PrefabInstance:
     - target: {fileID: 4510504706680420901, guid: 67497f372a9a57a4da5a837170b522d3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4510504706680420901, guid: 67497f372a9a57a4da5a837170b522d3,
         type: 3}
@@ -6929,7 +6993,7 @@ PrefabInstance:
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062814, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
@@ -6985,7 +7049,7 @@ PrefabInstance:
         type: 3}
       propertyPath: button
       value: 
-      objectReference: {fileID: 1930792800}
+      objectReference: {fileID: 0}
     - target: {fileID: 7629014852694062815, guid: d1d20fe605e1fef4e89f243df154b33e,
         type: 3}
       propertyPath: dice

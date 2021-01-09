@@ -10,12 +10,12 @@ public class CameraOrbit : MonoBehaviour
     private Vector3 _LocalRotation;
     private float _CameraDistance = 10f;
 
-    public float MouseSensitivity = 0.1f;
-    public float ScrollSensitvity = 2f;
-    public float OrbitDampening = 3f;
-    public float ScrollDampening = 6f;
+    private float MouseSensitivity = 0.1f;
+    private float ScrollSensitvity = 2f;
+    private float OrbitDampening = 3f;
+    private float ScrollDampening = 6f;
 
-    public bool CameraDisabled = false;
+    private bool CameraDisabled = false;
 
 
     void Start()
