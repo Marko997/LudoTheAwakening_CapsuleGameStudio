@@ -530,7 +530,7 @@ MonoBehaviour:
   activePlayer: 0
   rollButton: {fileID: 1266510101}
   rolledHumanDice: 0
-  dice: {fileID: 1281702147}
+  dice: {fileID: 1641892618}
 --- !u!4 &98795633
 Transform:
   m_ObjectHideFlags: 0
@@ -2755,7 +2755,7 @@ Transform:
   m_Children:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &423796964 stripped
 MonoBehaviour:
@@ -4835,11 +4835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a45eb6888c46b4cb55d474e31fc25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MouseSensitivity: 4
-  ScrollSensitvity: 2
-  OrbitDampening: 10
-  ScrollDampening: 6
-  CameraDisabled: 0
 --- !u!1 &983040704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8763579671510702870, guid: 19f29827da532b6469ded89aed163555,
@@ -6466,6 +6461,80 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTaken: 0
   pawn: {fileID: 0}
+--- !u!1001 &1154890292
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1361.334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 955.45795
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 355.1848
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073870, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073872, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: m_Name
+      value: Roller
+      objectReference: {fileID: 0}
+    - target: {fileID: 1876342971637073873, guid: da7bf21a766caed4d9d67c49494b0a70,
+        type: 3}
+      propertyPath: One
+      value: 
+      objectReference: {fileID: 1885948867}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da7bf21a766caed4d9d67c49494b0a70, type: 3}
 --- !u!1001 &1190033199
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7676,6 +7745,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1619109819798898736, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -430
+      objectReference: {fileID: 0}
+    - target: {fileID: 1619109819798898736, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 247
+      objectReference: {fileID: 0}
+    - target: {fileID: 1619109819798898740, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1619109819798898742, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: myRoller
+      value: 
+      objectReference: {fileID: 1641892618}
     - target: {fileID: 4510504706680420901, guid: 67497f372a9a57a4da5a837170b522d3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7830,6 +7919,31 @@ PrefabInstance:
     - target: {fileID: 4510504708197265165, guid: 67497f372a9a57a4da5a837170b522d3,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510504708197265165, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510504708197265165, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510504708197265165, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 98795632}
+    - target: {fileID: 4510504708197265165, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: HumanRoll
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510504708197265165, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4510504708197265170, guid: 67497f372a9a57a4da5a837170b522d3,
@@ -9095,6 +9209,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1641892618 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1876342971637073873, guid: da7bf21a766caed4d9d67c49494b0a70,
+    type: 3}
+  m_PrefabInstance: {fileID: 1154890292}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698c0c150b7894149b618a9065d61532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649131236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6154704795242662239, guid: 1a605d9c4bcc2e14195002a45cc5f47d,
@@ -9845,6 +9971,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTaken: 0
   pawn: {fileID: 0}
+--- !u!114 &1885948867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1619109819798898743, guid: 67497f372a9a57a4da5a837170b522d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1344241355}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1895498612
 GameObject:
   m_ObjectHideFlags: 0
@@ -11513,7 +11651,7 @@ PrefabInstance:
     - target: {fileID: 2868877613674511964, guid: 20b5e6a7c1e5dfc42afff4addbb926b7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2868877613674537596, guid: 20b5e6a7c1e5dfc42afff4addbb926b7,
         type: 3}

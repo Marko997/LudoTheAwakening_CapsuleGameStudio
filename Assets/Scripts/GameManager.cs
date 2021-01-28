@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
     public GameObject rollButton;
     [HideInInspector]public int rolledHumanDice;
 
-    public DiceController dice;
+    //public DiceController dice;
+    public Roller dice;
 
     void Awake() {
         instance = this;
@@ -248,7 +249,7 @@ public class GameManager : MonoBehaviour
 
     public void HumanRoll(){
         
-        dice.RollDice();
+        dice.Roll1();
         ActivateButton(false);
     }
 

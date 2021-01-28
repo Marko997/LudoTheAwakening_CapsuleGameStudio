@@ -74,7 +74,7 @@ public class DiceController : MonoBehaviour
         foreach(DiceSide side in diceSides){
             if(side.OnGround()){
                 diceValue = side.sideValue;
-                GameManager.instance.RollDice(diceValue);
+                //GameManager.instance.RollDice(diceValue);
             }
         }
     }
