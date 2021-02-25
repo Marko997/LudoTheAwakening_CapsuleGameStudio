@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     bool turnPossible = true;
 
     public GameObject rollButton;
+    //public GameObject powerButton;
+
     [HideInInspector]public int rolledHumanDice;
 
     //public DiceController dice;
@@ -68,6 +70,37 @@ public class GameManager : MonoBehaviour
                     //DEACTIVATE HIGHLIGHTS
                     ActivateButton(true);
                     state = States.WAITING;
+                    /*for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
+                        playerList[activePlayer].allPawns[i].powerButton.SetActive(true);
+
+                        } */
+                    
+                    //
+                    //LOGIC FOR SHOWING DIFFERENT BUTTON MAYBE FOR LATER
+                    // for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
+                    //     for(int j =0;j<playerList[i].allPawns.Length;j++){
+                    //     if(playerList[activePlayer].allPawns[j].pawnName =="Spearman"){
+                    //         //Debug.Log(playerList[activePlayer].allPawns[i]);
+                    //         playerList[activePlayer].allPawns[j].spearmanPowerButton.SetActive(true);
+                    //         break;
+
+                    //     } else if(playerList[activePlayer].allPawns[j].pawnName =="Archer"){
+                    //         //Debug.Log("SOME LOGggggggg");
+                    //         playerList[activePlayer].allPawns[j].archerPowerButton.SetActive(true);
+                    //         break;
+                    //     }
+                    //     else if(playerList[activePlayer].allPawns[j].pawnName =="Swordgirl"){
+                    //         //Debug.Log("SOME LOG");
+                    //         playerList[activePlayer].allPawns[j].swordgirlPowerButton.SetActive(true);
+                    //         break;
+
+                    //     } else if(playerList[activePlayer].allPawns[j].pawnName =="Macebearer"){
+                    //         //Debug.Log("SOME LOGggggggg");
+                    //         playerList[activePlayer].allPawns[j].macebearerPowerButton.SetActive(true);
+                    //         break;
+                    //     }
+                    // }
+                    // } 
                 }
             break;
             case States.WAITING:
@@ -88,7 +121,7 @@ public class GameManager : MonoBehaviour
     }
 
     void CPUDice(){
-        dice.RollDice();
+        dice.Roll1();
     }
 
     public void RollDice(int _diceNumber){
@@ -173,7 +206,7 @@ public class GameManager : MonoBehaviour
             state = States.WAITING;
             return;
         }
-        //PERFORM MOVE IF POSSIBE
+        //PERFORM MOVE IF POSSIBLE
         if(movablePawns.Count>0){
             int num = Random.Range(0,movablePawns.Count);
             movablePawns[num].StartTheMove(diceNumber);
@@ -193,6 +226,32 @@ public class GameManager : MonoBehaviour
         switchingPlayer = true;
 
         yield return new WaitForSeconds(2);
+
+        /*for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
+                            
+            playerList[activePlayer].allPawns[i].powerButton.SetActive(false);
+
+        }*/
+
+        //DEACTIVATE POWER BUTTONS LOGIC FOR LATER
+        // for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
+        //     if(playerList[activePlayer].allPawns[i].pawnName =="Spearman"){
+                            
+        //         playerList[activePlayer].allPawns[i].spearmanPowerButton.gameObject.SetActive(false);
+
+        //         }else if(playerList[activePlayer].allPawns[i].pawnName =="Archer"){
+        //             playerList[activePlayer].allPawns[i].archerPowerButton.SetActive(false);
+                            
+        //         }else if(playerList[activePlayer].allPawns[i].pawnName =="Swordgirl"){
+        //             playerList[activePlayer].allPawns[i].swordgirlPowerButton.SetActive(false);
+                            
+        //         }else if(playerList[activePlayer].allPawns[i].pawnName =="Macebearer"){
+        //             playerList[activePlayer].allPawns[i].macebearerPowerButton.SetActive(false);
+                            
+        //         }
+        //     }
+    
+
         //SET NEXT PLAYER
         SetNextActivePlayer();
 
@@ -243,14 +302,18 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i<playerList.Count;i++){
             for(int j =0;j<playerList[i].allPawns.Length;j++){
                 playerList[i].allPawns[j].SetSelector(false);
+                
             }
         }
     }
+    
 
     public void HumanRoll(){
         
         dice.Roll1();
         ActivateButton(false);
+
+        
     }
 
     //ON ROLL DICE BUTTON
@@ -331,6 +394,8 @@ public class GameManager : MonoBehaviour
 
         return tempList;
     }
+
+    
 
 
 

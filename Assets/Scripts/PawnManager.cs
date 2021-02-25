@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PawnManager : MonoBehaviour
 {
     public int pawnId;
+    public string pawnName;
     [Header("ROUTES")]   
     public CommonRouteManager commonRoute;
     public CommonRouteManager finalRoute;
@@ -26,7 +28,7 @@ public class PawnManager : MonoBehaviour
     [Header("BOOLS")]
     public bool isOut;
     bool isMoving;
-    bool hasTurn; // human input
+    protected bool hasTurn; // human input
 
     [Header("SELECTOR")]
     public GameObject selector;
@@ -35,14 +37,35 @@ public class PawnManager : MonoBehaviour
     float amplitude = 0.5f;
     float timeForPointToPoint = 0f;
 
-    public DiceButton button;
+    //public DiceButton button;
+    public int eatPower;
+    //public GameObject powerButton;
+
+
+    //Button for different powers ----- FOR LATER MAYBE
+    // public GameObject spearmanPowerButton;
+    // public GameObject archerPowerButton;
+    // public GameObject swordgirlPowerButton;
+    // public GameObject macebearerPowerButton;
 
     private void Start() {
+
+        //FOR LATER /\
+        // spearmanPowerButton.SetActive(false);
+        // archerPowerButton.SetActive(false);
+        // swordgirlPowerButton.SetActive(false);
+        // macebearerPowerButton.SetActive(false);
+
+        //powerButton.SetActive(false);
+
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
         CreateFullRoute();
 
         SetSelector(false);
 
+    }
+    private void Update() {
+       
     }
 
     protected void CreateFullRoute(){
@@ -56,6 +79,45 @@ public class PawnManager : MonoBehaviour
         for(int i =0;i<finalRoute.childNodesList.Count;i++){
         
             fullRoute.Add(finalRoute.childNodesList[i].GetComponent<NodeManager>());
+        }
+    }
+
+    
+
+    public void spearmanSpell(){
+        Debug.Log("WORKING");
+        goalNode = fullRoute[routePosition+eatPower];
+        //CHECK POSSIBLE KICK
+        if(goalNode.isTaken){
+            //KICK THE OTHER STONE
+            goalNode.pawn.ReturnToBase();
+        }
+    }
+    public void archerSpell(){
+        Debug.Log("WORKING");
+        goalNode = fullRoute[routePosition+eatPower];
+        //CHECK POSSIBLE KICK
+        if(goalNode.isTaken){
+            //KICK THE OTHER STONE
+            goalNode.pawn.ReturnToBase();
+        }
+    }
+    public void macebearerSpell(){
+        Debug.Log("WORKING");
+        goalNode = fullRoute[routePosition+eatPower];
+        //CHECK POSSIBLE KICK
+        if(goalNode.isTaken){
+            //KICK THE OTHER STONE
+            goalNode.pawn.ReturnToBase();
+        }
+    }
+    public void swordgirlSpell(){
+        Debug.Log("WORKING");
+        goalNode = fullRoute[routePosition+eatPower];
+        //CHECK POSSIBLE KICK
+        if(goalNode.isTaken){
+            //KICK THE OTHER STONE
+            goalNode.pawn.ReturnToBase();
         }
     }
 
@@ -119,6 +181,8 @@ public class PawnManager : MonoBehaviour
         isMoving = false;
 
     }
+
+    
 
     bool MoveToNextNode(Vector3 goal, float speed){
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
@@ -191,6 +255,7 @@ public class PawnManager : MonoBehaviour
         isMoving = false;
 
     }
+
 
     public bool CheckPossibleMove(int diceNumber){
 

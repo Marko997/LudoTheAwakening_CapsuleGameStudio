@@ -30,7 +30,7 @@ public class Roller : MonoBehaviour
         int x = Mathf.RoundToInt(Random.Range(0, DiceImages.Length));
         currentVal = x + 1;
         GameManager.instance.RollDice(currentVal);
-        Debug.Log(currentVal);
+        //Debug.Log(currentVal);
         return DiceImages[x];
     }
 }
