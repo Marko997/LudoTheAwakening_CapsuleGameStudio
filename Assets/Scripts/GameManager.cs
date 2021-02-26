@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,6 +32,43 @@ public class GameManager : MonoBehaviour
 
     void Awake() {
         instance = this;
+
+        //INSERT DATA FROM STARTGAME SCENE
+		for (int i = 0; i < playerList.Count; i++)
+		{
+            if(SaveSettings.players[i] == "HUMAN")
+			{
+                playerList[i].playerTypes = Entity.PlayerTypes.HUMAN;
+			}
+            if (SaveSettings.players[i] == "BOT")
+            {
+                playerList[i].playerTypes = Entity.PlayerTypes.BOT;
+            }
+            if (playerList[i].playerName == "Red") {
+
+                playerList[i].playerName = SaveSettings.playerNames[0];
+
+            }
+            if (playerList[i].playerName == "Green")
+            {
+
+                playerList[i].playerName = SaveSettings.playerNames[1];
+
+            }
+            if (playerList[i].playerName == "Blue")
+            {
+
+                playerList[i].playerName = SaveSettings.playerNames[2];
+
+            }
+            if (playerList[i].playerName == "Yellow")
+            {
+
+                playerList[i].playerName = SaveSettings.playerNames[3];
+
+            }
+
+        }
     }
 
     void Start() {
@@ -275,6 +313,7 @@ public class GameManager : MonoBehaviour
         }
         else if(available<2){
             //GAME OVER SCREEN
+            SceneManager.LoadScene("EndScene");
             state = States.WAITING;
             return;
         }
@@ -290,6 +329,16 @@ public class GameManager : MonoBehaviour
     public void ReportWinning(){
         //SHOW UI
         playerList[activePlayer].hasWon = true;
+
+		//SAVE WINNERS
+		for (int i = 0; i < SaveSettings.winners.Length; i++)
+		{
+            if(SaveSettings.winners[i] == "")
+			{
+                SaveSettings.winners[i] = playerList[activePlayer].playerName;
+                break;
+			}
+		}
     }
 
 //---------------------HUMAN INPUT ------------------------//
