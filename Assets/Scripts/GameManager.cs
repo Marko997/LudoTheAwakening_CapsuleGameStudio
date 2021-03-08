@@ -29,11 +29,19 @@ public class GameManager : MonoBehaviour
 
     //public DiceController dice;
     public Roller dice;
+    public PawnManager pawn;
+    public CommonRouteManager commonRoute;
 
     void Awake() {
         instance = this;
 
-        //INSERT DATA FROM STARTGAME SCENE
+		//ADDING PAWNS TO ENTITIY
+		//for (int i = 0; i < playerList.Count; i++)
+		//{
+		//	playerList[i].allPawns[0] = Instantiate<RedPawn>;
+		//}
+
+		//INSERT DATA FROM STARTGAME SCENE
 		for (int i = 0; i < playerList.Count; i++)
 		{
             if(SaveSettings.players[i] == "HUMAN")
@@ -41,8 +49,8 @@ public class GameManager : MonoBehaviour
                 playerList[i].playerTypes = Entity.PlayerTypes.HUMAN;
 			}
             if (SaveSettings.players[i] == "BOT")
-            {
-                playerList[i].playerTypes = Entity.PlayerTypes.BOT;
+			{
+				playerList[i].playerTypes = Entity.PlayerTypes.BOT;
             }
             if (playerList[i].playerName == "Red") {
 
@@ -61,14 +69,24 @@ public class GameManager : MonoBehaviour
                 playerList[i].playerName = SaveSettings.playerNames[2];
 
             }
-            if (playerList[i].playerName == "Yellow")
+            if (playerList[i].playerName == "Yellow" && SaveSettings.yellowPawns[0] == "Pawn")
             {
-
+                //PawnManager yellowPawn = pawn;
+                                
+                //playerList[i].allPawns[0] = Instantiate(yellowPawn, transform.position, transform.rotation);
+                //playerList[i].allPawns[1] = Instantiate(yellowPawn, transform.position, transform.rotation);
+                //playerList[i].allPawns[2] = Instantiate(yellowPawn, transform.position, transform.rotation);
+                //playerList[i].allPawns[3] = Instantiate(yellowPawn, transform.position, transform.rotation);
+                
+                //playerList[i].allPawns[0].pawnId = 4;
+                //playerList[i].allPawns[0].commonRoute = Instantiate(commonRoute,transform.position,transform.rotation);
+               
+                
+                
                 playerList[i].playerName = SaveSettings.playerNames[3];
-
+                
             }
-
-        }
+		}
     }
 
     void Start() {

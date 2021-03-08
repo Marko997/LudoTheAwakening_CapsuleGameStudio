@@ -10,7 +10,7 @@ public class CameraOrbit : MonoBehaviour
     private Vector3 _LocalRotation;
     private float _CameraDistance = 10f;
 
-    private float MouseSensitivity = 0.1f;
+    private float MouseSensitivity = 1f;
     private float ScrollSensitvity = 2f;
     private float OrbitDampening = 3f;
     private float ScrollDampening = 6f;
@@ -32,7 +32,7 @@ public class CameraOrbit : MonoBehaviour
         }
 
         if(!CameraDisabled){
-            if(Input.GetMouseButton(0) && Input.touchCount ==2){
+            if(Input.GetMouseButton(0) ){
             //Rotation of the Camera based on Mouse Coordinates
             if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             {

@@ -92,6 +92,13 @@ public class GameSettings : MonoBehaviour
 		SaveSettings.playerNames[3] = name;
 
 	}
+	public void SetAllYellowPawns(bool on)
+	{
+		if (on)
+		{
+			SaveSettings.yellowPawns[0] = "Pawn";
+		}
+	}
 }
 
 public static class SaveSettings
@@ -99,6 +106,7 @@ public static class SaveSettings
     //Red Green Blue Yellow
     public static string[] players = new string[4];
 	public static string[] playerNames = new string[4];
+	public static string[] yellowPawns = new string[4];
 
 	public static string[] winners = new string[3] { string.Empty, string.Empty,string.Empty};
 }
