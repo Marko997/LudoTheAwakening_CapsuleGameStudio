@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]public int rolledHumanDice;
 
-    //public DiceController dice;
     public Roller dice;
     public PawnManager pawn;
     public CommonRouteManager commonRoute;
@@ -126,37 +125,7 @@ public class GameManager : MonoBehaviour
                     //DEACTIVATE HIGHLIGHTS
                     ActivateButton(true);
                     state = States.WAITING;
-                    /*for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
-                        playerList[activePlayer].allPawns[i].powerButton.SetActive(true);
-
-                        } */
                     
-                    //
-                    //LOGIC FOR SHOWING DIFFERENT BUTTON MAYBE FOR LATER
-                    // for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
-                    //     for(int j =0;j<playerList[i].allPawns.Length;j++){
-                    //     if(playerList[activePlayer].allPawns[j].pawnName =="Spearman"){
-                    //         //Debug.Log(playerList[activePlayer].allPawns[i]);
-                    //         playerList[activePlayer].allPawns[j].spearmanPowerButton.SetActive(true);
-                    //         break;
-
-                    //     } else if(playerList[activePlayer].allPawns[j].pawnName =="Archer"){
-                    //         //Debug.Log("SOME LOGggggggg");
-                    //         playerList[activePlayer].allPawns[j].archerPowerButton.SetActive(true);
-                    //         break;
-                    //     }
-                    //     else if(playerList[activePlayer].allPawns[j].pawnName =="Swordgirl"){
-                    //         //Debug.Log("SOME LOG");
-                    //         playerList[activePlayer].allPawns[j].swordgirlPowerButton.SetActive(true);
-                    //         break;
-
-                    //     } else if(playerList[activePlayer].allPawns[j].pawnName =="Macebearer"){
-                    //         //Debug.Log("SOME LOGggggggg");
-                    //         playerList[activePlayer].allPawns[j].macebearerPowerButton.SetActive(true);
-                    //         break;
-                    //     }
-                    // }
-                    // } 
                 }
             break;
             case States.WAITING:

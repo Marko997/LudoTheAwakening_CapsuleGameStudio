@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    float MouseZoomSpeed = 15.0f;
-    float TouchZoomSpeed = 0.1f;
-    float ZoomMinBound = 30.0f;
-    float ZoomMaxBound = 150.0f;
+    float mouseZoomSpeed = 15.0f;
+    float touchZoomSpeed = 0.1f;
+    float zoomMinBound = 30.0f;
+    float zoomMaxBound = 150.0f;
     Camera cam;
 
     [SerializeField] private Transform target;
@@ -61,19 +61,19 @@ public class CameraController : MonoBehaviour
                 //Get offset value
 
                 float deltaDistance = oldTouchDistance - currentDistance;
-                Zoom(deltaDistance, TouchZoomSpeed);
+                Zoom(deltaDistance, touchZoomSpeed);
 
 			}
 		}else
 		{
             float scroll = Input.GetAxis("Mouse ScrollWheel");
-            Zoom(scroll, MouseZoomSpeed);
+            Zoom(scroll, mouseZoomSpeed);
 		}
 
-        if(cam.fieldOfView < ZoomMinBound)
+        if(cam.fieldOfView < zoomMinBound)
 		{
             cam.fieldOfView = 30.0f;
-		}else if(cam.fieldOfView > ZoomMaxBound)
+		}else if(cam.fieldOfView > zoomMaxBound)
 		{
             cam.fieldOfView = 150.0f;
 		}
@@ -86,7 +86,7 @@ public class CameraController : MonoBehaviour
 
         //Set clamp form cam
 
-        cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, ZoomMinBound, ZoomMaxBound);
+        cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, zoomMinBound, zoomMaxBound);
 
 	}
 }

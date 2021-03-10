@@ -37,26 +37,10 @@ public class PawnManager : MonoBehaviour
     float amplitude = 0.5f;
     float timeForPointToPoint = 0f;
 
-    //public DiceButton button;
     public int eatPower;
-    //public GameObject powerButton;
 
-
-    //Button for different powers ----- FOR LATER MAYBE
-    // public GameObject spearmanPowerButton;
-    // public GameObject archerPowerButton;
-    // public GameObject swordgirlPowerButton;
-    // public GameObject macebearerPowerButton;
 
     private void Start() {
-
-        //FOR LATER /\
-        // spearmanPowerButton.SetActive(false);
-        // archerPowerButton.SetActive(false);
-        // swordgirlPowerButton.SetActive(false);
-        // macebearerPowerButton.SetActive(false);
-
-        //powerButton.SetActive(false);
 
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
         CreateFullRoute();
