@@ -16,7 +16,11 @@ public enum CanvasType
 	SettingsScreen,
 	MessagesScreen,
 	FriendsScreen,
-	ProfileScreen
+	ProfileScreen,
+	PawnSelectionScreen,
+	Pawn2SelectionScreen,
+	Pawn3SelectionScreen,
+	Pawn4SelectionScreen
 }
 
 

@@ -40,7 +40,7 @@ public class PawnManager : MonoBehaviour
     public int eatPower;
 
 
-    private void Start() {
+    public void Init() {
 
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
         CreateFullRoute();
@@ -115,8 +115,14 @@ public class PawnManager : MonoBehaviour
             routePosition++;
 
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
-            
+                        
             Vector3 startPos = fullRoute[routePosition-1].gameObject.transform.position;
+            Debug.Log(routePosition);
+            //Debug.Log(nextPos+" "+ fullRoute[routePosition + 1].transform.position);
+            if(routePosition == 5){
+                transform.localRotation = Quaternion.Euler(0,180,0);
+                //transform.Rotate(0, 0, 0, Space.Self);
+			}
 
             // while(MoveToNextNode(nextPos,8f)){
             //     yield return null;

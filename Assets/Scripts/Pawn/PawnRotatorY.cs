@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PawnRotatorY : MonoBehaviour, IPointerUpHandler,IPointerDownHandler
+public class PawnRotatorY : MonoBehaviour//, IPointerUpHandler,IPointerDownHandler
 {
     bool isPressed;
     bool isMoving;
@@ -13,8 +13,8 @@ public class PawnRotatorY : MonoBehaviour, IPointerUpHandler,IPointerDownHandler
     [SerializeField]
     Transform pawnHolder;
 
-    [SerializeField]
-    GameObject pawnSelectionMenu;
+    //[SerializeField]
+    //GameObject pawnSelectionMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -41,17 +41,17 @@ public class PawnRotatorY : MonoBehaviour, IPointerUpHandler,IPointerDownHandler
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        isPressed = true;
-    }
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		isPressed = true;
+	}
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if(isMoving == false){
-            pawnSelectionMenu.SetActive(true);
-        }
-        isPressed = false;
-        isMoving = false;
-    }
+	//public void OnPointerUp(PointerEventData eventData)
+	//{
+	//    if(isMoving == false){
+	//        pawnSelectionMenu.SetActive(true);
+	//    }
+	//    isPressed = false;
+	//    isMoving = false;
+	//}
 }

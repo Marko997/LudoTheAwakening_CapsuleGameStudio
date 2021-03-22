@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe21d3927066b974fb287d857514a13e, type: 3}
+  m_Name: Pawn
+  m_EditorClassIdentifier: 
+  commonRoute: {fileID: 7031079928249773031, guid: 065048c25ef49a84d882c60a9000a092,
+    type: 3}
+  yellowRoute: {fileID: 5574183011300559150, guid: c1df866e2ac3de546b449344faf01356,
+    type: 3}
+  yellowBase: {fileID: 824580031846370276, guid: 7f4e4ceb0b1fc52419886c006abe75e1,
+    type: 3}
+  yellowPawn: {fileID: 7629014852694062785, guid: d1d20fe605e1fef4e89f243df154b33e,
+    type: 3}
+  yellowSelector: {fileID: 2586688897144379815, guid: 4c377444978842d45b0b4c63cbc87a25,
+    type: 3}
+  redRoute: {fileID: 780536404678807286, guid: b7c85e7c57892af48abd856dbbaddaa6, type: 3}
+  redBase: {fileID: 8024814748996388327, guid: a11771a6ac5189c4586215f7b2001637, type: 3}
+  redPawn: {fileID: 7629014852694062785, guid: d1d20fe605e1fef4e89f243df154b33e, type: 3}
+  redSelector: {fileID: 2586688897144379815, guid: 4c377444978842d45b0b4c63cbc87a25,
+    type: 3}
+  blueRoute: {fileID: 6460570583543123379, guid: 1a605d9c4bcc2e14195002a45cc5f47d,
+    type: 3}
+  blueBase: {fileID: 8155173212933278492, guid: b578963f64f90da4aad509098d2ff309,
+    type: 3}
+  bluePawn: {fileID: 2183137148966779695, guid: df0c3a7dea2c61c4389d6f7d5e113329,
+    type: 3}
+  blueSelector: {fileID: 2586688897144379815, guid: 4c377444978842d45b0b4c63cbc87a25,
+    type: 3}
+  greenRoute: {fileID: 2029307486537810310, guid: 8770042f7d09f654ca02afab7ff3c527,
+    type: 3}
+  greenBase: {fileID: 8457501259879547031, guid: 19f29827da532b6469ded89aed163555,
+    type: 3}
+  greenPawn: {fileID: 7629014852694062785, guid: d1d20fe605e1fef4e89f243df154b33e,
+    type: 3}
+  greenSelector: {fileID: 2586688897144379815, guid: 4c377444978842d45b0b4c63cbc87a25,
+    type: 3}

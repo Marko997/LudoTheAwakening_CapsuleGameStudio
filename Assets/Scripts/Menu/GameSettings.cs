@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GameSettings : MonoBehaviour
 {
+	public AllPawnsTemplates template;
 	//private string redName, greenName, blueName, yellowName;
-    //------------------RED-------------------------------------------
-    public void SetRedHumanType(bool on)
+	//------------------RED-------------------------------------------
+	public void SetRedHumanType(bool on)
 	{
 		if (on)
 		{
@@ -96,8 +97,41 @@ public class GameSettings : MonoBehaviour
 	{
 		if (on)
 		{
-			SaveSettings.yellowPawns[0] = "Pawn";
+			SaveSettings.pawn = template.yellowPawn.GetComponent<PawnManager>();
 		}
+	}
+	public void SetAllBluePawns(bool on)
+	{
+		if (on)
+		{
+			SaveSettings.pawn = template.bluePawn.GetComponent<PawnManager>();
+		}
+	}
+	public void SetAllRedPawns(bool on)
+	{
+		if (on)
+		{
+			SaveSettings.pawn = template.redPawn.GetComponent<PawnManager>();
+		}
+	}
+	public void SetAllGreenPawns(bool on)
+	{
+		if (on)
+		{
+			SaveSettings.pawn = template.greenPawn.GetComponent<PawnManager>();
+		}
+	}
+	public void SetHumanType(playerColor color,bool on)
+	{
+		if (on)
+		{
+			//SaveSettings.players[3] = "HUMAN";
+			SaveSettings.players[(int)color] = "HUMAN";
+		}
+	}
+	public enum playerColor
+	{
+		blue, red, yellow, green
 	}
 }
 
@@ -106,7 +140,10 @@ public static class SaveSettings
     //Red Green Blue Yellow
     public static string[] players = new string[4];
 	public static string[] playerNames = new string[4];
-	public static string[] yellowPawns = new string[4];
+	public static PawnManager pawn = new PawnManager();
+	
+
+	public static GameObject[] playerPawnTemplates = new GameObject[4];
 
 	public static string[] winners = new string[3] { string.Empty, string.Empty,string.Empty};
 }

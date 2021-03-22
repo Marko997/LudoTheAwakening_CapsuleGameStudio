@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     public List<Entity> playerList = new List<Entity>();
 
+    public AllPawnsTemplates templates;
+
     public enum States{
         WAITING,
         ROLL_DICE,
@@ -31,62 +33,87 @@ public class GameManager : MonoBehaviour
     public PawnManager pawn;
     public CommonRouteManager commonRoute;
 
-    void Awake() {
-        instance = this;
+    void Awake()
+	{
+		instance = this;
 
-		//ADDING PAWNS TO ENTITIY
-		//for (int i = 0; i < playerList.Count; i++)
-		//{
-		//	playerList[i].allPawns[0] = Instantiate<RedPawn>;
-		//}
+		commonRoute = Instantiate(templates.commonRoute, Vector3.zero, Quaternion.identity).GetComponent<CommonRouteManager>();
 
 		//INSERT DATA FROM STARTGAME SCENE
+		InsertPlayerData();
+
+	}
+
+	private void InsertPlayerData()
+	{
 		for (int i = 0; i < playerList.Count; i++)
 		{
-            if(SaveSettings.players[i] == "HUMAN")
+			if (SaveSettings.players[i] == "HUMAN")
 			{
-                playerList[i].playerTypes = Entity.PlayerTypes.HUMAN;
+				playerList[i].playerTypes = Entity.PlayerTypes.HUMAN;
 			}
-            if (SaveSettings.players[i] == "BOT")
+			if (SaveSettings.players[i] == "BOT")
 			{
 				playerList[i].playerTypes = Entity.PlayerTypes.BOT;
-            }
-            if (playerList[i].playerName == "Red") {
+			}
+			if (playerList[i].playerName == "Red")
+			{
 
-                playerList[i].playerName = SaveSettings.playerNames[0];
+				var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
+				var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
+				var redPawn = SaveSettings.pawn;
+				CreatePawn(i, finalRoute, redBase, 40, redPawn,90);
 
-            }
-            if (playerList[i].playerName == "Green")
-            {
+				playerList[i].playerName = SaveSettings.playerNames[0];
 
-                playerList[i].playerName = SaveSettings.playerNames[1];
+			}
+			if (playerList[i].playerName == "Green")
+			{
+				var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
+				var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
+				var greenPawn = templates.greenPawn.GetComponent<PawnManager>();
+				CreatePawn(i, finalRoute, greenBase, 27, greenPawn,0);
+				playerList[i].playerName = SaveSettings.playerNames[1];
 
-            }
-            if (playerList[i].playerName == "Blue")
-            {
+			}
+			if (playerList[i].playerName == "Blue")
+			{
+				var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
+				var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
+				var bluePawn = templates.yellowPawn.GetComponent<PawnManager>();
+				CreatePawn(i, finalRoute, blueBase, 14, bluePawn,270);
+				playerList[i].playerName = SaveSettings.playerNames[2];
 
-                playerList[i].playerName = SaveSettings.playerNames[2];
+			}
+			if (playerList[i].playerName == "Yellow")
+			{
+				var finalRoute = Instantiate(templates.yellowRoute, Vector3.zero, Quaternion.Euler(0, 90, 0)).GetComponent<CommonRouteManager>();
+				var yellowBase = Instantiate(templates.yellowBase, Vector3.zero, Quaternion.identity);
+				var yellowPawn = templates.yellowPawn.GetComponent<PawnManager>();
+				CreatePawn(i, finalRoute, yellowBase, 1, yellowPawn,180);
 
-            }
-            if (playerList[i].playerName == "Yellow" && SaveSettings.yellowPawns[0] == "Pawn")
-            {
-                //PawnManager yellowPawn = pawn;
-                                
-                //playerList[i].allPawns[0] = Instantiate(yellowPawn, transform.position, transform.rotation);
-                //playerList[i].allPawns[1] = Instantiate(yellowPawn, transform.position, transform.rotation);
-                //playerList[i].allPawns[2] = Instantiate(yellowPawn, transform.position, transform.rotation);
-                //playerList[i].allPawns[3] = Instantiate(yellowPawn, transform.position, transform.rotation);
-                
-                //playerList[i].allPawns[0].pawnId = 4;
-                //playerList[i].allPawns[0].commonRoute = Instantiate(commonRoute,transform.position,transform.rotation);
-               
-                
-                
-                playerList[i].playerName = SaveSettings.playerNames[3];
-                
-            }
+				playerList[i].playerName = SaveSettings.playerNames[3];
+
+			}
 		}
-    }
+	}
+
+	private void CreatePawn(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn, int pawnRotation)
+	{
+		for (int j = 0; j < playerList[i].allPawns.Length; j++)
+		{
+			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(j).transform.position.x, 0, newBase.transform.GetChild(j).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
+            newPawn.commonRoute = commonRoute;
+            newPawn.finalRoute = finalRoute;
+            newPawn.baseNode = newBase.transform.GetChild(j).GetComponent<NodeManager>();
+            newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
+            newPawn.selector = templates.yellowSelector;
+
+            newPawn.Init();
+
+			playerList[i].allPawns[j] = newPawn;
+		}
+	}
 
     void Start() {
         ActivateButton(false);
