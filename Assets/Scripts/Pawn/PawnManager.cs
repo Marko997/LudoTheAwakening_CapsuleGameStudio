@@ -7,6 +7,18 @@ public class PawnManager : MonoBehaviour
 {
     public int pawnId;
     public string pawnName;
+
+    public enum SpellType
+	{
+        SPEARMAN,
+        ARCHER,
+        MACEBEARER,
+        SWORDGIRL,
+        SLINGSHOOTMAN,
+        WIZARD
+    }
+    public SpellType spellType;
+
     [Header("ROUTES")]   
     public CommonRouteManager commonRoute;
     public CommonRouteManager finalRoute;
@@ -19,7 +31,7 @@ public class PawnManager : MonoBehaviour
     public NodeManager currentNode;
     public NodeManager goalNode;
 
-    int routePosition;
+    public int routePosition;
     protected int startNodeIndex;
 
     int steps;
@@ -38,6 +50,7 @@ public class PawnManager : MonoBehaviour
     float timeForPointToPoint = 0f;
 
     public int eatPower;
+    public bool isSelected = false;
 
 
     public void Init() {
@@ -47,9 +60,6 @@ public class PawnManager : MonoBehaviour
 
         SetSelector(false);
 
-    }
-    private void Update() {
-       
     }
 
     protected void CreateFullRoute(){
@@ -66,77 +76,51 @@ public class PawnManager : MonoBehaviour
         }
     }
 
-    
-
-    public void spearmanSpell(){
-        Debug.Log("WORKING");
-        goalNode = fullRoute[routePosition+eatPower];
-        //CHECK POSSIBLE KICK
-        if(goalNode.isTaken){
-            //KICK THE OTHER STONE
-            goalNode.pawn.ReturnToBase();
-        }
-    }
-    public void archerSpell(){
-        Debug.Log("WORKING");
-        goalNode = fullRoute[routePosition+eatPower];
-        //CHECK POSSIBLE KICK
-        if(goalNode.isTaken){
-            //KICK THE OTHER STONE
-            goalNode.pawn.ReturnToBase();
-        }
-    }
-    public void macebearerSpell(){
-        Debug.Log("WORKING");
-        goalNode = fullRoute[routePosition+eatPower];
-        //CHECK POSSIBLE KICK
-        if(goalNode.isTaken){
-            //KICK THE OTHER STONE
-            goalNode.pawn.ReturnToBase();
-        }
-    }
-    public void swordgirlSpell(){
-        Debug.Log("WORKING");
-        goalNode = fullRoute[routePosition+eatPower];
-        //CHECK POSSIBLE KICK
-        if(goalNode.isTaken){
-            //KICK THE OTHER STONE
-            goalNode.pawn.ReturnToBase();
-        }
-    }
-
+   
     IEnumerator Move(int diceNumber){
         if(isMoving){
             yield break;
         }
         isMoving = true;
 
-        while(steps>0){
-            routePosition++;
+        while(steps>0)
+		{
+			routePosition++;
 
-            Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
-                        
-            Vector3 startPos = fullRoute[routePosition-1].gameObject.transform.position;
-            Debug.Log(routePosition);
-            //Debug.Log(nextPos+" "+ fullRoute[routePosition + 1].transform.position);
-            if(routePosition == 5){
-                transform.localRotation = Quaternion.Euler(0,180,0);
-                //transform.Rotate(0, 0, 0, Space.Self);
+			Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;
+
+			Vector3 startPos = fullRoute[routePosition - 1].gameObject.transform.position;
+
+            currentNode = fullRoute[routePosition];
+			
+            RotatePawnOnBoard();
+
+
+			// while(MoveToNextNode(nextPos,8f)){
+			//     yield return null;
+			// }
+			while (MoveInArcToNextNode(startPos, nextPos, 8f))
+			{
+				yield return null;
+			}
+			yield return new WaitForSeconds(0.1f);
+			timeForPointToPoint = 0;
+			steps--;
+			doneSteps++;
+            if(steps == 0)
+			{
+                if(GameManager.instance.displaySpellButton == true)
+				{
+                    break;
+				}
+                GameManager.instance.displaySpellButton = true;
+                GameManager.instance.powerButton.gameObject.SetActive(true);
+
 			}
 
-            // while(MoveToNextNode(nextPos,8f)){
-            //     yield return null;
-            // }
-            while(MoveInArcToNextNode(startPos,nextPos,8f)){
-                yield return null;
-            }
-            yield return new WaitForSeconds(0.1f);
-            timeForPointToPoint = 0;
-            steps--;
-            doneSteps++;
-            
-        }
-        goalNode = fullRoute[routePosition];
+		}
+        
+		goalNode = fullRoute[routePosition];
         //CHECK POSSIBLE KICK
         if(goalNode.isTaken){
             //KICK THE OTHER STONE
@@ -162,19 +146,84 @@ public class PawnManager : MonoBehaviour
 
         //SWITCH THE PLAYER
         if(diceNumber<6){
-            GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+            GameManager.instance.state = GameManager.States.ATTACK;
         }else{
             GameManager.instance.state = GameManager.States.ROLL_DICE;
 
         }
 
+        isSelected = false;
         isMoving = false;
 
     }
 
-    
+	private void RotatePawnOnBoard()
+	{
+		if (routePosition == 5)
+		{
 
-    bool MoveToNextNode(Vector3 goal, float speed){
+			transform.rotation *= Quaternion.Euler(0, -90, 0);
+
+		}
+		else if (routePosition == 10)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 12)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 18)
+		{
+			transform.rotation *= Quaternion.Euler(0, -90, 0);
+
+		}
+		else if (routePosition == 23)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 25)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 31)
+		{
+			transform.rotation *= Quaternion.Euler(0, -90, 0);
+
+		}
+		else if (routePosition == 36)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 38)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 44)
+		{
+			transform.rotation *= Quaternion.Euler(0, -90, 0);
+
+		}
+		else if (routePosition == 49)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+		else if (routePosition == 51)
+		{
+			transform.rotation *= Quaternion.Euler(0, 90, 0);
+
+		}
+	}
+
+
+	bool MoveToNextNode(Vector3 goal, float speed){
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
     }
 
@@ -334,6 +383,7 @@ public class PawnManager : MonoBehaviour
             }else{
 
                 StartTheMove(GameManager.instance.rolledHumanDice);
+                isSelected = true;
             }
             
             GameManager.instance.DeactivateAllSelectors();

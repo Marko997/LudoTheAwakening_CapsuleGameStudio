@@ -97,28 +97,28 @@ public class GameSettings : MonoBehaviour
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.yellowPawn.GetComponent<PawnManager>();
+			SaveSettings.pawn = template.yellowPawn;
 		}
 	}
 	public void SetAllBluePawns(bool on)
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.bluePawn.GetComponent<PawnManager>();
+			SaveSettings.pawn = template.bluePawn;
 		}
 	}
 	public void SetAllRedPawns(bool on)
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.redPawn.GetComponent<PawnManager>();
+			SaveSettings.pawn = template.redPawn;
 		}
 	}
 	public void SetAllGreenPawns(bool on)
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.greenPawn.GetComponent<PawnManager>();
+			SaveSettings.pawn = template.greenPawn;
 		}
 	}
 	public void SetHumanType(playerColor color,bool on)
@@ -140,7 +140,7 @@ public static class SaveSettings
     //Red Green Blue Yellow
     public static string[] players = new string[4];
 	public static string[] playerNames = new string[4];
-	public static PawnManager pawn = new PawnManager();
+	public static GameObject pawn = new GameObject();
 	
 
 	public static GameObject[] playerPawnTemplates = new GameObject[4];

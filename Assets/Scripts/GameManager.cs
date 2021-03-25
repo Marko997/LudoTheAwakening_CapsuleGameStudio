@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public enum States{
         WAITING,
         ROLL_DICE,
+        ATTACK,
         SWITCH_PLAYER
     }
 
@@ -25,12 +26,14 @@ public class GameManager : MonoBehaviour
     bool turnPossible = true;
 
     public GameObject rollButton;
-    //public GameObject powerButton;
+    public GameObject powerButton;
 
     [HideInInspector]public int rolledHumanDice;
 
+    public bool displaySpellButton;
+
     public Roller dice;
-    public PawnManager pawn;
+    //public PawnManager pawn;
     public CommonRouteManager commonRoute;
 
     void Awake()
@@ -61,8 +64,9 @@ public class GameManager : MonoBehaviour
 
 				var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
 				var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
-				var redPawn = SaveSettings.pawn;
-				CreatePawn(i, finalRoute, redBase, 40, redPawn,90);
+                //var redPawn = SaveSettings.pawn.GetComponent<PawnManager>();
+                var redPawn = templates.redPawn.GetComponent<PawnManager>();
+                CreatePawn(i, finalRoute, redBase, 40, redPawn,90,0);
 
 				playerList[i].playerName = SaveSettings.playerNames[0];
 
@@ -72,7 +76,7 @@ public class GameManager : MonoBehaviour
 				var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
 				var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
 				var greenPawn = templates.greenPawn.GetComponent<PawnManager>();
-				CreatePawn(i, finalRoute, greenBase, 27, greenPawn,0);
+				CreatePawn(i, finalRoute, greenBase, 27, greenPawn,0,1);
 				playerList[i].playerName = SaveSettings.playerNames[1];
 
 			}
@@ -81,7 +85,7 @@ public class GameManager : MonoBehaviour
 				var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
 				var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
 				var bluePawn = templates.yellowPawn.GetComponent<PawnManager>();
-				CreatePawn(i, finalRoute, blueBase, 14, bluePawn,270);
+				CreatePawn(i, finalRoute, blueBase, 14, bluePawn,270,2);
 				playerList[i].playerName = SaveSettings.playerNames[2];
 
 			}
@@ -90,7 +94,7 @@ public class GameManager : MonoBehaviour
 				var finalRoute = Instantiate(templates.yellowRoute, Vector3.zero, Quaternion.Euler(0, 90, 0)).GetComponent<CommonRouteManager>();
 				var yellowBase = Instantiate(templates.yellowBase, Vector3.zero, Quaternion.identity);
 				var yellowPawn = templates.yellowPawn.GetComponent<PawnManager>();
-				CreatePawn(i, finalRoute, yellowBase, 1, yellowPawn,180);
+				CreatePawn(i, finalRoute, yellowBase, 1, yellowPawn,180,3);
 
 				playerList[i].playerName = SaveSettings.playerNames[3];
 
@@ -98,7 +102,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void CreatePawn(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn, int pawnRotation)
+	private void CreatePawn(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn, int pawnRotation, int spellType)
 	{
 		for (int j = 0; j < playerList[i].allPawns.Length; j++)
 		{
@@ -108,6 +112,7 @@ public class GameManager : MonoBehaviour
             newPawn.baseNode = newBase.transform.GetChild(j).GetComponent<NodeManager>();
             newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
             newPawn.selector = templates.yellowSelector;
+            newPawn.spellType = (PawnManager.SpellType)spellType;
 
             newPawn.Init();
 
@@ -136,9 +141,16 @@ public class GameManager : MonoBehaviour
             case States.WAITING:
                 //IDLE
             break;
+            case States.ATTACK:
+			    if (turnPossible) {
+                   StartCoroutine(WaitForAttack());
+                   state = States.WAITING;
+                }
+                break;
             case States.SWITCH_PLAYER:
                 if(turnPossible){
-                    StartCoroutine(SwitchPlayer());
+                    powerButton.SetActive(false);
+                        StartCoroutine(SwitchPlayer());
                     state = States.WAITING;
                 }
                 break;
@@ -158,10 +170,15 @@ public class GameManager : MonoBehaviour
             case States.WAITING:
                 //IDLE
             break;
-            case States.SWITCH_PLAYER:
+            case States.ATTACK:
+               if (turnPossible)
+                    {
+                        StartCoroutine(WaitForAttack());
+                        state = States.WAITING;
+                    }
+                    break;
+                case States.SWITCH_PLAYER:
                 if(turnPossible){
-                    //DEACTIVATE BUTTON
-                    
                     StartCoroutine(SwitchPlayer());
                     state = States.WAITING;
                 }
@@ -171,6 +188,94 @@ public class GameManager : MonoBehaviour
 
         
     }
+
+    IEnumerator WaitForAttack()
+	{
+        yield return new WaitForSeconds(5);
+        state = States.SWITCH_PLAYER;
+    }
+    public void PlaySpell()
+	{
+
+        displaySpellButton = false;
+        powerButton.SetActive(false);
+        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+		{
+            var activePawn = playerList[activePlayer].allPawns[i];
+
+            //---------SPEARMAN----------//
+            if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.SPEARMAN) { }
+			{
+                activePawn.eatPower = 1;
+                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                if (activePawn.goalNode.isTaken)
+                {
+                    //KICK THE OTHER STONE
+                    activePawn.goalNode.pawn.ReturnToBase();
+                }
+
+            }
+            //-------------ARHCER----------//
+            if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.ARCHER) { }
+            {
+                activePawn.eatPower = 3;
+                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                if (activePawn.goalNode.isTaken)
+                {
+                    //KICK THE OTHER STONE
+                    activePawn.goalNode.pawn.ReturnToBase();
+                }
+
+            }
+            //-----------MACEBARER----------//
+            if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.MACEBEARER) { }
+            {
+                activePawn.eatPower = -1;
+                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                if (activePawn.goalNode.isTaken)
+                {
+                    //KICK THE OTHER STONE
+                    activePawn.goalNode.pawn.ReturnToBase();
+                }
+
+            }
+            //------------SWORDGIRL----------//
+            if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.SWORDGIRL) { }
+            {
+                powerButton.SetActive(true);
+                displaySpellButton = true;
+                if (activePawn.currentNode.isTaken)
+                {
+                    //KICK THE OTHER STONE
+                    activePawn.goalNode.pawn.ReturnToBase();
+                }
+
+            }
+            //--------------SLINGSHOTMAN------------//
+            if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.SLINGSHOOTMAN) { }
+            {
+                activePawn.eatPower = 2;
+                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                if (activePawn.goalNode.isTaken)
+                {
+                    //KICK THE OTHER STONE
+                    activePawn.goalNode.pawn.ReturnToBase();
+                }
+
+            }
+            //-----------WIZARD-----------------//
+            if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.WIZARD) { }
+            {
+                powerButton.SetActive(true);
+                displaySpellButton = true;
+                activePawn.eatPower = 3;
+                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                
+
+            }
+        }
+	}
+
 
     void CPUDice(){
         dice.Roll1();
@@ -262,13 +367,13 @@ public class GameManager : MonoBehaviour
         if(movablePawns.Count>0){
             int num = Random.Range(0,movablePawns.Count);
             movablePawns[num].StartTheMove(diceNumber);
-            state = States.WAITING;
+            state = States.ATTACK;
             return;
         }
         //NONE IS POSSIBLE
         //SWITCH PLAYER
+ 
         state = States.SWITCH_PLAYER;
-        //Debug.Log("Should switch player!");
     }
 
     IEnumerator SwitchPlayer(){
@@ -278,30 +383,6 @@ public class GameManager : MonoBehaviour
         switchingPlayer = true;
 
         yield return new WaitForSeconds(2);
-
-        /*for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
-                            
-            playerList[activePlayer].allPawns[i].powerButton.SetActive(false);
-
-        }*/
-
-        //DEACTIVATE POWER BUTTONS LOGIC FOR LATER
-        // for(int i=0;i<playerList[activePlayer].allPawns.Length;i++){
-        //     if(playerList[activePlayer].allPawns[i].pawnName =="Spearman"){
-                            
-        //         playerList[activePlayer].allPawns[i].spearmanPowerButton.gameObject.SetActive(false);
-
-        //         }else if(playerList[activePlayer].allPawns[i].pawnName =="Archer"){
-        //             playerList[activePlayer].allPawns[i].archerPowerButton.SetActive(false);
-                            
-        //         }else if(playerList[activePlayer].allPawns[i].pawnName =="Swordgirl"){
-        //             playerList[activePlayer].allPawns[i].swordgirlPowerButton.SetActive(false);
-                            
-        //         }else if(playerList[activePlayer].allPawns[i].pawnName =="Macebearer"){
-        //             playerList[activePlayer].allPawns[i].macebearerPowerButton.SetActive(false);
-                            
-        //         }
-        //     }
     
 
         //SET NEXT PLAYER
@@ -429,6 +510,7 @@ public class GameManager : MonoBehaviour
         if(movablePawns.Count > 0){
             for(int i=0; i< movablePawns.Count; i++){
                 movablePawns[i].SetSelector(true);
+                Debug.Log("SEE SELECTOR");
             }
         }else{
             state = States.SWITCH_PLAYER;
@@ -457,8 +539,6 @@ public class GameManager : MonoBehaviour
 
         return tempList;
     }
-
-    
 
 
 
