@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe21d3927066b974fb287d857514a13e, type: 3}
   m_Name: Pawn
   m_EditorClassIdentifier: 
+  cameraPivot: {fileID: 1001867511465088915, guid: ef3924f48f137fd4a8510d734672d433,
+    type: 3}
   commonRoute: {fileID: 7031079928249773031, guid: 065048c25ef49a84d882c60a9000a092,
     type: 3}
   yellowRoute: {fileID: 5574183011300559150, guid: c1df866e2ac3de546b449344faf01356,

@@ -58,11 +58,13 @@ public class PawnManager : MonoBehaviour
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
         CreateFullRoute();
 
+    }
+	private void Start()
+	{
         SetSelector(false);
-
     }
 
-    protected void CreateFullRoute(){
+	protected void CreateFullRoute(){
         for(int i =0;i<commonRoute.childNodesList.Count-1;i++){
             int tempPosition = startNodeIndex +i;
             tempPosition %= commonRoute.childNodesList.Count;

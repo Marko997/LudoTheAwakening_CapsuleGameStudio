@@ -6,6 +6,7 @@ using UnityEngine;
 public class AllPawnsTemplates : ScriptableObject
 {
     //public List<GameObject> pawnTemplates;
+    public Transform cameraPivot;
 
     public GameObject commonRoute;
 

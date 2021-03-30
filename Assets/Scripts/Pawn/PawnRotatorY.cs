@@ -2,25 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class PawnRotatorY : MonoBehaviour//, IPointerUpHandler,IPointerDownHandler
+public class PawnRotatorY : MonoBehaviour, IPointerUpHandler,IPointerDownHandler
 {
     bool isPressed;
-    bool isMoving;
+    bool isMoving;    
 
     Touch touch;
 
     [SerializeField]
     Transform pawnHolder;
 
-    //[SerializeField]
-    //GameObject pawnSelectionMenu;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+   // void Awake()
+   // {
+   //     for (int i = 0; i < panels.Length; i++)
+   //     {
+   //         var type = panels[i]._panelType;
+   //         if(type == PanelType.panelType.LEADER)
+			//{
+   //             pawnHolder = Instantiate(loadOutTemplate.leaderPawn, new Vector3(-1.6f, -1f, 0f), Quaternion.identity).GetComponent<Transform>();
+
+   //         }
+   //     }
+   // }
 
     // Update is called once per frame
     void Update()
@@ -39,6 +46,7 @@ public class PawnRotatorY : MonoBehaviour//, IPointerUpHandler,IPointerDownHandl
                 }
             }
         }
+
     }
 
 	public void OnPointerDown(PointerEventData eventData)
@@ -46,12 +54,13 @@ public class PawnRotatorY : MonoBehaviour//, IPointerUpHandler,IPointerDownHandl
 		isPressed = true;
 	}
 
-	//public void OnPointerUp(PointerEventData eventData)
-	//{
-	//    if(isMoving == false){
-	//        pawnSelectionMenu.SetActive(true);
-	//    }
-	//    isPressed = false;
-	//    isMoving = false;
-	//}
+	public void OnPointerUp(PointerEventData eventData)
+	{
+		if (isMoving == false)
+		{
+			//pawnSelectionMenu.SetActive(true);
+		}
+		isPressed = false;
+		isMoving = false;
+	}
 }

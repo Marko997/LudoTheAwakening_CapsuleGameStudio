@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameSettings : MonoBehaviour
 {
 	public AllPawnsTemplates template;
+	public SelectionTemplate templateYellow;
 	//private string redName, greenName, blueName, yellowName;
 	//------------------RED-------------------------------------------
 	public void SetRedHumanType(bool on)
@@ -97,28 +98,32 @@ public class GameSettings : MonoBehaviour
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.yellowPawn;
+			SaveSettings.yellowPawns[0] = template.yellowPawn;
+			templateYellow.leaderPawn = SaveSettings.yellowPawns[0];
+			//templateYellow.secondPawn = SaveSettings.pawn;
+			//templateYellow.thirdPawn = SaveSettings.pawn;
+			//templateYellow.fourthPawn = SaveSettings.pawn;
 		}
 	}
 	public void SetAllBluePawns(bool on)
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.bluePawn;
+			//SaveSettings.pawn = template.bluePawn;
 		}
 	}
 	public void SetAllRedPawns(bool on)
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.redPawn;
+			//SaveSettings.pawn = template.redPawn;
 		}
 	}
 	public void SetAllGreenPawns(bool on)
 	{
 		if (on)
 		{
-			SaveSettings.pawn = template.greenPawn;
+			//SaveSettings.pawn = template.greenPawn;
 		}
 	}
 	public void SetHumanType(playerColor color,bool on)
@@ -140,8 +145,12 @@ public static class SaveSettings
     //Red Green Blue Yellow
     public static string[] players = new string[4];
 	public static string[] playerNames = new string[4];
-	public static GameObject pawn = new GameObject();
-	
+
+	public static GameObject[] yellowPawns = new GameObject[4];
+	public static GameObject[] greenPawns = new GameObject[4];
+	public static GameObject[] bluePawns = new GameObject[4];
+	public static GameObject[] redPawns = new GameObject[4];
+
 
 	public static GameObject[] playerPawnTemplates = new GameObject[4];
 

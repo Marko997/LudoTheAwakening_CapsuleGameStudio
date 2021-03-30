@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pawnId: 2
   pawnName: Archer
+  spellType: 0
   commonRoute: {fileID: 0}
   finalRoute: {fileID: 0}
   fullRoute: []
@@ -56,9 +57,11 @@ MonoBehaviour:
   baseNode: {fileID: 0}
   currentNode: {fileID: 0}
   goalNode: {fileID: 0}
+  routePosition: 0
   isOut: 0
   selector: {fileID: 8616436382858993727}
   eatPower: 0
+  isSelected: 0
 --- !u!65 &8616436384754388056
 BoxCollider:
   m_ObjectHideFlags: 0

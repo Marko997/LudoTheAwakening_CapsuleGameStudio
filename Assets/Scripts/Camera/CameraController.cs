@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     float zoomMinBound = 30.0f;
     float zoomMaxBound = 150.0f;
     Camera cam;
+    public AllPawnsTemplates template;
 
     [SerializeField] private Transform target;
     [SerializeField] private float distanceToTarget = 100;
@@ -20,11 +21,13 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //Camera rotation
         if (Input.GetMouseButton(0) || Input.touchCount == 1)
         {

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306d207129d4a1e488a2bdf0308addda, type: 3}
+  m_Name: LoadOutSelection
+  m_EditorClassIdentifier: 
+  leaderPawn: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  secondPawn: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  thirdPawn: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  fourthPawn: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  redSanta: {fileID: 2183137148966779695, guid: df0c3a7dea2c61c4389d6f7d5e113329,
+    type: 3}
+  blueSanta: {fileID: 7629014852694062785, guid: d1d20fe605e1fef4e89f243df154b33e,
+    type: 3}

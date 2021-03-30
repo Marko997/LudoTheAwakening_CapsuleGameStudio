@@ -48,6 +48,7 @@ MonoBehaviour:
   pawns:
   - {fileID: 7607626434144309044}
   - {fileID: 7607626433811335523}
+  pressed: 0
 --- !u!1001 &7301142306596287538
 PrefabInstance:
   m_ObjectHideFlags: 0
