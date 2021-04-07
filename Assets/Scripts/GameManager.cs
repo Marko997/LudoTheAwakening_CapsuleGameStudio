@@ -70,7 +70,13 @@ public class GameManager : MonoBehaviour
 				var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
 				var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
                 //var redPawn = SaveSettings.pawn.GetComponent<PawnManager>();
-                var redPawn = templates.redPawn.GetComponent<PawnManager>();
+                var redPawn = templateRed.leaderPawn.GetComponent<PawnManager>();
+                var redPawn2 = templateRed.secondPawn.GetComponent<PawnManager>();
+                var redPawn3 = templateRed.thirdPawn.GetComponent<PawnManager>();
+                var redPawn4 = templateRed.fourthPawn.GetComponent<PawnManager>();
+
+                CreatePawns(i, finalRoute, redBase, 1, redPawn, redPawn2, redPawn3, redPawn4, 0);
+
 
                 //CreatePawns(i, finalRoute, redBase, 40, redPawn,90,0);
 
@@ -81,7 +87,12 @@ public class GameManager : MonoBehaviour
 			{
 				var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
 				var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
-				var greenPawn = templates.greenPawn.GetComponent<PawnManager>();
+				var greenPawn = templateGreen.leaderPawn.GetComponent<PawnManager>();
+                var greenPawn2 = templateGreen.secondPawn.GetComponent<PawnManager>();
+                var greenPawn3 = templateGreen.thirdPawn.GetComponent<PawnManager>();
+                var greenPawn4 = templateGreen.fourthPawn.GetComponent<PawnManager>();
+
+                CreatePawns(i, finalRoute, greenBase, 1, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0);
 
                 //CreatePawns(i, finalRoute, greenBase, 27, greenPawn,0,1);
 
@@ -92,8 +103,12 @@ public class GameManager : MonoBehaviour
 			{
 				var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
 				var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
-				var bluePawn = templates.yellowPawn.GetComponent<PawnManager>();
+				var bluePawn = templateBlue.leaderPawn.GetComponent<PawnManager>();
+                var bluePawn2 = templateBlue.secondPawn.GetComponent<PawnManager>();
+                var bluePawn3 = templateBlue.thirdPawn.GetComponent<PawnManager>();
+                var bluePawn4 = templateBlue.fourthPawn.GetComponent<PawnManager>();
 
+                CreatePawns(i, finalRoute, blueBase, 1, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270);
 
                 //CreatePawns(i, finalRoute, blueBase, 14, bluePawn,270,2);
 
@@ -111,7 +126,7 @@ public class GameManager : MonoBehaviour
                 var yellowPawn3 = templateYellow.thirdPawn.GetComponent<PawnManager>();
                 var yellowPawn4 = templateYellow.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180, 3);
+                CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180);
 
 
                 playerList[i].playerName = SaveSettings.playerNames[3];
@@ -120,7 +135,7 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, int spellType)
+	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation)
 	{
 		for (int j = 0; j < playerList[i].allPawns.Length-3; j++)
 		{
@@ -129,10 +144,10 @@ public class GameManager : MonoBehaviour
 			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
 			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
 
-			CreatePawn(finalRoute, newBase, startNode, spellType, j, newPawn);
-            CreatePawn(finalRoute, newBase, startNode, spellType, j, newPawn2);
-            CreatePawn(finalRoute, newBase, startNode, spellType, j, newPawn3);
-            CreatePawn(finalRoute, newBase, startNode, spellType, j, newPawn4);
+			CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn);
+            CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2);
+            CreatePawn(finalRoute, newBase, startNode, 2, j, newPawn3);
+            CreatePawn(finalRoute, newBase, startNode, 3, j, newPawn4);
 
             playerList[i].allPawns[0] = newPawn;
 			playerList[i].allPawns[1] = newPawn2;
@@ -150,7 +165,7 @@ public class GameManager : MonoBehaviour
 		newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, 0.1f, newPawn.transform.position.z), Quaternion.identity);
 		newPawn.selector.transform.parent = newPawn.transform;
 
-		newPawn.spellType = (PawnManager.SpellType)spellType;
+		//newPawn.spellType = (PawnManager.SpellType)spellType;
 
 		newPawn.Init();
 	}

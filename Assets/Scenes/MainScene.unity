@@ -627,7 +627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &63781615
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1759,6 +1759,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126652785}
   m_CullTransparentMesh: 0
+--- !u!114 &127285909 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  m_PrefabInstance: {fileID: 560442912}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2bc82f35b74f04190dd1cd566b3dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &128259896 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5860095091895867719, guid: d75464c5f13a9ce4bab6f733873e3a1a,
@@ -2887,8 +2899,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectBlueSanta
+      - m_Target: {fileID: 468652393}
+        m_MethodName: YELLOW_THIRDPAWN_SelectBlueSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3262,7 +3274,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -3334,6 +3346,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: redTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 02668634c318fd34684c92bc0bb817b5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &218293356
@@ -3432,8 +3450,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963283957}
-        m_MethodName: SelectBlueSanta
+      - m_Target: {fileID: 1913485280}
+        m_MethodName: YELLOW_LEADER_SelectBlueSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3640,6 +3658,7 @@ GameObject:
   - component: {fileID: 235983252}
   - component: {fileID: 235983255}
   - component: {fileID: 235983256}
+  - component: {fileID: 235983257}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -3709,7 +3728,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 235983253}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 235983257}
+        m_MethodName: StartTheGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 4 players
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &235983253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3759,7 +3789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5742154eb77288408227126dc127411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredCanvasType: 12
+  desiredCanvasType: 1
 --- !u!114 &235983256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3772,7 +3802,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55726f71f9a141543b3e6482f63bdf5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredCameraType: 1
+  desiredCameraType: 3
+--- !u!114 &235983257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235983250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b04ae1affe0c6444885f40e5f7f167b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &237956836
 GameObject:
   m_ObjectHideFlags: 0
@@ -4226,7 +4268,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -4414,11 +4456,22 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1683180232}
   toggleTransition: 1
   graphic: {fileID: 1861901495}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 707756865}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
-  m_IsOn: 1
+      m_Calls:
+      - m_Target: {fileID: 235983257}
+        m_MethodName: FourPlayers
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_IsOn: 0
 --- !u!1 &326829859
 GameObject:
   m_ObjectHideFlags: 0
@@ -4943,7 +4996,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -5015,6 +5068,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: redTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 02668634c318fd34684c92bc0bb817b5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &370550259
@@ -5646,8 +5705,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectRedSanta
+      - m_Target: {fileID: 127285909}
+        m_MethodName: YELLLOW_FOURTHPAWN_SelectRedSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5857,6 +5916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PawnHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -6077,6 +6141,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460330391}
   m_CullTransparentMesh: 0
+--- !u!114 &468652393 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  m_PrefabInstance: {fileID: 1052478963}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2bc82f35b74f04190dd1cd566b3dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &483451595
 GameObject:
   m_ObjectHideFlags: 0
@@ -6539,8 +6615,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963283957}
-        m_MethodName: SelectRedSanta
+      - m_Target: {fileID: 1913485280}
+        m_MethodName: YELLLOW_LEADER_SelectRedSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6979,7 +7055,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -7051,6 +7127,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: yellowTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e028d6bccce59fb4bafb58c04dbc1115,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &560458552
@@ -7329,8 +7411,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectBlueSanta
+      - m_Target: {fileID: 127285909}
+        m_MethodName: YELLOW_FOURTHPAWN_SelectBlueSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7833,7 +7915,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -7905,6 +7987,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: yellowTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e028d6bccce59fb4bafb58c04dbc1115,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &616315027
@@ -7998,7 +8086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &621541048
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8780,7 +8868,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -9671,8 +9759,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectRedSanta
+      - m_Target: {fileID: 468652393}
+        m_MethodName: YELLLOW_THIRDPAWN_SelectRedSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9729,6 +9817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 707756863}
   - component: {fileID: 707756864}
+  - component: {fileID: 707756865}
   m_Layer: 5
   m_Name: PlayScreen
   m_TagString: Untagged
@@ -9773,6 +9862,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasType: 3
+--- !u!114 &707756865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707756862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &714271446
 GameObject:
   m_ObjectHideFlags: 0
@@ -10131,10 +10233,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 394055177}
   toggleTransition: 1
   graphic: {fileID: 961293020}
-  m_Group: {fileID: 0}
+  m_Group: {fileID: 707756865}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 235983257}
+        m_MethodName: TwoPlayers
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &721019998
 GameObject:
@@ -10380,8 +10493,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectBlueSanta
+      - m_Target: {fileID: 939015343}
+        m_MethodName: YELLOW_SECONDPAWN_SelectBlueSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11261,7 +11374,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963283957}
+      - m_Target: {fileID: 1742318672}
         m_MethodName: SelectBlueSanta
         m_Mode: 1
         m_Arguments:
@@ -11468,7 +11581,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -11540,6 +11653,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: redTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 02668634c318fd34684c92bc0bb817b5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &867176727
@@ -12740,6 +12859,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasType: 9
+--- !u!114 &939015343 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  m_PrefabInstance: {fileID: 1593155724}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2bc82f35b74f04190dd1cd566b3dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &942650246
 GameObject:
   m_ObjectHideFlags: 0
@@ -13030,7 +13161,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -13498,7 +13629,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1127735423}
-  - {fileID: 1736432524}
   m_Father: {fileID: 179699379}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13535,7 +13665,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -13607,6 +13737,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: yellowTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e028d6bccce59fb4bafb58c04dbc1115,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &1064043569
@@ -13784,7 +13920,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1313703123}
-        m_MethodName: SelectBlueSanta
+        m_MethodName: RED_LEADER_SelectBlueSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14133,7 +14269,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1313703123}
-        m_MethodName: SelectRedSanta
+        m_MethodName: RED_LEADER_SelectRedSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14561,7 +14697,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -17812,7 +17948,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1963283957}
+      - m_Target: {fileID: 1742318672}
         m_MethodName: SelectRedSanta
         m_Mode: 1
         m_Arguments:
@@ -19341,7 +19477,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -19413,6 +19549,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: redTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 02668634c318fd34684c92bc0bb817b5,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &1518188375
@@ -19920,7 +20062,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -20601,7 +20743,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -20823,7 +20965,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -20895,6 +21037,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+        type: 3}
+      propertyPath: yellowTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: e028d6bccce59fb4bafb58c04dbc1115,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac48616172cd7244a9d0ce872960a340, type: 3}
 --- !u!1 &1596848235
@@ -22305,7 +22453,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -22970,80 +23118,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1730735341}
   m_CullTransparentMesh: 0
---- !u!1 &1736432523
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1736432524}
-  - component: {fileID: 1736432526}
-  - component: {fileID: 1736432525}
-  m_Layer: 5
-  m_Name: Image
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1736432524
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736432523}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1051179279}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1736432525
+--- !u!114 &1742318672 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  m_PrefabInstance: {fileID: 1566250776}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736432523}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: ec2bc82f35b74f04190dd1cd566b3dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1736432526
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1736432523}
-  m_CullTransparentMesh: 0
 --- !u!1 &1745842542
 GameObject:
   m_ObjectHideFlags: 0
@@ -25204,7 +25290,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -25323,7 +25409,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -26153,8 +26239,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: SelectRedSanta
+      - m_Target: {fileID: 939015343}
+        m_MethodName: YELLLOW_SECONDPAWN_SelectRedSanta
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -26486,6 +26572,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906934203}
   m_CullTransparentMesh: 0
+--- !u!114 &1913485280 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7301142306967885355, guid: ac48616172cd7244a9d0ce872960a340,
+    type: 3}
+  m_PrefabInstance: {fileID: 606662768}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec2bc82f35b74f04190dd1cd566b3dad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1915840380
 GameObject:
   m_ObjectHideFlags: 0
@@ -27714,7 +27812,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
@@ -28967,7 +29065,7 @@ PrefabInstance:
     - target: {fileID: 7301142306967885353, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301142306967885354, guid: ac48616172cd7244a9d0ce872960a340,
         type: 3}
