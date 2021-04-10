@@ -4828,7 +4828,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   hasTurn: 0
-  playerTypes: 2
+  playerTypes: 0
   hasWon: 0
 --- !u!4 &1102394099
 Transform:
@@ -7484,7 +7484,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   hasTurn: 0
-  playerTypes: 2
+  playerTypes: 0
   hasWon: 0
 --- !u!4 &1793617013
 Transform:

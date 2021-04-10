@@ -55,6 +55,7 @@ public class PawnManager : MonoBehaviour
 
     public void Init() {
 
+        
         startNodeIndex = commonRoute.RequestPosition(startNode.gameObject.transform);
         CreateFullRoute();
 
@@ -62,6 +63,7 @@ public class PawnManager : MonoBehaviour
 	private void Start()
 	{
         SetSelector(false);
+
     }
 
 	protected void CreateFullRoute(){

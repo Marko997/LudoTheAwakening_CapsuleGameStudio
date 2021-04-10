@@ -13,7 +13,7 @@ public class StartGame : MonoBehaviour
 		{
             SaveSettings.players[i] = "CPU";
 		}
-        sname = "2 players";
+        sname = "LoadingScene 1";
 
 
     }
@@ -32,14 +32,13 @@ public class StartGame : MonoBehaviour
     {
         if (on)
         {
-            sname = "4 players";
-
+            //sname = "4 players";
+            sname = "LoadingScene 1";
         }
     }
     public void StartTheGame()
     {
         string sceneName = sname;
-        Debug.Log(sceneName);
         SceneManager.LoadScene(sceneName);
     }
 

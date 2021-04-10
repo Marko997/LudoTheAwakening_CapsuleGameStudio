@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviour
     public bool displaySpellButton;
 
     public Roller dice;
-    //public PawnManager pawn;
     public CommonRouteManager commonRoute;
 
     void Awake()
@@ -75,12 +74,14 @@ public class GameManager : MonoBehaviour
                 var redPawn3 = templateRed.thirdPawn.GetComponent<PawnManager>();
                 var redPawn4 = templateRed.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, redBase, 1, redPawn, redPawn2, redPawn3, redPawn4, 0);
+                //redPawn.pawnMaterial.color = Color.red;
+
+                CreatePawns(i, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90);
 
 
                 //CreatePawns(i, finalRoute, redBase, 40, redPawn,90,0);
 
-                playerList[i].playerName = SaveSettings.playerNames[0];
+                //playerList[i].playerName = SaveSettings.playerNames[0];
 
 			}
 			if (playerList[i].playerName == "Green")
@@ -92,11 +93,11 @@ public class GameManager : MonoBehaviour
                 var greenPawn3 = templateGreen.thirdPawn.GetComponent<PawnManager>();
                 var greenPawn4 = templateGreen.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, greenBase, 1, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0);
+                CreatePawns(i, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0);
 
                 //CreatePawns(i, finalRoute, greenBase, 27, greenPawn,0,1);
 
-                playerList[i].playerName = SaveSettings.playerNames[1];
+                //playerList[i].playerName = SaveSettings.playerNames[1];
 
 			}
 			if (playerList[i].playerName == "Blue")
@@ -108,13 +109,13 @@ public class GameManager : MonoBehaviour
                 var bluePawn3 = templateBlue.thirdPawn.GetComponent<PawnManager>();
                 var bluePawn4 = templateBlue.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, blueBase, 1, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270);
+                CreatePawns(i, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270);
 
                 //CreatePawns(i, finalRoute, blueBase, 14, bluePawn,270,2);
 
 
 
-                playerList[i].playerName = SaveSettings.playerNames[2];
+                //playerList[i].playerName = SaveSettings.playerNames[2];
 
 			}
 			if (playerList[i].playerName == "Yellow")
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
                 CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180);
 
 
-                playerList[i].playerName = SaveSettings.playerNames[3];
+                //playerList[i].playerName = SaveSettings.playerNames[3];
 
             }
         }
@@ -139,7 +140,7 @@ public class GameManager : MonoBehaviour
 	{
 		for (int j = 0; j < playerList[i].allPawns.Length-3; j++)
 		{
-			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, 0, newBase.transform.GetChild(0).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
+			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, newBase.transform.GetChild(0).transform.position.y, newBase.transform.GetChild(0).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
 			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
 			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
 			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
@@ -164,6 +165,7 @@ public class GameManager : MonoBehaviour
 		newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
 		newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, 0.1f, newPawn.transform.position.z), Quaternion.identity);
 		newPawn.selector.transform.parent = newPawn.transform;
+        //newPawn.pawnMaterial = Color.red;
 
 		//newPawn.spellType = (PawnManager.SpellType)spellType;
 
