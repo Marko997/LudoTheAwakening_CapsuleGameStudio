@@ -74,9 +74,9 @@ public class GameManager : MonoBehaviour
                 var redPawn3 = templateRed.thirdPawn.GetComponent<PawnManager>();
                 var redPawn4 = templateRed.fourthPawn.GetComponent<PawnManager>();
 
-                //redPawn.pawnMaterial.color = Color.red;
+                Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
 
-                CreatePawns(i, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90);
+                CreatePawns(i, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90,baseRotation);
 
 
                 //CreatePawns(i, finalRoute, redBase, 40, redPawn,90,0);
@@ -93,7 +93,9 @@ public class GameManager : MonoBehaviour
                 var greenPawn3 = templateGreen.thirdPawn.GetComponent<PawnManager>();
                 var greenPawn4 = templateGreen.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0);
+                Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
+
+                CreatePawns(i, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0,baseRotation);
 
                 //CreatePawns(i, finalRoute, greenBase, 27, greenPawn,0,1);
 
@@ -109,7 +111,9 @@ public class GameManager : MonoBehaviour
                 var bluePawn3 = templateBlue.thirdPawn.GetComponent<PawnManager>();
                 var bluePawn4 = templateBlue.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270);
+                Quaternion baseRotation = Quaternion.Euler(0, 270, 0);
+
+                CreatePawns(i, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270,baseRotation);
 
                 //CreatePawns(i, finalRoute, blueBase, 14, bluePawn,270,2);
 
@@ -127,7 +131,9 @@ public class GameManager : MonoBehaviour
                 var yellowPawn3 = templateYellow.thirdPawn.GetComponent<PawnManager>();
                 var yellowPawn4 = templateYellow.fourthPawn.GetComponent<PawnManager>();
 
-                CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180);
+                Quaternion baseRotation = Quaternion.Euler(0, 180, 0);
+
+                CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180,baseRotation);
 
 
                 //playerList[i].playerName = SaveSettings.playerNames[3];
@@ -136,19 +142,21 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation)
+	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, Quaternion baseRotation)
 	{
 		for (int j = 0; j < playerList[i].allPawns.Length-3; j++)
 		{
-			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, newBase.transform.GetChild(0).transform.position.y, newBase.transform.GetChild(0).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
-			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
-			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
-			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), Quaternion.Euler(0, pawnRotation, 0)).GetComponent<PawnManager>();
+			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, newBase.transform.GetChild(0).transform.position.y, newBase.transform.GetChild(0).transform.position.z), baseRotation).GetComponent<PawnManager>();
+			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), baseRotation).GetComponent<PawnManager>();
+			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), baseRotation).GetComponent<PawnManager>();
+			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
 
-			CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn);
-            CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2);
-            CreatePawn(finalRoute, newBase, startNode, 2, j, newPawn3);
-            CreatePawn(finalRoute, newBase, startNode, 3, j, newPawn4);
+            //newPawn.baseRotation = Quaternion.Euler(0, pawnRotation, 0);
+
+			CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn,baseRotation);
+            CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2,baseRotation);
+            CreatePawn(finalRoute, newBase, startNode, 2, j, newPawn3, baseRotation);
+            CreatePawn(finalRoute, newBase, startNode, 3, j, newPawn4, baseRotation);
 
             playerList[i].allPawns[0] = newPawn;
 			playerList[i].allPawns[1] = newPawn2;
@@ -157,7 +165,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, int j, PawnManager newPawn)
+	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, int j, PawnManager newPawn, Quaternion baseRotation)
 	{
 		newPawn.commonRoute = commonRoute;
 		newPawn.finalRoute = finalRoute;
@@ -165,7 +173,7 @@ public class GameManager : MonoBehaviour
 		newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
 		newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, 0.1f, newPawn.transform.position.z), Quaternion.identity);
 		newPawn.selector.transform.parent = newPawn.transform;
-        //newPawn.pawnMaterial = Color.red;
+        newPawn.baseRotation = baseRotation;
 
 		//newPawn.spellType = (PawnManager.SpellType)spellType;
 
@@ -174,6 +182,7 @@ public class GameManager : MonoBehaviour
 
 	void Start() {
         ActivateButton(false);
+        powerButton.SetActive(false);
 
         int randomPlayer = Random.Range(0, playerList.Count);
         activePlayer = randomPlayer;
@@ -193,13 +202,15 @@ public class GameManager : MonoBehaviour
             case States.WAITING:
                 //IDLE
             break;
-            case States.ATTACK:
-			    if (turnPossible) {
-                   StartCoroutine(WaitForAttack());
-                   state = States.WAITING;
-                }
-                break;
-            case States.SWITCH_PLAYER:
+                //COMMENTED BECAUSE BOTS DONT SHOW BUTTONS
+				//case States.ATTACK:
+				//	if (turnPossible)
+				//	{
+				//		StartCoroutine(WaitForAttack());
+				//		state = States.WAITING;
+				//	}
+				//	break;
+				case States.SWITCH_PLAYER:
                 if(turnPossible){
                     powerButton.SetActive(false);
                         StartCoroutine(SwitchPlayer());
@@ -222,16 +233,24 @@ public class GameManager : MonoBehaviour
             case States.WAITING:
                 //IDLE
             break;
-            case States.ATTACK:
-               if (turnPossible)
-                    {
-                        StartCoroutine(WaitForAttack());
-                        state = States.WAITING;
-                    }
-                    break;
-                case States.SWITCH_PLAYER:
+				case States.ATTACK:
+					if (turnPossible)
+					{
+						powerButton.SetActive(true);
+						StartCoroutine(WaitForAttack());
+                        
+						state = States.WAITING;
+					}
+					break;
+				case States.SWITCH_PLAYER:
                 if(turnPossible){
-                    StartCoroutine(SwitchPlayer());
+                    powerButton.SetActive(false);
+                        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+                        {
+                            var activePawn = playerList[activePlayer].allPawns[i];
+                            activePawn.isSelected = false;
+                        }
+                        StartCoroutine(SwitchPlayer());
                     state = States.WAITING;
                 }
                 break;
@@ -254,16 +273,22 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
 		{
             var activePawn = playerList[activePlayer].allPawns[i];
+            //var eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+            
 
             //---------SPEARMAN----------//
             if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.SPEARMAN) { }
 			{
                 activePawn.eatPower = 1;
-                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-                if (activePawn.goalNode.isTaken)
+                activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                if (activePawn.eatNode.isTaken)
                 {
                     //KICK THE OTHER STONE
-                    activePawn.goalNode.pawn.ReturnToBase();
+                    activePawn.eatNode.pawn.ReturnToBase();
+                    //activePawn.goalNode = eatNode;
+                    activePawn.isSelected = false;
+                    powerButton.SetActive(false);
+                    activePawn.eatNode = null;
                 }
 
             }
@@ -271,11 +296,15 @@ public class GameManager : MonoBehaviour
             if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.ARCHER) { }
             {
                 activePawn.eatPower = 3;
-                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
                 if (activePawn.goalNode.isTaken)
                 {
                     //KICK THE OTHER STONE
-                    activePawn.goalNode.pawn.ReturnToBase();
+                    activePawn.eatNode.pawn.ReturnToBase();
+                    //activePawn.goalNode = eatNode;
+                    activePawn.isSelected = false;
+                    powerButton.SetActive(false);
+                    activePawn.eatNode = null;
                 }
 
             }
@@ -283,11 +312,15 @@ public class GameManager : MonoBehaviour
             if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.MACEBEARER) { }
             {
                 activePawn.eatPower = -1;
-                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
                 if (activePawn.goalNode.isTaken)
                 {
                     //KICK THE OTHER STONE
-                    activePawn.goalNode.pawn.ReturnToBase();
+                    activePawn.eatNode.pawn.ReturnToBase();
+                    //activePawn.goalNode = eatNode;
+                    activePawn.isSelected = false;
+                    powerButton.SetActive(false);
+                    activePawn.eatNode = null;
                 }
 
             }
@@ -296,10 +329,15 @@ public class GameManager : MonoBehaviour
             {
                 powerButton.SetActive(true);
                 displaySpellButton = true;
+                activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition];
                 if (activePawn.currentNode.isTaken)
                 {
                     //KICK THE OTHER STONE
-                    activePawn.goalNode.pawn.ReturnToBase();
+                    activePawn.eatNode.pawn.ReturnToBase();
+                    //activePawn.goalNode = eatNode;
+                    activePawn.isSelected = false;
+                    powerButton.SetActive(false);
+                    activePawn.eatNode = null;
                 }
 
             }
@@ -312,6 +350,10 @@ public class GameManager : MonoBehaviour
                 {
                     //KICK THE OTHER STONE
                     activePawn.goalNode.pawn.ReturnToBase();
+                    //activePawn.goalNode = eatNode;
+                    activePawn.isSelected = false;
+                    powerButton.SetActive(false);
+                    activePawn.eatNode = null;
                 }
 
             }
@@ -320,11 +362,12 @@ public class GameManager : MonoBehaviour
             {
                 powerButton.SetActive(true);
                 displaySpellButton = true;
-                activePawn.eatPower = 3;
-                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                activePawn.eatPower = 6;
+                activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
                 
 
             }
+            
         }
 	}
 
@@ -420,6 +463,7 @@ public class GameManager : MonoBehaviour
             int num = Random.Range(0,movablePawns.Count);
             movablePawns[num].StartTheMove(diceNumber);
             state = States.ATTACK;
+            //state = States.WAITING;
             return;
         }
         //NONE IS POSSIBLE

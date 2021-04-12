@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leaderPawn: {fileID: 2794497596776756804, guid: 4cdbe72e4d248be4aa1662a0bc7494d5,
     type: 3}
-  secondPawn: {fileID: 8464011299139954686, guid: e67d211dbc5536b409ce6869cc956472,
+  secondPawn: {fileID: 5729253412487455503, guid: e67d211dbc5536b409ce6869cc956472,
     type: 3}
-  thirdPawn: {fileID: 8176186087047373479, guid: 2ae1082f41aa1fd43971637ac59a1c15,
+  thirdPawn: {fileID: 4719917468357955233, guid: 2ae1082f41aa1fd43971637ac59a1c15,
     type: 3}
-  fourthPawn: {fileID: 3824535849156079269, guid: dcbedd636ec1b5640b82671377796659,
+  fourthPawn: {fileID: 2803426087482539726, guid: dcbedd636ec1b5640b82671377796659,
     type: 3}

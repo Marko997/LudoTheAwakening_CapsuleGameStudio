@@ -30,6 +30,7 @@ public class PawnManager : MonoBehaviour
     public NodeManager baseNode; //pawn house
     public NodeManager currentNode;
     public NodeManager goalNode;
+    public NodeManager eatNode;
 
     public int routePosition;
     protected int startNodeIndex;
@@ -51,6 +52,8 @@ public class PawnManager : MonoBehaviour
 
     public int eatPower;
     public bool isSelected = false;
+
+    public Quaternion baseRotation;
 
 
     public void Init() {
@@ -95,7 +98,7 @@ public class PawnManager : MonoBehaviour
 
 			Vector3 startPos = fullRoute[routePosition - 1].gameObject.transform.position;
 
-            currentNode = fullRoute[routePosition];
+            //currentNode = fullRoute[routePosition];
 			
             RotatePawnOnBoard();
 
@@ -151,12 +154,14 @@ public class PawnManager : MonoBehaviour
         //SWITCH THE PLAYER
         if(diceNumber<6){
             GameManager.instance.state = GameManager.States.ATTACK;
-        }else{
+            //GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+        }
+        else{
             GameManager.instance.state = GameManager.States.ROLL_DICE;
 
         }
 
-        isSelected = false;
+        
         isMoving = false;
 
     }
@@ -349,6 +354,7 @@ public class PawnManager : MonoBehaviour
         goalNode = null;
         isOut = false;
         doneSteps = 0;
+        transform.rotation = baseRotation;
 
         Vector3 baseNodePos = baseNode.gameObject.transform.position;
         while(MoveToNextNode(baseNodePos,100f)){

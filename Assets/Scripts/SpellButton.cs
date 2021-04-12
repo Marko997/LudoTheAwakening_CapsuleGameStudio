@@ -34,6 +34,7 @@ public class SpellButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     public void OnPointerUp(PointerEventData eventData)
     {
         pressed = false;
+		//GameManager.instance.powerButton.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)
