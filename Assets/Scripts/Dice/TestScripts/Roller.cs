@@ -9,9 +9,8 @@ public class Roller : MonoBehaviour
     public Image One;
     int currentVal;
     public int DiceOneValue;
-    // Start is called before the first frame update
 
-    public void Roll1()
+    public void Roll()
     {
         One.gameObject.GetComponent<Animator>().enabled = true;
         One.gameObject.GetComponent<Animator>().ResetTrigger("RollDice");
@@ -28,9 +27,10 @@ public class Roller : MonoBehaviour
     public Sprite RollDice()
     {
         int x = Mathf.RoundToInt(Random.Range(0, DiceImages.Length));
+        //int x = 5;
         currentVal = x + 1;
         GameManager.instance.RollDice(currentVal);
-        //Debug.Log(currentVal);
+
         return DiceImages[x];
     }
 }

@@ -67,7 +67,8 @@ public class GameManager : MonoBehaviour
 			{
 
 				var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
-				var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
+                //var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
+                var redBase = Instantiate(templates.redBase);
                 //var redPawn = SaveSettings.pawn.GetComponent<PawnManager>();
                 var redPawn = templateRed.leaderPawn.GetComponent<PawnManager>();
                 var redPawn2 = templateRed.secondPawn.GetComponent<PawnManager>();
@@ -87,8 +88,9 @@ public class GameManager : MonoBehaviour
 			if (playerList[i].playerName == "Green")
 			{
 				var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
-				var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
-				var greenPawn = templateGreen.leaderPawn.GetComponent<PawnManager>();
+                //var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
+                var greenBase = Instantiate(templates.greenBase);
+                var greenPawn = templateGreen.leaderPawn.GetComponent<PawnManager>();
                 var greenPawn2 = templateGreen.secondPawn.GetComponent<PawnManager>();
                 var greenPawn3 = templateGreen.thirdPawn.GetComponent<PawnManager>();
                 var greenPawn4 = templateGreen.fourthPawn.GetComponent<PawnManager>();
@@ -105,7 +107,8 @@ public class GameManager : MonoBehaviour
 			if (playerList[i].playerName == "Blue")
 			{
 				var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
-				var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
+				//var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
+				var blueBase = Instantiate(templates.blueBase);
 				var bluePawn = templateBlue.leaderPawn.GetComponent<PawnManager>();
                 var bluePawn2 = templateBlue.secondPawn.GetComponent<PawnManager>();
                 var bluePawn3 = templateBlue.thirdPawn.GetComponent<PawnManager>();
@@ -125,7 +128,8 @@ public class GameManager : MonoBehaviour
 			if (playerList[i].playerName == "Yellow")
 			{
 				var finalRoute = Instantiate(templates.yellowRoute, Vector3.zero, Quaternion.Euler(0, 90, 0)).GetComponent<CommonRouteManager>();
-				var yellowBase = Instantiate(templates.yellowBase, Vector3.zero, Quaternion.identity);
+				//var yellowBase = Instantiate(templates.yellowBase, Vector3.zero, Quaternion.identity);
+				var yellowBase = Instantiate(templates.yellowBase);
 				var yellowPawn = templateYellow.leaderPawn.GetComponent<PawnManager>();
                 var yellowPawn2 = templateYellow.secondPawn.GetComponent<PawnManager>();
                 var yellowPawn3 = templateYellow.thirdPawn.GetComponent<PawnManager>();
@@ -274,7 +278,6 @@ public class GameManager : MonoBehaviour
 		{
             var activePawn = playerList[activePlayer].allPawns[i];
             //var eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-            
 
             //---------SPEARMAN----------//
             if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.SPEARMAN) { }
@@ -373,12 +376,12 @@ public class GameManager : MonoBehaviour
 
 
     void CPUDice(){
-        dice.Roll1();
+        dice.Roll();
     }
 
     public void RollDice(int _diceNumber){
         int diceNumber = _diceNumber;//Random.Range(1,7);
-
+        //int diceNumber = 6;
         if(playerList[activePlayer].playerTypes == Entity.PlayerTypes.BOT){
             
             if(diceNumber == 6){
@@ -398,7 +401,7 @@ public class GameManager : MonoBehaviour
         }
 
         InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " has rolled "+ _diceNumber);
-        //Debug.Log(diceNumber+"sadsadsadsa");
+
     }
 
     IEnumerator RollDiceDelay(){
@@ -478,7 +481,7 @@ public class GameManager : MonoBehaviour
         }
         switchingPlayer = true;
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
     
 
         //SET NEXT PLAYER
@@ -550,7 +553,7 @@ public class GameManager : MonoBehaviour
 
     public void HumanRoll(){
         
-        dice.Roll1();
+        dice.Roll();
         ActivateButton(false);
 
         

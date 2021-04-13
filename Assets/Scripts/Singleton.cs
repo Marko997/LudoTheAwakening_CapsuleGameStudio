@@ -36,13 +36,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
         if (instance == null)
         {
             instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else if (instance != this as T)
         {
             Destroy(gameObject);
         }
-        else { DontDestroyOnLoad(gameObject); }
+        //else { DontDestroyOnLoad(gameObject); }
     }
 
     private void OnApplicationQuit()
