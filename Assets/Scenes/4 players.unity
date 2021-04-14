@@ -2753,7 +2753,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d3ce0cd28cb258347a81fced09dacafd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d3ce0cd28cb258347a81fced09dacafd,
         type: 3}
@@ -2793,7 +2793,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d3ce0cd28cb258347a81fced09dacafd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3ce0cd28cb258347a81fced09dacafd, type: 3}
@@ -3602,7 +3602,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8c6d6efd42ba90041af7ac40e138cd05,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.3
+      value: -15.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8c6d6efd42ba90041af7ac40e138cd05,
         type: 3}
@@ -3652,17 +3652,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8c6d6efd42ba90041af7ac40e138cd05,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8c6d6efd42ba90041af7ac40e138cd05,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8c6d6efd42ba90041af7ac40e138cd05,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8c6d6efd42ba90041af7ac40e138cd05,
         type: 3}
@@ -5473,9 +5473,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.8301887, g: 0.81609744, b: 0.6148096, a: 1}
-  m_Intensity: 2
+  m_Intensity: 3
   m_Range: 100
-  m_SpotAngle: 114
+  m_SpotAngle: 120.99307
   m_InnerSpotAngle: 2
   m_CookieSize: 10
   m_Shadows:
@@ -5530,7 +5530,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318195345}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2.3, y: 27.3, z: 16.9}
+  m_LocalPosition: {x: 2.3, y: 39.6, z: 16.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5563,6 +5563,11 @@ PrefabInstance:
       propertyPath: myRoller
       value: 
       objectReference: {fileID: 1641892618}
+    - target: {fileID: 4510504706612463811, guid: 67497f372a9a57a4da5a837170b522d3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4510504706680420901, guid: 67497f372a9a57a4da5a837170b522d3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9144,6 +9149,7 @@ MonoBehaviour:
   pawnId: 1
   pawnName: Spearman
   spellType: 0
+  baseRotation: {x: 0, y: 0, z: 0, w: 0}
   commonRoute: {fileID: 2049947442}
   finalRoute: {fileID: 375171338}
   fullRoute: []
@@ -9153,11 +9159,10 @@ MonoBehaviour:
   goalNode: {fileID: 0}
   eatNode: {fileID: 0}
   routePosition: 0
-  isOut: 0
-  selector: {fileID: 134624372}
   eatPower: 0
+  isOut: 0
   isSelected: 0
-  baseRotation: {x: 0, y: 0, z: 0, w: 0}
+  selector: {fileID: 134624372}
 --- !u!1 &7629014852634405951
 GameObject:
   m_ObjectHideFlags: 0

@@ -203,8 +203,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Size: {x: 0.75, y: 1.6, z: 0.5}
+  m_Center: {x: 0, y: 0.85, z: 0.135}
 --- !u!114 &-8318103680104209692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   pawnId: 0
   pawnName: 
   spellType: 2
+  baseRotation: {x: 0, y: 0, z: 0, w: 0}
   commonRoute: {fileID: 0}
   finalRoute: {fileID: 0}
   fullRoute: []
@@ -227,11 +228,12 @@ MonoBehaviour:
   baseNode: {fileID: 0}
   currentNode: {fileID: 0}
   goalNode: {fileID: 0}
+  eatNode: {fileID: 0}
   routePosition: 0
-  isOut: 0
-  selector: {fileID: 0}
   eatPower: 0
+  isOut: 0
   isSelected: 0
+  selector: {fileID: 0}
 --- !u!1 &6592267358994508598
 GameObject:
   m_ObjectHideFlags: 0

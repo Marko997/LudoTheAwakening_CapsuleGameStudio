@@ -18,6 +18,7 @@ public class PawnManager : MonoBehaviour
         WIZARD
     }
     public SpellType spellType;
+    public Quaternion baseRotation;
 
     [Header("ROUTES")]   
     public CommonRouteManager commonRoute;
@@ -37,11 +38,13 @@ public class PawnManager : MonoBehaviour
 
     int steps;
     int doneSteps;
+    [HideInInspector]public int eatPower;
 
     [Header("BOOLS")]
     public bool isOut;
     bool isMoving;
     protected bool hasTurn; // human input
+    public bool isSelected = false;
 
     [Header("SELECTOR")]
     public GameObject selector;
@@ -49,12 +52,6 @@ public class PawnManager : MonoBehaviour
     //ARC MOVEMENT
     float amplitude = 0.5f;
     float timeForPointToPoint = 0f;
-
-    public int eatPower;
-    public bool isSelected = false;
-
-    public Quaternion baseRotation;
-
 
     public void Init() {
 
