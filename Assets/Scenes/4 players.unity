@@ -323,7 +323,7 @@ MonoBehaviour:
   numberOfPlayers: 0
   state: 1
   rollButton: {fileID: 790686820}
-  powerButton: {fileID: 0}
+  powerButton: {fileID: 1625452270}
   displaySpellButton: 0
   dice: {fileID: 1641892618}
   rolledHumanDice: 0
@@ -5274,7 +5274,7 @@ Transform:
   - {fileID: 1458885175}
   - {fileID: 1459304636}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1150149568 stripped
 MonoBehaviour:
@@ -6117,7 +6117,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &1344288633
 PrefabInstance:
@@ -6759,7 +6759,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 78.55, y: 90.00001, z: 74.486}
 --- !u!1 &1368406744 stripped
 GameObject:
