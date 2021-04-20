@@ -6,55 +6,84 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public List<Entity> playerList = new List<Entity>();
-
-    public AllPawnsTemplates templates;
-
-    public SelectionTemplate templateYellow;
-    public SelectionTemplate templateBlue;
-    public SelectionTemplate templateGreen;
-    public SelectionTemplate templateRed;
-
-    public enum States{
+    public enum States
+    {
         WAITING,
         ROLL_DICE,
         ATTACK,
         SWITCH_PLAYER
     }
+    CommonRouteManager commonRoute;
 
+    public List<Entity> playerList = new List<Entity>();
+
+    [Header("TEMPLATES")]
+    public AllPawnsTemplates templates;
+    public SelectionTemplate templateYellow;
+    public SelectionTemplate templateBlue;
+    public SelectionTemplate templateGreen;
+    public SelectionTemplate templateRed;
+    public EntityTemplate playerEntity;
+
+    [Header("PLAYER INFO")]
+    public int activePlayer;
+    public int numberOfPlayers;
     public States state;
 
-    public int activePlayer;
-
-    bool switchingPlayer;
-    bool turnPossible = true;
-
+    [Header("BUTTONS")]
     public GameObject rollButton;
     public GameObject powerButton;
 
-    [HideInInspector]public int rolledHumanDice;
+    [Header("BOOLS")]
+    [HideInInspector] public bool displaySpellButton;
+    bool switchingPlayer;
+    bool turnPossible = true;
 
-    public bool displaySpellButton;
-
+    [Header("DICE")]
     public Roller dice;
-    public CommonRouteManager commonRoute;
+    [HideInInspector] public int rolledHumanDice;
+
+    
+
+    
 
     void Awake()
 	{
 		instance = this;
-
+        numberOfPlayers = SaveSettings.numberOfPlayers;
 		commonRoute = Instantiate(templates.commonRoute, Vector3.zero, Quaternion.identity).GetComponent<CommonRouteManager>();
 
-		//INSERT DATA FROM STARTGAME SCENE
-		InsertPlayerData();
-
-	}
+        //INSERT DATA FROM STARTGAME SCENE
+        InsertPlayerData();
+    }
 
 	private void InsertPlayerData()
 	{
-		for (int i = 0; i < playerList.Count; i++)
+        if(numberOfPlayers == 2)
 		{
+            playerList.Add(Instantiate(playerEntity.player));
+            playerList.Add(Instantiate(playerEntity.player));
+
+            playerList[0].playerName = "Red";
+            playerList[1].playerName = "Blue";
+        }
+        if (numberOfPlayers == 4)
+		{
+            playerList.Add(Instantiate(playerEntity.player));
+            playerList.Add(Instantiate(playerEntity.player));
+            playerList.Add(Instantiate(playerEntity.player));
+            playerList.Add(Instantiate(playerEntity.player));
+
+            playerList[0].playerName = "Yellow";
+            playerList[1].playerName = "Red";
+            playerList[2].playerName = "Green";
+            playerList[3].playerName = "Blue";
+        }
+
+
+        for (int i = 0; i < playerList.Count; i++)
+		{
+
 			if (SaveSettings.players[i] == "HUMAN")
 			{
 				playerList[i].playerTypes = Entity.PlayerTypes.HUMAN;
@@ -150,12 +179,11 @@ public class GameManager : MonoBehaviour
 	{
 		for (int j = 0; j < playerList[i].allPawns.Length-3; j++)
 		{
-			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, newBase.transform.GetChild(0).transform.position.y, newBase.transform.GetChild(0).transform.position.z), baseRotation).GetComponent<PawnManager>();
+			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, 0, newBase.transform.GetChild(0).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
 
-            //newPawn.baseRotation = Quaternion.Euler(0, pawnRotation, 0);
 
 			CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn,baseRotation);
             CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2,baseRotation);
@@ -187,6 +215,7 @@ public class GameManager : MonoBehaviour
 	void Start() {
         ActivateButton(false);
         powerButton.SetActive(false);
+
 
         int randomPlayer = Random.Range(0, playerList.Count);
         activePlayer = randomPlayer;

@@ -14,7 +14,7 @@ public class StartGame : MonoBehaviour
             SaveSettings.players[i] = "CPU";
 		}
         sname = "LoadingScene 1";
-
+        SaveSettings.numberOfPlayers = 2;
 
     }
 
@@ -24,8 +24,8 @@ public class StartGame : MonoBehaviour
 	{
 		if (on)
 		{
-           sname = "2 players";
-
+           sname = "LoadingScene 1";
+            SaveSettings.numberOfPlayers = 2;
         }
 	}
     public void FourPlayers(bool on)
@@ -34,6 +34,7 @@ public class StartGame : MonoBehaviour
         {
             //sname = "4 players";
             sname = "LoadingScene 1";
+            SaveSettings.numberOfPlayers = 4;
         }
     }
     public void StartTheGame()

@@ -11,11 +11,12 @@ public class LevelLoaderManager : MonoBehaviour
     AsyncOperation loadingOperation;
     public Slider slider;
     public Text percentLoaded;
+    //public int numberOfplayers;
 
     void Start() 
     {
         loadingOperation = SceneManager.LoadSceneAsync(sceneToLoad);
-
+        //SaveSettings.numberOfPlayers = numberOfplayers;
         //if token is present to main menu
 
         //if not loging-register scene 
