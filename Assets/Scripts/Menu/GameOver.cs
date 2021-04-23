@@ -20,6 +20,7 @@ public class GameOver : MonoBehaviour
     public void BackButton(string sceneName)
 	{
         SceneManager.LoadScene(sceneName);
+        LevelLoaderManager.sceneToLoad = "MainScene";
 	}
 
     

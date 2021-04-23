@@ -13,7 +13,7 @@ public class StartGame : MonoBehaviour
 		{
             SaveSettings.players[i] = "CPU";
 		}
-        sname = "LoadingScene 1";
+        sname = "LoadingScene";
         SaveSettings.numberOfPlayers = 2;
 
     }
@@ -24,7 +24,7 @@ public class StartGame : MonoBehaviour
 	{
 		if (on)
 		{
-           sname = "LoadingScene 1";
+           sname = "LoadingScene";
             SaveSettings.numberOfPlayers = 2;
         }
 	}
@@ -33,13 +33,15 @@ public class StartGame : MonoBehaviour
         if (on)
         {
             //sname = "4 players";
-            sname = "LoadingScene 1";
+            sname = "LoadingScene";
             SaveSettings.numberOfPlayers = 4;
         }
     }
     public void StartTheGame()
     {
         string sceneName = sname;
+        LevelLoaderManager.sceneToLoad = "GameScene";
+        Debug.Log(LevelLoaderManager.sceneToLoad);
         SceneManager.LoadScene(sceneName);
     }
 

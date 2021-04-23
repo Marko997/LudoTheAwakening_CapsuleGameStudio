@@ -536,7 +536,8 @@ public class GameManager : MonoBehaviour
         }
         else if(available<2){
             //GAME OVER SCREEN
-            SceneManager.LoadScene("EndScene");
+            SceneManager.LoadScene("LoadingScene");
+            LevelLoaderManager.sceneToLoad= "EndScene";
             state = States.WAITING;
             return;
         }

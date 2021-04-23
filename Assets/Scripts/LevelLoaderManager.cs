@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LevelLoaderManager : MonoBehaviour
 {
     public GameObject loadingScreen;
-    public string sceneToLoad;
+    public static string sceneToLoad = null;
     AsyncOperation loadingOperation;
     public Slider slider;
     public Text percentLoaded;
@@ -15,6 +15,11 @@ public class LevelLoaderManager : MonoBehaviour
 
     void Start() 
     {
+        //sceneToLoad = "MainScene";
+        if(sceneToLoad == null)
+		{
+            loadingOperation = SceneManager.LoadSceneAsync("MainScene");
+        }
         loadingOperation = SceneManager.LoadSceneAsync(sceneToLoad);
         //SaveSettings.numberOfPlayers = numberOfplayers;
         //if token is present to main menu
