@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public Roller dice;
     [HideInInspector] public int rolledHumanDice;
 
-    
+    //public PawnManager bluePawn;
 
     
 

@@ -17,4 +17,6 @@ public class Entity : MonoBehaviour
 	public PlayerTypes playerTypes;
 	public bool hasWon;
 
+
+
 }
