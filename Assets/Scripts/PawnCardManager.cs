@@ -34,7 +34,7 @@ public class PawnCardManager : MonoBehaviour
         currentIndex = 0;
         //historyImage.gameObject.SetActive(false);
 
-        DisplayInfo();
+        //DisplayInfo();
         DisplayCharacters();
     }
 

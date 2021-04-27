@@ -7,155 +7,103 @@ public class PawnSelectionUIManager : MonoBehaviour
 {
     public PawnCardManager cardManager;
 
-    public Image playerImage;
-    public Image playerImage1;
-    public Image playerImage2;
-    public Image playerImage3;
+    public Image[] playerImage;
+    public Image[] playerImage1;
+    public Image[] playerImage2;
+    public Image[] playerImage3;
 
 	public SelectionTemplate templateBlue;
 	public SelectionTemplate templateRed;
+	public SelectionTemplate templateGreen;
+	public SelectionTemplate templateYellow;
 
-	public LeaderPawn leaderPawn;
-	public LeaderPawn secondPawn;
-	public LeaderPawn thirdPawn;
-	public LeaderPawn fourthPawn;
+	public LeaderPawn[] leaderPawn;
+	public LeaderPawn[] secondPawn;
+	public LeaderPawn[] thirdPawn;
+	public LeaderPawn[] fourthPawn;
+
 
 	private void Start()
 	{
 		cardManager = FindObjectOfType<PawnCardManager>();
-		//UpdatePlayerImage();
 	}
 
-	public void UpdatePlayerImage(Image pawnImage)
+
+    public void UpdatePlayerImage(Image pawnImage)
 	{
 		pawnImage.sprite = cardManager.pawnCards[cardManager.currentIndex].cardSprite;
 	}
 	public void UpdatePawn(SelectionTemplate pawnTemplate, PawnCardManager cardManager, LeaderPawn pawn)
 	{
-		//SOME UPDATE
-		//pawnTemplate.leaderPawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
 		pawn.template = pawnTemplate;
 		pawn.pawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-		//pawn.template.leaderPawn = pawn.pawn;
-	}
-	public void UpdateLeaderPawn(SelectionTemplate pawnTemplate, PawnCardManager cardManager)
-	{
-		//SOME UPDATE
-		//pawnTemplate.leaderPawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-		leaderPawn.template = pawnTemplate;
-		leaderPawn.pawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-		//leaderPawn.template.leaderPawn = leaderPawn.pawn;
-	}
-	public void UpdateSecondPawn(SelectionTemplate pawnTemplate, PawnCardManager cardManager)
-	{
-		//SOME UPDATE
-		secondPawn.template = pawnTemplate;
-		secondPawn.pawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-		secondPawn.template.secondPawn = secondPawn.pawn;
-	}
-	public void UpdateThirdPawn(SelectionTemplate pawnTemplate, PawnCardManager cardManager)
-	{
-		//SOME UPDATE
-		thirdPawn.template = pawnTemplate;
-		thirdPawn.pawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-		thirdPawn.template.thirdPawn = thirdPawn.pawn;
-	}
-	public void UpdateFourtPawn(SelectionTemplate pawnTemplate, PawnCardManager cardManager)
-	{
-		//SOME UPDATE
-		fourthPawn.template = pawnTemplate;
-		fourthPawn.pawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-		fourthPawn.template.fourthPawn = fourthPawn.pawn;
 	}
 
 	public void SelectCharacter(int _id)
 	{
 		cardManager.currentIndex = _id;
-
 		cardManager.DisplayInfo();
 	}
 
 	public void PressPawnIconToSelectPawn()
-	{
-		if (cardManager.pawnCards[cardManager.currentIndex].locked == false)
-		{
-			if (leaderPawn.isBlue && leaderPawn.isOppened)
-			{
-				var templateSelect = templateBlue;
-				AddLeader(templateSelect, playerImage,leaderPawn);
-				templateSelect.leaderPawn = leaderPawn.pawn;
-				leaderPawn.isBlue = false;
-			}
-			if (secondPawn.isBlue && secondPawn.isOppened)
-			{
-				var templateSelect = templateBlue;
-				AddLeader(templateSelect, playerImage1,secondPawn);
-				templateSelect.secondPawn = secondPawn.pawn;
-				secondPawn.isBlue = false;
-			}
-			if (thirdPawn.isBlue && thirdPawn.isOppened)
-			{
-				var templateSelect = templateBlue;
-				AddLeader(templateSelect, playerImage2, thirdPawn);
-				templateSelect.thirdPawn = thirdPawn.pawn;
-				thirdPawn.isBlue = false;
-			}
-			if (fourthPawn.isBlue && fourthPawn.isOppened)
-			{
-				var templateSelect = templateBlue;
-				AddLeader(templateSelect, playerImage3, fourthPawn);
-				templateSelect.fourthPawn = fourthPawn.pawn;
-				fourthPawn.isBlue = false;
-			}
-		}
+    {
+        for (int i = 0; i < leaderPawn.Length; i++)
+        {
+            if((leaderPawn[i].isBlue && leaderPawn[i].isOppened) || (secondPawn[i].isBlue && secondPawn[i].isOppened) || (thirdPawn[i].isBlue && thirdPawn[i].isOppened) || (fourthPawn[i].isBlue && fourthPawn[i].isOppened))
+            {
+                AddPawnsToTemplate(templateBlue);
+                leaderPawn[i].isBlue = false;
+                secondPawn[i].isBlue = false;
+                thirdPawn[i].isBlue = false;
+                fourthPawn[i].isBlue = false;
+            }
+            if ((leaderPawn[i].isRed && leaderPawn[i].isOppened) || (secondPawn[i].isRed && secondPawn[i].isOppened) || (thirdPawn[i].isRed && thirdPawn[i].isOppened) || (fourthPawn[i].isRed && fourthPawn[i].isOppened))
+            {
+                AddPawnsToTemplate(templateRed);
+                leaderPawn[i].isRed = false;
+                secondPawn[i].isRed = false;
+                thirdPawn[i].isRed = false;
+                fourthPawn[i].isRed = false;
+            }
+        }
 
+    }
 
+    private void AddPawnsToTemplate(SelectionTemplate template)
+    {
+        if (cardManager.pawnCards[cardManager.currentIndex].locked == false)
+        {
+            for (int i = 0; i < leaderPawn.Length; i++)
+            {
+                if (leaderPawn[i].isOppened)
+                {
+                    AddPawnToUiHolder(template, playerImage[i], leaderPawn[i]);
+                    template.leaderPawn = leaderPawn[i].pawn;
+                }
+                if (secondPawn[i].isOppened)
+                {
+                    AddPawnToUiHolder(template, playerImage1[i], secondPawn[i]);
+                    template.secondPawn = secondPawn[i].pawn;
+                }
+                if (thirdPawn[i].isOppened)
+                {
+                    AddPawnToUiHolder(template, playerImage2[i], thirdPawn[i]);
+                    template.thirdPawn = thirdPawn[i].pawn;
+                }
+                if (fourthPawn[i].isOppened)
+                {
+                    AddPawnToUiHolder(template, playerImage3[i], fourthPawn[i]);
+                    template.fourthPawn = fourthPawn[i].pawn;
+                }
+            }
+        }
+    }
 
-
-
-		//{
-			
-
-		//	if (secondPawn.isOppened)
-		//	{
-		//		UpdateSecondPawn(templateBlue, cardManager);
-		//		UpdatePlayerImage(playerImage1);
-		//		Debug.Log(templateBlue.secondPawn);
-
-		//		secondPawn.isOppened = false;
-		//	}
-		//	if (thirdPawn.isOppened)
-		//	{
-		//		UpdateThirdPawn(templateBlue, cardManager);
-		//		UpdatePlayerImage(playerImage2);
-		//		Debug.Log(templateBlue.leaderPawn);
-
-		//		thirdPawn.isOppened = false;
-
-		//	}
-		//	if (fourthPawn.isOppened)
-		//	{
-		//		UpdateFourtPawn(templateBlue, cardManager);
-		//		UpdatePlayerImage(playerImage3);
-		//		Debug.Log(templateBlue.secondPawn);
-
-		//		fourthPawn.isOppened = false;
-		//	}
-
-
-		//}
-	}
-
-	private void AddLeader(SelectionTemplate template, Image playerImage, LeaderPawn pawn)
+    private void AddPawnToUiHolder(SelectionTemplate template, Image playerImage, LeaderPawn pawn)
 	{
 		UpdatePawn(template, cardManager,pawn);
 		UpdatePlayerImage(playerImage);
-		Debug.Log(template.leaderPawn);
-
-		pawn.isOppened = false;
-		
+		pawn.isOppened = false;		
 	}
-
-	
 
 }
