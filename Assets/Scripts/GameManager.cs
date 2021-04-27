@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum PlayerSelection
+{
+    Spearman = 0, Macebearer = 1
+}
+
 public class GameManager : MonoBehaviour
 {
+    public PlayerSelection playerSelection;
+    public int playerID;
+
+    private PawnCardManager cardManager;
     public static GameManager instance;
     public enum States
     {

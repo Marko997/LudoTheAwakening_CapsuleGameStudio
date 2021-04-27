@@ -951,7 +951,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 93.6}
+  m_AnchoredPosition: {x: 0, y: 460}
   m_SizeDelta: {x: -540, y: 27.858986}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &590772952
@@ -1671,7 +1671,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadingScreen: {fileID: 1042789618}
-  sceneToLoad: MainScene
   slider: {fileID: 590772952}
   percentLoaded: {fileID: 1825295710}
 --- !u!4 &1042789620
