@@ -18,26 +18,7 @@ public enum CanvasType
 	FriendsScreen,
 	ProfileScreen,
 	OfflineSettingsScreen,
-	PawnSelectionScreen,
-	Pawn2SelectionScreen,
-	Pawn3SelectionScreen,
-	Pawn4SelectionScreen,
-	RedSelectionScreen,
-	Red2SelectionScreen,
-	Red3SelectionScreen,
-	Red4SelectionScreen,
-	GreenSelectionScreen,
-	Green2SelectionScreen,
-	Green3SelectionScreen,
-	Green4SelectionScreen,
-	BlueSelectionScreen,
-	Blue2SelectionScreen,
-	Blue3SelectionScreen,
-	Blue4SelectionScreen,
-	YellowSelectionScreen,
-	Yellow2SelectionScreen,
-	Yellow3SelectionScreen,
-	Yellow4SelectionScreen
+    OfflineSettingsScreen2
 }
 
 

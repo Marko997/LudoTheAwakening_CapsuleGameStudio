@@ -545,8 +545,10 @@ public class GameManager : MonoBehaviour
         }
         else if(available<2){
             //GAME OVER SCREEN
-            SceneManager.LoadScene("LoadingScene");
-            LevelLoaderManager.sceneToLoad= "EndScene";
+            //SceneManager.LoadScene("LoadingScene");
+            //LevelLoaderManager.sceneToLoad= "EndScene";
+            SwitchScene("EndScene");
+            EmptyAllTemplates();
             state = States.WAITING;
             return;
         }
@@ -554,6 +556,8 @@ public class GameManager : MonoBehaviour
         InfoText.instance.ShowMessage(playerList[activePlayer].playerName+ " has turn!");
         state = States.ROLL_DICE;
     }
+
+    
     
     public void ReportTurnPossible(bool possible){
         turnPossible = possible;
@@ -677,8 +681,27 @@ public class GameManager : MonoBehaviour
         return tempList;
     }
 
+    public void EmptyAllTemplates()
+    {
+        EmptyTemplate(templateRed);
+        EmptyTemplate(templateBlue);
+        EmptyTemplate(templateGreen);
+        EmptyTemplate(templateYellow);
+    }
 
+    public void EmptyTemplate(SelectionTemplate template)
+    {
+        template.leaderPawn = null;
+        template.secondPawn = null;
+        template.thirdPawn = null;
+        template.fourthPawn = null;
+    }
 
+    public void SwitchScene(string sceneToSwitch)
+    {
+        SceneManager.LoadScene("LoadingScene");
+        LevelLoaderManager.sceneToLoad = sceneToSwitch;
+    }
 
 }
 
