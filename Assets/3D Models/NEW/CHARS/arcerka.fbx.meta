@@ -23,7 +23,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -73,7 +73,37 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: arcerka(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Oil_Tank
+      parentName: arcerka(Clone)
+      position: {x: 0.8796398, y: 1.5497079, z: 0.85979927}
+      rotation: {x: -0.03305902, y: 0.058416676, z: 0.53557944, w: 0.84181315}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Symmetry_1
+      parentName: Oil_Tank
+      position: {x: 0.022906635, y: -0.045178805, z: -0.07476587}
+      rotation: {x: -2.1684043e-18, y: -7.875812e-36, z: 3.6320773e-18, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Cube
+      parentName: Symmetry_1
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -2.1684043e-18, y: -7.875812e-36, z: 3.6320773e-18, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BODY
+      parentName: arcerka(Clone)
+      position: {x: -0, y: 1.1538056, z: 0.18241814}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BODY_2
+      parentName: BODY
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -84,7 +114,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

@@ -7,49 +7,58 @@ using UnityEngine.UI;
 public class PawnRotatorY : MonoBehaviour, IPointerUpHandler,IPointerDownHandler
 {
     bool isPressed;
-    bool isMoving;    
+    bool isMoving;
+
+    public CanvasManager cManager;
+
+    public SelectionTemplate loadOutTemplate;
 
     Touch touch;
 
     [SerializeField]
-    Transform pawnHolder;
+    public Transform pawnHolder;
 
 
     // Start is called before the first frame update
-   // void Awake()
-   // {
-   //     for (int i = 0; i < panels.Length; i++)
-   //     {
-   //         var type = panels[i]._panelType;
-   //         if(type == PanelType.panelType.LEADER)
-			//{
-   //             pawnHolder = Instantiate(loadOutTemplate.leaderPawn, new Vector3(-1.6f, -1f, 0f), Quaternion.identity).GetComponent<Transform>();
+    void Awake()
+    {
 
-   //         }
-   //     }
-   // }
+        //pawnHolder = Instantiate(loadOutTemplate.leaderPawn,Vector3.zero, Quaternion.identity).GetComponent<Transform>();
+
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(isPressed){
-            if(Input.touchCount > 0){
+        if (isPressed)
+        {
+            if (Input.touchCount > 0)
+            {
 
                 touch = Input.GetTouch(0);
 
-                if(touch.phase == TouchPhase.Moved){
+                if (touch.phase == TouchPhase.Moved)
+                {
 
-                        pawnHolder.Rotate(0,-touch.deltaPosition.x,0);
-                        
-                    
+                    pawnHolder.Rotate(0, -touch.deltaPosition.x, 0);
+
+
                     isMoving = true;
                 }
             }
         }
 
+        
+
+        //if (canvasControllers[i].canvasType != CanvasType.MainMenu)
+        //{
+        //    pawnHolder.gameObject.SetActive(false);
+        //}
     }
 
-	public void OnPointerDown(PointerEventData eventData)
+
+
+public void OnPointerDown(PointerEventData eventData)
 	{
 		isPressed = true;
 	}

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum PlayerSelection
 {
-    Spearman = 0, Macebearer = 1
+    Spearman = 0, Macebearer = 1, Swordgirl = 2, Archergirl = 3
 }
 
 public class GameManager : MonoBehaviour
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
 
                 //CreatePawns(i, finalRoute, redBase, 40, redPawn,90,0);
 
-                //playerList[i].playerName = SaveSettings.playerNames[0];
+                playerList[i].playerName = SaveSettings.playerNames[0];
 
 			}
 			if (playerList[i].playerName == "Green")
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
 
                 //CreatePawns(i, finalRoute, greenBase, 27, greenPawn,0,1);
 
-                //playerList[i].playerName = SaveSettings.playerNames[1];
+                playerList[i].playerName = SaveSettings.playerNames[1];
 
 			}
 			if (playerList[i].playerName == "Blue")
@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
 
 
 
-                //playerList[i].playerName = SaveSettings.playerNames[2];
+                playerList[i].playerName = SaveSettings.playerNames[2];
 
 			}
 			if (playerList[i].playerName == "Yellow")
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
                 CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180,baseRotation);
 
 
-                //playerList[i].playerName = SaveSettings.playerNames[3];
+                playerList[i].playerName = SaveSettings.playerNames[3];
 
             }
         }

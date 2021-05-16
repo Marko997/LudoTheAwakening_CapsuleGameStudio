@@ -9,6 +9,8 @@ public class PawnCardManager : MonoBehaviour
 
 	public PawnTemplate[] pawnCards;
 
+    public PawnRotatorY displayedPawn;
+
     [Header("Cards UI")]
     public Text cardNameText;
     public Image cardSpriteImage;
@@ -36,11 +38,25 @@ public class PawnCardManager : MonoBehaviour
 
         //DisplayInfo();
         DisplayCharacters();
+        DisplayCharacter();
     }
 
     
     void Update()
     {
+        if(displayedPawn.pawnHolder == null)
+        {
+            DisplayCharacter();
+        }else if(displayedPawn.pawnHolder != null)
+        {
+            if (displayedPawn.pawnHolder.name != displayedPawn.loadOutTemplate.leaderPawn.name)
+            {
+                Destroy(displayedPawn.pawnHolder.gameObject);
+
+                DisplayCharacter();
+
+            }
+        }
         
     }
 
@@ -64,6 +80,25 @@ public class PawnCardManager : MonoBehaviour
         }
         //UPDATES
         DisplayInfo();
+    }
+
+    public void DisplayCharacter()
+    {
+
+        displayedPawn.pawnHolder = Instantiate(displayedPawn.loadOutTemplate.leaderPawn.transform);
+        displayedPawn.pawnHolder.name = displayedPawn.loadOutTemplate.leaderPawn.name;
+        displayedPawn.pawnHolder.transform.parent = displayedPawn.transform;
+        displayedPawn.pawnHolder.localScale = new Vector3(40, 40, 40);
+        displayedPawn.pawnHolder.transform.localPosition = new Vector3(-7.5f, -72, -1730);
+        Destroy(displayedPawn.pawnHolder.GetComponent<PawnManager>());
+        //SelectButton.color = new Color(1,1,1,1);
+        //cardSpriteImage.sprite = pawnCards[currentIndex].cardSprite;
+        //cardSpriteImage.GetComponent<Image>().color = new Color(1f,1f,1f,1f);
+
+        //cardNameText.text = pawnCards[currentIndex].cardName;
+        //cardHisText.text = pawnCards[currentIndex].cardHistory;
+        //cardDesText.text = pawnCards[currentIndex].cardDescription;
+
     }
 
     //FOR INFO IN CHARACTER SCREEN FOR LATER USE

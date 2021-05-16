@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3caaab3c725a2458e9a734c7c53645, type: 3}
   m_Name: ArcherGirl
   m_EditorClassIdentifier: 
-  pawnObject: {fileID: -2870387045946776099, guid: 5407b075398ab064daa180fd016b9f4f,
+  pawnObject: {fileID: 1269457147017809914, guid: 2731a21cd1392a348ac79fcd2f61a5b7,
     type: 3}
   cardName: ArcherGirl
-  cardSprite: {fileID: 3286163911610860551, guid: c1d171b9be8b4644f88c12b6c710cd4e,
+  cardSprite: {fileID: 3286163911610860551, guid: 4b716f542c554cf40adfd479322223f9,
     type: 3}
   locked: 0
   cardHistory: 

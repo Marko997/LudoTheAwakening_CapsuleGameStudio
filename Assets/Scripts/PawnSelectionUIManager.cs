@@ -21,6 +21,7 @@ public class PawnSelectionUIManager : MonoBehaviour
 	public SelectionTemplate templateRed;
 	public SelectionTemplate templateGreen;
 	public SelectionTemplate templateYellow;
+    public SelectionTemplate loadoutTemplate;
 
 	public LeaderPawn[] leaderPawn;
 	public LeaderPawn[] secondPawn;
@@ -100,6 +101,14 @@ public class PawnSelectionUIManager : MonoBehaviour
                 secondPawn[i].isYellow = false;
                 thirdPawn[i].isYellow = false;
                 fourthPawn[i].isYellow = false;
+            }
+            if ((leaderPawn[i].isLoadout && leaderPawn[i].isOppened) || (secondPawn[i].isLoadout && secondPawn[i].isOppened) || (thirdPawn[i].isLoadout && thirdPawn[i].isOppened) || (fourthPawn[i].isLoadout && fourthPawn[i].isOppened))
+            {
+                AddPawnsToTemplate(loadoutTemplate);
+                leaderPawn[i].isLoadout = false;
+                secondPawn[i].isLoadout = false;
+                thirdPawn[i].isLoadout = false;
+                fourthPawn[i].isLoadout = false;
             }
         }
 

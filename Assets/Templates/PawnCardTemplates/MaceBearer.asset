@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnObject: {fileID: -8318103680104209692, guid: add0151480533a844b2bd1c09015c25c,
     type: 3}
   cardName: MaceBearer
-  cardSprite: {fileID: 3286163911610860551, guid: f7f5fe412cc2bda4c967823e8ab977dd,
+  cardSprite: {fileID: 3286163911610860551, guid: a9b46bde33d2a074a9e9d13a3d279e76,
     type: 3}
   locked: 0
   cardHistory: Some history

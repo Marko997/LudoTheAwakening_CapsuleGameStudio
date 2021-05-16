@@ -13,6 +13,7 @@ public class LeaderPawn : MonoBehaviour
     public bool isBlue;
     public bool isGreen;
     public bool isYellow;
+    public bool isLoadout;
 
     public void ReturnIsOppened(bool _isOppened)
 	{
@@ -33,5 +34,10 @@ public class LeaderPawn : MonoBehaviour
     public void ReturnIsYellow(bool _isYellow)
     {
         isYellow = _isYellow;
+    }
+
+    public void ReturnIsInLoadout(bool _isLoadout)
+    {
+        isLoadout = _isLoadout;
     }
 }

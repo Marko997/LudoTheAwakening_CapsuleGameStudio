@@ -25,7 +25,7 @@ public enum CanvasType
 public class CanvasManager : Singleton<CanvasManager>
 {
     List<CanvasController> canvasControllerList;
-	CanvasController lastActiveCanvas;
+	public CanvasController lastActiveCanvas;
 
 	protected override void Awake()
 	{
