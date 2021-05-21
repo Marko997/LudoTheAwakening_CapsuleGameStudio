@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306d207129d4a1e488a2bdf0308addda, type: 3}
   m_Name: YellowTemplate
   m_EditorClassIdentifier: 
-  leaderPawn: {fileID: 2794497596776756804, guid: 84678d225f921544783d79b2c8a80344,
+  leaderPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}
-  secondPawn: {fileID: 5729253412487455503, guid: 4eeaabdfb1a48ba4e89b92f33eeceb39,
+  secondPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}
-  thirdPawn: {fileID: 4719917468357955233, guid: fef06d393f37b0d46a27b221441e56b7,
+  thirdPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}
-  fourthPawn: {fileID: 2803426087482539726, guid: 94630f4471455c840b4ee656a35d35ec,
+  fourthPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}

@@ -29,4 +29,7 @@ public class AllPawnsTemplates : ScriptableObject
     public GameObject greenBase;
     public GameObject greenPawn;
     public GameObject greenSelector;
+
+
+    
 }

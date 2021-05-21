@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306d207129d4a1e488a2bdf0308addda, type: 3}
   m_Name: BlueTemplate
   m_EditorClassIdentifier: 
-  leaderPawn: {fileID: 5729253412487455503, guid: add0151480533a844b2bd1c09015c25c,
+  leaderPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}
-  secondPawn: {fileID: 4719917468357955233, guid: 1704ef0451c751e4280960f492da343a,
+  secondPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}
-  thirdPawn: {fileID: 2803426087482539726, guid: 975192e8fd7c24943a5b052da392fd21,
+  thirdPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}
-  fourthPawn: {fileID: 5989659985400073481, guid: 2731a21cd1392a348ac79fcd2f61a5b7,
+  fourthPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}

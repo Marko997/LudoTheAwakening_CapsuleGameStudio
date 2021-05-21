@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 {
     public PlayerSelection playerSelection;
     public int playerID;
+    public GameObject emptyPawn;
 
     private PawnCardManager cardManager;
     public static GameManager instance;
@@ -52,15 +53,11 @@ public class GameManager : MonoBehaviour
     public Roller dice;
     [HideInInspector] public int rolledHumanDice;
 
-    //public PawnManager bluePawn;
-
-    
-
     void Awake()
 	{
 		instance = this;
         numberOfPlayers = SaveSettings.numberOfPlayers;
-		commonRoute = Instantiate(templates.commonRoute, Vector3.zero, Quaternion.identity).GetComponent<CommonRouteManager>();
+		commonRoute = Instantiate(templates.commonRoute).GetComponent<CommonRouteManager>();
 
         //INSERT DATA FROM STARTGAME SCENE
         InsertPlayerData();
@@ -73,8 +70,13 @@ public class GameManager : MonoBehaviour
             playerList.Add(Instantiate(playerEntity.player));
             playerList.Add(Instantiate(playerEntity.player));
 
-            playerList[0].playerName = "Red";
-            playerList[1].playerName = "Blue";
+            playerList[0].playerName = SaveSettings.playerNames[0];
+            playerList[0].playerColors = Entity.PlayerColors.RED;
+            playerList[1].playerName = SaveSettings.playerNames[1];
+            playerList[1].playerColors = Entity.PlayerColors.BLUE;
+
+            playerList[0].playerTypes = Entity.PlayerTypes.BOT;
+            playerList[1].playerTypes = Entity.PlayerTypes.BOT;
         }
         if (numberOfPlayers == 4)
 		{
@@ -83,10 +85,19 @@ public class GameManager : MonoBehaviour
             playerList.Add(Instantiate(playerEntity.player));
             playerList.Add(Instantiate(playerEntity.player));
 
-            playerList[0].playerName = "Yellow";
-            playerList[1].playerName = "Red";
-            playerList[2].playerName = "Green";
-            playerList[3].playerName = "Blue";
+            playerList[0].playerName = SaveSettings.playerNames[0];
+            playerList[0].playerColors = Entity.PlayerColors.RED;
+            playerList[1].playerName = SaveSettings.playerNames[1];
+            playerList[1].playerColors = Entity.PlayerColors.BLUE;
+            playerList[2].playerName = SaveSettings.playerNames[2];
+            playerList[2].playerColors = Entity.PlayerColors.GREEN;
+            playerList[3].playerName = SaveSettings.playerNames[3];
+            playerList[3].playerColors = Entity.PlayerColors.YELLOW;
+
+            //playerList[0].playerName = "Yellow";
+            //playerList[1].playerName = "Red";
+            //playerList[2].playerName = "Green";
+            //playerList[3].playerName = "Blue";
         }
 
 
@@ -101,17 +112,18 @@ public class GameManager : MonoBehaviour
 			{
 				playerList[i].playerTypes = Entity.PlayerTypes.BOT;
 			}
-			if (playerList[i].playerName == "Red")
+
+			if (playerList[i].playerColors == Entity.PlayerColors.RED)
 			{
 
 				var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
                 //var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
                 var redBase = Instantiate(templates.redBase);
                 //var redPawn = SaveSettings.pawn.GetComponent<PawnManager>();
-                var redPawn = templateRed.leaderPawn.GetComponent<PawnManager>();
-                var redPawn2 = templateRed.secondPawn.GetComponent<PawnManager>();
-                var redPawn3 = templateRed.thirdPawn.GetComponent<PawnManager>();
-                var redPawn4 = templateRed.fourthPawn.GetComponent<PawnManager>();
+                var redPawn = SaveSettings.redPawns[0].GetComponent<PawnManager>();
+                var redPawn2 = SaveSettings.redPawns[1].GetComponent<PawnManager>();
+                var redPawn3 = SaveSettings.redPawns[2].GetComponent<PawnManager>();
+                var redPawn4 = SaveSettings.redPawns[3].GetComponent<PawnManager>();
 
                 Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
 
@@ -123,15 +135,15 @@ public class GameManager : MonoBehaviour
                 playerList[i].playerName = SaveSettings.playerNames[0];
 
 			}
-			if (playerList[i].playerName == "Green")
+			if (playerList[i].playerColors == Entity.PlayerColors.GREEN)
 			{
 				var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
                 //var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
                 var greenBase = Instantiate(templates.greenBase);
-                var greenPawn = templateGreen.leaderPawn.GetComponent<PawnManager>();
-                var greenPawn2 = templateGreen.secondPawn.GetComponent<PawnManager>();
-                var greenPawn3 = templateGreen.thirdPawn.GetComponent<PawnManager>();
-                var greenPawn4 = templateGreen.fourthPawn.GetComponent<PawnManager>();
+                var greenPawn = SaveSettings.greenPawns[0].GetComponent<PawnManager>();
+                var greenPawn2 = SaveSettings.greenPawns[1].GetComponent<PawnManager>();
+                var greenPawn3 = SaveSettings.greenPawns[2].GetComponent<PawnManager>();
+                var greenPawn4 = SaveSettings.greenPawns[3].GetComponent<PawnManager>();
 
                 Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
 
@@ -142,15 +154,16 @@ public class GameManager : MonoBehaviour
                 playerList[i].playerName = SaveSettings.playerNames[1];
 
 			}
-			if (playerList[i].playerName == "Blue")
+			if (playerList[i].playerColors == Entity.PlayerColors.BLUE)
 			{
 				var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
 				//var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
 				var blueBase = Instantiate(templates.blueBase);
-				var bluePawn = templateBlue.leaderPawn.GetComponent<PawnManager>();
-                var bluePawn2 = templateBlue.secondPawn.GetComponent<PawnManager>();
-                var bluePawn3 = templateBlue.thirdPawn.GetComponent<PawnManager>();
-                var bluePawn4 = templateBlue.fourthPawn.GetComponent<PawnManager>();
+                //var bluePawn = templateBlue.leaderPawn.GetComponent<PawnManager>();
+                var bluePawn = SaveSettings.bluePawns[0].GetComponent<PawnManager>();
+                var bluePawn2 = SaveSettings.bluePawns[1].GetComponent<PawnManager>();
+                var bluePawn3 = SaveSettings.bluePawns[2].GetComponent<PawnManager>();
+                var bluePawn4 = SaveSettings.bluePawns[3].GetComponent<PawnManager>();
 
                 Quaternion baseRotation = Quaternion.Euler(0, 270, 0);
 
@@ -163,15 +176,15 @@ public class GameManager : MonoBehaviour
                 playerList[i].playerName = SaveSettings.playerNames[2];
 
 			}
-			if (playerList[i].playerName == "Yellow")
+			if (playerList[i].playerColors == Entity.PlayerColors.YELLOW)
 			{
 				var finalRoute = Instantiate(templates.yellowRoute, Vector3.zero, Quaternion.Euler(0, 90, 0)).GetComponent<CommonRouteManager>();
 				//var yellowBase = Instantiate(templates.yellowBase, Vector3.zero, Quaternion.identity);
 				var yellowBase = Instantiate(templates.yellowBase);
-				var yellowPawn = templateYellow.leaderPawn.GetComponent<PawnManager>();
-                var yellowPawn2 = templateYellow.secondPawn.GetComponent<PawnManager>();
-                var yellowPawn3 = templateYellow.thirdPawn.GetComponent<PawnManager>();
-                var yellowPawn4 = templateYellow.fourthPawn.GetComponent<PawnManager>();
+				var yellowPawn = SaveSettings.yellowPawns[0].GetComponent<PawnManager>();
+                var yellowPawn2 = SaveSettings.yellowPawns[1].GetComponent<PawnManager>();
+                var yellowPawn3 = SaveSettings.yellowPawns[2].GetComponent<PawnManager>();
+                var yellowPawn4 = SaveSettings.yellowPawns[3].GetComponent<PawnManager>();
 
                 Quaternion baseRotation = Quaternion.Euler(0, 180, 0);
 
@@ -216,8 +229,6 @@ public class GameManager : MonoBehaviour
 		newPawn.selector.transform.parent = newPawn.transform;
         newPawn.baseRotation = baseRotation;
 
-		//newPawn.spellType = (PawnManager.SpellType)spellType;
-
 		newPawn.Init();
 	}
 
@@ -228,7 +239,8 @@ public class GameManager : MonoBehaviour
 
         int randomPlayer = Random.Range(0, playerList.Count);
         activePlayer = randomPlayer;
-        InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " starts first!");
+        UpdateDiceBackground();
+        //InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " starts first!");
     }
 
     void Update() {
@@ -368,8 +380,8 @@ public class GameManager : MonoBehaviour
             //------------SWORDGIRL----------//
             if (activePawn.isSelected && activePawn.spellType == PawnManager.SpellType.SWORDGIRL) { }
             {
-                powerButton.SetActive(true);
-                displaySpellButton = true;
+                //powerButton.SetActive(true);
+                //displaySpellButton = true;
                 activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition];
                 if (activePawn.currentNode.isTaken)
                 {
@@ -438,7 +450,7 @@ public class GameManager : MonoBehaviour
             HumanRollDice();
         }
 
-        InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " has rolled "+ _diceNumber);
+        //InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " has rolled "+ _diceNumber);
 
     }
 
@@ -528,22 +540,27 @@ public class GameManager : MonoBehaviour
         switchingPlayer = false;
     }
 
-    void SetNextActivePlayer(){
+    void SetNextActivePlayer()
+    {
         activePlayer++;
         activePlayer %= playerList.Count;
 
         int available = 0;
-        for(int i=0;i<playerList.Count;i++){
-            if(!playerList[i].hasWon){
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            if (!playerList[i].hasWon)
+            {
                 available++;
             }
         }
 
-        if(playerList[activePlayer].hasWon && available>1){
+        if (playerList[activePlayer].hasWon && available > 1)
+        {
             SetNextActivePlayer();
             return;
         }
-        else if(available<2){
+        else if (available < 2)
+        {
             //GAME OVER SCREEN
             //SceneManager.LoadScene("LoadingScene");
             //LevelLoaderManager.sceneToLoad= "EndScene";
@@ -553,12 +570,34 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        InfoText.instance.ShowMessage(playerList[activePlayer].playerName+ " has turn!");
+        UpdateDiceBackground();
+
+        //InfoText.instance.ShowMessage(playerList[activePlayer].playerName+ " has turn!");
+        //DiceBackgoundSwitcher.instance.ChangeBackgroundImage(1);
         state = States.ROLL_DICE;
     }
 
-    
-    
+    private void UpdateDiceBackground()
+    {
+        if (playerList[activePlayer].playerColors == Entity.PlayerColors.BLUE)
+        {
+            DiceBackgoundSwitcher.instance.ChangeBackgroundImage(0);
+        }
+        else if (playerList[activePlayer].playerColors == Entity.PlayerColors.RED)
+        {
+            DiceBackgoundSwitcher.instance.ChangeBackgroundImage(2);
+        }
+        else if (playerList[activePlayer].playerColors == Entity.PlayerColors.GREEN)
+        {
+            DiceBackgoundSwitcher.instance.ChangeBackgroundImage(1);
+        }
+        else //if (playerList[activePlayer].playerColors == Entity.PlayerColors.RED)
+        {
+            DiceBackgoundSwitcher.instance.ChangeBackgroundImage(3);
+        }
+    }
+
+
     public void ReportTurnPossible(bool possible){
         turnPossible = possible;
     }
@@ -691,10 +730,10 @@ public class GameManager : MonoBehaviour
 
     public void EmptyTemplate(SelectionTemplate template)
     {
-        template.leaderPawn = null;
-        template.secondPawn = null;
-        template.thirdPawn = null;
-        template.fourthPawn = null;
+        template.leaderPawn = emptyPawn;
+        template.secondPawn = emptyPawn;
+        template.thirdPawn = emptyPawn;
+        template.fourthPawn = emptyPawn;
     }
 
     public void SwitchScene(string sceneToSwitch)

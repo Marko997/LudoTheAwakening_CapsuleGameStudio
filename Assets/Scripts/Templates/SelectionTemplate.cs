@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "Selection", menuName = "Selection/SelectionScreen", order = 1)]
 
 public class SelectionTemplate : ScriptableObject

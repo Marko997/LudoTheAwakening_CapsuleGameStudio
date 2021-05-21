@@ -6,6 +6,12 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
 	public string playerName;
+    public enum PlayerColors {
+        BLUE,
+        RED,
+        YELLOW,
+        GREEN
+    }
 	public PawnManager[] allPawns;
 	public bool hasTurn;
 	public enum PlayerTypes
@@ -15,6 +21,7 @@ public class Entity : MonoBehaviour
 		NO_PLAYER
 	}
 	public PlayerTypes playerTypes;
+    public PlayerColors playerColors;
 	public bool hasWon;
 
 

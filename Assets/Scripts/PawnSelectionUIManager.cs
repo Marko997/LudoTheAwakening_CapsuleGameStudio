@@ -28,23 +28,39 @@ public class PawnSelectionUIManager : MonoBehaviour
 	public LeaderPawn[] thirdPawn;
 	public LeaderPawn[] fourthPawn;
 
+    public Button startButton;
 
-	private void Start()
+
+
+    private void Start()
 	{
-		cardManager = FindObjectOfType<PawnCardManager>();
-        
+        cardManager = FindObjectOfType<PawnCardManager>();
+        startButton.enabled = false;   
     }
     private void Update()
     {
         if (twoPlayers)
         {
+            //DEACTIVATE OTHER PLAYER UI
             greenPlayerUI.SetActive(false);
             yellowPlayerUI.SetActive(false);
+
+            //CHECK IF PAWNS ARE EMPTY
+            CheckForEmptyPawns(SaveSettings.bluePawns);
+            CheckForEmptyPawns(SaveSettings.redPawns);
+
         }
         else
         {
+            //ACTIVATE OTHER PLAYER UI
             greenPlayerUI.SetActive(true);
             yellowPlayerUI.SetActive(true);
+
+            //CHECK OTHER PLAYERS IF PAWNS ARE EMPTY
+            CheckForEmptyPawns(SaveSettings.bluePawns);
+            CheckForEmptyPawns(SaveSettings.redPawns);
+            CheckForEmptyPawns(SaveSettings.greenPawns);
+            CheckForEmptyPawns(SaveSettings.redPawns);
         }
 
     }
@@ -58,6 +74,7 @@ public class PawnSelectionUIManager : MonoBehaviour
 	{
 		pawn.template = pawnTemplate;
 		pawn.pawn = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
+
 	}
 
 	public void SelectCharacter(int _id)
@@ -72,7 +89,7 @@ public class PawnSelectionUIManager : MonoBehaviour
         {
             if ((leaderPawn[i].isBlue && leaderPawn[i].isOppened) || (secondPawn[i].isBlue && secondPawn[i].isOppened) || (thirdPawn[i].isBlue && thirdPawn[i].isOppened) || (fourthPawn[i].isBlue && fourthPawn[i].isOppened))
             {
-                AddPawnsToTemplate(templateBlue);
+                AddPawnsToTemplate(templateBlue, SaveSettings.bluePawns);
                 leaderPawn[i].isBlue = false;
                 secondPawn[i].isBlue = false;
                 thirdPawn[i].isBlue = false;
@@ -80,7 +97,7 @@ public class PawnSelectionUIManager : MonoBehaviour
             }
             if ((leaderPawn[i].isRed && leaderPawn[i].isOppened) || (secondPawn[i].isRed && secondPawn[i].isOppened) || (thirdPawn[i].isRed && thirdPawn[i].isOppened) || (fourthPawn[i].isRed && fourthPawn[i].isOppened))
             {
-                AddPawnsToTemplate(templateRed);
+                AddPawnsToTemplate(templateRed, SaveSettings.redPawns);
                 leaderPawn[i].isRed = false;
                 secondPawn[i].isRed = false;
                 thirdPawn[i].isRed = false;
@@ -88,7 +105,7 @@ public class PawnSelectionUIManager : MonoBehaviour
             }
             if ((leaderPawn[i].isGreen && leaderPawn[i].isOppened) || (secondPawn[i].isGreen && secondPawn[i].isOppened) || (thirdPawn[i].isGreen && thirdPawn[i].isOppened) || (fourthPawn[i].isGreen && fourthPawn[i].isOppened))
             {
-                AddPawnsToTemplate(templateGreen);
+                AddPawnsToTemplate(templateGreen,SaveSettings.greenPawns);
                 leaderPawn[i].isGreen = false;
                 secondPawn[i].isGreen = false;
                 thirdPawn[i].isGreen = false;
@@ -96,7 +113,7 @@ public class PawnSelectionUIManager : MonoBehaviour
             }
             if ((leaderPawn[i].isYellow && leaderPawn[i].isOppened) || (secondPawn[i].isYellow && secondPawn[i].isOppened) || (thirdPawn[i].isYellow && thirdPawn[i].isOppened) || (fourthPawn[i].isYellow && fourthPawn[i].isOppened))
             {
-                AddPawnsToTemplate(templateYellow);
+                AddPawnsToTemplate(templateYellow,SaveSettings.yellowPawns);
                 leaderPawn[i].isYellow = false;
                 secondPawn[i].isYellow = false;
                 thirdPawn[i].isYellow = false;
@@ -104,7 +121,7 @@ public class PawnSelectionUIManager : MonoBehaviour
             }
             if ((leaderPawn[i].isLoadout && leaderPawn[i].isOppened) || (secondPawn[i].isLoadout && secondPawn[i].isOppened) || (thirdPawn[i].isLoadout && thirdPawn[i].isOppened) || (fourthPawn[i].isLoadout && fourthPawn[i].isOppened))
             {
-                AddPawnsToTemplate(loadoutTemplate);
+                AddPawnsToTemplate(loadoutTemplate,SaveSettings.loadOutPawns);
                 leaderPawn[i].isLoadout = false;
                 secondPawn[i].isLoadout = false;
                 thirdPawn[i].isLoadout = false;
@@ -114,7 +131,7 @@ public class PawnSelectionUIManager : MonoBehaviour
 
     }
 
-    private void AddPawnsToTemplate(SelectionTemplate template)
+    private void AddPawnsToTemplate(SelectionTemplate template, GameObject[] playerPawns)
     {
         if (cardManager.pawnCards[cardManager.currentIndex].locked == false)
         {
@@ -124,21 +141,28 @@ public class PawnSelectionUIManager : MonoBehaviour
                 {
                     AddPawnToUiHolder(template, playerImage[i], leaderPawn[i]);
                     template.leaderPawn = leaderPawn[i].pawn;
+                    GameObject newLeader = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
+                    playerPawns[0] = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
+
                 }
                 if (secondPawn[i].isOppened)
                 {
                     AddPawnToUiHolder(template, playerImage1[i], secondPawn[i]);
-                    template.secondPawn = secondPawn[i].pawn;
+                    playerPawns[1] = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
                 }
                 if (thirdPawn[i].isOppened)
                 {
                     AddPawnToUiHolder(template, playerImage2[i], thirdPawn[i]);
-                    template.thirdPawn = thirdPawn[i].pawn;
+                    playerPawns[2] = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
                 }
                 if (fourthPawn[i].isOppened)
                 {
                     AddPawnToUiHolder(template, playerImage3[i], fourthPawn[i]);
-                    template.fourthPawn = fourthPawn[i].pawn;
+                    playerPawns[3] = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
+                    Debug.Log(SaveSettings.bluePawns[0]);
+                    Debug.Log(SaveSettings.bluePawns[1]);
+                    Debug.Log(SaveSettings.bluePawns[2]);
+                    Debug.Log(SaveSettings.bluePawns[3]);
                 }
             }
         }
@@ -155,4 +179,20 @@ public class PawnSelectionUIManager : MonoBehaviour
     {
         twoPlayers = _twoPlayers;
     }
+
+    public void CheckForEmptyPawns(GameObject[] playerPawns)
+    {
+        for (int i = 0; i < playerPawns.Length; i++)
+        {
+            if (playerPawns[i] == null)
+            {
+                startButton.enabled = false;
+            }
+            else
+            {
+                startButton.enabled = true;
+            }
+        }
+    }
+
 }

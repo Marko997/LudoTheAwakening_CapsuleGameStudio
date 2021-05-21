@@ -26,8 +26,8 @@ public class Roller : MonoBehaviour
 
     public Sprite RollDice()
     {
-        //int x = Mathf.RoundToInt(Random.Range(0, DiceImages.Length));
-        int x = 5;
+        int x = Mathf.RoundToInt(Random.Range(0, DiceImages.Length));
+        //int x = 5;
         currentVal = x + 1;
         GameManager.instance.RollDice(currentVal);
 
