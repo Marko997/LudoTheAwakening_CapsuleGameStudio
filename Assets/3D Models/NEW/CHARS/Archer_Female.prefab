@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2451528110888572540}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3739561, y: 0.5188539, z: -0.0025425854}
+  m_LocalPosition: {x: -1.3739561, y: -0.03, z: -0.0025425854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6364814055132420019}
@@ -103,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3733251060155040049}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.8890126, y: 1.4583346, z: 0.38937488}
+  m_LocalPosition: {x: 2.8890126, y: 1.05, z: 0.38937488}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4404424699509744152}
@@ -136,7 +136,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4131145050517383659}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.020560937, y: 1.1538056, z: 0.18241814}
+  m_LocalPosition: {x: 0.020560937, y: 0.78, z: 0.18241814}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2443019807415110461}
@@ -309,6 +309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6364814055132420019}
   - component: {fileID: 1269457147017809914}
+  - component: {fileID: -6747751510592053030}
   m_Layer: 0
   m_Name: Archer_Female
   m_TagString: Untagged
@@ -324,7 +325,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5989659985400073481}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2004616279383627059}
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pawnId: 0
   pawnName: 
-  spellType: 0
+  spellType: 1
   baseRotation: {x: 0, y: 0, z: 0, w: 0}
   commonRoute: {fileID: 0}
   finalRoute: {fileID: 0}
@@ -362,3 +363,16 @@ MonoBehaviour:
   isOut: 0
   isSelected: 0
   selector: {fileID: 0}
+--- !u!65 &-6747751510592053030
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5989659985400073481}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.9562457, z: 1.013241}
+  m_Center: {x: 0, y: 0.30020678, z: 0.17488156}

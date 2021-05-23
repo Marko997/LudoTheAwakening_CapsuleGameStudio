@@ -159,10 +159,7 @@ public class PawnSelectionUIManager : MonoBehaviour
                 {
                     AddPawnToUiHolder(template, playerImage3[i], fourthPawn[i]);
                     playerPawns[3] = cardManager.pawnCards[cardManager.currentIndex].pawnObject.gameObject;
-                    Debug.Log(SaveSettings.bluePawns[0]);
-                    Debug.Log(SaveSettings.bluePawns[1]);
-                    Debug.Log(SaveSettings.bluePawns[2]);
-                    Debug.Log(SaveSettings.bluePawns[3]);
+
                 }
             }
         }

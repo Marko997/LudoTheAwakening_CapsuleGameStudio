@@ -26,8 +26,9 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Camera rotation
+        try
+        {
+//Camera rotation
         if (Input.GetMouseButton(0) || Input.touchCount == 1)
         {
             //mouseX += Input.GetAxis("Mouse X") * 3;
@@ -71,6 +72,14 @@ public class CameraController : MonoBehaviour
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             Zoom(scroll, mouseZoomSpeed);
 		}
+        }
+        catch (System.IndexOutOfRangeException)
+        {
+
+            //throw;
+        }
+
+        
 
         if(cam.fieldOfView < zoomMinBound)
 		{

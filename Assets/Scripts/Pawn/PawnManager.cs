@@ -38,7 +38,7 @@ public class PawnManager : MonoBehaviour
 
     int steps;
     int doneSteps;
-    [HideInInspector]public int eatPower;
+    public int eatPower;
 
     [Header("BOOLS")]
     public bool isOut;
@@ -111,16 +111,16 @@ public class PawnManager : MonoBehaviour
 			timeForPointToPoint = 0;
 			steps--;
 			doneSteps++;
-            if(steps == 0)
-			{
-                if(GameManager.instance.displaySpellButton == true)
-				{
-                    break;
-				}
-                GameManager.instance.displaySpellButton = true;
-                GameManager.instance.powerButton.gameObject.SetActive(true);
+   //         if(steps == 0)
+			//{
+   //             if(GameManager.instance.displaySpellButton == true)
+			//	{
+   //                 break;
+			//	}
+   //             GameManager.instance.displaySpellButton = true;
+   //             //GameManager.instance.powerButton.gameObject.SetActive(true);
 
-			}
+			//}
 
 		}
         
@@ -150,8 +150,17 @@ public class PawnManager : MonoBehaviour
 
         //SWITCH THE PLAYER
         if(diceNumber<6){
-            GameManager.instance.state = GameManager.States.ATTACK;
+            //GameManager.instance.state = GameManager.States.ATTACK;
             //GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+
+            if(GameManager.instance.playerList[GameManager.instance.activePlayer].playerTypes == Entity.PlayerTypes.HUMAN)
+            {
+                GameManager.instance.state = GameManager.States.ATTACK;
+            }
+            else
+            {
+                GameManager.instance.state = GameManager.States.SWITCH_PLAYER;
+            }
         }
         else{
             GameManager.instance.state = GameManager.States.ROLL_DICE;

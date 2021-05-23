@@ -20,14 +20,15 @@ public class SpellButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     // Update is called once per frame
     void Update()
     {
-        spellButton.visible = GameManager.instance.displaySpellButton;
+        //spellButton.visible = GameManager.instance.displaySpellButton;
 		if (spellButton.visible)
 		{
             spellButton.gameObject.SetActive(true);
+
 		}
 		else
 		{
-            spellButton.gameObject.SetActive(false);
+            spellButton.gameObject.SetActive(true);
         }
     }
 
