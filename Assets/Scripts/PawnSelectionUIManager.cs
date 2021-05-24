@@ -35,7 +35,7 @@ public class PawnSelectionUIManager : MonoBehaviour
     private void Start()
 	{
         cardManager = FindObjectOfType<PawnCardManager>();
-        startButton.enabled = false;   
+        startButton.interactable = false;   
     }
     private void Update()
     {
@@ -183,11 +183,11 @@ public class PawnSelectionUIManager : MonoBehaviour
         {
             if (playerPawns[i] == null)
             {
-                startButton.enabled = false;
+                startButton.interactable = false;
             }
             else
             {
-                startButton.enabled = true;
+                startButton.interactable = true;
             }
         }
     }

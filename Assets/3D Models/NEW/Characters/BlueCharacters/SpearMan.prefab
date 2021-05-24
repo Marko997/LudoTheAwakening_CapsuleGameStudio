@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: -356113577853848352}
   - component: {fileID: -4544267299765982360}
   m_Layer: 0
-  m_Name: kopljonosa 1
+  m_Name: SpearMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,8 +232,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 1.6, z: 0.5}
-  m_Center: {x: 0, y: 0.85, z: 0.135}
+  m_Size: {x: 1.0138168, y: 2.2207463, z: 0.5}
+  m_Center: {x: -0.0077593178, y: 1.0672611, z: 0.13499999}
 --- !u!1 &6160526601443624600
 GameObject:
   m_ObjectHideFlags: 0

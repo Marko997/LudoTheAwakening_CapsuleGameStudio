@@ -15,10 +15,12 @@ public class GameManager : MonoBehaviour
     public PlayerSelection playerSelection;
     public int playerID;
     public GameObject emptyPawn;
-    public PawnManager activePawn;
+    //public PawnManager activePawn;
 
     public TextMeshProUGUI redName;
     public TextMeshProUGUI blueName;
+    public TextMeshProUGUI greenName;
+    public TextMeshProUGUI yellowName;
 
     private PawnCardManager cardManager;
     public static GameManager instance;
@@ -67,8 +69,8 @@ public class GameManager : MonoBehaviour
 
         redName.text = SaveSettings.playerNames[0];
         blueName.text = SaveSettings.playerNames[2];
-        //greenName.text = SaveSettings.playerNames[1];
-        //yellowName.text = SaveSettings.playerNames[3];
+        greenName.text = SaveSettings.playerNames[1];
+        yellowName.text = SaveSettings.playerNames[3];
 
         //INSERT DATA FROM STARTGAME SCENE
         InsertPlayerData();
@@ -308,6 +310,18 @@ public class GameManager : MonoBehaviour
                     {
                         //DEACTIVATE HIGHLIGHTS
                         ActivateRollButton(true);
+                        //try
+                        //{
+                        //    if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
+                        //    {
+                        //        ActivatePowerButton(true);
+                        //    }
+                        //}
+                        //catch (System.NullReferenceException)
+                        //{
+
+                        //}
+
                         state = States.WAITING;
 
                     }
@@ -342,15 +356,22 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //CHECK IF PAWN IS SWORDGIRL AND TURN POWER BUTTON ON
         for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
         {
-
-            var somePawn = playerList[activePlayer].allPawns[i];
-            if (somePawn.isSelected)
+            if (playerList[activePlayer].allPawns[i].isSelected)
             {
-                activePawn = somePawn;
-
+                var activePawn = playerList[activePlayer].allPawns[i];
+                Debug.Log(activePawn);
+                if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
+                {
+                    ActivatePowerButton(true);
+                }
             }
+            //if (playerList[activePlayer].allPawns[i].spellType == PawnManager.SpellType.SWORDGIRL)
+            //{
+            //    ActivatePowerButton(true);
+            //}
         }
     }
 
@@ -364,103 +385,112 @@ public class GameManager : MonoBehaviour
         //displaySpellButton = false;
         //powerButton.SetActive(false);
         ActivatePowerButton(false);
+        
         for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
 		{
-            //---------SPEARMAN----------//
-            if (activePawn.spellType == PawnManager.SpellType.SPEARMAN)
-			{
-                activePawn.eatPower = 1;                
-                activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-               
-                if (activePawn.eatNode.isTaken)
-                {
-                    if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
-                    {
-                        //KICK THE OTHER STONE
-                        activePawn.eatNode.pawn.ReturnToBase();
-                    }
-                }
-            }
-            //-------------ARHCER----------//
-             if (activePawn.spellType == PawnManager.SpellType.ARCHER)
+            if (playerList[activePlayer].allPawns[i].isSelected)
             {
-                activePawn.eatPower = 3;
-                activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-                if (activePawn.goalNode.isTaken)
-                {
-                    if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
-                    {
-                        //KICK THE OTHER STONE
-                        activePawn.eatNode.pawn.ReturnToBase();
-                    }
+                var activePawn = playerList[activePlayer].allPawns[i];
+                Debug.Log(activePawn);
 
-                }
-
-            }
-            //-----------MACEBARER----------//
-             if ( activePawn.spellType == PawnManager.SpellType.MACEBEARER)
-            {
-                activePawn.eatPower = -1;
-                activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-                if (activePawn.goalNode.isTaken)
+                //---------SPEARMAN----------//
+                if (activePawn.spellType == PawnManager.SpellType.SPEARMAN)
                 {
-                    if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                    activePawn.eatPower = 1;
+                    activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+
+                    if (activePawn.eatNode.isTaken)
                     {
-                        //KICK THE OTHER STONE
-                        activePawn.eatNode.pawn.ReturnToBase();
+                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        {
+                            //KICK THE OTHER STONE
+                            activePawn.eatNode.pawn.ReturnToBase();
+                        }
                     }
                 }
 
-            }
-            //------------SWORDGIRL----------//
-             if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
-            {
-                ActivatePowerButton(true);
-                //powerButton.SetActive(true);
-                //displaySpellButton = true;
-                activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition];
-                if (activePawn.currentNode.isTaken)
+                //-------------ARHCER----------//
+                if (activePawn.spellType == PawnManager.SpellType.ARCHER)
                 {
-                    if (activePawn.pawnId != activePawn.currentNode.pawn.pawnId)
+                    activePawn.eatPower = 3;
+                    activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                    if (activePawn.eatNode.isTaken)
                     {
-                        //KICK THE OTHER STONE
-                        activePawn.currentNode.pawn.ReturnToBase();
+                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        {
+                            //KICK THE OTHER STONE
+                            activePawn.eatNode.pawn.ReturnToBase();
+                        }
+
                     }
+
+                }
+                //-----------MACEBARER----------//
+                if (activePawn.spellType == PawnManager.SpellType.MACEBEARER)
+                { 
+                    activePawn.eatPower = -1;
+                    activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                    if (activePawn.eatNode.isTaken)
+                    {
+                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        {
+                            //KICK THE OTHER STONE
+                            activePawn.eatNode.pawn.ReturnToBase();
+                        }
+                    }
+
+                }
+                //------------SWORDGIRL----------//
+                if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
+                {
+                    //ActivatePowerButton(true);
+                    //powerButton.SetActive(true);
+                    //displaySpellButton = true;
+                    activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition];
+                    if (activePawn.currentNode.isTaken)
+                    {
+                        if (activePawn.pawnId != activePawn.currentNode.pawn.pawnId)
+                        {
+                            //KICK THE OTHER STONE
+                            activePawn.currentNode.pawn.ReturnToBase();
+                        }
+                    }
+
+                }
+                //--------------SLINGSHOTMAN------------//
+                if (activePawn.spellType == PawnManager.SpellType.SLINGSHOOTMAN)
+                {
+                    activePawn.eatPower = 2;
+                    activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+                    if (activePawn.goalNode.isTaken)
+                    {
+                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        {
+                            //KICK THE OTHER STONE
+                            activePawn.eatNode.pawn.ReturnToBase();
+                        }
+                    }
+
+                }
+                //-----------WIZARD-----------------//
+                if (activePawn.spellType == PawnManager.SpellType.WIZARD) { }
+                {
+                    ActivatePowerButton(true);
+                    //powerButton.SetActive(true);
+                    //displaySpellButton = true;
+                    activePawn.eatPower = 6;
+                    activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+
+
                 }
 
+                activePawn.eatPower = 0;
+                activePawn.isSelected = false;
+                ActivatePowerButton(false);
+                //powerButton.SetActive(false);
+                activePawn.eatNode = null;
+                activePawn = null;
             }
-            //--------------SLINGSHOTMAN------------//
-             if ( activePawn.spellType == PawnManager.SpellType.SLINGSHOOTMAN)
-            {
-                activePawn.eatPower = 2;
-                activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-                if (activePawn.goalNode.isTaken)
-                {
-                    if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
-                    {
-                        //KICK THE OTHER STONE
-                        activePawn.eatNode.pawn.ReturnToBase();
-                    }
-                }
-
-            }
-            //-----------WIZARD-----------------//
-             if (activePawn.spellType == PawnManager.SpellType.WIZARD) { }
-            {
-                ActivatePowerButton(true);
-                //powerButton.SetActive(true);
-                //displaySpellButton = true;
-                activePawn.eatPower = 6;
-                activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-                
-
-            }
-
-            activePawn.eatPower = 0;
-            activePawn.isSelected = false;
-            ActivatePowerButton(false);
-            //powerButton.SetActive(false);
-            activePawn.eatNode = null;
         }
 	}
 
