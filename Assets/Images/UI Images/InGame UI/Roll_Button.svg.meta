@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 56c4808f889e54144973437f51f29259
+guid: 777bc51597ee12a4694b8d53714bf150
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -39,17 +39,17 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: Roll_ButtonSprite
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.49956924, y: 0.50066984}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
-      spriteID: c73ca4f75feba4d4fb53c05b1917c213
+        width: 325
+        height: 209
+      spriteID: f27ef9435d640e846a71b7a45573f72a
       internalID: 0
     PhysicsOutlines: []

@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnObject: {fileID: 6910309990583401737, guid: 975192e8fd7c24943a5b052da392fd21,
     type: 3}
   cardName: SwordGirl
-  cardSprite: {fileID: 3286163911610860551, guid: 8d6a3b84168fe0f4783835ba23dae59a,
+  cardSprite: {fileID: 3286163911610860551, guid: b8451d798e690d146aaf139aadda4feb,
     type: 3}
   locked: 0
   cardHistory: 

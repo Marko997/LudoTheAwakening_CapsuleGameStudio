@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnObject: {fileID: -356113577853848352, guid: 1704ef0451c751e4280960f492da343a,
     type: 3}
   cardName: SpearMan
-  cardSprite: {fileID: 3286163911610860551, guid: 538f3860b15c5794689c09a33bac2fe3,
+  cardSprite: {fileID: 3286163911610860551, guid: ae33b3edbe50fb041856df03b666440d,
     type: 3}
   locked: 0
   cardHistory: Some history

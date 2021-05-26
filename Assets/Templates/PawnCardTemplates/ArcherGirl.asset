@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnObject: {fileID: 1269457147017809914, guid: 2731a21cd1392a348ac79fcd2f61a5b7,
     type: 3}
   cardName: ArcherGirl
-  cardSprite: {fileID: 3286163911610860551, guid: 4b716f542c554cf40adfd479322223f9,
+  cardSprite: {fileID: 3286163911610860551, guid: b428cf7d20e652a4ba757c6de3a4f99a,
     type: 3}
   locked: 0
   cardHistory: 

@@ -68,8 +68,8 @@ public class GameManager : MonoBehaviour
 		commonRoute = Instantiate(templates.commonRoute).GetComponent<CommonRouteManager>();
 
         redName.text = SaveSettings.playerNames[0];
-        blueName.text = SaveSettings.playerNames[2];
         greenName.text = SaveSettings.playerNames[1];
+        blueName.text = SaveSettings.playerNames[2];
         yellowName.text = SaveSettings.playerNames[3];
 
         //INSERT DATA FROM STARTGAME SCENE
@@ -362,7 +362,7 @@ public class GameManager : MonoBehaviour
             if (playerList[activePlayer].allPawns[i].isSelected)
             {
                 var activePawn = playerList[activePlayer].allPawns[i];
-                Debug.Log(activePawn);
+                //Debug.Log(activePawn);
                 if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
                 {
                     ActivatePowerButton(true);
@@ -391,7 +391,7 @@ public class GameManager : MonoBehaviour
             if (playerList[activePlayer].allPawns[i].isSelected)
             {
                 var activePawn = playerList[activePlayer].allPawns[i];
-                Debug.Log(activePawn);
+                //Debug.Log(activePawn);
 
                 //---------SPEARMAN----------//
                 if (activePawn.spellType == PawnManager.SpellType.SPEARMAN)
@@ -443,17 +443,34 @@ public class GameManager : MonoBehaviour
                 //------------SWORDGIRL----------//
                 if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
                 {
-                    //ActivatePowerButton(true);
-                    //powerButton.SetActive(true);
-                    //displaySpellButton = true;
-                    activePawn.currentNode = activePawn.fullRoute[activePawn.routePosition];
-                    if (activePawn.currentNode.isTaken)
+                    
+                    for (int j = activePawn.fullRoute.IndexOf(activePawn.currentNode)+1;  j < activePawn.fullRoute.IndexOf(activePawn.currentNode) + dice.DiceOneValue;  j++)
                     {
-                        if (activePawn.pawnId != activePawn.currentNode.pawn.pawnId)
+                        //List<NodeManager> eatNodes = new List<NodeManager>();
+                        //eatNodes.Add(activePawn.fullRoute[j]);
+                        activePawn.eatNode = activePawn.fullRoute[j];
+
+                        if (activePawn.eatNode.isTaken)
                         {
-                            //KICK THE OTHER STONE
-                            activePawn.currentNode.pawn.ReturnToBase();
+                            if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                            {
+                                //KICK THE OTHER STONE
+                                activePawn.eatNode.pawn.ReturnToBase();
+                            }
                         }
+
+                        //foreach (NodeManager node in eatNodes){
+                        //    if (node.isTaken)
+                        //    {
+                        //        if (activePawn.pawnId != activePawn.currentNode.pawn.pawnId)
+                        //        {
+                        //            //KICK THE OTHER STONE
+                        //            node.pawn.ReturnToBase();
+                        //        }
+                        //    }
+                        //}
+
+
                     }
 
                 }
@@ -461,8 +478,9 @@ public class GameManager : MonoBehaviour
                 if (activePawn.spellType == PawnManager.SpellType.SLINGSHOOTMAN)
                 {
                     activePawn.eatPower = 2;
-                    activePawn.goalNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
-                    if (activePawn.goalNode.isTaken)
+                    activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
+
+                    if (activePawn.eatNode.isTaken)
                     {
                         if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
                         {
@@ -475,7 +493,7 @@ public class GameManager : MonoBehaviour
                 //-----------WIZARD-----------------//
                 if (activePawn.spellType == PawnManager.SpellType.WIZARD) { }
                 {
-                    ActivatePowerButton(true);
+                    //ActivatePowerButton(true);
                     //powerButton.SetActive(true);
                     //displaySpellButton = true;
                     activePawn.eatPower = 6;

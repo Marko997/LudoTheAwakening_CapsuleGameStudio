@@ -89,7 +89,7 @@ public class PawnCardManager : MonoBehaviour
         displayedPawn.pawnHolder.name = displayedPawn.loadOutTemplate.leaderPawn.name;
         displayedPawn.pawnHolder.transform.parent = displayedPawn.transform;
         displayedPawn.pawnHolder.localScale = new Vector3(500, 500, 500);
-        displayedPawn.pawnHolder.transform.localPosition = new Vector3(-7.5f, -1058, -166);
+        displayedPawn.pawnHolder.transform.localPosition = new Vector3(-7.5f, -715, -166);
         Destroy(displayedPawn.pawnHolder.GetComponent<PawnManager>());
         //SelectButton.color = new Color(1,1,1,1);
         //cardSpriteImage.sprite = pawnCards[currentIndex].cardSprite;

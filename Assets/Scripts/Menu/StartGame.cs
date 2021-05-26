@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartGame : MonoBehaviour
 {
     string sname;
+    public Toggle humanVsHuman;
     // Start is called before the first frame update
     void Start()
     {
-		for (int i = 0; i < SaveSettings.players.Length; i++)
-		{
-            SaveSettings.players[i] = "BOT";
-		}
+        humanVsHuman.isOn = true;
         sname = "LoadingScene";
         SaveSettings.numberOfPlayers = 2;
 
