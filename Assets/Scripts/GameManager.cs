@@ -130,7 +130,8 @@ public class GameManager : MonoBehaviour
 			if (playerList[i].playerColors == Entity.PlayerColors.RED)
 			{
 
-				var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
+				//var finalRoute = Instantiate(templates.redRoute, Vector3.zero, Quaternion.Euler(0, 0, 0)).GetComponent<CommonRouteManager>();
+				var finalRoute = Instantiate(templates.redRoute).GetComponent<CommonRouteManager>();
                 //var redBase = Instantiate(templates.redBase, Vector3.zero, Quaternion.identity);
                 var redBase = Instantiate(templates.redBase);
                 //var redPawn = SaveSettings.pawn.GetComponent<PawnManager>();
@@ -141,7 +142,7 @@ public class GameManager : MonoBehaviour
 
                 Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
 
-                CreatePawns(i, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90,baseRotation,i);
+                CreatePawns(i, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90,baseRotation,i,templates.redShader);
 
 
                 //CreatePawns(i, finalRoute, redBase, 40, redPawn,90,0);
@@ -151,7 +152,8 @@ public class GameManager : MonoBehaviour
 			}
 			if (playerList[i].playerColors == Entity.PlayerColors.GREEN)
 			{
-				var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
+				//var finalRoute = Instantiate(templates.greenRoute, Vector3.zero, Quaternion.Euler(0, 270, 0)).GetComponent<CommonRouteManager>();
+				var finalRoute = Instantiate(templates.greenRoute).GetComponent<CommonRouteManager>();
                 //var greenBase = Instantiate(templates.greenBase, Vector3.zero, Quaternion.identity);
                 var greenBase = Instantiate(templates.greenBase);
                 var greenPawn = SaveSettings.greenPawns[0].GetComponent<PawnManager>();
@@ -161,7 +163,7 @@ public class GameManager : MonoBehaviour
 
                 Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
 
-                CreatePawns(i, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0,baseRotation,i);
+                CreatePawns(i, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0,baseRotation,i,templates.greenShader);
 
                 //CreatePawns(i, finalRoute, greenBase, 27, greenPawn,0,1);
 
@@ -170,7 +172,8 @@ public class GameManager : MonoBehaviour
 			}
 			if (playerList[i].playerColors == Entity.PlayerColors.BLUE)
 			{
-				var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
+				//var finalRoute = Instantiate(templates.blueRoute, Vector3.zero, Quaternion.Euler(0, 180, 0)).GetComponent<CommonRouteManager>();
+				var finalRoute = Instantiate(templates.blueRoute).GetComponent<CommonRouteManager>();
 				//var blueBase = Instantiate(templates.blueBase, Vector3.zero, Quaternion.identity);
 				var blueBase = Instantiate(templates.blueBase);
                 //var bluePawn = templateBlue.leaderPawn.GetComponent<PawnManager>();
@@ -181,7 +184,7 @@ public class GameManager : MonoBehaviour
 
                 Quaternion baseRotation = Quaternion.Euler(0, 270, 0);
 
-                CreatePawns(i, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270,baseRotation,i);
+                CreatePawns(i, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270,baseRotation,i,templates.blueShader);
 
                 //CreatePawns(i, finalRoute, blueBase, 14, bluePawn,270,2);
 
@@ -192,7 +195,8 @@ public class GameManager : MonoBehaviour
 			}
 			if (playerList[i].playerColors == Entity.PlayerColors.YELLOW)
 			{
-				var finalRoute = Instantiate(templates.yellowRoute, Vector3.zero, Quaternion.Euler(0, 90, 0)).GetComponent<CommonRouteManager>();
+				//var finalRoute = Instantiate(templates.yellowRoute, Vector3.zero, Quaternion.Euler(0, 90, 0)).GetComponent<CommonRouteManager>();
+				var finalRoute = Instantiate(templates.yellowRoute).GetComponent<CommonRouteManager>();
 				//var yellowBase = Instantiate(templates.yellowBase, Vector3.zero, Quaternion.identity);
 				var yellowBase = Instantiate(templates.yellowBase);
 				var yellowPawn = SaveSettings.yellowPawns[0].GetComponent<PawnManager>();
@@ -202,7 +206,7 @@ public class GameManager : MonoBehaviour
 
                 Quaternion baseRotation = Quaternion.Euler(0, 180, 0);
 
-                CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180,baseRotation,i);
+                CreatePawns(i, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180,baseRotation,i, templates.yellowShader);
 
 
                 playerList[i].playerName = SaveSettings.playerNames[3];
@@ -211,7 +215,7 @@ public class GameManager : MonoBehaviour
         }
 	}
 
-	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, Quaternion baseRotation, int pawnId)
+	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
 		for (int j = 0; j < playerList[i].allPawns.Length-3; j++)
 		{
@@ -225,10 +229,15 @@ public class GameManager : MonoBehaviour
             newPawn3.baseNode = newBase.transform.GetChild(2).GetComponent<NodeManager>();
             newPawn4.baseNode = newBase.transform.GetChild(3).GetComponent<NodeManager>();
 
-            CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn,baseRotation,pawnId);
-            CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2,baseRotation, pawnId);
-            CreatePawn(finalRoute, newBase, startNode, 2, j, newPawn3, baseRotation, pawnId);
-            CreatePawn(finalRoute, newBase, startNode, 3, j, newPawn4, baseRotation, pawnId);
+            newPawn.transform.position = newBase.transform.GetChild(0).GetComponent<NodeManager>().transform.position;
+            newPawn2.transform.position = newBase.transform.GetChild(1).GetComponent<NodeManager>().transform.position;
+            newPawn3.transform.position = newBase.transform.GetChild(2).GetComponent<NodeManager>().transform.position;
+            newPawn4.transform.position = newBase.transform.GetChild(3).GetComponent<NodeManager>().transform.position;
+
+            CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn,baseRotation,pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2,baseRotation, pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 2, j, newPawn3, baseRotation, pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 3, j, newPawn4, baseRotation, pawnId, pawnShader);
 
             playerList[i].allPawns[0] = newPawn;
 			playerList[i].allPawns[1] = newPawn2;
@@ -237,18 +246,19 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
-	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, int j, PawnManager newPawn, Quaternion baseRotation, int pawnId)
+	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, int j, PawnManager newPawn, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
         
 		newPawn.commonRoute = commonRoute;
 		newPawn.finalRoute = finalRoute;
 		
 		newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
-		newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, 0.1f, newPawn.transform.position.z), Quaternion.identity);
+		newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, newPawn.transform.position.y, newPawn.transform.position.z), Quaternion.identity);
 		newPawn.selector.transform.parent = newPawn.transform;
         newPawn.baseRotation = baseRotation;
         newPawn.pawnId = pawnId;
-
+        newPawn.glowShader = Instantiate(pawnShader,new Vector3(newPawn.transform.position.x, newPawn.transform.position.y+3, newPawn.transform.position.z-0.3f), Quaternion.identity);
+        newPawn.glowShader.transform.parent = newPawn.transform;
 		newPawn.Init();
 	}
 
@@ -457,6 +467,7 @@ public class GameManager : MonoBehaviour
                                 //KICK THE OTHER STONE
                                 activePawn.eatNode.pawn.ReturnToBase();
                             }
+                            ActivatePowerButton(false);
                         }
 
                         //foreach (NodeManager node in eatNodes){
@@ -472,6 +483,7 @@ public class GameManager : MonoBehaviour
 
 
                     }
+                    ActivatePowerButton(false);
 
                 }
                 //--------------SLINGSHOTMAN------------//

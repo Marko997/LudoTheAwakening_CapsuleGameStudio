@@ -48,6 +48,7 @@ public class PawnManager : MonoBehaviour
 
     [Header("SELECTOR")]
     public GameObject selector;
+    public GameObject glowShader;
 
     //ARC MOVEMENT
     float amplitude = 0.5f;

@@ -10,6 +10,11 @@ public class AllPawnsTemplates : ScriptableObject
 
     public GameObject commonRoute;
 
+    public GameObject blueShader;
+    public GameObject redShader;
+    public GameObject greenShader;
+    public GameObject yellowShader;
+
     public GameObject yellowRoute;
     public GameObject yellowBase;
     public GameObject yellowPawn;

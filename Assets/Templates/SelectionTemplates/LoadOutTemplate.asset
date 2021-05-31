@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306d207129d4a1e488a2bdf0308addda, type: 3}
   m_Name: LoadOutTemplate
   m_EditorClassIdentifier: 
-  leaderPawn: {fileID: 5989659985400073481, guid: 2731a21cd1392a348ac79fcd2f61a5b7,
+  leaderPawn: {fileID: 9115079825275431751, guid: f0cbfada423ff234185e37400f64f081,
     type: 3}
   secondPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
     type: 3}

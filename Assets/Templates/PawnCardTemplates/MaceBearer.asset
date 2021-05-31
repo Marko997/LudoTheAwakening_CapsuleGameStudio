@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3caaab3c725a2458e9a734c7c53645, type: 3}
   m_Name: MaceBearer
   m_EditorClassIdentifier: 
-  pawnObject: {fileID: -8318103680104209692, guid: add0151480533a844b2bd1c09015c25c,
+  pawnObject: {fileID: 8664171812061801380, guid: a992d08312b4d3946a2c03bf1a169b19,
     type: 3}
   cardName: MaceBearer
   cardSprite: {fileID: 3286163911610860551, guid: cb6b55e3a75220f409188211f0ae4297,

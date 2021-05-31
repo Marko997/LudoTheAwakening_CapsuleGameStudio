@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3caaab3c725a2458e9a734c7c53645, type: 3}
   m_Name: SwordGirl
   m_EditorClassIdentifier: 
-  pawnObject: {fileID: 6910309990583401737, guid: 975192e8fd7c24943a5b052da392fd21,
+  pawnObject: {fileID: 8910422939661709183, guid: b3a838c97bed3b84f8cb6985b8df1b09,
     type: 3}
   cardName: SwordGirl
   cardSprite: {fileID: 3286163911610860551, guid: b8451d798e690d146aaf139aadda4feb,
