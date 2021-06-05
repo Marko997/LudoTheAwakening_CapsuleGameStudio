@@ -14,13 +14,6 @@ public class GameManager : MonoBehaviour
 {
     public PlayerSelection playerSelection;
     public int playerID;
-    public GameObject emptyPawn;
-    //public PawnManager activePawn;
-
-    public TextMeshProUGUI redName;
-    public TextMeshProUGUI blueName;
-    public TextMeshProUGUI greenName;
-    public TextMeshProUGUI yellowName;
 
     private PawnCardManager cardManager;
     public static GameManager instance;
@@ -37,10 +30,6 @@ public class GameManager : MonoBehaviour
 
     [Header("TEMPLATES")]
     public AllPawnsTemplates templates;
-    public SelectionTemplate templateYellow;
-    public SelectionTemplate templateBlue;
-    public SelectionTemplate templateGreen;
-    public SelectionTemplate templateRed;
     public EntityTemplate playerEntity;
 
     [Header("PLAYER INFO")]
@@ -67,10 +56,6 @@ public class GameManager : MonoBehaviour
         numberOfPlayers = SaveSettings.numberOfPlayers;
 		commonRoute = Instantiate(templates.commonRoute).GetComponent<CommonRouteManager>();
 
-        redName.text = SaveSettings.playerNames[0];
-        greenName.text = SaveSettings.playerNames[1];
-        blueName.text = SaveSettings.playerNames[2];
-        yellowName.text = SaveSettings.playerNames[3];
 
         //INSERT DATA FROM STARTGAME SCENE
         InsertPlayerData();
@@ -87,10 +72,6 @@ public class GameManager : MonoBehaviour
             playerList[0].playerColors = Entity.PlayerColors.RED;
             playerList[1].playerName = SaveSettings.playerNames[1];
             playerList[1].playerColors = Entity.PlayerColors.BLUE;
-
-
-            //playerList[0].playerTypes = Entity.PlayerTypes.SaveSettings.players[0];
-            //playerList[1].playerTypes = Entity.PlayerTypes.BOT;
         }
         if (numberOfPlayers == 4)
 		{
@@ -108,10 +89,6 @@ public class GameManager : MonoBehaviour
             playerList[3].playerName = SaveSettings.playerNames[3];
             playerList[3].playerColors = Entity.PlayerColors.YELLOW;
 
-            //playerList[0].playerName = "Yellow";
-            //playerList[1].playerName = "Red";
-            //playerList[2].playerName = "Green";
-            //playerList[3].playerName = "Blue";
         }
 
 
@@ -265,7 +242,6 @@ public class GameManager : MonoBehaviour
 	void Start() {
         ActivateRollButton(false);
         ActivatePowerButton(false);
-        //powerButton.SetActive(false);
 
 
         int randomPlayer = Random.Range(0, playerList.Count);
@@ -378,10 +354,6 @@ public class GameManager : MonoBehaviour
                     ActivatePowerButton(true);
                 }
             }
-            //if (playerList[activePlayer].allPawns[i].spellType == PawnManager.SpellType.SWORDGIRL)
-            //{
-            //    ActivatePowerButton(true);
-            //}
         }
     }
 
@@ -672,7 +644,6 @@ public class GameManager : MonoBehaviour
             //SceneManager.LoadScene("LoadingScene");
             //LevelLoaderManager.sceneToLoad= "EndScene";
             SwitchScene("EndScene");
-            EmptyAllTemplates();
             state = States.WAITING;
             return;
         }
@@ -833,21 +804,6 @@ public class GameManager : MonoBehaviour
         return tempList;
     }
 
-    public void EmptyAllTemplates()
-    {
-        EmptyTemplate(templateRed);
-        EmptyTemplate(templateBlue);
-        EmptyTemplate(templateGreen);
-        EmptyTemplate(templateYellow);
-    }
-
-    public void EmptyTemplate(SelectionTemplate template)
-    {
-        template.leaderPawn = emptyPawn;
-        template.secondPawn = emptyPawn;
-        template.thirdPawn = emptyPawn;
-        template.fourthPawn = emptyPawn;
-    }
 
     public void SwitchScene(string sceneToSwitch)
     {

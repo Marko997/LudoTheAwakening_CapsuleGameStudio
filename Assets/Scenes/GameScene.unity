@@ -289,6 +289,7 @@ GameObject:
   - component: {fileID: 27553445}
   - component: {fileID: 27553444}
   - component: {fileID: 27553447}
+  - component: {fileID: 27553448}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -354,13 +355,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27553443}
-  m_LocalRotation: {x: 0.078459114, y: 0, z: 0, w: 0.99691737}
-  m_LocalPosition: {x: 0, y: 13, z: -30}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 9, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &27553447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,7 +375,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1173284554}
-  distanceToTarget: 15
+--- !u!65 &27553448
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27553443}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &77508015
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,12 +711,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSelection: 0
   playerID: 0
-  emptyPawn: {fileID: 5841029438673618633, guid: efb85ac6a0dc602449ee9b593fefaa9e,
-    type: 3}
-  redName: {fileID: 14469677}
-  blueName: {fileID: 570071344}
-  greenName: {fileID: 1423141578}
-  yellowName: {fileID: 2127707127}
+  displayedPLayerNames:
+  - {fileID: 14469677}
+  - {fileID: 1423141578}
+  - {fileID: 570071344}
+  - {fileID: 2127707127}
   playerList: []
   templates: {fileID: 11400000, guid: a0c491199ce8adc42acf73af6abd2498, type: 2}
   templateYellow: {fileID: 11400000, guid: e028d6bccce59fb4bafb58c04dbc1115, type: 2}
@@ -1617,7 +1629,7 @@ PrefabInstance:
     - target: {fileID: 1001867511465088915, guid: ef3924f48f137fd4a8510d734672d433,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.59
+      value: 11.17
       objectReference: {fileID: 0}
     - target: {fileID: 1001867511465088915, guid: ef3924f48f137fd4a8510d734672d433,
         type: 3}
@@ -2442,6 +2454,7 @@ GameObject:
   - component: {fileID: 2035073495}
   - component: {fileID: 2035073494}
   - component: {fileID: 2035073496}
+  - component: {fileID: 2035073497}
   m_Layer: 5
   m_Name: PlayerIcons
   m_TagString: Untagged
@@ -2527,6 +2540,23 @@ MonoBehaviour:
   greenIcon: {fileID: 1888991159}
   blueIcon: {fileID: 1731236901}
   yellowIcon: {fileID: 873019198}
+--- !u!114 &2035073497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035073492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf297a812a4e4245a56496c678bb52c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayedPLayerNames:
+  - {fileID: 14469677}
+  - {fileID: 1423141578}
+  - {fileID: 570071344}
+  - {fileID: 2127707127}
 --- !u!1 &2124725877
 GameObject:
   m_ObjectHideFlags: 0

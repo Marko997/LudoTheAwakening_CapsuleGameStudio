@@ -99,7 +99,7 @@ public class PawnManager : MonoBehaviour
             //currentNode = fullRoute[routePosition];
 			
             RotatePawnOnBoard();
-
+            //transform.LookAt(-nextPos);
 
 			// while(MoveToNextNode(nextPos,8f)){
 			//     yield return null;
@@ -112,16 +112,7 @@ public class PawnManager : MonoBehaviour
 			timeForPointToPoint = 0;
 			steps--;
 			doneSteps++;
-   //         if(steps == 0)
-			//{
-   //             if(GameManager.instance.displaySpellButton == true)
-			//	{
-   //                 break;
-			//	}
-   //             GameManager.instance.displaySpellButton = true;
-   //             //GameManager.instance.powerButton.gameObject.SetActive(true);
 
-			//}
 
 		}
         

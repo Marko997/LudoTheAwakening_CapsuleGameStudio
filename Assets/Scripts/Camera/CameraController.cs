@@ -6,12 +6,12 @@ public class CameraController : MonoBehaviour
 {
     float mouseZoomSpeed = 15.0f;
     float touchZoomSpeed = 0.1f;
-    float zoomMinBound = 30.0f;
-    float zoomMaxBound = 150.0f;
+    float zoomMinBound = 20.0f;
+    float zoomMaxBound = 60.0f;
     Camera cam;
 
     [SerializeField] private Transform target;
-    [SerializeField] private float distanceToTarget = 100;
+    private float distanceToTarget;
 
     float mouseX, mouseY;
 
@@ -20,7 +20,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cam = GetComponent<Camera>();
-
+        distanceToTarget = 50;
+        cam.transform.position = new Vector3(target.position.x, target.position.y + distanceToTarget, target.position.z - distanceToTarget);
+        cam.transform.LookAt(target);
     }
 
     // Update is called once per frame
@@ -28,23 +30,20 @@ public class CameraController : MonoBehaviour
     {
         try
         {
-//Camera rotation
-        if (Input.GetMouseButton(0) || Input.touchCount == 1)
-        {
-            //mouseX += Input.GetAxis("Mouse X") * 3;
-            //mouseY -= Input.GetAxis("Mouse Y") * 3;
-            mouseX += Input.touches[0].deltaPosition.x *0.1f;
-            mouseY += Input.touches[0].deltaPosition.y *0.1f;
-            mouseY = Mathf.Clamp(mouseY, 0, 90);
+            //Camera rotation
+            if (Input.touches[0].phase == TouchPhase.Moved && Input.touchCount == 1)
+            {
+                mouseX += Input.touches[0].deltaPosition.x * 0.1f;
+                mouseY -= Input.touches[0].deltaPosition.y * 0.1f;
+                mouseY = Mathf.Clamp(mouseY, -30, 10);
 
-            cam.transform.position = target.position;
-             
-            target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-            cam.transform.rotation = target.transform.rotation;
+                cam.transform.position = target.position;
 
-            cam.transform.Translate(new Vector3(0, 0, -distanceToTarget));
+                cam.transform.rotation = Quaternion.Euler(mouseY, mouseX, 0);
 
-        }
+                cam.transform.Translate(new Vector3(0, distanceToTarget, -distanceToTarget));
+                cam.transform.LookAt(target);
+            }
         if (Input.touchSupported)
 		{            
             //PinchZoom
@@ -79,8 +78,6 @@ public class CameraController : MonoBehaviour
             //throw;
         }
 
-        
-
         if(cam.fieldOfView < zoomMinBound)
 		{
             cam.fieldOfView = 30.0f;
@@ -91,6 +88,7 @@ public class CameraController : MonoBehaviour
 
 
     }
+
     void Zoom(float DeltaDistanceDiff, float speed)
 	{
         cam.fieldOfView += DeltaDistanceDiff * speed;
