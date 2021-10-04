@@ -18,6 +18,8 @@ namespace KingdomOfNight
         public static void LoadLoadingScene() { OpenScene("Assets/scenes/LoadingScene.unity"); }
         [MenuItem("Scenes/MainScene")]
         public static void LoadMainScene() { OpenScene("Assets/scenes/MainScene.unity"); }
+        [MenuItem("Scenes/MapTest")]
+        public static void LoadMapTest() { OpenScene("Assets/scenes/MapTest.unity"); }
 #endif
     }
 }
