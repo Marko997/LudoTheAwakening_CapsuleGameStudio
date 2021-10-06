@@ -15,7 +15,7 @@ MonoBehaviour:
   TitleId: 2D715
   DeveloperSecretKey: F38MZ4MG7DETJPBOQP1FWRS9YNH5POKQSNTDEAC4EIU5AUTNOR
   ProductionEnvironmentUrl: 
-  RequestType: 2
+  RequestType: 0
   DisableDeviceInfo: 0
   DisableFocusTimeCollection: 0
   RequestTimeout: 2000
