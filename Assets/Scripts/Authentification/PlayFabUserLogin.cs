@@ -58,7 +58,7 @@ public class PlayFabUserLogin : MonoBehaviour
         var registerRequest = new RegisterPlayFabUserRequest
         {
             Email = emailInputField.text,
-            Username = "smt",
+            Username = usernameInputField.text,
             Password = Encrypt(passwordInputField.text),
         };
         PlayFabClientAPI.RegisterPlayFabUser(registerRequest, RegisterSuccess, RegisterError);
