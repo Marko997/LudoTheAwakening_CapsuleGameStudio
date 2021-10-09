@@ -793,7 +793,7 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   cloudProjectId: 46105ce1-3fbb-41ac-85a2-b367163bffb2
   framebufferDepthMemorylessMode: 0
-  projectName: LudoSpecialPowers
+  projectName: 'Ludo: The Awakening'
   organizationId: ludo-specialpowers
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

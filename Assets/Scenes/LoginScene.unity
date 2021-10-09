@@ -671,63 +671,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466560089}
   m_CullTransparentMesh: 0
---- !u!1 &530735910
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 530735912}
-  - component: {fileID: 530735911}
-  m_Layer: 0
-  m_Name: '#PLAYFAB_CONTROLS'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &530735911
+--- !u!114 &530735911 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+    type: 3}
+  m_PrefabInstance: {fileID: 1155565499847167501}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530735910}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 699c59f2e62945a40ade0eaadf7cf8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClearPlayerPrefs: 0
-  usernameInputField: {fileID: 1352462726}
-  emailInputField: {fileID: 1383457589}
-  passwordInputField: {fileID: 1934997400}
-  confirmPasswordInputField: {fileID: 0}
-  loginButton: {fileID: 864703618}
-  playAsGuestButton: {fileID: 170790228}
-  loginWithFacebookButton: {fileID: 1036330142}
-  loginWithGoogleButton: {fileID: 586035690}
-  registerButton: {fileID: 0}
-  cancelRegisterButton: {fileID: 0}
-  registerPanel: {fileID: 0}
-  loginPanel: {fileID: 0}
-  startPanel: {fileID: 0}
---- !u!4 &530735912
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 530735910}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 223.2399, y: 450.65277, z: -541.87915}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &557198408
 GameObject:
   m_ObjectHideFlags: 0
@@ -3090,3 +3045,107 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &1155565499847167501
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 223.2399
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 450.65277
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -541.87915
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528933, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: loginButton
+      value: 
+      objectReference: {fileID: 864703618}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: emailInputField
+      value: 
+      objectReference: {fileID: 1383457589}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: playAsGuestButton
+      value: 
+      objectReference: {fileID: 170790228}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: passwordInputField
+      value: 
+      objectReference: {fileID: 1934997400}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 1352462726}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: loginWithGoogleButton
+      value: 
+      objectReference: {fileID: 586035690}
+    - target: {fileID: 1155565499404528938, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: loginWithFacebookButton
+      value: 
+      objectReference: {fileID: 1036330142}
+    - target: {fileID: 1155565499404528939, guid: 3c3ba216f93800040a6f64da904a8571,
+        type: 3}
+      propertyPath: m_Name
+      value: '#PLAYFAB_CONTROLS'
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3c3ba216f93800040a6f64da904a8571, type: 3}
