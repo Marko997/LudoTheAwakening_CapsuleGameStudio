@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public enum CanvasType
 {
@@ -18,7 +19,10 @@ public enum CanvasType
 	FriendsScreen,
 	ProfileScreen,
 	OfflineSettingsScreen,
-    OfflineSettingsScreen2
+    OfflineSettingsScreen2,
+	LoginScreen,
+	RegisterScreen,
+	StartScreen
 }
 
 
@@ -27,17 +31,27 @@ public class CanvasManager : Singleton<CanvasManager>
     List<CanvasController> canvasControllerList;
 	public CanvasController lastActiveCanvas;
 
+	//static Scene currentScene = SceneManager.GetActiveScene();
+	//string nameOfCurrentScene = currentScene.name;
+
 	protected override void Awake()
 	{
 		base.Awake();
 		canvasControllerList = GetComponentsInChildren<CanvasController>().ToList();
 
 		canvasControllerList.ForEach(x => x.gameObject.SetActive(false));
-		SwitchCanvas(CanvasType.MainMenu);
-		
+
+		if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene"))
+		{
+			SwitchCanvas(CanvasType.MainMenu);
+		}
+		else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("LoginScene"))
+		{
+			SwitchCanvas(CanvasType.StartScreen);
+		}
 	}
 
-	public void SwitchCanvas(CanvasType _type)
+    public void SwitchCanvas(CanvasType _type)
 	{
 		if(lastActiveCanvas != null)
 		{

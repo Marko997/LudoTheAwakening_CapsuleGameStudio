@@ -11,13 +11,12 @@ public class PlayFabGuestLogin : MonoBehaviour
     public void GuestLogin()
     {
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
         var requestAndroid = new LoginWithAndroidDeviceIDRequest { AndroidDeviceId = ReturnMobileID(), CreateAccount = true };
         PlayFabClientAPI.LoginWithAndroidDeviceID(requestAndroid, OnMobileLoginSuccess, OnMobileLoginFailure);
 
-
 #endif
-#if UNITY_IOS
+#if UNITY_IOS && !UNITY_EDITOR
         var requestIOS = new LoginWithIOSDeviceIDRequest { DeviceId =  ReturnMobileID(), CreateAccount = true};
         PlayFabClientAPI.LoginWithIOSDeviceID(requestIOS, OnMobileLoginSuccess, OnMobileLoginFailure);
 #endif

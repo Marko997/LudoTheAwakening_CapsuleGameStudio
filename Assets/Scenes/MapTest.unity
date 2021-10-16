@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridVisualizer: {fileID: 1087048872}
-  width: 7
-  length: 7
+  width: 19
+  length: 19
 --- !u!4 &461542247
 Transform:
   m_ObjectHideFlags: 0

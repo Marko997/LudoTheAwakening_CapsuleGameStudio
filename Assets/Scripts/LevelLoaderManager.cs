@@ -34,27 +34,4 @@ public class LevelLoaderManager : MonoBehaviour
         percentLoaded.text = Mathf.Round(progressValue * 100) + "%";
     }
 
-
-    // public void LoadLevel(int sceneIndex){
-
-    //     StartCoroutine(LoadAsync(sceneIndex));
-        
-
-    // }
-
-    // IEnumerator LoadAsync (int sceneIndex){
-
-    //     AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-
-    //     loadingScreen.SetActive(True);
-
-    //     while(operation.isDone==false){
-
-    //         float progress = Mathf.Clamp01(operation.progress / .9f);
-
-    //         Debug.Log(progress);
-
-    //         yield return null;
-    //     }
-    // }
 }

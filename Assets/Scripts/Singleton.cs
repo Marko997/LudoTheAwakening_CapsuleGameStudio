@@ -43,6 +43,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
             Destroy(gameObject);
         }
         //else { DontDestroyOnLoad(gameObject); }
+       
     }
 
     private void OnApplicationQuit()

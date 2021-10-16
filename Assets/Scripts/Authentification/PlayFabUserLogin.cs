@@ -1,41 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayFabUserLogin : MonoBehaviour
 {
     public bool ClearPlayerPrefs;
 
+    [Header("REGISTER PARAMS")]
     [SerializeField] private TMP_InputField usernameInputField = default;
-    [SerializeField] private TMP_InputField emailInputField = default;
-    [SerializeField] private TMP_InputField passwordInputField = default;
-    [SerializeField] private TMP_InputField confirmPasswordInputField = default;
+    [SerializeField] private TMP_InputField registerEmailInputField = default; 
+    [SerializeField] private TMP_InputField registerPasswordInputField = default;
+    [SerializeField] private TMP_Text registerErrorMessageText = default;
+    public Button registerButton;
+
+    [Header("LOGIN PARAMS")]
+    [SerializeField] private TMP_InputField loginEmailInputField = default;
+    [SerializeField] private TMP_InputField loginPasswordInputField = default;
+    [SerializeField] private TMP_Text loginErrorMessageText = default;
+
+    public static string SessionTicket;
+    public static string EntityId;
 
     public Button loginButton;
     public Button playAsGuestButton;
     public Button loginWithFacebookButton;
     public Button loginWithGoogleButton;
-    public Button registerButton;
+    public Button loginWithAppleIDButton;
+    
     public Button cancelRegisterButton;
 
-    [SerializeField] GameObject registerPanel, loginPanel, startPanel;
+    //string encryptedPassword;
 
-    string encryptedPassword;
-    public void SwitchToSignUpTab()
-    {
-        loginPanel.SetActive(false);
-        registerPanel.SetActive(true);
-    }
+    private void Awake()
+    {//SHOW GOOGLE OR APPLE LOGIN BUTTON
+#if UNITY_ANDROID && !UNITY_EDITOR
+        loginWithGoogleButton.gameObject.SetActive(true);
+        loginWithAppleIDButton.gameObject.SetActive(false);
+#endif
 
-    public void SwitchLoginTab()
-    {
-        loginPanel.SetActive(true);
-        registerPanel.SetActive(false);
+#if UNITY_IOS //&& !UNITY_EDITOR
+        loginWithGoogleButton.gameObject.SetActive(false);
+        loginWithAppleIDButton.gameObject.SetActive(true);
+#endif
+        registerErrorMessageText.text = string.Empty;
+        loginErrorMessageText.text = string.Empty;
+
     }
 
     string Encrypt (string pass)
@@ -57,52 +70,63 @@ public class PlayFabUserLogin : MonoBehaviour
     {
         var registerRequest = new RegisterPlayFabUserRequest
         {
-            Email = emailInputField.text,
+            Email = registerEmailInputField.text,
             Username = usernameInputField.text,
-            Password = Encrypt(passwordInputField.text),
+            Password = Encrypt(registerPasswordInputField.text),
         };
         PlayFabClientAPI.RegisterPlayFabUser(registerRequest, RegisterSuccess, RegisterError);
     }
 
     public void RegisterSuccess(RegisterPlayFabUserResult result)
     {
-        //errorSignUp.text = "";
+        SessionTicket = result.SessionTicket;
+        EntityId = result.EntityToken.Entity.Id;
+        registerErrorMessageText.text = "";
         Debug.Log("suc");
         StartGame();
     }
 
     public void RegisterError(PlayFabError error)
     {
-        //errorSignUp.text = error.GenerateErrorReport(); 
-        Debug.Log(error.GenerateErrorReport());
+        if (error.Error == PlayFabErrorCode.UsernameNotAvailable) 
+        {
+            registerErrorMessageText.text = "Username already exists!";
+        }else if (error.Error == PlayFabErrorCode.EmailAddressNotAvailable)
+        {
+            registerErrorMessageText.text = "Email already exists!";
+        }
+        
+
     }
     public void LoginUser() {
         
         var request = new LoginWithEmailAddressRequest {
-            Email = emailInputField.text,
-            Password = Encrypt(passwordInputField.text)
+            Email = loginEmailInputField.text,
+            Password = Encrypt(loginPasswordInputField.text)
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, LoginSuccess, LoginError);
     }
     public void LoginSuccess(LoginResult result)
     {
-        //errorLogin.text = "";
+        SessionTicket = result.SessionTicket;
+        EntityId = result.EntityToken.Entity.Id;
+        loginErrorMessageText.text = string.Empty;
         Debug.Log("suc");
         StartGame();
     }
     public void LoginError(PlayFabError error)
     {
-        //errorLogin.text = error.GenerateErrorReport(); 
+        loginErrorMessageText.text = error.ErrorMessage;
+        Debug.Log(loginEmailInputField.text);
+        Debug.Log(loginPasswordInputField.text);
         Debug.Log(error.GenerateErrorReport());
     }
     private void StartGame()
     {
-        startPanel.SetActive(false);
+        //Load next scene
+        SceneManager.LoadScene("MainScene");
 
     }
-
-
-
 
 
 }
