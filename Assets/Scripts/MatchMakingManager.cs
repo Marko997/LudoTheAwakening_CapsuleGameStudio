@@ -1,5 +1,6 @@
 ﻿using PlayFab;
 using PlayFab.MultiplayerModels;
+using PlayFab.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -32,7 +33,16 @@ public class MatchMakingManager : MonoBehaviour
                 },
                 Attributes = new MatchmakingPlayerAttributes
                 {
-                    DataObject = new { }
+                    DataObject = new {
+                        latencies = new object[]
+                        {
+                            new
+                            {
+                                region = "NorthEurope",
+                                latency = 100
+                            }
+                        }
+                    }
                 }
             },
             GiveUpAfterSeconds = 120,
@@ -66,7 +76,7 @@ public class MatchMakingManager : MonoBehaviour
                 TicketId = ticketId,
                 QueueName = QueueName
             };
-            Debug.Log("coururu");
+            Debug.Log("Got ticket");
             PlayFabMultiplayerAPI.GetMatchmakingTicket(getMatchmakingTicketRequest,OnGetMatchmakingTicketSuccess,OnGetMatchmakingTicketError);
             yield return new WaitForSeconds(6);
         }
@@ -80,6 +90,7 @@ public class MatchMakingManager : MonoBehaviour
             case "Matched":
                 StopCoroutine(pollTicketCoroutine);
                 StartMatch(result.MatchId);
+                RequestMultiplayerServer(result.MatchId);
                 Debug.Log(result.MatchId);
                 break;
 
@@ -107,13 +118,43 @@ public class MatchMakingManager : MonoBehaviour
     private void OnGetMatchSuccess(GetMatchResult result)
     {
         queueStatusText.text = $"{result.Members[0].Entity.Id} vs {result.Members[1].Entity.Id}";
+
+        //RequestMultiplayerServer(result.MatchId);
+        Debug.Log(result.MatchId);
     }
     private void OnGetMatchError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
     }
 
+    private void RequestMultiplayerServer(string sessionId)
+    {
+        Debug.Log("Requesting mp server!");
 
+        RequestMultiplayerServerRequest requestData = new RequestMultiplayerServerRequest
+        {
+            //BuildId = "42e5b732-f469-4a32-9aa3-effadeac49a5",
+            BuildId = "5a1078ea-5cac-41f7-a70d-44af8249c9ee",
+            SessionId = sessionId,
+            PreferredRegions = new List<string> { "NorthEurope" } 
+            
+        };
+        PlayFabMultiplayerAPI.RequestMultiplayerServer(requestData, OnRequestMultiplayerServer, OnRequestMultiplayerServerError);
+    }
+        void OnRequestMultiplayerServer(RequestMultiplayerServerResponse result)
+        {
+            if (result == null) return;
 
+            Debug.Log("------These are your details: " + result.IPV4Address + " port: " + (ushort)result.Ports[0].Num);
+            UnityNetworkServer.Instance.networkAddress = result.IPV4Address;
+            UnityNetworkServer.Instance.GetComponent<kcp2k.KcpTransport>().Port = (ushort)result.Ports[0].Num;
 
-}
+            UnityNetworkServer.Instance.StartClient();
+        } 
+
+        void OnRequestMultiplayerServerError(PlayFabError error)
+        {
+            Debug.LogError(error.GenerateErrorReport());
+        }
+    }
+
