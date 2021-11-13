@@ -134,7 +134,7 @@ public class MatchMakingManager : MonoBehaviour
         RequestMultiplayerServerRequest requestData = new RequestMultiplayerServerRequest
         {
             //BuildId = "42e5b732-f469-4a32-9aa3-effadeac49a5",
-            BuildId = "5a1078ea-5cac-41f7-a70d-44af8249c9ee",
+            BuildId = "2d46f8f7-a38a-4ac2-b84f-efc02c8c4612",
             SessionId = sessionId,
             PreferredRegions = new List<string> { "NorthEurope" } 
             
