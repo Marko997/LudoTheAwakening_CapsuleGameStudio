@@ -5,6 +5,7 @@
     using UnityEngine;
     using Mirror;
     using UnityEngine.Events;
+    using System.Linq;
 
     public class UnityNetworkServer : NetworkManager
     {
@@ -13,7 +14,7 @@
         public PlayerEvent OnPlayerAdded = new PlayerEvent();
         public PlayerEvent OnPlayerRemoved = new PlayerEvent();
 
-        public int MaxConnections = 100;
+        public int MaxConnections = 4;
         //public int Port = 7777;
 
         public List<UnityNetworkConnection> Connections
@@ -24,6 +25,7 @@
         private List<UnityNetworkConnection> _connections = new List<UnityNetworkConnection>();
 
         public class PlayerEvent : UnityEvent<string> { }
+
 
         // Use this for initialization
         public override void Awake()
