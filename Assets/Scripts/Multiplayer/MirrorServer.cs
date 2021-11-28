@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.Events;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class MirrorServer : NetworkManager
 {
@@ -12,11 +13,19 @@ public class MirrorServer : NetworkManager
 
     [Header("Room")]
     [SerializeField] private NetworkRoomPlayerLobby roomPlayerPrefab = null;
-
     public List<NetworkRoomPlayerLobby> RoomPlayers { get; } = new List<NetworkRoomPlayerLobby>();
+
+    [Header("Game")]
+    [SerializeField] private NetworkGamePlayerLobby gamePlayerPrefab = null;
+    public List<NetworkGamePlayerLobby> GamePlayers { get; } = new List<NetworkGamePlayerLobby>();
+    [SerializeField] private GameObject playerSpawnSystem = null;
+
+
+
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
+    public static event Action<NetworkConnection> OnServerIsReady;
 
     public override void OnStartServer()
     {
@@ -111,6 +120,51 @@ public class MirrorServer : NetworkManager
             if (!player.IsReady) { return false; }
         }
         return true;
+    }
+
+    public void StartGame()
+    {
+        if (SceneManager.GetActiveScene().path == menuScene)
+        {
+            
+            if (!IsReadyToStart()) { return; }
+
+            ServerChangeScene("MPgameScene");
+        }
+    }
+
+    public override void ServerChangeScene(string newSceneName)
+    {
+        if (SceneManager.GetActiveScene().path == menuScene && newSceneName.StartsWith("MP"))
+        {
+            for (int i = RoomPlayers.Count - 1; i >= 0; i--)
+            {
+                var conn = RoomPlayers[i].connectionToClient;
+                var gamePlayerInstance = Instantiate(gamePlayerPrefab);
+                //gamePlayerInstance.SetDisplayName(RoomPlayers[i].displayName);
+
+                NetworkServer.Destroy(conn.identity.gameObject);
+                NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance.gameObject);
+            }
+        }
+
+        base.ServerChangeScene(newSceneName);
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        if (sceneName.StartsWith("MP"))
+        {
+            GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
+            NetworkServer.Spawn(playerSpawnSystemInstance);
+        }
+    }
+
+    public override void OnServerReady(NetworkConnection conn)
+    {
+        base.OnServerReady(conn);
+
+        OnServerIsReady?.Invoke(conn);
     }
 
 

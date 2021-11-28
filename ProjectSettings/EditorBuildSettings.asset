@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/4 players.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LoginScene.unity
     guid: ed4573b575703504582bb5bdb84f71fe
   - enabled: 1
@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 610bb514994b0f64286f419ea44a3089
+  - enabled: 1
+    path: Assets/Scenes/MPgameScene.unity
+    guid: e43af25b99cf3034898726a81d04448d
   m_configObjects: {}
