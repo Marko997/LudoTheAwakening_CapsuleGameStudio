@@ -15,6 +15,7 @@ public class PlayFabUserLogin : MonoBehaviour
     [SerializeField] private TMP_InputField registerEmailInputField = default; 
     [SerializeField] private TMP_InputField registerPasswordInputField = default;
     [SerializeField] private TMP_Text registerErrorMessageText = default;
+    public static string displayName;
     public Button registerButton;
 
     [Header("LOGIN PARAMS")]
@@ -82,6 +83,7 @@ public class PlayFabUserLogin : MonoBehaviour
         SessionTicket = result.SessionTicket;
         EntityId = result.EntityToken.Entity.Id;
         registerErrorMessageText.text = "";
+        displayName = result.Username;
         Debug.Log("suc");
         StartGame();
     }
@@ -102,7 +104,11 @@ public class PlayFabUserLogin : MonoBehaviour
         
         var request = new LoginWithEmailAddressRequest {
             Email = loginEmailInputField.text,
-            Password = Encrypt(loginPasswordInputField.text)
+            Password = Encrypt(loginPasswordInputField.text),
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
+            }
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, LoginSuccess, LoginError);
     }
@@ -111,7 +117,7 @@ public class PlayFabUserLogin : MonoBehaviour
         SessionTicket = result.SessionTicket;
         EntityId = result.EntityToken.Entity.Id;
         loginErrorMessageText.text = string.Empty;
-        Debug.Log("suc");
+        displayName = result.InfoResultPayload.PlayerProfile.DisplayName;
         StartGame();
     }
     public void LoginError(PlayFabError error)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8505238134447544709}
   - component: {fileID: 7363816499035393309}
   - component: {fileID: 826885076636305731}
+  - component: {fileID: -7156704615389121504}
   m_Layer: 0
   m_Name: MP_PlayerEntity
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001588319496150224}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.325399, y: 20.32673, z: -30.391829}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5551204507135253641}
@@ -49,7 +50,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: dde5121e5b4bc2f4993d9edfc8ce77fd
   hasSpawned: 0
 --- !u!114 &826885076636305731
 MonoBehaviour:
@@ -74,6 +75,27 @@ MonoBehaviour:
   distanceToTarget: 50
   mouseX: 0
   mouseY: 0
+--- !u!114 &-7156704615389121504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2001588319496150224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e34f18f394c48f49a48e0876ff48b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerName: 
+  allPawns:
+  - {fileID: 8176767446287098510, guid: c5a997ebdb07a024c802fa14060b749f, type: 3}
+  hasTurn: 0
+  playerTypes: 0
+  playerColors: 0
+  hasWon: 0
 --- !u!1 &8422254377028887199
 GameObject:
   m_ObjectHideFlags: 0
