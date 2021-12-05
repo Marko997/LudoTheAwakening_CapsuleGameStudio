@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8505238134447544709}
   - component: {fileID: 7363816499035393309}
-  - component: {fileID: 826885076636305731}
   - component: {fileID: -7156704615389121504}
   m_Layer: 0
   m_Name: MP_PlayerEntity
@@ -52,29 +51,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: dde5121e5b4bc2f4993d9edfc8ce77fd
   hasSpawned: 0
---- !u!114 &826885076636305731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2001588319496150224}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14e1ffca5a2e0bc46910481b26a2049c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  mouseZoomSpeed: 15
-  touchZoomSpeed: 0.1
-  zoomMinBound: 20
-  zoomMaxBound: 60
-  cam: {fileID: 7509273559567193799}
-  target: {fileID: 5551204507135253641}
-  distanceToTarget: 50
-  mouseX: 0
-  mouseY: 0
 --- !u!114 &-7156704615389121504
 MonoBehaviour:
   m_ObjectHideFlags: 0

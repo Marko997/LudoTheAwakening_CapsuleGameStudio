@@ -27,14 +27,11 @@ public class MPCameraController : NetworkBehaviour
         cam.transform.LookAt(target);
     }
 
-
-
     // Update is called once per frame
     void Update()
     {
         if (isLocalPlayer)
         {
-            Debug.Log("Looking");
             try
             {
                 //Camera rotation
