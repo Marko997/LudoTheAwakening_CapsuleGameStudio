@@ -5,24 +5,27 @@ using Mirror;
 
 public class MP_playerEntity : NetworkBehaviour
 {
-	public string playerName;
-	public enum PlayerColors
+	[SerializeField] private string playerName;
+	[SerializeField] private enum PlayerColors
 	{
 		BLUE,
 		RED,
 		YELLOW,
 		GREEN
 	}
-	public PawnManager[] allPawns;
-	public bool hasTurn;
-	public enum PlayerTypes
+	[SerializeField] private PawnManager[] allPawns;
+	[SerializeField] private bool hasTurn;
+	[SerializeField] private enum PlayerTypes
 	{
 		HUMAN,
 		BOT,
 		NO_PLAYER
 	}
-	public PlayerTypes playerTypes;
-	public PlayerColors playerColors;
-	public bool hasWon;
+	[SerializeField] private PlayerTypes playerTypes;
+	[SerializeField] private PlayerColors playerColors;
+	[SerializeField] private bool hasWon;
+
+    public string PlayerName { get; set; }
+
 
 }

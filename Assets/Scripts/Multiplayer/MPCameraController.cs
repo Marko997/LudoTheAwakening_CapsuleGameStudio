@@ -75,7 +75,6 @@ public class MPCameraController : NetworkBehaviour
                 {
                     float scroll = Input.GetAxis("Mouse ScrollWheel");
                     Zoom(scroll, mouseZoomSpeed);
-                    Debug.Log("Zooming");
                 }
             }
             catch (System.IndexOutOfRangeException)

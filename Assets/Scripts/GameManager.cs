@@ -296,17 +296,6 @@ public class GameManager : MonoBehaviour
                     {
                         //DEACTIVATE HIGHLIGHTS
                         ActivateRollButton(true);
-                        //try
-                        //{
-                        //    if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
-                        //    {
-                        //        ActivatePowerButton(true);
-                        //    }
-                        //}
-                        //catch (System.NullReferenceException)
-                        //{
-
-                        //}
 
                         state = States.WAITING;
 
