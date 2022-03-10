@@ -14,6 +14,8 @@ public class AgentListener : MonoBehaviour
     void Start()
     {
         _connectedPlayers = new List<ConnectedPlayer>();
+
+
         PlayFabMultiplayerAgentAPI.Start();
         PlayFabMultiplayerAgentAPI.IsDebugging = Debugging;
         PlayFabMultiplayerAgentAPI.OnMaintenanceCallback += OnMaintenance;

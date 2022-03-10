@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a3caaab3c725a2458e9a734c7c53645, type: 3}
   m_Name: SpearMan
   m_EditorClassIdentifier: 
-  pawnObject: {fileID: 9061280166736107394, guid: e53493329ffa51d40bfbc18a1e5d5cca,
+  pawnObject: {fileID: 7945531366287539654, guid: 45288819fde2143449a96207b14db0bb,
     type: 3}
   cardName: SpearMan
   cardSprite: {fileID: 3286163911610860551, guid: ae33b3edbe50fb041856df03b666440d,
