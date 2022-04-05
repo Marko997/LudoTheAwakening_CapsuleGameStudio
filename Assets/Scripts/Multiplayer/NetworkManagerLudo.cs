@@ -7,22 +7,30 @@ using UnityEngine.SceneManagement;
 public class NetworkManagerLudo : NetworkManager
 {
     [Header("Player Managers")]
+    public GameObject playerRoomPrefab;
     public GameObject playerGamePrefab;
-    public GameObject playerLobbyPrefab;
-    
 
-    public void ChangeSceneToMultiPlayer(List<PlayerLobbyManager> playerLobbyManagers)
+    public override void OnServerAddPlayer(NetworkConnection conn)
     {
-        foreach (var player in playerLobbyManagers)
+        base.OnServerAddPlayer(conn);
+
+        GameObject playerNewObject;
+
+        switch (SceneManager.GetActiveScene().name)
         {
-            var conn = player.connectionToClient;
-
-            GameObject gamePlayerInstance = Instantiate(playerGamePrefab);
-
-            NetworkServer.Destroy(conn.identity.gameObject);
-            NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance);
-
-            base.ServerChangeScene("MPgameScene");
+            case "MainScene":
+                playerNewObject = Instantiate(playerRoomPrefab);
+                break;
+            case "MPgameScene":
+                playerNewObject = Instantiate(playerGamePrefab);
+                break;
+            default:
+                return;
         }
+
+        GameObject playerTmp = conn.identity.gameObject;
+        NetworkServer.ReplacePlayerForConnection(conn, playerNewObject);
+        NetworkServer.Destroy(playerTmp);
     }
+
 }

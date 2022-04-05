@@ -66,9 +66,7 @@ public class LobbyManager : NetworkBehaviour
             if (!player.playerIsReady) return;
         }
         NetworkManagerLudo networkManagerLudo = GameObject.Find("NetworkManagerLudo").GetComponent<NetworkManagerLudo>();
-        Debug.Log(networkManagerLudo);
-        networkManagerLudo.ChangeSceneToMultiPlayer(playerList);
-        //networkManagerLudo.ServerChangeScene("MPgameScene");
+        networkManagerLudo.ServerChangeScene("MPgameScene");
 
 
     }

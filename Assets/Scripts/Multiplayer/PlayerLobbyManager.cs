@@ -5,8 +5,6 @@ using Mirror;
 
 public class PlayerLobbyManager : NetworkBehaviour
 {
-    [SyncVar(hook = nameof(HandlePlayerIsReadyChanged))]
-    public bool playerIsReady = false;
 
     private LobbyManager _lobbyManager;
     private LobbyManager lobbyManager
@@ -18,16 +16,14 @@ public class PlayerLobbyManager : NetworkBehaviour
         }
     }
 
+
+    [SyncVar(hook = nameof(HandlePlayerIsReadyChanged))]
+    public bool playerIsReady = false;
+
+
     public void HandlePlayerIsReadyChanged(bool oldValue, bool newValue)
     {
         lobbyManager.UpdatePlayerStatus();
-    }
-
-    [Command]
-    public void CmdTogglePlayerIsReady()
-    {
-        playerIsReady = !playerIsReady;
-        lobbyManager.StartGameIfAllPlayersAreReady();
     }
 
 
@@ -35,6 +31,7 @@ public class PlayerLobbyManager : NetworkBehaviour
     {
         lobbyManager.AddPlayerToLobby(this);
     }
+
 
     public override void OnStartServer()
     {
@@ -45,5 +42,13 @@ public class PlayerLobbyManager : NetworkBehaviour
     public override void OnStopClient()
     {
         lobbyManager.RemovePlayerFromLobby(this);
+    }
+
+
+    [Command]
+    public void CmdTogglePlayerIsReady()
+    {
+        playerIsReady = !playerIsReady;
+        lobbyManager.StartGameIfAllPlayersAreReady();
     }
 }
