@@ -45,6 +45,12 @@ public class PlayerLobbyManager : NetworkBehaviour
     }
 
 
+    public override void OnStopServer()
+    {
+        lobbyManager.RemovePlayerFromLobby(this);
+    }
+
+
     [Command]
     public void CmdTogglePlayerIsReady()
     {
