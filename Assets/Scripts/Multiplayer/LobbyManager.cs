@@ -7,7 +7,7 @@ using TMPro;
 public class LobbyManager : NetworkBehaviour
 {
     [SyncVar]
-    public int numberOfMaxPlayersInLobby = 3;
+    public int numberOfMaxPlayersInLobby;
 
     public TextMeshProUGUI[] playerListReadyTexts;
 
@@ -59,6 +59,17 @@ public class LobbyManager : NetworkBehaviour
 
     public void StartGameIfAllPlayersAreReady()
     {
+        if (playerList.Count != numberOfMaxPlayersInLobby) return;
+
+        foreach (var player in playerList)
+        {
+            if (!player.playerIsReady) return;
+        }
+        NetworkManagerLudo networkManagerLudo = GameObject.Find("NetworkManagerLudo").GetComponent<NetworkManagerLudo>();
+        Debug.Log(networkManagerLudo);
+        networkManagerLudo.ChangeSceneToMultiPlayer(playerList);
+        //networkManagerLudo.ServerChangeScene("MPgameScene");
+
 
     }
 
