@@ -9,6 +9,18 @@ public class NetworkManagerLudo : NetworkManager
     [Header("Player Managers")]
     public GameObject playerRoomPrefab;
     public GameObject playerGamePrefab;
+    public int playerCounter = 0;
+
+    private MpGameManager _mpGameManager;
+    private MpGameManager mpGameManager
+    {
+        get
+        {
+            if (_mpGameManager == null) _mpGameManager = GameObject.Find("#GAME_MANAGER").GetComponent<MpGameManager>();
+
+            return _mpGameManager;
+        }
+    }
 
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
@@ -31,6 +43,16 @@ public class NetworkManagerLudo : NetworkManager
         GameObject playerTmp = conn.identity.gameObject;
         NetworkServer.ReplacePlayerForConnection(conn, playerNewObject);
         NetworkServer.Destroy(playerTmp);
+
+        if(SceneManager.GetActiveScene().name == "MPgameScene")
+        {
+            mpGameManager.InsertPlayerData(playerNewObject.GetComponent<MP_playerEntity>());
+            playerCounter++;
+            if(playerCounter == 2)
+            {
+                mpGameManager.OnStartGame();
+            }
+        }
     }
 
 }
