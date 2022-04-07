@@ -48,7 +48,7 @@ public class NetworkManagerLudo : NetworkManager
         {
             mpGameManager.InsertPlayerData(playerNewObject.GetComponent<MP_playerEntity>());
             playerCounter++;
-            if(playerCounter == 2)
+            if(playerCounter == 1)
             {
                 mpGameManager.OnStartGame();
             }

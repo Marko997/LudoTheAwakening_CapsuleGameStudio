@@ -64,16 +64,18 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   playerID: 0
-  commonRoute: {fileID: 0}
   playerList: []
-  templates: {fileID: 0}
+  templates: {fileID: 11400000, guid: a0c491199ce8adc42acf73af6abd2498, type: 2}
   playerEntity: {fileID: 0}
+  pawnCards:
+  - {fileID: 11400000, guid: 6f41e3920c3fda245b5708d8d981c1b1, type: 2}
+  - {fileID: 11400000, guid: 073bd7ece96a4a549ac38d22396f190c, type: 2}
+  - {fileID: 11400000, guid: 7605087abffedcd4f97f3c0499e04386, type: 2}
+  - {fileID: 11400000, guid: fa78cbb5955c9664eae7a712d427613e, type: 2}
   activePlayer: 0
   numberOfPlayers: 0
   state: 0
   rollButton: {fileID: 0}
   powerButton: {fileID: 0}
-  switchingPlayer: 0
-  turnPossible: 1
   dice: {fileID: 0}
   rolledHumanDice: 0

@@ -26,6 +26,7 @@ public class MpGameManager : NetworkBehaviour
     [Header("TEMPLATES")]
     public AllPawnsTemplates templates;
     public EntityTemplate playerEntity;
+    public PawnTemplate[] pawnCards;
 
     [Header("PLAYER INFO")]
     public int activePlayer;
@@ -70,62 +71,64 @@ public class MpGameManager : NetworkBehaviour
         playerList[playerList.Count - 1].playerTypes = MP_playerEntity.PlayerTypes.HUMAN;
 
         if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.RED)
-			{
-				var finalRoute = Instantiate(templates.redRoute).GetComponent<CommonRouteManager>();
-                var redBase = Instantiate(templates.redBase);
-                var redPawn = SaveSettings.redPawns[0].GetComponent<PawnManager>();
-                var redPawn2 = SaveSettings.redPawns[1].GetComponent<PawnManager>();
-                var redPawn3 = SaveSettings.redPawns[2].GetComponent<PawnManager>();
-                var redPawn4 = SaveSettings.redPawns[3].GetComponent<PawnManager>();
+        {
+            var finalRoute = Instantiate(templates.redRoute).GetComponent<CommonRouteManager>();
+            var redBase = Instantiate(templates.redBase);
+            var redPawn = pawnCards[0].pawnObject;
+            var redPawn2 = pawnCards[0].pawnObject;
+            var redPawn3 = pawnCards[0].pawnObject;
+            var redPawn4 = pawnCards[0].pawnObject;
 
-                Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
 
-                CreatePawns(playerList.Count - 1, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90,baseRotation, playerList.Count - 1, templates.redShader);
+            Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
 
-			}
-			if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.GREEN)
-			{
-				var finalRoute = Instantiate(templates.greenRoute).GetComponent<CommonRouteManager>();
-                var greenBase = Instantiate(templates.greenBase);
-                var greenPawn = SaveSettings.greenPawns[0].GetComponent<PawnManager>();
-                var greenPawn2 = SaveSettings.greenPawns[1].GetComponent<PawnManager>();
-                var greenPawn3 = SaveSettings.greenPawns[2].GetComponent<PawnManager>();
-                var greenPawn4 = SaveSettings.greenPawns[3].GetComponent<PawnManager>();
+            CreatePawns(playerList.Count - 1, finalRoute, redBase, 40, redPawn, redPawn2, redPawn3, redPawn4, 90, baseRotation, playerList.Count - 1, templates.redShader);
 
-                Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
-
-                CreatePawns(playerList.Count - 1, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0,baseRotation, playerList.Count - 1, templates.greenShader);
-
-			}
-			if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.BLUE)
-			{
-				var finalRoute = Instantiate(templates.blueRoute).GetComponent<CommonRouteManager>();
-				var blueBase = Instantiate(templates.blueBase);
-                var bluePawn = SaveSettings.bluePawns[0].GetComponent<PawnManager>();
-                var bluePawn2 = SaveSettings.bluePawns[1].GetComponent<PawnManager>();
-                var bluePawn3 = SaveSettings.bluePawns[2].GetComponent<PawnManager>();
-                var bluePawn4 = SaveSettings.bluePawns[3].GetComponent<PawnManager>();
-
-                Quaternion baseRotation = Quaternion.Euler(0, 270, 0);
-
-                CreatePawns(playerList.Count - 1, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270,baseRotation, playerList.Count - 1, templates.blueShader);
-
-			}
-			if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.YELLOW)
-			{
-				var finalRoute = Instantiate(templates.yellowRoute).GetComponent<CommonRouteManager>();
-				var yellowBase = Instantiate(templates.yellowBase);
-				var yellowPawn = SaveSettings.yellowPawns[0].GetComponent<PawnManager>();
-                var yellowPawn2 = SaveSettings.yellowPawns[1].GetComponent<PawnManager>();
-                var yellowPawn3 = SaveSettings.yellowPawns[2].GetComponent<PawnManager>();
-                var yellowPawn4 = SaveSettings.yellowPawns[3].GetComponent<PawnManager>();
-
-                Quaternion baseRotation = Quaternion.Euler(0, 180, 0);
-
-                CreatePawns(playerList.Count - 1, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4,180,baseRotation, playerList.Count - 1, templates.yellowShader);
-            
         }
-	}
+        if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.GREEN)
+        {
+            var finalRoute = Instantiate(templates.greenRoute).GetComponent<CommonRouteManager>();
+            var greenBase = Instantiate(templates.greenBase);
+            var greenPawn = pawnCards[1].pawnObject;
+            var greenPawn2 = pawnCards[1].pawnObject;
+            var greenPawn3 = pawnCards[1].pawnObject;
+            var greenPawn4 = pawnCards[1].pawnObject;
+
+            Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
+
+            CreatePawns(playerList.Count - 1, finalRoute, greenBase, 27, greenPawn, greenPawn2, greenPawn3, greenPawn4, 0, baseRotation, playerList.Count - 1, templates.greenShader);
+
+        }
+        if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.BLUE)
+        {
+            var finalRoute = Instantiate(templates.blueRoute).GetComponent<CommonRouteManager>();
+            var blueBase = Instantiate(templates.blueBase);
+            var bluePawn = pawnCards[2].pawnObject;
+            var bluePawn2 = pawnCards[2].pawnObject;
+            var bluePawn3 = pawnCards[2].pawnObject;
+            var bluePawn4 = pawnCards[2].pawnObject;
+
+
+            Quaternion baseRotation = Quaternion.Euler(0, 270, 0);
+
+            CreatePawns(playerList.Count - 1, finalRoute, blueBase, 14, bluePawn2, bluePawn3, bluePawn4, bluePawn, 270, baseRotation, playerList.Count - 1, templates.blueShader);
+
+        }
+        if (playerList[playerList.Count - 1].playerColors == MP_playerEntity.PlayerColors.YELLOW)
+        {
+            var finalRoute = Instantiate(templates.yellowRoute).GetComponent<CommonRouteManager>();
+            var yellowBase = Instantiate(templates.yellowBase);
+            var yellowPawn = pawnCards[3].pawnObject;
+            var yellowPawn2 = pawnCards[3].pawnObject;
+            var yellowPawn3 = pawnCards[3].pawnObject;
+            var yellowPawn4 = pawnCards[3].pawnObject;
+
+            Quaternion baseRotation = Quaternion.Euler(0, 180, 0);
+
+            CreatePawns(playerList.Count - 1, finalRoute, yellowBase, 1, yellowPawn, yellowPawn2, yellowPawn3, yellowPawn4, 180, baseRotation, playerList.Count - 1, templates.yellowShader);
+
+        }
+    }
 
 	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
@@ -135,6 +138,11 @@ public class MpGameManager : NetworkBehaviour
 			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
+
+            NetworkServer.Spawn(newPawn.gameObject);
+            NetworkServer.Spawn(newPawn2.gameObject);
+            NetworkServer.Spawn(newPawn3.gameObject);
+            NetworkServer.Spawn(newPawn4.gameObject);
 
             newPawn.baseNode = newBase.transform.GetChild(0).GetComponent<NodeManager>();
             newPawn2.baseNode = newBase.transform.GetChild(1).GetComponent<NodeManager>();
@@ -629,12 +637,12 @@ public class MpGameManager : NetworkBehaviour
 
     void ActivateRollButton(bool buttonOn){
 
-        rollButton.interactable = buttonOn;
+        //rollButton.interactable = buttonOn;
     }
     void ActivatePowerButton(bool buttonOn)
     {
 
-        powerButton.interactable = buttonOn;
+        //powerButton.interactable = buttonOn;
     }
 
     public void DeactivateAllSelectors(){

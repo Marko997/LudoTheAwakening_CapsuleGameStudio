@@ -97,16 +97,18 @@ public class GameSettings : MonoBehaviour
 
 public static class SaveSettings
 {
-    //Red Green Blue Yellow
-    public static string[] players = new string[4];
+	//Red Green Blue Yellow
+	public static string[] players = new string[4];
 	public static string[] playerNames = new string[4];
 	public static int numberOfPlayers;
 
-	public static GameObject[] yellowPawns = new GameObject[4];
+	public static GameObject[] yellowPawns = new GameObject[4] { };
 	public static GameObject[] greenPawns = new GameObject[4];
 	public static GameObject[] bluePawns = new GameObject[4];
 	public static GameObject[] redPawns = new GameObject[4];
 	public static GameObject[] loadOutPawns = new GameObject[4];
+
+	
 
 
     
