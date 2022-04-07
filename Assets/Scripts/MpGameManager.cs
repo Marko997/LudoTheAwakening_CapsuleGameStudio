@@ -74,10 +74,10 @@ public class MpGameManager : NetworkBehaviour
         {
             var finalRoute = Instantiate(templates.redRoute).GetComponent<CommonRouteManager>();
             var redBase = Instantiate(templates.redBase);
-            var redPawn = pawnCards[0].pawnObject;
-            var redPawn2 = pawnCards[0].pawnObject;
-            var redPawn3 = pawnCards[0].pawnObject;
-            var redPawn4 = pawnCards[0].pawnObject;
+            var redPawn = pawnCards[0].pawnObject.GetComponent<PawnManager>();
+            var redPawn2 = pawnCards[0].pawnObject.GetComponent<PawnManager>();
+            var redPawn3 = pawnCards[0].pawnObject.GetComponent<PawnManager>();
+            var redPawn4 = pawnCards[0].pawnObject.GetComponent<PawnManager>();
 
 
             Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
@@ -89,10 +89,10 @@ public class MpGameManager : NetworkBehaviour
         {
             var finalRoute = Instantiate(templates.greenRoute).GetComponent<CommonRouteManager>();
             var greenBase = Instantiate(templates.greenBase);
-            var greenPawn = pawnCards[1].pawnObject;
-            var greenPawn2 = pawnCards[1].pawnObject;
-            var greenPawn3 = pawnCards[1].pawnObject;
-            var greenPawn4 = pawnCards[1].pawnObject;
+            var greenPawn = pawnCards[1].pawnObject.GetComponent<PawnManager>();
+            var greenPawn2 = pawnCards[1].pawnObject.GetComponent<PawnManager>();
+            var greenPawn3 = pawnCards[1].pawnObject.GetComponent<PawnManager>();
+            var greenPawn4 = pawnCards[1].pawnObject.GetComponent<PawnManager>();
 
             Quaternion baseRotation = Quaternion.Euler(0, 0, 0);
 
@@ -103,10 +103,10 @@ public class MpGameManager : NetworkBehaviour
         {
             var finalRoute = Instantiate(templates.blueRoute).GetComponent<CommonRouteManager>();
             var blueBase = Instantiate(templates.blueBase);
-            var bluePawn = pawnCards[2].pawnObject;
-            var bluePawn2 = pawnCards[2].pawnObject;
-            var bluePawn3 = pawnCards[2].pawnObject;
-            var bluePawn4 = pawnCards[2].pawnObject;
+            var bluePawn = pawnCards[2].pawnObject.GetComponent<PawnManager>();
+            var bluePawn2 = pawnCards[2].pawnObject.GetComponent<PawnManager>();
+            var bluePawn3 = pawnCards[2].pawnObject.GetComponent<PawnManager>();
+            var bluePawn4 = pawnCards[2].pawnObject.GetComponent<PawnManager>();
 
 
             Quaternion baseRotation = Quaternion.Euler(0, 270, 0);
@@ -118,10 +118,10 @@ public class MpGameManager : NetworkBehaviour
         {
             var finalRoute = Instantiate(templates.yellowRoute).GetComponent<CommonRouteManager>();
             var yellowBase = Instantiate(templates.yellowBase);
-            var yellowPawn = pawnCards[3].pawnObject;
-            var yellowPawn2 = pawnCards[3].pawnObject;
-            var yellowPawn3 = pawnCards[3].pawnObject;
-            var yellowPawn4 = pawnCards[3].pawnObject;
+            var yellowPawn = pawnCards[3].pawnObject.GetComponent<PawnManager>();
+            var yellowPawn2 = pawnCards[3].pawnObject.GetComponent<PawnManager>();
+            var yellowPawn3 = pawnCards[3].pawnObject.GetComponent<PawnManager>();
+            var yellowPawn4 = pawnCards[3].pawnObject.GetComponent<PawnManager>();
 
             Quaternion baseRotation = Quaternion.Euler(0, 180, 0);
 
@@ -132,17 +132,10 @@ public class MpGameManager : NetworkBehaviour
 
 	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
-		for (int j = 0; j < playerList[i].allPawns.Length-3; j++)
-		{
 			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, 0, newBase.transform.GetChild(0).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), baseRotation).GetComponent<PawnManager>();
-			var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
-
-            NetworkServer.Spawn(newPawn.gameObject);
-            NetworkServer.Spawn(newPawn2.gameObject);
-            NetworkServer.Spawn(newPawn3.gameObject);
-            NetworkServer.Spawn(newPawn4.gameObject);
+        var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
 
             newPawn.baseNode = newBase.transform.GetChild(0).GetComponent<NodeManager>();
             newPawn2.baseNode = newBase.transform.GetChild(1).GetComponent<NodeManager>();
@@ -154,19 +147,24 @@ public class MpGameManager : NetworkBehaviour
             newPawn3.transform.position = newBase.transform.GetChild(2).GetComponent<NodeManager>().transform.position;
             newPawn4.transform.position = newBase.transform.GetChild(3).GetComponent<NodeManager>().transform.position;
 
-            CreatePawn(finalRoute, newBase, startNode, 0, j, newPawn,baseRotation,pawnId, pawnShader);
-            CreatePawn(finalRoute, newBase, startNode, 1, j, newPawn2,baseRotation, pawnId, pawnShader);
-            CreatePawn(finalRoute, newBase, startNode, 2, j, newPawn3, baseRotation, pawnId, pawnShader);
-            CreatePawn(finalRoute, newBase, startNode, 3, j, newPawn4, baseRotation, pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 0, newPawn,baseRotation,pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 1, newPawn2,baseRotation, pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 2, newPawn3, baseRotation, pawnId, pawnShader);
+            CreatePawn(finalRoute, newBase, startNode, 3, newPawn4, baseRotation, pawnId, pawnShader);
 
-            playerList[i].allPawns[0] = newPawn;
-			playerList[i].allPawns[1] = newPawn2;
-			playerList[i].allPawns[2] = newPawn3;
-			playerList[i].allPawns[3] = newPawn4;
-		}
-	}
+        playerList[i].allPawns = new PawnManager[4];
+        playerList[i].allPawns[0] = newPawn;
+		playerList[i].allPawns[1] = newPawn2;
+		playerList[i].allPawns[2] = newPawn3;
+		playerList[i].allPawns[3] = newPawn4;
 
-	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, int j, PawnManager newPawn, Quaternion baseRotation, int pawnId, GameObject pawnShader)
+        NetworkServer.Spawn(newPawn.gameObject);
+        NetworkServer.Spawn(newPawn2.gameObject);
+        NetworkServer.Spawn(newPawn3.gameObject);
+        NetworkServer.Spawn(newPawn4.gameObject);
+    }
+
+	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, PawnManager newPawn, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
         
 		newPawn.commonRoute = commonRoute;

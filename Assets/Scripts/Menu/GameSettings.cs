@@ -102,7 +102,7 @@ public static class SaveSettings
 	public static string[] playerNames = new string[4];
 	public static int numberOfPlayers;
 
-	public static GameObject[] yellowPawns = new GameObject[4] { };
+	public static GameObject[] yellowPawns = new GameObject[4];
 	public static GameObject[] greenPawns = new GameObject[4];
 	public static GameObject[] bluePawns = new GameObject[4];
 	public static GameObject[] redPawns = new GameObject[4];
