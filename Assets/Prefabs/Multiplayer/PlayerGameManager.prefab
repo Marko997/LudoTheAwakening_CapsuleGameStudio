@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5121125229728434192}
-  - component: {fileID: 9219844376606450721}
   - component: {fileID: 9012901491464295375}
+  - component: {fileID: -1818374332765967073}
   m_Layer: 0
-  m_Name: Player_Entity 1
+  m_Name: PlayerGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,28 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9219844376606450721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6727055961124934169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0dd33f190c98f747a0b88dd7d36becd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: 
-  allPawns:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  hasTurn: 0
-  playerTypes: 2
-  playerColors: 0
-  hasWon: 0
 --- !u!114 &9012901491464295375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,3 +49,23 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 3a4972236a0993f4faf771a21875de6f
   hasSpawned: 0
+--- !u!114 &-1818374332765967073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6727055961124934169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e34f18f394c48f49a48e0876ff48b6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerName: 
+  allPawns: []
+  hasTurn: 0
+  playerTypes: 0
+  playerColors: 0
+  hasWon: 0

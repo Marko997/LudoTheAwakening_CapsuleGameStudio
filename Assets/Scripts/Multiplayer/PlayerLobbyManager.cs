@@ -10,7 +10,14 @@ public class PlayerLobbyManager : NetworkBehaviour
     private LobbyManager lobbyManager
     {
         get {
-            if (_lobbyManager == null) _lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+            try
+            {
+                if (_lobbyManager == null) _lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
+            }
+            catch
+            {
+                _lobbyManager = null;
+            }
 
             return _lobbyManager;
         }
@@ -41,12 +48,16 @@ public class PlayerLobbyManager : NetworkBehaviour
 
     public override void OnStopClient()
     {
+        if (lobbyManager == null) return;
+
         lobbyManager.RemovePlayerFromLobby(this);
     }
 
 
     public override void OnStopServer()
     {
+        if (lobbyManager == null) return;
+
         lobbyManager.RemovePlayerFromLobby(this);
     }
 
