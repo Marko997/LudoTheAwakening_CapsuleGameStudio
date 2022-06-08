@@ -77,6 +77,7 @@ public class LobbyManager : NetworkBehaviour
 
         PlayerLobbyManager playerLobbyManager = NetworkClient.localPlayer.gameObject.GetComponent<PlayerLobbyManager>();
         playerLobbyManager.CmdTogglePlayerIsReady();
+        Debug.Log(playerList.Count);
 
     }
 }

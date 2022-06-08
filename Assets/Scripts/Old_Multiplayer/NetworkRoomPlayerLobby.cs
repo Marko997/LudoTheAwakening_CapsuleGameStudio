@@ -24,7 +24,6 @@ public class NetworkRoomPlayerLobby : NetworkBehaviour
     {
         set {
             isLeader = value;
-            //startGameButton.gameObject.SetActive(value);
         }
     }
 

@@ -11,6 +11,8 @@ public class NetworkManagerLudo : NetworkManager
     public GameObject playerGamePrefab;
     public int playerCounter = 0;
 
+    [SerializeField] private GameObject playerSpawnSystem = null;
+
     private MpGameManager _mpGameManager;
     private MpGameManager mpGameManager
     {
@@ -47,6 +49,8 @@ public class NetworkManagerLudo : NetworkManager
         if(SceneManager.GetActiveScene().name == "MPgameScene")
         {
             mpGameManager.InsertPlayerData(playerNewObject.GetComponent<MP_playerEntity>());
+
+            mpGameManager.SpawnSelectorRPC();
             playerCounter++;
             if(playerCounter == 1)
             {
@@ -54,5 +58,6 @@ public class NetworkManagerLudo : NetworkManager
             }
         }
     }
+    
 
 }

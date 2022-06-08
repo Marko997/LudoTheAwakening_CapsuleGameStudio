@@ -25,7 +25,7 @@ public class MpGameManager : NetworkBehaviour
 
     [Header("TEMPLATES")]
     public AllPawnsTemplates templates;
-    public EntityTemplate playerEntity;
+    //public EntityTemplate playerEntity;
     public PawnTemplate[] pawnCards;
 
     [Header("PLAYER INFO")]
@@ -50,6 +50,12 @@ public class MpGameManager : NetworkBehaviour
                                   { MP_playerEntity.PlayerColors.BLUE,MP_playerEntity.PlayerColors.RED,
                                     MP_playerEntity.PlayerColors.YELLOW,MP_playerEntity.PlayerColors.GREEN};
 
+    [ClientRpc]
+    public void SpawnSelectorRPC()
+    {
+        Instantiate(templates.yellowSelector);
+    }
+
     void Awake()
 	{
 		instance = this;
@@ -57,9 +63,8 @@ public class MpGameManager : NetworkBehaviour
 		commonRoute = Instantiate(templates.commonRoute).GetComponent<CommonRouteManager>();
 
     }
-
-	public void InsertPlayerData(MP_playerEntity player)
-	{
+    public void InsertPlayerData(MP_playerEntity player)
+    {
         playerCounter++;
         playerList.Add(player);
 
@@ -129,13 +134,12 @@ public class MpGameManager : NetworkBehaviour
 
         }
     }
-
 	private void CreatePawns(int i, CommonRouteManager finalRoute, GameObject newBase, int startNode, PawnManager pawn,PawnManager pawn2, PawnManager pawn3, PawnManager pawn4, int pawnRotation, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
 			var newPawn = Instantiate(pawn, new Vector3(newBase.transform.GetChild(0).transform.position.x, 0, newBase.transform.GetChild(0).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn2 = Instantiate(pawn2, new Vector3(newBase.transform.GetChild(1).transform.position.x, 0, newBase.transform.GetChild(1).transform.position.z), baseRotation).GetComponent<PawnManager>();
 			var newPawn3 = Instantiate(pawn3, new Vector3(newBase.transform.GetChild(2).transform.position.x, 0, newBase.transform.GetChild(2).transform.position.z), baseRotation).GetComponent<PawnManager>();
-        var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
+            var newPawn4 = Instantiate(pawn4, new Vector3(newBase.transform.GetChild(3).transform.position.x, 0, newBase.transform.GetChild(3).transform.position.z), baseRotation).GetComponent<PawnManager>();
 
             newPawn.baseNode = newBase.transform.GetChild(0).GetComponent<NodeManager>();
             newPawn2.baseNode = newBase.transform.GetChild(1).GetComponent<NodeManager>();
@@ -146,6 +150,10 @@ public class MpGameManager : NetworkBehaviour
             newPawn2.transform.position = newBase.transform.GetChild(1).GetComponent<NodeManager>().transform.position;
             newPawn3.transform.position = newBase.transform.GetChild(2).GetComponent<NodeManager>().transform.position;
             newPawn4.transform.position = newBase.transform.GetChild(3).GetComponent<NodeManager>().transform.position;
+
+            newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, newPawn.transform.position.y, newPawn.transform.position.z), Quaternion.identity);
+            newPawn.selector.transform.parent = newPawn.transform;
+        //NetworkServer.Spawn(newPawn.selector);
 
             CreatePawn(finalRoute, newBase, startNode, 0, newPawn,baseRotation,pawnId, pawnShader);
             CreatePawn(finalRoute, newBase, startNode, 1, newPawn2,baseRotation, pawnId, pawnShader);
@@ -158,12 +166,16 @@ public class MpGameManager : NetworkBehaviour
 		playerList[i].allPawns[2] = newPawn3;
 		playerList[i].allPawns[3] = newPawn4;
 
+        //Prebaciti sve u jedan metod kako bi spawn stvorio sve odjednom
+
+        
+
         NetworkServer.Spawn(newPawn.gameObject);
         NetworkServer.Spawn(newPawn2.gameObject);
         NetworkServer.Spawn(newPawn3.gameObject);
         NetworkServer.Spawn(newPawn4.gameObject);
-    }
 
+    }
 	private void CreatePawn(CommonRouteManager finalRoute, GameObject newBase, int startNode, int spellType, PawnManager newPawn, Quaternion baseRotation, int pawnId, GameObject pawnShader)
 	{
         
@@ -172,7 +184,8 @@ public class MpGameManager : NetworkBehaviour
 		
 		newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
 		newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, newPawn.transform.position.y, newPawn.transform.position.z), Quaternion.identity);
-		newPawn.selector.transform.parent = newPawn.transform;
+        newPawn.selector.transform.parent = newPawn.transform;
+
         newPawn.baseRotation = baseRotation;
         newPawn.pawnId = pawnId;
         newPawn.glowShader = Instantiate(pawnShader,new Vector3(newPawn.transform.position.x, newPawn.transform.position.y+3, newPawn.transform.position.z-0.3f), Quaternion.identity);
@@ -189,7 +202,7 @@ public class MpGameManager : NetworkBehaviour
 
         int randomPlayer = Random.Range(0, playerList.Count);
         activePlayer = randomPlayer;
-        UpdateDiceBackground();
+        //UpdateDiceBackground();
 
         isGameRunning = true;
 
@@ -198,7 +211,6 @@ public class MpGameManager : NetworkBehaviour
     void Update()
     {
         if (!isGameRunning) return;
-
         //CPU
         if (playerList[activePlayer].playerTypes == MP_playerEntity.PlayerTypes.BOT)
         {
@@ -635,12 +647,12 @@ public class MpGameManager : NetworkBehaviour
 
     void ActivateRollButton(bool buttonOn){
 
-        //rollButton.interactable = buttonOn;
+        rollButton.interactable = buttonOn;
     }
     void ActivatePowerButton(bool buttonOn)
     {
 
-        //powerButton.interactable = buttonOn;
+        powerButton.interactable = buttonOn;
     }
 
     public void DeactivateAllSelectors(){

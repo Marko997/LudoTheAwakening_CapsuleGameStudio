@@ -657,18 +657,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &203705182 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7240554607163415512, guid: c901c12bc7d100f4bb75d8aadcbd7521,
-    type: 3}
-  m_PrefabInstance: {fileID: 7240554607098679430}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d557049b2a44694faea13d6702e9f68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &218853874
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400335041
 Transform:
   m_ObjectHideFlags: 0
@@ -1232,7 +1220,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 203705182}
+      - m_Target: {fileID: 0}
         m_MethodName: EmptyAllTemplates
         m_Mode: 1
         m_Arguments:
@@ -1243,7 +1231,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 203705182}
+      - m_Target: {fileID: 0}
         m_MethodName: SwitchScene
         m_Mode: 5
         m_Arguments:
@@ -2269,7 +2257,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 203705182}
+      - m_Target: {fileID: 0}
         m_MethodName: HumanRoll
         m_Mode: 1
         m_Arguments:
@@ -2863,21 +2851,6 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3472115791
       objectReference: {fileID: 0}
-    - target: {fileID: 7240554607163415512, guid: c901c12bc7d100f4bb75d8aadcbd7521,
-        type: 3}
-      propertyPath: dice
-      value: 
-      objectReference: {fileID: 172811585}
-    - target: {fileID: 7240554607163415512, guid: c901c12bc7d100f4bb75d8aadcbd7521,
-        type: 3}
-      propertyPath: rollButton
-      value: 
-      objectReference: {fileID: 1466465176}
-    - target: {fileID: 7240554607163415512, guid: c901c12bc7d100f4bb75d8aadcbd7521,
-        type: 3}
-      propertyPath: powerButton
-      value: 
-      objectReference: {fileID: 1214995790}
     - target: {fileID: 7240554607163415513, guid: c901c12bc7d100f4bb75d8aadcbd7521,
         type: 3}
       propertyPath: m_RootOrder
@@ -2938,5 +2911,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: '#GAME_MANAGER'
       objectReference: {fileID: 0}
+    - target: {fileID: 8969452157323037972, guid: c901c12bc7d100f4bb75d8aadcbd7521,
+        type: 3}
+      propertyPath: dice
+      value: 
+      objectReference: {fileID: 172811585}
+    - target: {fileID: 8969452157323037972, guid: c901c12bc7d100f4bb75d8aadcbd7521,
+        type: 3}
+      propertyPath: rollButton
+      value: 
+      objectReference: {fileID: 1466465176}
+    - target: {fileID: 8969452157323037972, guid: c901c12bc7d100f4bb75d8aadcbd7521,
+        type: 3}
+      propertyPath: powerButton
+      value: 
+      objectReference: {fileID: 1214995790}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c901c12bc7d100f4bb75d8aadcbd7521, type: 3}

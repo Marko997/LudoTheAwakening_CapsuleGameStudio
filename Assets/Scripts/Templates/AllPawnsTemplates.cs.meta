@@ -3,7 +3,29 @@ guid: fe21d3927066b974fb287d857514a13e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cameraPivot: {instanceID: 0}
+  - commonRoute: {instanceID: 0}
+  - blueShader: {instanceID: 0}
+  - redShader: {instanceID: 0}
+  - greenShader: {instanceID: 0}
+  - yellowShader: {instanceID: 0}
+  - yellowRoute: {instanceID: 0}
+  - yellowBase: {instanceID: 0}
+  - yellowPawn: {instanceID: 0}
+  - yellowSelector: {instanceID: 0}
+  - redRoute: {instanceID: 0}
+  - redBase: {instanceID: 0}
+  - redPawn: {instanceID: 0}
+  - redSelector: {instanceID: 0}
+  - blueRoute: {instanceID: 0}
+  - blueBase: {instanceID: 0}
+  - bluePawn: {instanceID: 0}
+  - blueSelector: {instanceID: 0}
+  - greenRoute: {instanceID: 0}
+  - greenBase: {instanceID: 0}
+  - greenPawn: {instanceID: 0}
+  - greenSelector: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

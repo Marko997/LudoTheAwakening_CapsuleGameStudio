@@ -7,7 +7,6 @@ using System.Linq;
 public class PlayerSpawnSystem : NetworkBehaviour
 {
     [SerializeField] private GameObject playerPrefab = null;
-    [SerializeField] private MpGameManager mpGameManager;
 
 
     private static List<Transform> spawnPoints = new List<Transform>();
@@ -45,11 +44,9 @@ public class PlayerSpawnSystem : NetworkBehaviour
         }
 
         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
-        //MP_playerEntity playerInstance2 = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation).GetComponent<MP_playerEntity>();
 
         NetworkServer.Spawn(playerInstance.gameObject, conn);
         Debug.Log(playerInstance);
-        //mpGameManager.PlayerList.Add(playerInstance.GetComponent<MP_playerEntity>());
 
         nextIndex++;
     }
