@@ -70,17 +70,17 @@
                 {
                     Connection = conn,
                     ConnectionId = conn.connectionId,
-                    LobbyId = PlayFabMultiplayerAgentAPI.SessionConfig.SessionId
+                    //LobbyId = PlayFabMultiplayerAgentAPI.SessionConfig.SessionId
                 });
             }
         }
 
-        public override void OnServerError(NetworkConnection conn, int errorCode)
-        {
-            base.OnServerError(conn, errorCode);
+        //public override void OnServerError(NetworkConnection conn, int errorCode)
+        //{
+        //    base.OnServerError(conn, errorCode);
 
-            Debug.Log(string.Format("Unity Network Connection Status: code - {0}", errorCode));
-        }
+        //    Debug.Log(string.Format("Unity Network Connection Status: code - {0}", errorCode));
+        //}
 
         public override void OnServerDisconnect(NetworkConnection conn)
         {

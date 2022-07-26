@@ -26,15 +26,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/EndScene.unity
     guid: e7aac1a73e2ce284a8aa7545f0afd6cd
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 610bb514994b0f64286f419ea44a3089
   - enabled: 0
     path: Assets/Scenes/MPgameScene.unity
     guid: e43af25b99cf3034898726a81d04448d
   - enabled: 1
-    path: Assets/Scenes/NewLobby.unity
+    path: Assets/Scenes/NewMain.unity
     guid: eed38dbb5229db94ba20eb5b4dba3dd4
+  - enabled: 0
+    path: Assets/Scenes/NewLobby.unity
+    guid: 676d3ae4547e74c839305e7b29e1fbb9
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c6ca533da370b4f2794f0c63c45e0e6f,
       type: 2}
