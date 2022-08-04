@@ -25,8 +25,10 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     public List<PlayerEntityLTA> playerList = new List<PlayerEntityLTA>();
 
     //Izbacio template jer ne koristimo scriptable objects
-    private GameObject redRoutePrefab;
-    private GameObject redBasePrefab;
+    public GameObject redRoutePrefab;
+    public GameObject redBasePrefab;
+    public GameObject testPawn;
+    public GameObject testSelector;
 
 
     [Header("PLAYER INFO")]
@@ -35,8 +37,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     public States state;
 
     [Header("Buttons")]
-    public Button rollButton;
-    public Button powerButton;
+    //public Button rollButton;
+    //public Button powerButton;
 
     [Header("Bools")]
     bool switchingPlayer;
@@ -44,8 +46,10 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     bool pawnsSpawned = false;
 
     [Header("DICE")]
-    public Roller dice;
+    //public DiceRollerLTA diceRoller;
     [HideInInspector] public int rolledHumanDice;//mozda bolje private
+
+    CommonRouteLTA commonRouteInstance;
 
     private NetworkManagerLTA room;
     private NetworkManagerLTA Room
@@ -62,7 +66,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         instance = this;
         numberOfPlayers = NetworkManager.singleton.numPlayers; //setovanje broja igraca proveriti jel radi
 
-        var commonRouteInstance = Instantiate(commonRoutePrefab);// vratio na gameObject jer nmg da spawnujem na serveru.GetComponent<CommonRouteLTA>();
+        commonRouteInstance = Instantiate(commonRoutePrefab);// vratio na gameObject jer nmg da spawnujem na serveru.GetComponent<CommonRouteLTA>();
         NetworkServer.Spawn(commonRouteInstance.gameObject);
 
         int randomPlayer = Random.Range(0, playerList.Count);
@@ -75,37 +79,42 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        foreach(var player in playerList)
+        {
+            CmdTurnOffButtons();
+        }
+        
 
-        CmdTurnOffButtons();
-
-        UpdateDiceBackground();
+        //TO DO 
+        //UpdateDiceBackground();
     }
     //Cmd and Rpc for turning off buttons on clients on start
     #region Buttons
     [Command(requiresAuthority = false)]
     private void CmdTurnOffButtons()
     {
-        RpcTurnOffButtons();
+        RpcSwitchButtonState(false);
     }
 
     [ClientRpc]
-    private void RpcTurnOffButtons()
+    private void RpcSwitchButtonState(bool state)
     {
         Debug.Log("Buttons deactivated");
-        ActivateRollButton(false);
-        ActivatePowerButton(false);
+            ActivateRollButton(state, playerList[activePlayer].rollButton);
+            ActivatePowerButton(state, playerList[activePlayer].powerButton);
+        
     }
     #endregion 
 
     private void Update()
     {
         if (!isServer) { return; }
-        //TO DO SPAWN PAWS
+
         if(pawnsSpawned == false)
         {
             foreach(var player in playerList)
             {
-                //CreatePawn(player.playerColors);
+                CreatePawns(player.playerColors, player);
             }
             pawnsSpawned = true;
         }
@@ -143,6 +152,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     break;
             }
         }
+        //HUMAN
         if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
         {
             switch (state)
@@ -151,7 +161,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     if (turnPossible)
                     {
                         //DEACTIVATE HIGHLIGHTS
-                        //ActivateRollButton(true);
+                        RpcSwitchButtonState(true);
+                        ActivateRollButton(true,playerList[activePlayer].rollButton);
 
                         state = States.WAITING;
 
@@ -164,8 +175,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     if (turnPossible)
                     {
                         //powerButton.SetActive(true);
-                        //ActivatePowerButton(true);
-                        //StartCoroutine(WaitForAttack());
+                        ActivatePowerButton(true,playerList[activePlayer].powerButton);
+                        StartCoroutine(WaitForAttack());
 
                         state = States.WAITING;
                     }
@@ -173,14 +184,14 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 case States.SWITCH_PLAYER:
                     if (turnPossible)
                     {
-                        //ActivatePowerButton(false);
+                        ActivatePowerButton(false,playerList[activePlayer].powerButton);
                         //powerButton.SetActive(false);
-                        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+                        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
                         {
                             var activePawn = playerList[activePlayer].allPawns[i];
                             activePawn.isSelected = false;
                         }
-                        //StartCoroutine(SwitchPlayer());
+                        StartCoroutine(SwitchPlayer());
                         state = States.WAITING;
                     }
                     break;
@@ -188,100 +199,98 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         }
 
         //CHECK IF PAWN IS SWORDGIRL AND TURN POWER BUTTON ON
-        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
             if (playerList[activePlayer].allPawns[i].isSelected)
             {
                 var activePawn = playerList[activePlayer].allPawns[i];
                 //Debug.Log(activePawn);
-                if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
+                if (activePawn.spellType == PawnLTA.SpellType.SWORDGIRL)
                 {
-                    //ActivatePowerButton(true);
+                    ActivatePowerButton(true,playerList[activePlayer].powerButton);
                 }
             }
         }
 
     }
 
-    private void CreatePawn(PlayerEntityLTA.PlayerColors playerColor)
+    private List<PawnLTA> PreparePawns(GameObject routePrefab, GameObject basePrefab, int rotation, GameObject pawn,NetworkConnectionToClient sender = null)
+    {
+        var finalRoute = Instantiate(routePrefab).GetComponent<CommonRouteLTA>();
+        var finalBase = Instantiate(basePrefab);
+
+        Quaternion baseRotation = Quaternion.Euler(0, rotation, 0); //sets spawn rotation
+
+        List<PawnLTA> pawns = new List<PawnLTA>(new PawnLTA[4]);
+
+        for (int i = 0; i < pawns.Count; i++)
+        {
+            pawns[i] = Instantiate(pawn.GetComponent<PawnLTA>(), new Vector3(finalBase.transform.GetChild(i).transform.position.x, 0,
+                    finalBase.transform.GetChild(i).transform.position.z),
+                    baseRotation);
+            pawns[i].baseNode = finalBase.transform.GetChild(i).GetComponent<NodeLTA>();
+            pawns[i].transform.position = finalBase.transform.GetChild(i).GetComponent<NodeLTA>().transform.position;
+
+            pawns[i].commonRoute = commonRouteInstance;
+            pawns[i].finalRoute = finalRoute;
+
+            pawns[i].startNode = commonRouteInstance.transform.GetChild(i).GetComponent<NodeLTA>(); ;
+            pawns[i].selector = Instantiate(testSelector ,new Vector3(pawns[i].transform.position.x, pawns[i].transform.position.y, pawns[i].transform.position.z), Quaternion.identity);
+            pawns[i].BaseRotation = baseRotation;
+            pawns[i].PawnId = i;
+            //pawns[i].glowShader = null;
+            pawns[i].Init();
+
+            //Spawn pawn on clients
+            NetworkServer.Spawn(pawns[i].gameObject,sender); //namestiti da pripada playeru
+
+            //Add pawn to pawn list of each player
+
+        }
+
+        return pawns;
+
+    }
+
+
+    private void CreatePawns(PlayerEntityLTA.PlayerColors playerColor, PlayerEntityLTA player)
     {
 
         switch (playerColor)
         {
             case PlayerEntityLTA.PlayerColors.BLUE:
+
+                player.allPawns.AddRange(PreparePawns(redRoutePrefab, redBasePrefab, 90, testPawn)); //Spawn and adds pawns to player
+
                 Debug.Log("Blue pawn instantiated!");
-                var finalRoute = Instantiate(redRoutePrefab).GetComponent<CommonRouteLTA>();
-                var redBase = Instantiate(redBasePrefab);
+                
+                //var redPawn0 = Instantiate(SaveSettings.loadOutPawns[0].GetComponent<PawnLTA>(),
 
-                Quaternion baseRotation = Quaternion.Euler(0, 90, 0);
-
-                //set pawns TO DO
-                var redPawn0 = Instantiate(SaveSettings.loadOutPawns[0].GetComponent<PawnManager>(),
-                    new Vector3(redBase.transform.GetChild(0).transform.position.x, 0,
-                    redBase.transform.GetChild(0).transform.position.z),
-                    baseRotation); //change it once pawn script is transfered to mp
-
-                var redPawn1 = Instantiate(SaveSettings.loadOutPawns[1].GetComponent<PawnManager>());
-                var redPawn2 = Instantiate(SaveSettings.loadOutPawns[2].GetComponent<PawnManager>());
-                var redPawn3 = Instantiate(SaveSettings.loadOutPawns[3].GetComponent<PawnManager>());
-
-                //Create pawns DONE
-
-                redPawn0.baseNode = redBase.transform.GetChild(0).GetComponent<NodeManager>(); 
-                redPawn1.baseNode = redBase.transform.GetChild(0).GetComponent<NodeManager>(); 
-                redPawn2.baseNode = redBase.transform.GetChild(0).GetComponent<NodeManager>(); 
-                redPawn3.baseNode = redBase.transform.GetChild(0).GetComponent<NodeManager>();
-
-                redPawn0.transform.position = redBase.transform.GetChild(0).GetComponent<NodeManager>().transform.position;
-                redPawn1.transform.position = redBase.transform.GetChild(1).GetComponent<NodeManager>().transform.position;
-                redPawn2.transform.position = redBase.transform.GetChild(2).GetComponent<NodeManager>().transform.position;
-                redPawn3.transform.position = redBase.transform.GetChild(3).GetComponent<NodeManager>().transform.position;
-
-                //Create pawn TO DO
-
-                redPawn0.commonRoute = null;
-                redPawn0.finalRoute = null;
-
-                redPawn0.startNode = null;
-                redPawn0.selector = null;
-                redPawn0.baseRotation = Quaternion.identity;
-                redPawn0.pawnId = 0;
-                redPawn0.glowShader = null;
-                redPawn0.Init();
-
-                //newPawn.commonRoute = commonRoute;
-                //newPawn.finalRoute = finalRoute;
-
-                //newPawn.startNode = commonRoute.transform.GetChild(startNode).GetComponent<NodeManager>();
                 //newPawn.selector = Instantiate(templates.yellowSelector, new Vector3(newPawn.transform.position.x, newPawn.transform.position.y, newPawn.transform.position.z), Quaternion.identity);
                 //newPawn.selector.transform.parent = newPawn.transform;
-                //newPawn.baseRotation = baseRotation;
-                //newPawn.pawnId = pawnId;
+
                 //newPawn.glowShader = Instantiate(pawnShader, new Vector3(newPawn.transform.position.x, newPawn.transform.position.y + 3, newPawn.transform.position.z - 0.3f), Quaternion.identity);
                 //newPawn.glowShader.transform.parent = newPawn.transform;
-                //newPawn.Init();
+ 
 
 
                 break;
             case PlayerEntityLTA.PlayerColors.RED:
                 Debug.Log("Red pawn instantiated!");
-
+                player.allPawns.AddRange(PreparePawns(redRoutePrefab, redBasePrefab, 90, testPawn));
 
                 break;
             case PlayerEntityLTA.PlayerColors.YELLOW:
                 Debug.Log("Yellow pawn instantiated!");
-
+                player.allPawns.AddRange(PreparePawns(redRoutePrefab, redBasePrefab, 90, testPawn));
 
                 break;
             case PlayerEntityLTA.PlayerColors.GREEN:
                 Debug.Log("Green pawn instantiated!");
-
+                player.allPawns.AddRange(PreparePawns(redRoutePrefab, redBasePrefab, 90, testPawn));
 
                 break;
         }
-        
-
-
 
     }
 
@@ -295,9 +304,9 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     {
         //displaySpellButton = false;
         //powerButton.SetActive(false);
-        ActivatePowerButton(false);
+        ActivatePowerButton(false, playerList[activePlayer].powerButton);
 
-        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
             if (playerList[activePlayer].allPawns[i].isSelected)
             {
@@ -305,14 +314,14 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 //Debug.Log(activePawn);
 
                 //---------SPEARMAN----------//
-                if (activePawn.spellType == PawnManager.SpellType.SPEARMAN)
+                if (activePawn.spellType == PawnLTA.SpellType.SPEARMAN)
                 {
                     activePawn.eatPower = 1;
                     activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
 
                     if (activePawn.eatNode.isTaken)
                     {
-                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        if (activePawn.PawnId != activePawn.eatNode.pawn.PawnId)
                         {
                             //KICK THE OTHER STONE
                             activePawn.eatNode.pawn.ReturnToBase();
@@ -321,13 +330,13 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 }
 
                 //-------------ARHCER----------//
-                if (activePawn.spellType == PawnManager.SpellType.ARCHER)
+                if (activePawn.spellType == PawnLTA.SpellType.ARCHER)
                 {
                     activePawn.eatPower = 3;
                     activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
                     if (activePawn.eatNode.isTaken)
                     {
-                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        if (activePawn.PawnId != activePawn.eatNode.pawn.PawnId)
                         {
                             //KICK THE OTHER STONE
                             activePawn.eatNode.pawn.ReturnToBase();
@@ -337,13 +346,13 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
                 }
                 //-----------MACEBARER----------//
-                if (activePawn.spellType == PawnManager.SpellType.MACEBEARER)
+                if (activePawn.spellType == PawnLTA.SpellType.MACEBEARER)
                 {
                     activePawn.eatPower = -1;
                     activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
                     if (activePawn.eatNode.isTaken)
                     {
-                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        if (activePawn.PawnId != activePawn.eatNode.pawn.PawnId)
                         {
                             //KICK THE OTHER STONE
                             activePawn.eatNode.pawn.ReturnToBase();
@@ -352,10 +361,10 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
                 }
                 //------------SWORDGIRL----------//
-                if (activePawn.spellType == PawnManager.SpellType.SWORDGIRL)
+                if (activePawn.spellType == PawnLTA.SpellType.SWORDGIRL)
                 {
 
-                    for (int j = activePawn.fullRoute.IndexOf(activePawn.currentNode) + 1; j < activePawn.fullRoute.IndexOf(activePawn.currentNode) + dice.DiceOneValue; j++)
+                    for (int j = activePawn.fullRoute.IndexOf(activePawn.currentNode) + 1; j < activePawn.fullRoute.IndexOf(activePawn.currentNode) + playerList[activePlayer].diceRoller.DiceValue; j++)
                     {
                         //List<NodeManager> eatNodes = new List<NodeManager>();
                         //eatNodes.Add(activePawn.fullRoute[j]);
@@ -363,12 +372,12 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
                         if (activePawn.eatNode.isTaken)
                         {
-                            if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                            if (activePawn.PawnId != activePawn.eatNode.pawn.PawnId)
                             {
                                 //KICK THE OTHER STONE
                                 activePawn.eatNode.pawn.ReturnToBase();
                             }
-                            ActivatePowerButton(false);
+                            ActivatePowerButton(false,playerList[activePlayer].powerButton);
                         }
 
                         //foreach (NodeManager node in eatNodes){
@@ -384,18 +393,18 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
 
                     }
-                    ActivatePowerButton(false);
+                    ActivatePowerButton(false, playerList[activePlayer].powerButton);
 
                 }
                 //--------------SLINGSHOTMAN------------//
-                if (activePawn.spellType == PawnManager.SpellType.SLINGSHOOTMAN)
+                if (activePawn.spellType == PawnLTA.SpellType.SLINGSHOOTMAN)
                 {
                     activePawn.eatPower = 2;
                     activePawn.eatNode = activePawn.fullRoute[activePawn.routePosition + activePawn.eatPower];
 
                     if (activePawn.eatNode.isTaken)
                     {
-                        if (activePawn.pawnId != activePawn.eatNode.pawn.pawnId)
+                        if (activePawn.PawnId != activePawn.eatNode.pawn.PawnId)
                         {
                             //KICK THE OTHER STONE
                             activePawn.eatNode.pawn.ReturnToBase();
@@ -404,7 +413,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
                 }
                 //-----------WIZARD-----------------//
-                if (activePawn.spellType == PawnManager.SpellType.WIZARD) { }
+                if (activePawn.spellType == PawnLTA.SpellType.WIZARD) { }
                 {
                     //ActivatePowerButton(true);
                     //powerButton.SetActive(true);
@@ -417,7 +426,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
                 activePawn.eatPower = 0;
                 activePawn.isSelected = false;
-                ActivatePowerButton(false);
+                ActivatePowerButton(false, playerList[activePlayer].powerButton);
                 //powerButton.SetActive(false);
                 activePawn.eatNode = null;
                 activePawn = null;
@@ -428,7 +437,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
     void CPUDice()
     {
-        dice.Roll();
+        //TO DO BOTS
+        //diceRoller.Roll();
     }
 
     public void RollDice(int _diceNumber)
@@ -471,7 +481,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     {
         //is start node occupied
         bool startNodeFull = false;
-        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
             if (playerList[activePlayer].allPawns[i].currentNode == playerList[activePlayer].allPawns[i].startNode)
             {
@@ -486,7 +496,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         }
         else
         { //Leave base
-            for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+            for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
             {
                 if (!playerList[activePlayer].allPawns[i].ReturnIsOut())
                 {
@@ -503,16 +513,16 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
     void MoveAStone(int diceNumber)
     {
-        List<PawnManager> movablePawns = new List<PawnManager>();
-        List<PawnManager> moveKickPawns = new List<PawnManager>();
+        List<PawnLTA> movablePawns = new List<PawnLTA>();
+        List<PawnLTA> moveKickPawns = new List<PawnLTA>();
 
         //FILL THE LISTS
-        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
             if (playerList[activePlayer].allPawns[i].ReturnIsOut())
             {
                 //CHECK FOR POSSIBLE KICK
-                if (playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].pawnId, diceNumber))
+                if (playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].PawnId, diceNumber))
                 {
                     moveKickPawns.Add(playerList[activePlayer].allPawns[i]);
                     continue;
@@ -652,12 +662,12 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
     //---------------------HUMAN INPUT ------------------------//
 
-    void ActivateRollButton(bool buttonOn)
+    void ActivateRollButton(bool buttonOn, Button rollButton)
     {
 
         rollButton.interactable = buttonOn;
     }
-    void ActivatePowerButton(bool buttonOn)
+    void ActivatePowerButton(bool buttonOn, Button powerButton)
     {
 
         powerButton.interactable = buttonOn;
@@ -667,7 +677,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     {
         for (int i = 0; i < playerList.Count; i++)
         {
-            for (int j = 0; j < playerList[i].allPawns.Length; j++)
+            for (int j = 0; j < playerList[i].allPawns.Count; j++)
             {
                 playerList[i].allPawns[j].SetSelector(false);
 
@@ -675,12 +685,19 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         }
     }
 
+    [Command]
+    public void CmdHumanRoll()
+    {
+        if (!hasAuthority) { return; }
+        HumanRoll();
+    }
+
 
     public void HumanRoll()
     {
 
-        dice.Roll();
-        ActivateRollButton(false);
+        playerList[activePlayer].diceRoller.Roll();
+        ActivateRollButton(false, playerList[activePlayer].rollButton);
 
 
     }
@@ -695,12 +712,12 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         //rolledHumanDice = 6;
 
         //MOVABLE PAWN LIST
-        List<PawnManager> movablePawns = new List<PawnManager>();
+        List<PawnLTA> movablePawns = new List<PawnLTA>();
 
         //START NODE FULL CHECK
         //is start node occupied
         bool startNodeFull = false;
-        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
             if (playerList[activePlayer].allPawns[i].currentNode == playerList[activePlayer].allPawns[i].startNode)
             {
@@ -721,7 +738,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         if (rolledHumanDice == 6 && !startNodeFull)
         {
             //INSIDE BASE CHECK
-            for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+            for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
             {
                 if (!playerList[activePlayer].allPawns[i].ReturnIsOut())
                 {
@@ -757,17 +774,17 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
     }
 
-    List<PawnManager> PossiblePawns()
+    List<PawnLTA> PossiblePawns()
     {
 
-        List<PawnManager> tempList = new List<PawnManager>();
+        List<PawnLTA> tempList = new List<PawnLTA>();
 
-        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
             //MAKE SURE HE IS OUT ALREADY
             if (playerList[activePlayer].allPawns[i].ReturnIsOut())
             {
-                if (playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].pawnId, rolledHumanDice))
+                if (playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].PawnId, rolledHumanDice))
                 {
                     tempList.Add(playerList[activePlayer].allPawns[i]);
                     continue;

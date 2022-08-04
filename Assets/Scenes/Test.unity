@@ -327,12 +327,18 @@ MonoBehaviour:
   commonRoutePrefab: {fileID: 6947221618056568562, guid: 598be04880bd34b48984566f5d0e9da8,
     type: 3}
   playerList: []
+  redRoutePrefab: {fileID: 780536404678807286, guid: 3eea2d144c509d8409913643301f3a8b,
+    type: 3}
+  redBasePrefab: {fileID: 8024814748996388327, guid: aef04951a20b753418f491d0f3fcb6f7,
+    type: 3}
+  testPawn: {fileID: 3608927726113367819, guid: 334a66b3854bd484cbce7a9541502e66,
+    type: 3}
+  testSelector: {fileID: 2586688897144379815, guid: 4c377444978842d45b0b4c63cbc87a25,
+    type: 3}
   activePlayer: 0
   numberOfPlayers: 0
   state: 0
-  rollButton: {fileID: 0}
-  powerButton: {fileID: 0}
-  dice: {fileID: 0}
+  diceRoller: {fileID: 0}
   rolledHumanDice: 0
 --- !u!114 &821332608
 MonoBehaviour:

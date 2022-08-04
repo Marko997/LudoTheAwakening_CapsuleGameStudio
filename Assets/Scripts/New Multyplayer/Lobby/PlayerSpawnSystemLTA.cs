@@ -12,6 +12,8 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
 
     private int nextIndex = 0;
 
+    PlayerEntityLTA.PlayerColors lastNumber;
+
     public static void AddSpawnPoint(Transform pointLocation)
     {
         spawnPoints.Add(pointLocation);
@@ -39,6 +41,8 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
 
         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
         playerInstance.GetComponent<PlayerEntityLTA>().playerName = conn.identity.GetComponent<NetworkGamePlayerLTA>().GetDisplayName();
+        playerInstance.GetComponent<PlayerEntityLTA>().playerColors = GetRandomColor();
+
 
         NetworkServer.Spawn(playerInstance, conn);
 
@@ -46,6 +50,15 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
 
 
         nextIndex++;
+    }
+
+    PlayerEntityLTA.PlayerColors GetRandomColor() //Return random color only if color isn't already used by another player
+    {
+        PlayerEntityLTA.PlayerColors rand = (PlayerEntityLTA.PlayerColors)Random.Range(0, 3);
+        while (rand == lastNumber)
+            rand = (PlayerEntityLTA.PlayerColors)Random.Range(0, 3);
+        lastNumber = rand;
+        return rand;
     }
 
 

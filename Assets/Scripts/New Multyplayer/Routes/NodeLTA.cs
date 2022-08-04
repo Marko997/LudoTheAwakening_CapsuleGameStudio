@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class NodeLTA : NetworkBehaviour
+public class NodeLTA : MonoBehaviour
 {
-    [SyncVar]
+    //[SyncVar]
     public bool isTaken;
     //[SyncVar]
-    //public PawnManager pawn;
+    public PawnLTA pawn;
 }

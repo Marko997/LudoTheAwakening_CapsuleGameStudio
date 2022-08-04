@@ -1,12 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 
 public class PlayerEntityLTA : NetworkBehaviour
 {
+	[Header("Buttons")]
+	public Button rollButton;
+	public Button powerButton;
+
+	[Header("Dice")]
+	public DiceRollerLTA diceRoller;
+
 	[SyncVar]
-	[SerializeField] public string playerName;
+	public string playerName;
 	public enum PlayerColors
 	{
 		BLUE,
@@ -14,7 +22,7 @@ public class PlayerEntityLTA : NetworkBehaviour
 		YELLOW,
 		GREEN
 	}
-	public PawnManager[] allPawns;
+	public List<PawnLTA> allPawns = new List<PawnLTA>(new PawnLTA[4]);
 	public bool hasTurn;
 	public enum PlayerTypes
 	{
@@ -23,7 +31,7 @@ public class PlayerEntityLTA : NetworkBehaviour
 		NO_PLAYER
 	}
 	public PlayerTypes playerTypes;
-	[SyncVar(hook = nameof(HandleColorChanged))]
+	[SyncVar]
 	public PlayerColors playerColors;
 	public bool hasWon;
 
@@ -40,46 +48,11 @@ public class PlayerEntityLTA : NetworkBehaviour
 		}
 	}
 
-	public override void OnStartServer()
+	[Command]
+	public void CmdRollButton()
     {
-		UpdateColors();
-
-	}
-
-    #region Color Updates
-    private void HandleColorChanged(PlayerColors oldValue, PlayerColors newValue) => UpdateColors();
-
-	private void UpdateColors()
-    {
-        if (!isServer) { return; }
-        if (!hasAuthority)
-        {
-            foreach (var player in NetworkGameManagerLTA.instance.playerList)
-            {
-                if (player.hasAuthority)
-                {
-                    player.UpdateColors();
-                    break;
-                }
-            }
-
-            return;
-        }
-
-        for (int i = 0; i < NetworkGameManagerLTA.instance.playerList.Count; i++)
-		{
-			playerColors = GetRandom();	
-		}
-	}
-
-	PlayerColors GetRandom() //Return random color only if color isn't already used by another player
-	{
-		PlayerColors rand = (PlayerColors)Random.Range(0, 3);
-		while (rand == lastNumber)
-			rand = (PlayerColors)Random.Range(0, 3);
-		lastNumber = rand;
-		return rand;
-	}
-	#endregion
+		if (!hasAuthority) { return; }
+		NetworkGameManagerLTA.instance.HumanRoll();
+    }
 
 }
