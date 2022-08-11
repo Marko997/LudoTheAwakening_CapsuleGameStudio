@@ -8,6 +8,7 @@ public class PawnLTA : NetworkBehaviour
     [Header("PAWN INFO")]
     [SerializeField] private int pawnId;
     [SerializeField] private string pawnName;
+    
 
     [SerializeField] public enum SpellType
     {

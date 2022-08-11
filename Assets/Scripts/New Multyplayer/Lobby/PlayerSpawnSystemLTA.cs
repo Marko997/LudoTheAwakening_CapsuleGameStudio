@@ -12,7 +12,7 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
 
     private int nextIndex = 0;
 
-    PlayerEntityLTA.PlayerColors lastNumber;
+    PlayerEntityLTA.PlayerColors lastColor;
 
     public static void AddSpawnPoint(Transform pointLocation)
     {
@@ -55,9 +55,9 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
     PlayerEntityLTA.PlayerColors GetRandomColor() //Return random color only if color isn't already used by another player
     {
         PlayerEntityLTA.PlayerColors rand = (PlayerEntityLTA.PlayerColors)Random.Range(0, 3);
-        while (rand == lastNumber)
+        while (rand == lastColor)
             rand = (PlayerEntityLTA.PlayerColors)Random.Range(0, 3);
-        lastNumber = rand;
+        lastColor = rand;
         return rand;
     }
 

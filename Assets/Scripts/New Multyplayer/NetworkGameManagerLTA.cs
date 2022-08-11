@@ -36,7 +36,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     public int numberOfPlayers;
     public States state;
 
-    [Header("Buttons")]
+    //[Header("Buttons")]
     //public Button rollButton;
     //public Button powerButton;
 
@@ -69,51 +69,26 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         commonRouteInstance = Instantiate(commonRoutePrefab);// vratio na gameObject jer nmg da spawnujem na serveru.GetComponent<CommonRouteLTA>();
         NetworkServer.Spawn(commonRouteInstance.gameObject);
 
-        int randomPlayer = Random.Range(0, playerList.Count);
-        activePlayer = randomPlayer;
-
         //Players added in list in spawn system script
 
         //TO DO add BOTS, now only HUMANS can exists
     }
 
-    public override void OnStartClient()
-    {
-        foreach(var player in playerList)
-        {
-            CmdTurnOffButtons();
-        }
-        
-
-        //TO DO 
-        //UpdateDiceBackground();
-    }
-    //Cmd and Rpc for turning off buttons on clients on start
-    #region Buttons
-    [Command(requiresAuthority = false)]
-    private void CmdTurnOffButtons()
-    {
-        RpcSwitchButtonState(false);
-    }
-
-    [ClientRpc]
-    private void RpcSwitchButtonState(bool state)
-    {
-        Debug.Log("Buttons deactivated");
-            ActivateRollButton(state, playerList[activePlayer].rollButton);
-            ActivatePowerButton(state, playerList[activePlayer].powerButton);
-        
-    }
-    #endregion 
-
+    [Server]
     private void Update()
     {
-        if (!isServer) { return; }
+        //if (!isServer) { return; }
 
         if(pawnsSpawned == false)
         {
-            foreach(var player in playerList)
+            int randomPlayer = Random.Range(0, playerList.Count);
+            activePlayer = randomPlayer;
+            playerList[activePlayer].hasTurn = true;
+            playerList[activePlayer].CheckForTurn();
+            foreach (var player in playerList)
             {
+                //UpdateDiceBackground();
+
                 CreatePawns(player.playerColors, player);
             }
             pawnsSpawned = true;
@@ -153,17 +128,19 @@ public class NetworkGameManagerLTA : NetworkBehaviour
             }
         }
         //HUMAN
-        if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
+        //if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
+        if (playerList[activePlayer].isActive)
         {
             switch (state)
             {
+                
                 case States.ROLL_DICE:
                     if (turnPossible)
                     {
                         //DEACTIVATE HIGHLIGHTS
-                        RpcSwitchButtonState(true);
-                        ActivateRollButton(true,playerList[activePlayer].rollButton);
-
+                        //ActivateRollButton(true,playerList[activePlayer].rollButton);
+                        Debug.Log("Roll state");
+                        playerList[activePlayer].RpcChangeButtons(true, false);
                         state = States.WAITING;
 
                     }
@@ -175,7 +152,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     if (turnPossible)
                     {
                         //powerButton.SetActive(true);
-                        ActivatePowerButton(true,playerList[activePlayer].powerButton);
+                        playerList[activePlayer].RpcChangeButtons(false, true);
                         StartCoroutine(WaitForAttack());
 
                         state = States.WAITING;
@@ -184,8 +161,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 case States.SWITCH_PLAYER:
                     if (turnPossible)
                     {
-                        ActivatePowerButton(false,playerList[activePlayer].powerButton);
                         //powerButton.SetActive(false);
+                        playerList[activePlayer].RpcChangeButtons(false, false);
                         for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
                         {
                             var activePawn = playerList[activePlayer].allPawns[i];
@@ -207,7 +184,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 //Debug.Log(activePawn);
                 if (activePawn.spellType == PawnLTA.SpellType.SWORDGIRL)
                 {
-                    ActivatePowerButton(true,playerList[activePlayer].powerButton);
+                    //ActivatePowerButton(true,playerList[activePlayer].powerButton);
                 }
             }
         }
@@ -243,7 +220,6 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
             //Spawn pawn on clients
             NetworkServer.Spawn(pawns[i].gameObject,sender); //namestiti da pripada playeru
-
             //Add pawn to pawn list of each player
 
         }
@@ -611,7 +587,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
             return;
         }
 
-        UpdateDiceBackground();
+        //UpdateDiceBackground();
 
         //InfoText.instance.ShowMessage(playerList[activePlayer].playerName+ " has turn!");
         //DiceBackgoundSwitcher.instance.ChangeBackgroundImage(1);
@@ -696,7 +672,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     public void HumanRoll()
     {
 
-        playerList[activePlayer].diceRoller.Roll();
+        //playerList[activePlayer].diceRoller.Roll();
         ActivateRollButton(false, playerList[activePlayer].rollButton);
 
 
@@ -705,7 +681,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     //ON ROLL DICE BUTTON
     public void HumanRollDice()
     {
-
+        Debug.Log("Human Roll Dice");
 
         //ROLL DICE
         //rolledHumanDice = Random.Range(1,7);
@@ -767,6 +743,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         }
         else
         {
+            Debug.Log("Switch player");
             state = States.SWITCH_PLAYER;
         }
 
@@ -805,6 +782,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         SceneManager.LoadScene("LoadingScene");
         LevelLoaderManager.sceneToLoad = sceneToSwitch;
     }
+
 
 }
 

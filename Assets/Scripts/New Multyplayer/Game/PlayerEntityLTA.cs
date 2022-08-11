@@ -10,6 +10,9 @@ public class PlayerEntityLTA : NetworkBehaviour
 	public Button rollButton;
 	public Button powerButton;
 
+	[SyncVar]
+	public bool isActive;
+
 	[Header("Dice")]
 	public DiceRollerLTA diceRoller;
 
@@ -23,7 +26,7 @@ public class PlayerEntityLTA : NetworkBehaviour
 		GREEN
 	}
 	public List<PawnLTA> allPawns = new List<PawnLTA>(new PawnLTA[4]);
-	public bool hasTurn;
+	[SyncVar] public bool hasTurn;
 	public enum PlayerTypes
 	{
 		HUMAN,
@@ -35,7 +38,7 @@ public class PlayerEntityLTA : NetworkBehaviour
 	public PlayerColors playerColors;
 	public bool hasWon;
 
-	private PlayerColors lastNumber;
+	private PlayerColors lastColor;
 
 	private NetworkManagerLTA room;
 
@@ -47,12 +50,45 @@ public class PlayerEntityLTA : NetworkBehaviour
 			return room = NetworkManager.singleton as NetworkManagerLTA;
 		}
 	}
-
-	[Command]
-	public void CmdRollButton()
+    public override void OnStartAuthority()
     {
-		if (!hasAuthority) { return; }
-		NetworkGameManagerLTA.instance.HumanRoll();
+        if (!hasAuthority) { return; }
+		CmdChangeButtons(false, false);
+		GetComponentInChildren<Canvas>().enabled = true;
+		//CheckForTurn();
+    }
+	[Command]
+	public void CmdChangeButtons(bool rollButtonState, bool powerButtonState)
+    {
+		RpcChangeButtons(rollButtonState, powerButtonState);
+	}
+	[ClientRpc]
+	public void RpcChangeButtons(bool rollButtonState, bool powerButtonState)
+    {
+		Debug.Log("butons changed");
+		rollButton.interactable = rollButtonState;
+		powerButton.interactable = powerButtonState;
+	}
+	[ClientRpc]
+	public void RpcWriteToClients()
+    {
+		Debug.Log("Everyone should see!");
     }
 
+    [Client]
+    private void Update()
+    {
+        if (!hasAuthority) { return; }
+		CheckForTurn();
+    }
+	//Check if player has turn and turn on his buttons
+	public void CheckForTurn()
+    {
+        if (!hasTurn) { return; }
+        
+		Debug.Log("My turn");
+		rollButton.interactable = true;
+		powerButton.interactable = false;
+		hasTurn = false;
+    }
 }

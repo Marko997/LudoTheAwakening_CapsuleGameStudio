@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DiceLTA : MonoBehaviour
 {
-    //Animator anim;
+    Animator anim;
     public DiceRollerLTA roller;
 
     public void Roller()

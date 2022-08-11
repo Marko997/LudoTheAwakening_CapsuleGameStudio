@@ -338,7 +338,6 @@ MonoBehaviour:
   activePlayer: 0
   numberOfPlayers: 0
   state: 0
-  diceRoller: {fileID: 0}
   rolledHumanDice: 0
 --- !u!114 &821332608
 MonoBehaviour:
@@ -353,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 4248380163
-  serverOnly: 0
+  serverOnly: 1
   visible: 0
   m_AssetId: 
   hasSpawned: 0
