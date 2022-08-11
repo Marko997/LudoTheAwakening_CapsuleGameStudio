@@ -459,6 +459,7 @@ MonoBehaviour:
   - {fileID: 3286163911610860551, guid: 50e8f609a77bb164280753279a8e50cd, type: 3}
   Dice: {fileID: 2932206409352461476}
   DiceValue: 0
+  player: {fileID: -5009288243640635201}
 --- !u!1 &3804360856601153684
 GameObject:
   m_ObjectHideFlags: 0

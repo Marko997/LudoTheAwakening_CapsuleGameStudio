@@ -8,9 +8,11 @@ public class DiceRollerLTA : NetworkBehaviour
 {
     public Sprite[] DiceImages;
     public Image Dice;
-    [SyncVar]int currentVal;
+    [SyncVar]public int currentVal;
     [SyncVar(hook = nameof(HandleDiceValueChanged))]
     public int DiceValue;
+
+    public PlayerEntityLTA player;
 
     private void HandleDiceValueChanged(int oldValue, int newValue) => UpdateDiceValue();
 
@@ -38,20 +40,15 @@ public class DiceRollerLTA : NetworkBehaviour
     public void RollDice()
     {
         Dice.gameObject.GetComponent<Animator>().enabled = false;
-        CmdReturnRadnomDiceNumber(); //sets currentVal
-        Dice.sprite = DiceImages[currentVal];
-        NetworkGameManagerLTA.instance.RollDice(currentVal);
+         //sets currentVal
+        player.CmdReturnRandomDiceNumber(currentVal);
         UpdateDiceValue();
+        Dice.sprite = DiceImages[currentVal];
+        player.CmdRollDiceFromPlayer(currentVal);
+        //NetworkGameManagerLTA.instance.RollDice(currentVal);
+        
     }
-    //Ne radi u mp, prebacio u RollDice
-    //public Sprite RollDiceSprites()
-    //{
-    //    int x = Mathf.RoundToInt(Random.Range(0, DiceImages.Length));
-    //    currentVal = x + 1;
 
-    //    NetworkGameManagerLTA.instance.RollDice(currentVal);
-    //    return DiceImages[x];
-    //}
     [Command(requiresAuthority = false)]
     public void CmdReturnRadnomDiceNumber()
     {

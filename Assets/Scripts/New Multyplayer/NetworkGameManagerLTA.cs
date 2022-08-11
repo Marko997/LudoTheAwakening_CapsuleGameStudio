@@ -128,8 +128,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
             }
         }
         //HUMAN
-        //if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
-        if (playerList[activePlayer].isActive)
+        if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
         {
             switch (state)
             {
@@ -161,8 +160,10 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 case States.SWITCH_PLAYER:
                     if (turnPossible)
                     {
+                        Debug.Log("works");
                         //powerButton.SetActive(false);
                         playerList[activePlayer].RpcChangeButtons(false, false);
+                        playerList[activePlayer].hasTurn = false;
                         for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
                         {
                             var activePawn = playerList[activePlayer].allPawns[i];
@@ -562,6 +563,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     {
         activePlayer++;
         activePlayer %= playerList.Count;
+        playerList[activePlayer].hasTurn = true;
 
         int available = 0;
         for (int i = 0; i < playerList.Count; i++)

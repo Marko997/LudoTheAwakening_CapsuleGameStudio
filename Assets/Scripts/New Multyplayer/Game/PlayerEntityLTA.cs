@@ -10,6 +10,7 @@ public class PlayerEntityLTA : NetworkBehaviour
 	public Button rollButton;
 	public Button powerButton;
 
+
 	[SyncVar]
 	public bool isActive;
 
@@ -91,4 +92,17 @@ public class PlayerEntityLTA : NetworkBehaviour
 		powerButton.interactable = false;
 		hasTurn = false;
     }
+
+	[Command]
+	public void CmdRollDiceFromPlayer(int diceNumber)
+    {
+		Debug.Log("Cmd roll from player");
+		NetworkGameManagerLTA.instance.RollDice(diceNumber);
+    }
+
+	[Command]
+	public void CmdReturnRandomDiceNumber(int currentVal)
+    {
+		diceRoller.currentVal = Mathf.RoundToInt(Random.Range(0, 6));
+	}
 }
