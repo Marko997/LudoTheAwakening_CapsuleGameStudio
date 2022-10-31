@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5934322310353406683}
   - component: {fileID: 3649018796910453219}
   - component: {fileID: 3843965391550089930}
+  - component: {fileID: 1197549939414321670}
+  - component: {fileID: 1275699365160935306}
   m_Layer: 0
   m_Name: Test_Pawn
   m_TagString: Untagged
@@ -27,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3608927726113367819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.600121, y: 10.17, z: -9.928429}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4693094243127212943}
@@ -79,9 +81,53 @@ MonoBehaviour:
   routePosition: 0
   eatPower: 0
   isOut: 0
+  hasTurn: 0
   isSelected: 0
-  selector: {fileID: 0}
+  selector: {fileID: 2586688897144379815, guid: 4c377444978842d45b0b4c63cbc87a25,
+    type: 3}
   glowShader: {fileID: 0}
+--- !u!65 &1197549939414321670
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608927726113367819}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1275699365160935306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3608927726113367819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  bufferTimeMultiplier: 3
+  bufferSizeLimit: 64
+  catchupThreshold: 6
+  catchupMultiplier: 0.1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &7017710606054082624
 GameObject:
   m_ObjectHideFlags: 0

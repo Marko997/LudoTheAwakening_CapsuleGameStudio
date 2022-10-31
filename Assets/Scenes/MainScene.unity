@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1753,7 +1753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &219134405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7679,7 +7679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &726694484
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10782,7 +10782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1112404809
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15436,6 +15436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -19027,7 +19028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc54de70c96131d479feffd2b4202990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Debugging: 1
 --- !u!1 &1969074852
 GameObject:
   m_ObjectHideFlags: 0
@@ -20468,7 +20468,7 @@ PrefabInstance:
     - target: {fileID: 227031221717601917, guid: 79290bfa7c2bc5d40814d417cc330e44,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 227031221717601919, guid: 79290bfa7c2bc5d40814d417cc330e44,
         type: 3}

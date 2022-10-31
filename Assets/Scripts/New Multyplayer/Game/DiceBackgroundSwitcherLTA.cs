@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
 
-public class DiceBackgroundSwitcherLTA : NetworkBehaviour
+public class DiceBackgroundSwitcherLTA : MonoBehaviour
 {
     public static DiceBackgroundSwitcherLTA instance;
 

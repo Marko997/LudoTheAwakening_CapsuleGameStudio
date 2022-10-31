@@ -19,6 +19,7 @@ public class NetworkManagerLTA : NetworkManager
     [Header("Game")]
     [SerializeField] private NetworkGamePlayerLTA gamePlayerPrefab = null;
     [SerializeField] private GameObject playerSpawnSystem = null;
+    [SerializeField] private GameObject gameManagerPrefab = null;
 
     public static event Action OnClientConnected;
     public static event Action OnClientDisconnected;
@@ -159,6 +160,8 @@ public class NetworkManagerLTA : NetworkManager
         {
             GameObject playerSpawnSystemInstance = Instantiate(playerSpawnSystem);
             NetworkServer.Spawn(playerSpawnSystemInstance);
+            GameObject gameManagerInstance = Instantiate(gameManagerPrefab);
+            NetworkServer.Spawn(gameManagerInstance);
         }
     }
 

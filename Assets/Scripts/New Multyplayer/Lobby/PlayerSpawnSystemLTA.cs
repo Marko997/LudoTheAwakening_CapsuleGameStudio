@@ -32,7 +32,7 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
     public void SpawnPlayer(NetworkConnection conn)
     {
         Transform spawnPoint = spawnPoints.ElementAtOrDefault(nextIndex);
-
+ 
         if(spawnPoint == null)
         {
             Debug.LogError($"Spawn point not found for player {nextIndex}");
@@ -40,13 +40,17 @@ public class PlayerSpawnSystemLTA : NetworkBehaviour
         }
 
         GameObject playerInstance = Instantiate(playerPrefab, spawnPoints[nextIndex].position, spawnPoints[nextIndex].rotation);
-        playerInstance.GetComponent<PlayerEntityLTA>().playerName = conn.identity.GetComponent<NetworkGamePlayerLTA>().GetDisplayName();
-        playerInstance.GetComponent<PlayerEntityLTA>().playerColors = GetRandomColor();
 
+        PlayerEntityLTA player = playerInstance.GetComponent<PlayerEntityLTA>();
+        player.playerName = conn.identity.GetComponent<NetworkGamePlayerLTA>().GetDisplayName();
+        player.playerColors = GetRandomColor();
+        player.playerTypes = PlayerEntityLTA.PlayerTypes.HUMAN;
+        //player.rollButtonState = false;
+
+        GameManager2.instance.playerDictionary.Add(conn.connectionId, playerInstance.GetComponent<PlayerEntityLTA>());
+        GameManager2.instance.playerList.Add(player);
 
         NetworkServer.Spawn(playerInstance, conn);
-
-        NetworkGameManagerLTA.instance.playerList.Add(playerInstance.GetComponent<PlayerEntityLTA>());
 
 
         nextIndex++;

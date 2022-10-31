@@ -47,7 +47,7 @@ public class PawnLTA : NetworkBehaviour
     [Header("BOOLS")]
     public bool isOut;
     bool isMoving;
-    protected bool hasTurn; //for human
+    [SerializeField]protected bool hasTurn; //for human
     public bool isSelected = false;
 
     [Header("ARC MOVEMENT")]
@@ -138,18 +138,18 @@ public class PawnLTA : NetworkBehaviour
         //Switch player
         if(diceNumber < 6)
         {
-            if (NetworkGameManagerLTA.instance.playerList[NetworkGameManagerLTA.instance.activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
+            if (GameManager2.instance.playerList[GameManager2.instance.activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
             {
-                NetworkGameManagerLTA.instance.state = NetworkGameManagerLTA.States.ATTACK;
+                GameManager2.instance.state = States.ATTACK;
             }
             else
             {
-                NetworkGameManagerLTA.instance.state = NetworkGameManagerLTA.States.SWITCH_PLAYER;
+                GameManager2.instance.state = States.SWITCH_PLAYER;
             }
         }
         else
         {
-            NetworkGameManagerLTA.instance.state = NetworkGameManagerLTA.States.ROLL_DICE;
+            GameManager2.instance.state = States.ROLL_DICE;
         }
 
         isMoving = false;
@@ -226,7 +226,7 @@ public class PawnLTA : NetworkBehaviour
         currentNode = goalNode;
         goalNode = null;
 
-        NetworkGameManagerLTA.instance.state = NetworkGameManagerLTA.States.ROLL_DICE;
+        GameManager2.instance.state = States.ROLL_DICE;
 
         isMoving = false;
     }
@@ -272,7 +272,7 @@ public class PawnLTA : NetworkBehaviour
 
     IEnumerator ReturnEatenPawn()
     {
-        NetworkGameManagerLTA.instance.ReportTurnPossible(false);
+        GameManager2.instance.ReportTurnPossible(false);
         routePosition = 0;
         currentNode = null;
         goalNode = null;
@@ -285,7 +285,7 @@ public class PawnLTA : NetworkBehaviour
         {
             yield return null;
         }
-        NetworkGameManagerLTA.instance.ReportTurnPossible(true);
+        GameManager2.instance.ReportTurnPossible(true);
     }
 
     bool WinCondition()
@@ -318,10 +318,11 @@ public class PawnLTA : NetworkBehaviour
             }
             else
             {
-                StartTheMove(NetworkGameManagerLTA.instance.rolledHumanDice);
+                StartTheMove(GameManager2.instance.rolledHumanDice);
+                //StartTheMove(6);
                 isSelected = true;
             }
-            NetworkGameManagerLTA.instance.DeactivateAllSelectors();
+            //GameManager2.instance.DeactivateAllSelectors();
         }
     }
 }

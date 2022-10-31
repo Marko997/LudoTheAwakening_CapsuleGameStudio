@@ -98,9 +98,10 @@ public class NetworkRoomPlayerLTA : NetworkBehaviour
 
     public void HandleReadyToStart(bool readyToStart)
     {
-        if(!isLeader) { return; }
+        //if(!isLeader) { return; }
 
-        startGameButton.interactable = readyToStart;
+        //startGameButton.interactable = readyToStart;
+        startGameButton.interactable = true;
     }
 
     [Command]

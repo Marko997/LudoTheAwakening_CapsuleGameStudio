@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class NetworkGameManagerLTA : NetworkBehaviour
 {
-    public int playerID;
+    //public int playerID;
 
     //private PawnCardManager cardManager;
     public static NetworkGameManagerLTA instance;
-
+    
     public enum States
     {
         WAITING,
@@ -34,6 +34,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     [Header("PLAYER INFO")]
     public int activePlayer;// mozda treba da bude syncvar
     public int numberOfPlayers;
+
+    [SyncVar(hook = nameof(OnStateChanged))] //-- napraviti metod sta se desi kada se promeni state
     public States state;
 
     //[Header("Buttons")]
@@ -49,7 +51,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     //public DiceRollerLTA diceRoller;
     [HideInInspector] public int rolledHumanDice;//mozda bolje private
 
-    CommonRouteLTA commonRouteInstance;
+    GameObject commonRouteInstance;
 
     private NetworkManagerLTA room;
     private NetworkManagerLTA Room
@@ -66,8 +68,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         instance = this;
         numberOfPlayers = NetworkManager.singleton.numPlayers; //setovanje broja igraca proveriti jel radi
 
-        commonRouteInstance = Instantiate(commonRoutePrefab);// vratio na gameObject jer nmg da spawnujem na serveru.GetComponent<CommonRouteLTA>();
-        NetworkServer.Spawn(commonRouteInstance.gameObject);
+        commonRouteInstance = Instantiate(commonRoutePrefab.gameObject);// vratio na gameObject jer nmg da spawnujem na serveru.GetComponent<CommonRouteLTA>();
+        NetworkServer.Spawn(commonRouteInstance);
 
         //Players added in list in spawn system script
 
@@ -78,11 +80,11 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     private void Update()
     {
         //if (!isServer) { return; }
-
-        if(pawnsSpawned == false)
+        if (pawnsSpawned == false)
         {
             int randomPlayer = Random.Range(0, playerList.Count);
             activePlayer = randomPlayer;
+            Debug.Log(activePlayer);
             playerList[activePlayer].hasTurn = true;
             playerList[activePlayer].CheckForTurn();
             foreach (var player in playerList)
@@ -128,17 +130,38 @@ public class NetworkGameManagerLTA : NetworkBehaviour
             }
         }
         //HUMAN
+        //OnStateChanged();
+
+        //CHECK IF PAWN IS SWORDGIRL AND TURN POWER BUTTON ON
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
+        {
+            if (playerList[activePlayer].allPawns[i].isSelected)
+            {
+                var activePawn = playerList[activePlayer].allPawns[i];
+                //Debug.Log(activePawn);
+                if (activePawn.spellType == PawnLTA.SpellType.SWORDGIRL)
+                {
+                    //ActivatePowerButton(true,playerList[activePlayer].powerButton);
+                }
+            }
+        }
+
+    }
+
+    private void OnStateChanged(States oldState, States newState)
+    {
+        Debug.Log("OnStateChanged");
         if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
         {
             switch (state)
             {
-                
+
                 case States.ROLL_DICE:
                     if (turnPossible)
                     {
                         //DEACTIVATE HIGHLIGHTS
                         //ActivateRollButton(true,playerList[activePlayer].rollButton);
-                        Debug.Log("Roll state");
+                        //Debug.Log("Roll state");
                         playerList[activePlayer].RpcChangeButtons(true, false);
                         state = States.WAITING;
 
@@ -175,21 +198,6 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     break;
             }
         }
-
-        //CHECK IF PAWN IS SWORDGIRL AND TURN POWER BUTTON ON
-        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
-        {
-            if (playerList[activePlayer].allPawns[i].isSelected)
-            {
-                var activePawn = playerList[activePlayer].allPawns[i];
-                //Debug.Log(activePawn);
-                if (activePawn.spellType == PawnLTA.SpellType.SWORDGIRL)
-                {
-                    //ActivatePowerButton(true,playerList[activePlayer].powerButton);
-                }
-            }
-        }
-
     }
 
     private List<PawnLTA> PreparePawns(GameObject routePrefab, GameObject basePrefab, int rotation, GameObject pawn,NetworkConnectionToClient sender = null)
@@ -209,10 +217,10 @@ public class NetworkGameManagerLTA : NetworkBehaviour
             pawns[i].baseNode = finalBase.transform.GetChild(i).GetComponent<NodeLTA>();
             pawns[i].transform.position = finalBase.transform.GetChild(i).GetComponent<NodeLTA>().transform.position;
 
-            pawns[i].commonRoute = commonRouteInstance;
+            pawns[i].commonRoute = commonRouteInstance.GetComponent<CommonRouteLTA>();
             pawns[i].finalRoute = finalRoute;
 
-            pawns[i].startNode = commonRouteInstance.transform.GetChild(i).GetComponent<NodeLTA>(); ;
+            pawns[i].startNode = commonRouteInstance.transform.GetChild(i).GetComponent<NodeLTA>();
             pawns[i].selector = Instantiate(testSelector ,new Vector3(pawns[i].transform.position.x, pawns[i].transform.position.y, pawns[i].transform.position.z), Quaternion.identity);
             pawns[i].BaseRotation = baseRotation;
             pawns[i].PawnId = i;
@@ -281,7 +289,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     {
         //displaySpellButton = false;
         //powerButton.SetActive(false);
-        ActivatePowerButton(false, playerList[activePlayer].powerButton);
+        playerList[activePlayer].RpcChangeButtons(false, false);
+        //ActivatePowerButton(false, playerList[activePlayer].powerButton);
 
         for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
         {
@@ -341,7 +350,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 if (activePawn.spellType == PawnLTA.SpellType.SWORDGIRL)
                 {
 
-                    for (int j = activePawn.fullRoute.IndexOf(activePawn.currentNode) + 1; j < activePawn.fullRoute.IndexOf(activePawn.currentNode) + playerList[activePlayer].diceRoller.DiceValue; j++)
+                    for (int j = activePawn.fullRoute.IndexOf(activePawn.currentNode) + 1; j < activePawn.fullRoute.IndexOf(activePawn.currentNode) + playerList[activePlayer].diceRoller.currentVal; j++)
                     {
                         //List<NodeManager> eatNodes = new List<NodeManager>();
                         //eatNodes.Add(activePawn.fullRoute[j]);
@@ -403,7 +412,8 @@ public class NetworkGameManagerLTA : NetworkBehaviour
 
                 activePawn.eatPower = 0;
                 activePawn.isSelected = false;
-                ActivatePowerButton(false, playerList[activePlayer].powerButton);
+                //ActivatePowerButton(false, playerList[activePlayer].powerButton);
+                playerList[activePlayer].RpcChangeButtons(false, false);
                 //powerButton.SetActive(false);
                 activePawn.eatNode = null;
                 activePawn = null;
@@ -441,7 +451,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
         {
             rolledHumanDice = _diceNumber;
-            HumanRollDice();
+            //HumanRollDice();
         }
 
         //InfoText.instance.ShowMessage(playerList[activePlayer].playerName + " has rolled "+ _diceNumber);
@@ -663,27 +673,11 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         }
     }
 
-    [Command]
-    public void CmdHumanRoll()
-    {
-        if (!hasAuthority) { return; }
-        HumanRoll();
-    }
-
-
-    public void HumanRoll()
-    {
-
-        //playerList[activePlayer].diceRoller.Roll();
-        ActivateRollButton(false, playerList[activePlayer].rollButton);
-
-
-    }
-
     //ON ROLL DICE BUTTON
-    public void HumanRollDice()
+    public void HumanRollDice(int diceNumber)
     {
-        Debug.Log("Human Roll Dice");
+        rolledHumanDice = diceNumber;
+        Debug.Log($"Human Roll Dice {rolledHumanDice}");
 
         //ROLL DICE
         //rolledHumanDice = Random.Range(1,7);
@@ -707,7 +701,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         //NUMBER <6
         if (rolledHumanDice < 6)
         {
-
+            Debug.Log("Less than 6");
             movablePawns.AddRange(PossiblePawns());
 
         }
@@ -715,12 +709,14 @@ public class NetworkGameManagerLTA : NetworkBehaviour
         //NUMBER ==6 && !startnode
         if (rolledHumanDice == 6 && !startNodeFull)
         {
+            Debug.Log("6");
             //INSIDE BASE CHECK
             for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
             {
                 if (!playerList[activePlayer].allPawns[i].ReturnIsOut())
                 {
                     movablePawns.Add(playerList[activePlayer].allPawns[i]);
+                    Debug.Log("Avilable pawns: " + movablePawns.Count);
                 }
             }
             //OUTSIDE CHECK
