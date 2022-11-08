@@ -86,7 +86,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
             activePlayer = randomPlayer;
             Debug.Log(activePlayer);
             playerList[activePlayer].hasTurn = true;
-            playerList[activePlayer].CheckForTurn();
+            //playerList[activePlayer].CheckForTurn();
             foreach (var player in playerList)
             {
                 //UpdateDiceBackground();
@@ -162,7 +162,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                         //DEACTIVATE HIGHLIGHTS
                         //ActivateRollButton(true,playerList[activePlayer].rollButton);
                         //Debug.Log("Roll state");
-                        playerList[activePlayer].RpcChangeButtons(true, false);
+                        //playerList[activePlayer].RpcChangeButtons(true, false);
                         state = States.WAITING;
 
                     }
@@ -174,7 +174,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     if (turnPossible)
                     {
                         //powerButton.SetActive(true);
-                        playerList[activePlayer].RpcChangeButtons(false, true);
+                        //playerList[activePlayer].RpcChangeButtons(false, true);
                         StartCoroutine(WaitForAttack());
 
                         state = States.WAITING;
@@ -185,7 +185,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                     {
                         Debug.Log("works");
                         //powerButton.SetActive(false);
-                        playerList[activePlayer].RpcChangeButtons(false, false);
+                        //playerList[activePlayer].RpcChangeButtons(false, false);
                         playerList[activePlayer].hasTurn = false;
                         for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
                         {
@@ -289,7 +289,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
     {
         //displaySpellButton = false;
         //powerButton.SetActive(false);
-        playerList[activePlayer].RpcChangeButtons(false, false);
+        //playerList[activePlayer].RpcChangeButtons(false, false);
         //ActivatePowerButton(false, playerList[activePlayer].powerButton);
 
         for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
@@ -413,7 +413,7 @@ public class NetworkGameManagerLTA : NetworkBehaviour
                 activePawn.eatPower = 0;
                 activePawn.isSelected = false;
                 //ActivatePowerButton(false, playerList[activePlayer].powerButton);
-                playerList[activePlayer].RpcChangeButtons(false, false);
+                //playerList[activePlayer].RpcChangeButtons(false, false);
                 //powerButton.SetActive(false);
                 activePawn.eatNode = null;
                 activePawn = null;

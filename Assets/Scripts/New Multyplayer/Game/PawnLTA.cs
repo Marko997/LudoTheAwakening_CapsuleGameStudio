@@ -301,13 +301,13 @@ public class PawnLTA : NetworkBehaviour
     }
 
     //------------------HUMAN INPUT--------------------//
-
+    [Command]
     public void SetSelector(bool selectorOn)
     {
         selector.SetActive(selectorOn);
         hasTurn = selectorOn;
     }
-
+    [Command]
     private void OnMouseDown()
     {
         if (hasTurn)
@@ -322,7 +322,7 @@ public class PawnLTA : NetworkBehaviour
                 //StartTheMove(6);
                 isSelected = true;
             }
-            //GameManager2.instance.DeactivateAllSelectors();
+            GameManager2.instance.DeactivateAllSelectors();
         }
     }
 }

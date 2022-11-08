@@ -7,6 +7,7 @@ using TMPro;
 using System.Linq;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.CullingGroup;
+using Unity.Collections.LowLevel.Unsafe;
 
 public enum States
 {
@@ -72,33 +73,19 @@ public class GameManager2 : NetworkBehaviour
         moveCompleted = true;
         playerReady = new Dictionary<int, bool>();
 
-
-        //foreach (var netConn in NetworkServer.connections)
-        //{
-        //    playerReady.Add(netConn.Key, false);
-        //}
     }
 
-
-    [Server]
-    private void Start()
-    {
-        if (!isServer) { return; }
-        
-        //Set first turn player
-        int randomPlayer = Random.Range(0, playerList.Count);
-        activePlayer = randomPlayer;
-        playerList[activePlayer].hasTurn = true;
-
-        ActivateRollButton(playerList[activePlayer], true);
-
-    }
-    [Server]
+    //[Server]
     private void Update()
     {
         if (!isServer) { return; }
         if (pawnsSpawned == false)
         {
+            Debug.Log(playerList.Count);
+            int randomPlayer = Random.Range(0, playerList.Count);
+            activePlayer = randomPlayer;
+            playerList[activePlayer].hasTurn = true;
+            ActivateRollButton(playerList[activePlayer], true);
             foreach (var player in playerDictionary)
             {
                 AddPawnsToPlayer(player.Value);
@@ -137,8 +124,10 @@ public class GameManager2 : NetworkBehaviour
 
             pawns[i].startNode = commonRouteInstance.transform.GetChild(i).GetComponent<NodeLTA>();
             pawns[i].selector = Instantiate(pawns[i].selector, new Vector3(pawns[i].transform.position.x, pawns[i].transform.position.y, pawns[i].transform.position.z), Quaternion.identity);
+            pawns[i].selector.SetActive(false);
             pawns[i].BaseRotation = baseRotation;
             pawns[i].PawnId = i;
+
             //pawns[i].glowShader = null;
             pawns[i].Init();
 
@@ -400,5 +389,118 @@ public class GameManager2 : NetworkBehaviour
         return tempList;
     }
 
+    void CheckStartNode(int diceNumber)
+    {
+        //is start node occupied
+        bool startNodeFull = false;
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
+        {
+            if (playerList[activePlayer].allPawns[i].currentNode == playerList[activePlayer].allPawns[i].startNode)
+            {
+                startNodeFull = true;
+                break; //we found a match
+            }
+        }
+        if (startNodeFull)
+        {//moving
+            MoveAStone(diceNumber);
+            Debug.Log("The start node is full!");
+        }
+        else
+        { //Leave base
+            for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
+            {
+                if (!playerList[activePlayer].allPawns[i].ReturnIsOut())
+                {
 
+                    playerList[activePlayer].allPawns[i].LeaveBase();
+                    state = States.WAITING;
+                    return;
+                }
+
+            }
+            MoveAStone(diceNumber);
+        }
+    }
+
+    void MoveAStone(int diceNumber)
+    {
+        List<PawnLTA> movablePawns = new List<PawnLTA>();
+        List<PawnLTA> moveKickPawns = new List<PawnLTA>();
+
+        //FILL THE LISTS
+        for (int i = 0; i < playerList[activePlayer].allPawns.Count; i++)
+        {
+            if (playerList[activePlayer].allPawns[i].ReturnIsOut())
+            {
+                //CHECK FOR POSSIBLE KICK
+                if (playerList[activePlayer].allPawns[i].CheckPossibleKick(playerList[activePlayer].allPawns[i].PawnId, diceNumber))
+                {
+                    moveKickPawns.Add(playerList[activePlayer].allPawns[i]);
+                    continue;
+                }
+                //CHECK FOR POSSIBLE MOVE
+                if (playerList[activePlayer].allPawns[i].CheckPossibleMove(diceNumber))
+                {
+                    movablePawns.Add(playerList[activePlayer].allPawns[i]);
+
+                }
+            }
+        }
+        //PERFORM KICK IF POSSIBLE
+        if (moveKickPawns.Count > 0)
+        {
+            int num = Random.Range(0, moveKickPawns.Count);
+            moveKickPawns[num].StartTheMove(diceNumber);
+            state = States.WAITING;
+            return;
+        }
+        //PERFORM MOVE IF POSSIBLE
+        if (movablePawns.Count > 0)
+        {
+            int num = Random.Range(0, movablePawns.Count);
+            movablePawns[num].StartTheMove(diceNumber);
+
+            if (playerList[activePlayer].playerTypes == PlayerEntityLTA.PlayerTypes.HUMAN)
+            {
+                state = States.ATTACK;
+            }
+            else
+            {
+                state = States.WAITING;
+            }
+            return;
+        }
+        //NONE IS POSSIBLE
+        //SWITCH PLAYER
+
+        state = States.SWITCH_PLAYER;
+    }
+
+    public void DeactivateAllSelectors()
+    {
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            for (int j = 0; j < playerList[i].allPawns.Count; j++)
+            {
+                playerList[i].allPawns[j].SetSelector(false);
+
+            }
+        }
+    }
+    public void ReportWinning()
+    {
+        //SHOW UI
+        playerList[activePlayer].hasWon = true;
+
+        //SAVE WINNERS
+        for (int i = 0; i < SaveSettings.winners.Length; i++)
+        {
+            if (SaveSettings.winners[i] == "")
+            {
+                SaveSettings.winners[i] = playerList[activePlayer].playerName;
+                break;
+            }
+        }
+    }
 }
