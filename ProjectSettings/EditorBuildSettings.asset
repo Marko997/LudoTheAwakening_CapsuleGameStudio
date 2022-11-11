@@ -6,41 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LoadingScene.unity
-    guid: 3af41e475cec7c84b930628206e89334
-  - enabled: 0
-    path: Assets/Scenes/4 players.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Scenes/LoginScene.unity
-    guid: ed4573b575703504582bb5bdb84f71fe
-  - enabled: 0
-    path: Assets/Scenes/MainScene.unity
-    guid: 9e2d16a97643fdd44a0c1aad27a7fad5
-  - enabled: 0
-    path: Assets/Scenes/LoadingScene 1.unity
-    guid: 982472174224a2640a1b1cebe280c19d
-  - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: ab973028e1c03cd42be8e4fae15d5efb
-  - enabled: 0
-    path: Assets/Scenes/EndScene.unity
-    guid: e7aac1a73e2ce284a8aa7545f0afd6cd
-  - enabled: 1
-    path: Assets/Scenes/Test.unity
-    guid: 610bb514994b0f64286f419ea44a3089
-  - enabled: 0
-    path: Assets/Scenes/MPgameScene.unity
-    guid: e43af25b99cf3034898726a81d04448d
-  - enabled: 0
-    path: Assets/Scenes/NewMain.unity
-    guid: eed38dbb5229db94ba20eb5b4dba3dd4
+    path: Assets/Scenes/LobbyScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/Game.unity
-    guid: 093d1e898930e8b43bd18583bf872b79
-  - enabled: 0
-    path: Assets/Scenes/NewLobby.unity
-    guid: 676d3ae4547e74c839305e7b29e1fbb9
-  m_configObjects:
-    com.unity.addressableassets: {fileID: 11400000, guid: c6ca533da370b4f2794f0c63c45e0e6f,
-      type: 2}
+    guid: 77dc9e431d683451a9393d88c7b3b0f8
+  m_configObjects: {}
