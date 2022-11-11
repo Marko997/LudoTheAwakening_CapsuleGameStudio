@@ -3,8 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -12,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Piece
+  - ActivePiece
   - 
   - 
   - 
@@ -41,10 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Backgorund
-    uniqueID: 1503298331
-    locked: 0
-  - name: UI
-    uniqueID: 2609473879
     locked: 0
