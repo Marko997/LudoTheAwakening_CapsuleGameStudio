@@ -1,0 +1,30 @@
+﻿ 
+// Equivalent to StartCoroutine(SomeCoroutine())
+new Task(SomeCoroutine());
+ 
+// Equivalent to the above, but keeps a handle to the running coroutine
+Task t = new Task(SomeCoroutine());
+ 
+// Pause the coroutine at next yield
+t.Pause();
+ 
+// Resume it
+t.Unpause();
+ 
+// Terminate it
+t.Stop();
+ 
+// Test if it's still running.
+if(t.Running) {}
+ 
+// Test if it's paused.
+if(t.Paused) {}
+ 
+// Receive notification when it terminates.
+t.Finished += delegate(bool manual) {
+    if(manual)
+        Debug.Log("t was stopped manually.");
+    else
+        Debug.Log("t completed execution normally.");
+};
+ 

@@ -14,6 +14,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
         }
     }
 
+
     private void OnApplicationQuit()
     {
         instance = null;
