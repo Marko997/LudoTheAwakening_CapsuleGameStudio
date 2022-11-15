@@ -14,10 +14,10 @@ public class Authentification : MonoBehaviour
     ////public Text UserNamen;
     //public Text playerName;
 
-    //[SerializeField] TextMeshProUGUI TopText;
+    [SerializeField] TextMeshProUGUI TopText;
     [SerializeField] TextMeshProUGUI MessageText;
 
-    [Header("Login")]   
+    [Header("Login")]
     [SerializeField]
     TMP_InputField EmailLoginInput;
     [SerializeField] TMP_InputField PasswordLoginInput;
@@ -41,145 +41,124 @@ public class Authentification : MonoBehaviour
     [SerializeField]
     public Text WelcomeUserNameText;
 
-#region Button Functions
+    #region Button Functions
 
-public void RegisterUser()
-{
-    //if statement if password is less than 6 message text  = Too short password;
-
-    var request = new RegisterPlayFabUserRequest
+    public void RegisterUser()
     {
+        //if statement if password is less than 6 message text  = Too short password;
 
-        DisplayName = UserNameRegisterInput.text,
-        Email = EmailRegisterInput.text,
-        Password = PasswordRegisterInput.text,
-
-        RequireBothUsernameAndEmail = false
-
-    };
-
-    PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
-
-}
-
-    //public void LoginAsGuest()
-    //{
-    //    var request = new LoginWithEmailAddressRequest
-    //    {
-    //        Email = EmailLoginInput.text,
-    //        Password = PasswordLoginInput.text,
-
-    //        InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
-    //        {
-
-    //            GetPlayerProfile = true
-
-    //        }
-
-    //    };
-    //    PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
-    //}
-
-    public void Login()
-{
-    var request = new LoginWithEmailAddressRequest
-    {
-        Email = EmailLoginInput.text,
-        Password = PasswordLoginInput.text,
-
-        InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+        var request = new RegisterPlayFabUserRequest
         {
 
-            GetPlayerProfile = true
+            DisplayName = UserNameRegisterInput.text,
+            Email = EmailRegisterInput.text,
+            Password = PasswordRegisterInput.text,
 
-        }
+            RequireBothUsernameAndEmail = false
 
-    };
-    PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
-}
+        };
 
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
 
-private void OnLoginSucess(LoginResult result)
-{
-    string name = null;
-
-    if (result.InfoResultPayload != null)
-    {
-        name = result.InfoResultPayload.PlayerProfile.DisplayName;
     }
 
-    WelcomeUserNameText.text = "Welcome " + name;
-        PlayerData.Name.text = name;
-        Debug.Log(PlayerData.Name.text);
-
-    // MessageText.text = "Login in";
-    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    StartCoroutine(LoadNextScene());
-}
-
-IEnumerator LoadNextScene()
-{
-    WelcomeUSerName.SetActive(true);
-    MessageText.text = "Login in";
-    yield return new WaitForSeconds(0);
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
-}
-
-public void RecoverUser()
-{
-    var request = new SendAccountRecoveryEmailRequest
+    public void Login()
     {
-        Email = EmailRecoverryInput.text,
-        TitleId = "F9B15",
-    };
-    PlayFabClientAPI.SendAccountRecoveryEmail(request, OnReciverySucces, OnError);
-}
+        var request = new LoginWithEmailAddressRequest
+        {
+            Email = EmailLoginInput.text,
+            Password = PasswordLoginInput.text,
 
-private void OnReciverySucces(SendAccountRecoveryEmailResult obj)
-{
-    MessageText.text = "Recovery Email send.Go to your email";
-    OpenLoginPage();
-}
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
 
-private void OnError(PlayFabError Error)
-{
-    MessageText.text = Error.ErrorMessage;
-    Debug.Log(Error.GenerateErrorReport());
-}
+                GetPlayerProfile = true
 
-private void OnregisterSucces(RegisterPlayFabUserResult Result)
-{
-    MessageText.text = "New Acoocunt is Created";
-    OpenLoginPage();
-}
+            }
 
-public void OpenLoginPage()
-{
+        };
+        PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
+    }
 
-    LoginPage.SetActive(true);
-    RegisterPage.SetActive(false);
-    RecoveryPage.SetActive(false);
 
-}
+    private void OnLoginSucess(LoginResult result)
+    {
+        string name = null;
 
-public void OpenRegisterPage()
-{
+        if (result.InfoResultPayload != null)
+        {
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        }
 
-    LoginPage.SetActive(false);
-    RegisterPage.SetActive(true);
-    RecoveryPage.SetActive(false);
+        WelcomeUserNameText.text = "Welcome " + name;
 
-}
+        // MessageText.text = "Login in";
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadNextScene());
+    }
 
-public void OpenRecoveryPage()
-{
+    IEnumerator LoadNextScene()
+    {
+        WelcomeUSerName.SetActive(true);
+        MessageText.text = "Login in";
+        yield return new WaitForSeconds(0);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
-    LoginPage.SetActive(false);
-    RegisterPage.SetActive(false);
-    RecoveryPage.SetActive(true);
+    }
 
-}
+    public void RecoverUser()
+    {
+        var request = new SendAccountRecoveryEmailRequest
+        {
+            Email = EmailRecoverryInput.text,
+            TitleId = "F9B15",
+        };
+        PlayFabClientAPI.SendAccountRecoveryEmail(request, OnReciverySucces, OnError);
+    }
+
+    private void OnReciverySucces(SendAccountRecoveryEmailResult obj)
+    {
+        MessageText.text = "Recovery Email send.Go to your email";
+        OpenLoginPage();
+    }
+
+    private void OnError(PlayFabError Error)
+    {
+        MessageText.text = Error.ErrorMessage;
+        Debug.Log(Error.GenerateErrorReport());
+    }
+
+    private void OnregisterSucces(RegisterPlayFabUserResult Result)
+    {
+        MessageText.text = "New Acoocunt is Created";
+        OpenLoginPage();
+    }
+
+    public void OpenLoginPage()
+    {
+
+        LoginPage.SetActive(true);
+        RegisterPage.SetActive(false);
+        RecoveryPage.SetActive(false);
+
+    }
+
+    public void OpenRegisterPage()
+    {
+
+        LoginPage.SetActive(false);
+        RegisterPage.SetActive(true);
+        RecoveryPage.SetActive(false);
+
+    }
+
+    public void OpenRecoveryPage()
+    {
+
+        LoginPage.SetActive(false);
+        RegisterPage.SetActive(false);
+        RecoveryPage.SetActive(true);
+
+    }
     #endregion
-
 }
