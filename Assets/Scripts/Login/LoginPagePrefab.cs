@@ -62,7 +62,25 @@ public void RegisterUser()
 
 }
 
-public void Login()
+    //public void LoginAsGuest()
+    //{
+    //    var request = new LoginWithEmailAddressRequest
+    //    {
+    //        Email = EmailLoginInput.text,
+    //        Password = PasswordLoginInput.text,
+
+    //        InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+    //        {
+
+    //            GetPlayerProfile = true
+
+    //        }
+
+    //    };
+    //    PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
+    //}
+
+    public void Login()
 {
     var request = new LoginWithEmailAddressRequest
     {
