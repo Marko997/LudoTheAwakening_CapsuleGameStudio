@@ -8,7 +8,7 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoginPagePrefab : MonoBehaviour
+public class Authentification : MonoBehaviour
 {
     //public static Scene1 scene1;
     ////public Text UserNamen;
@@ -17,7 +17,7 @@ public class LoginPagePrefab : MonoBehaviour
     [SerializeField] TextMeshProUGUI TopText;
     [SerializeField] TextMeshProUGUI MessageText;
 
-    [Header("Login")]   
+    [Header("Login")]
     [SerializeField]
     TMP_InputField EmailLoginInput;
     [SerializeField] TMP_InputField PasswordLoginInput;
@@ -41,28 +41,26 @@ public class LoginPagePrefab : MonoBehaviour
     [SerializeField]
     public Text WelcomeUserNameText;
 
-#region Button Functions
+    #region Button Functions
 
-public void RegisterUser()
-{
-    //if statement if password is less than 6 message text  = Too short password;
-
-    var request = new RegisterPlayFabUserRequest
+    public void RegisterUser()
     {
+        //if statement if password is less than 6 message text  = Too short password;
 
-        DisplayName = UserNameRegisterInput.text,
-        Email = EmailRegisterInput.text,
-        Password = PasswordRegisterInput.text,
+        var request = new RegisterPlayFabUserRequest
+        {
+            DisplayName = UserNameRegisterInput.text,
+            Email = EmailRegisterInput.text,
+            Password = PasswordRegisterInput.text,
 
-        RequireBothUsernameAndEmail = false
+            RequireBothUsernameAndEmail = false
+        };
 
-    };
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
 
-    PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
+    }
 
-}
-
-public void Login()
+    public void Login()
 {
     var request = new LoginWithEmailAddressRequest
     {
