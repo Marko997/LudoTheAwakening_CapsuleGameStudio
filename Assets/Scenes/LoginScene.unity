@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4947,7 +4947,7 @@ GameObject:
   - component: {fileID: 1304175168}
   - component: {fileID: 1304175167}
   m_Layer: 0
-  m_Name: LoginSystem
+  m_Name: AuthSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4965,19 +4965,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a330bb62264cf438d502ba8dc70cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TopText: {fileID: 337896680}
-  MessageText: {fileID: 1707126303}
-  EmailLoginInput: {fileID: 463048294}
-  PasswordLoginInput: {fileID: 1865207995}
-  LoginPage: {fileID: 967083381}
-  UserNameRegisterInput: {fileID: 2080808597}
-  EmailRegisterInput: {fileID: 607995931}
-  PasswordRegisterInput: {fileID: 985001918}
-  RegisterPage: {fileID: 739609900}
-  EmailRecoverryInput: {fileID: 43002156}
-  RecoveryPage: {fileID: 1745573984}
-  WelcomeUSerName: {fileID: 1411260808}
-  WelcomeUserNameText: {fileID: 18844009}
+  TopText: {fileID: 0}
+  MessageText: {fileID: 0}
+  EmailLoginInput: {fileID: 0}
+  PasswordLoginInput: {fileID: 0}
+  LoginPage: {fileID: 0}
+  UserNameRegisterInput: {fileID: 0}
+  EmailRegisterInput: {fileID: 0}
+  PasswordRegisterInput: {fileID: 0}
+  RegisterPage: {fileID: 0}
+  EmailRecoverryInput: {fileID: 0}
+  RecoveryPage: {fileID: 0}
+  WelcomeUSerName: {fileID: 0}
+  WelcomeUserNameText: {fileID: 0}
 --- !u!4 &1304175168
 Transform:
   m_ObjectHideFlags: 0

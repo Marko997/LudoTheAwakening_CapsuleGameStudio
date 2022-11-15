@@ -8,7 +8,7 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoginPagePrefab : MonoBehaviour
+public class Authentification : MonoBehaviour
 {
     //public static Scene1 scene1;
     ////public Text UserNamen;
@@ -109,6 +109,8 @@ private void OnLoginSucess(LoginResult result)
     }
 
     WelcomeUserNameText.text = "Welcome " + name;
+        PlayerData.Name.text = name;
+        Debug.Log(PlayerData.Name.text);
 
     // MessageText.text = "Login in";
     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
