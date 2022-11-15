@@ -8,7 +8,7 @@ using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Authentification : MonoBehaviour
+public class LoginPagePrefab : MonoBehaviour
 {
     //public static Scene1 scene1;
     ////public Text UserNamen;
@@ -17,7 +17,7 @@ public class Authentification : MonoBehaviour
     [SerializeField] TextMeshProUGUI TopText;
     [SerializeField] TextMeshProUGUI MessageText;
 
-    [Header("Login")]
+    [Header("Login")]   
     [SerializeField]
     TMP_InputField EmailLoginInput;
     [SerializeField] TMP_InputField PasswordLoginInput;
@@ -41,24 +41,44 @@ public class Authentification : MonoBehaviour
     [SerializeField]
     public Text WelcomeUserNameText;
 
-    #region Button Functions
+#region Button Functions
 
-    public void RegisterUser()
+public void RegisterUser()
+{
+    //if statement if password is less than 6 message text  = Too short password;
+
+    var request = new RegisterPlayFabUserRequest
     {
-        //if statement if password is less than 6 message text  = Too short password;
 
-        var request = new RegisterPlayFabUserRequest
-        {
-            DisplayName = UserNameRegisterInput.text,
-            Email = EmailRegisterInput.text,
-            Password = PasswordRegisterInput.text,
+        DisplayName = UserNameRegisterInput.text,
+        Email = EmailRegisterInput.text,
+        Password = PasswordRegisterInput.text,
 
-            RequireBothUsernameAndEmail = false
-        };
+        RequireBothUsernameAndEmail = false
 
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
+    };
 
-    }
+    PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
+
+}
+
+    //public void LoginAsGuest()
+    //{
+    //    var request = new LoginWithEmailAddressRequest
+    //    {
+    //        Email = EmailLoginInput.text,
+    //        Password = PasswordLoginInput.text,
+
+    //        InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+    //        {
+
+    //            GetPlayerProfile = true
+
+    //        }
+
+    //    };
+    //    PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
+    //}
 
     public void Login()
 {
