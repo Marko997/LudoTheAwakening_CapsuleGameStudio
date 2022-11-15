@@ -14,7 +14,7 @@ public class Authentification : MonoBehaviour
     ////public Text UserNamen;
     //public Text playerName;
 
-    [SerializeField] TextMeshProUGUI TopText;
+    //[SerializeField] TextMeshProUGUI TopText;
     [SerializeField] TextMeshProUGUI MessageText;
 
     [Header("Login")]   
