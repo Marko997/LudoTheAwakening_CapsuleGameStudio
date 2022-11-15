@@ -8,7 +8,7 @@ PlayerSettings:
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 0
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
@@ -47,7 +47,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 1
+  m_ActiveColorSpace: 0
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
@@ -69,11 +69,11 @@ PlayerSettings:
   androidUseSwappy: 0
   androidBlitType: 0
   androidResizableWindow: 0
-  androidDefaultWindowWidth: 1920
-  androidDefaultWindowHeight: 1080
+  androidDefaultWindowWidth: 2532
+  androidDefaultWindowHeight: 1170
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
-  androidFullscreenMode: 1
+  androidFullscreenMode: 3
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 0
@@ -162,7 +162,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 22
+  AndroidMinSdkVersion: 25
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -787,7 +787,7 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: com.unity.template-starter-kit
-  metroPackageVersion: 
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -795,7 +795,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: com.unity.template-starter-kit
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Ludo_TheAwakening
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
