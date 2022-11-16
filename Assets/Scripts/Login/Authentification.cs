@@ -54,6 +54,8 @@ public class Authentification : MonoBehaviour
     [SerializeField]
     public Text WelcomeUserNameText;
 
+    public PlayerData playerData;
+
     #region Button Functions
 
     public void RegisterUser()
@@ -97,16 +99,21 @@ public class Authentification : MonoBehaviour
     {
 
         string name = null;
+        string playerId = null;
 
         if (result.InfoResultPayload != null)
         {
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
+            playerId = result.InfoResultPayload.PlayerProfile.PlayerId;
         }
 
         WelcomeUserNameText.text = "Welcome " + name;
 
-        // MessageText.text = "Login in";
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        playerData.PlayerName = name;
+        playerData.PlayerId = playerId;
+        Debug.Log(playerData.PlayerName);
+        Debug.Log(playerData.PlayerId);
+
         StartCoroutine(LoadNextScene());
     }
 
@@ -124,7 +131,7 @@ public class Authentification : MonoBehaviour
         var request = new SendAccountRecoveryEmailRequest
         {
             Email = EmailRecoverryInput.text,
-            TitleId = "F9B15",
+            TitleId = "2D715",
         };
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnReciverySucces, OnError);
     }
