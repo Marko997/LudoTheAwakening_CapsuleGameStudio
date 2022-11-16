@@ -16,6 +16,7 @@ public class DontDestroyCanvas : MonoBehaviour
     public GameObject Hero;
     public GameObject Canvas;
     public GameObject Image;
+    //public GameObject canvas;
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +67,24 @@ public class DontDestroyCanvas : MonoBehaviour
             //PlayeScreen.SetActive(false);
             Destroy(Hero);
             Destroy(Image);
+
             //LobyScreen.SetActive(false);
+            Canvas.SetActive(false);
+            GameObject cRight, cLeft;
+
+            cRight = Instantiate(Canvas) as GameObject;
+            cLeft = Instantiate(Canvas) as GameObject;
+
+            cRight.SetActive(true);
+            cLeft.SetActive(true);
+
+            Canvas cL, cR;
+            cL = cLeft.GetComponent<Canvas>();
+            cR = cRight.GetComponent<Canvas>();
+
+            cL.renderMode = RenderMode.ScreenSpaceOverlay;
         }
     }
+    
+  
 }
