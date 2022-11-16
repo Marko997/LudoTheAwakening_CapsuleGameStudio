@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 8235994}
   - component: {fileID: 8235993}
   - component: {fileID: 8235992}
+  - component: {fileID: 8235997}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -246,6 +247,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &8235997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9cfc629a8158c4da4c8fc395dd7f43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Background: {fileID: 2081016036}
+  MainMenuScreen: {fileID: 1391323420}
+  ShopScreen: {fileID: 1684650861}
+  DeckScreen: {fileID: 1421681114}
+  ProfileScreen: {fileID: 1318123509}
+  SettingsScreen: {fileID: 178046760}
+  EventScreen: {fileID: 1657318699}
+  PremiumPassScreen: {fileID: 1888565045}
+  Currency: {fileID: 1436998138}
+  Hero: {fileID: 1379991224}
+  Canvas: {fileID: 8235991}
+  Image: {fileID: 1464991767}
 --- !u!1 &23060110
 GameObject:
   m_ObjectHideFlags: 0
@@ -6187,7 +6212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933577137}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -32, y: 31, z: -558}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6239,7 +6264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5be234306224e47baa21488204d9ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 933577139}
+  canvas: {fileID: 8235995}
   mydropdown: {fileID: 1761233931}
 --- !u!114 &933577143
 MonoBehaviour:
