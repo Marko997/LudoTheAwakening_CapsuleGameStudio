@@ -36,7 +36,7 @@ public class ScreenManager : MonoSingleton<ScreenManager>
 
         if(desiredScreen == null)
         {
-            Debug.LogWarning("The desired canvas was not found");
+            Debug.LogWarning($"The desired canvas was not found {desiredScreen}");
             return;
         }
         desiredScreen.gameObject.SetActive(true);

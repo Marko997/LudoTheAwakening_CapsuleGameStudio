@@ -124,7 +124,7 @@ public class Authentification : MonoBehaviour
         var request = new SendAccountRecoveryEmailRequest
         {
             Email = EmailRecoverryInput.text,
-            TitleId = "F9B15",
+            TitleId = "2D715",
         };
         PlayFabClientAPI.SendAccountRecoveryEmail(request, OnReciverySucces, OnError);
     }

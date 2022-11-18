@@ -28,7 +28,7 @@ public class DontDestroy : MonoBehaviour
         if (scene.name == "Game")
         {
             // Destroy the gameobject this script is attached to
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
