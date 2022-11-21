@@ -7,9 +7,11 @@ public class ScreenManager : MonoSingleton<ScreenManager>
 {
     List<Screen> screenList;
     private Screen lastActiveScreen;
-
+    public CheckInternetConnection Check;
     void Awake()
     {
+        Check = FindObjectOfType<CheckInternetConnection>();
+
         screenList = GetComponentsInChildren<Screen>().ToList();
 
         screenList.ForEach(x => x.gameObject.SetActive(false));
@@ -23,7 +25,12 @@ public class ScreenManager : MonoSingleton<ScreenManager>
         //    SwitchCanvas(CanvasType.StartScreen);
         //}
         SwitchScreen(ScreenType.MainMenu);
+        
+    }
 
+    private void Update()
+    {
+        Check.StartCoroutine(Check.CheckInternet());
     }
 
     public void SwitchScreen(ScreenType type)
