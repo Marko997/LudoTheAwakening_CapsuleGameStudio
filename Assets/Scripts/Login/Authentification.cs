@@ -7,18 +7,6 @@ using PlayFab.ClientModels;
 using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//
-using System;
-using System.Globalization;
-using System.Text;
-using PlayFab;
-using PlayFab.ClientModels;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using PlayFab;
-using PlayFab.ClientModels;
-using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -151,6 +139,7 @@ public class Authentification : MonoBehaviour
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
             PlayerPrefs.SetString("EMAIL", userEmail);
             PlayerPrefs.SetString("PASSWORD", userPassword);
+            //OVO NIJE BEZBEDNO!!!!
         }
 
         WelcomeUserNameText.text = "Welcome " + name;
