@@ -4501,7 +4501,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: -126}
+  m_AnchoredPosition: {x: -3, y: -385}
   m_SizeDelta: {x: 780.923, y: 255.916}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &999594573
@@ -5039,7 +5039,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.00018310547, y: 109.753}
+  m_AnchoredPosition: {x: 0.00024414062, y: 109.753}
   m_SizeDelta: {x: -0.00061035, y: 1543.996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1126236285
@@ -6126,6 +6126,7 @@ GameObject:
   - component: {fileID: 1411260812}
   - component: {fileID: 1411260811}
   - component: {fileID: 1411260810}
+  - component: {fileID: 1411260814}
   m_Layer: 5
   m_Name: Auth__UserName__Canvas
   m_TagString: Untagged
@@ -6215,6 +6216,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1411260814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411260808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f14039afa04f5479928bb5a7ffb045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1452778241
 GameObject:
   m_ObjectHideFlags: 0
@@ -7006,7 +7019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 11.588989, y: 54}
+  m_AnchoredPosition: {x: 11.588867, y: 54}
   m_SizeDelta: {x: 23.177, y: 392.003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1638299752
@@ -8292,13 +8305,14 @@ GameObject:
   - component: {fileID: 1990885866}
   - component: {fileID: 1990885865}
   - component: {fileID: 1990885869}
+  - component: {fileID: 1990885870}
   m_Layer: 5
   m_Name: Auth__Error__Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1990885865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8388,9 +8402,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990885864}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31f14039afa04f5479928bb5a7ffb045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1990885870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990885864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736f39928ce5eb74a9305d6f3bb7e21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2033596226
@@ -8404,6 +8430,7 @@ GameObject:
   - component: {fileID: 2033596228}
   - component: {fileID: 2033596227}
   - component: {fileID: 2033596229}
+  - component: {fileID: 2033596230}
   m_Layer: 0
   m_Name: CheckInternetConnection
   m_TagString: Untagged
@@ -8446,9 +8473,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033596226}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31f14039afa04f5479928bb5a7ffb045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2033596230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033596226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736f39928ce5eb74a9305d6f3bb7e21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2064811888

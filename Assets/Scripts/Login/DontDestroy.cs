@@ -25,7 +25,7 @@ public class DontDestroy : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // here you can use scene.buildIndex or scene.name to check which scene was loaded
-        if (scene.name == "Game")
+        //if (scene.name == "LoginScene")
         {
             // Destroy the gameobject this script is attached to
             //Destroy(gameObject);

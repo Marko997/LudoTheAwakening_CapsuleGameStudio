@@ -23,21 +23,20 @@ public class CheckInternetConnection : MonoBehaviour
         yield return request.SendWebRequest();
         if (request.error != null)
         {
+            Debug.Log(request.error);
             AuthErrorCanvas.SetActive(true);
-            //AuthCanvas.SetActive(false);
         }
         else
         {
             AuthErrorCanvas.SetActive(false);
-            //AuthCanvas.SetActive(true);
         }
 
     }
 
-    public void TryAgain()
-    {
-        //SceneManager.LoadScene("LogingScene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    //public void TryAgain()
+    //{
+    //    //SceneManager.LoadScene("LogingScene");
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //}
 
 }

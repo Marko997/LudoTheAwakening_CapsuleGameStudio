@@ -28,10 +28,10 @@ public class ScreenManager : MonoSingleton<ScreenManager>
         
     }
 
-    private void Update()
-    {
-        Check.StartCoroutine(Check.CheckInternet());
-    }
+    //private void Update()
+    //{
+    //    Check.StartCoroutine(Check.CheckInternet());
+    //}
 
     public void SwitchScreen(ScreenType type)
     {
