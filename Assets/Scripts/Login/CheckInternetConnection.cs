@@ -11,32 +11,39 @@ public class CheckInternetConnection : MonoBehaviour
     public GameObject AuthErrorCanvas;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        StartCoroutine(CheckInternet());
-    }
-
-    public IEnumerator CheckInternet()
-    {
-
-        UnityWebRequest request = new UnityWebRequest("http://google.com");
-        yield return request.SendWebRequest();
-        if (request.error != null)
+        //StartCoroutine(CheckInternet());
+        if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            Debug.Log(request.error);
             AuthErrorCanvas.SetActive(true);
         }
         else
         {
             AuthErrorCanvas.SetActive(false);
         }
-
     }
 
-    //public void TryAgain()
+    //public IEnumerator CheckInternet()
     //{
-    //    //SceneManager.LoadScene("LogingScene");
-    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    //    UnityWebRequest request = new UnityWebRequest("http://google.com");
+    //    yield return request.SendWebRequest();
+    //    if (request.error != null)
+    //    {
+    //        //Debug.Log(request.error);
+    //        AuthErrorCanvas.SetActive(true);        }
+    //    else
+    //    {
+    //        AuthErrorCanvas.SetActive(false);
+    //    }
+
     //}
+
+    public void TryAgain()
+    {
+        //SceneManager.LoadScene("LogingScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
 }

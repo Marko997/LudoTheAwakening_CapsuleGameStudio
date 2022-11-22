@@ -7,10 +7,11 @@ public class ScreenManager : MonoSingleton<ScreenManager>
 {
     List<Screen> screenList;
     private Screen lastActiveScreen;
-    public CheckInternetConnection Check;
+
+    //public CheckInternetConnection Check;
     void Awake()
     {
-        Check = FindObjectOfType<CheckInternetConnection>();
+        //Check = FindObjectOfType<CheckInternetConnection>();
 
         screenList = GetComponentsInChildren<Screen>().ToList();
 
