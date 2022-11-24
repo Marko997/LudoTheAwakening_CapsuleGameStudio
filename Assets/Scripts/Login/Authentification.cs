@@ -1,50 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using PlayFab;
 using PlayFab.ClientModels;
-using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Events;
-
 
 public class Authentification : MonoBehaviour
 {
-    //public static Scene1 scene1;
-    ////public Text UserNamen;
-    //public Text playerName;
-    //[SerializeField] TextMeshProUGUI TopText;
     [SerializeField] TextMeshProUGUI MessageText;
 
     [Header("Login")]
-    [SerializeField]
-    TMP_InputField EmailLoginInput;
+    [SerializeField] TMP_InputField EmailLoginInput;
     [SerializeField] TMP_InputField PasswordLoginInput;
     [SerializeField] GameObject LoginPage;
 
     [Header("Register")]
-    [SerializeField]
-    TMP_InputField UserNameRegisterInput;
+    [SerializeField] TMP_InputField UserNameRegisterInput;
     [SerializeField] TMP_InputField EmailRegisterInput;
     [SerializeField] TMP_InputField PasswordRegisterInput;
     [SerializeField] GameObject RegisterPage;
 
     [Header("Recovery")]
-    [SerializeField]
-    TMP_InputField EmailRecoverryInput;
+    [SerializeField] TMP_InputField EmailRecoverryInput;
     [SerializeField] GameObject RecoveryPage;
 
     [Header("WelcomeUserName")]
-    [SerializeField]
-    public GameObject WelcomeUSerName;
-    [SerializeField]
-    public Text WelcomeUserNameText;
-    //
+    [SerializeField] public GameObject WelcomeUSerName;
+    [SerializeField] public Text WelcomeUserNameText;
+  
     private string userEmail;
     private string userPassword;
-    //private string userName;
+
     public GameObject loginPanel;
     public GameObject addLoginPanel;
     public GameObject recoverButton;
@@ -52,63 +39,45 @@ public class Authentification : MonoBehaviour
     #region Button Functions
     public void Start()
     {
-
-        //PlayerPrefs.DeleteAll();
-        
+        //PlayerPrefs.DeleteAll();//Za odjavu zaboravi mail i sifru//Funkcionise po principu odkomentarises ,porenes,zakomentarrises i ulogujes se jer pamti logovanje.Kad bi stojalo odkomenatisano ne bi se auto logovao
         if (PlayerPrefs.HasKey("EMAIL"))
         {
-
             userEmail = PlayerPrefs.GetString("EMAIL");
             userPassword = PlayerPrefs.GetString("PASSWORD");
             var request = new LoginWithEmailAddressRequest
             {
-
                 Email = userEmail,
                 Password = userPassword,
                 InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
                 {
-
                     GetPlayerProfile = true
-
                 }
-
             };
-
             PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
-        }
-        
+        }   
     }
 
     public void GetUserEmail(string emailIn)
     {
-
         userEmail = emailIn;
-
     }
 
     public void GetUserPassword(string passwordIn)
     {
-
         userPassword = passwordIn;
-
     }
 
     public void RegisterUser()
     {
-
         var request = new RegisterPlayFabUserRequest
-        {
-            
+        {       
             DisplayName = UserNameRegisterInput.text,
             Email = EmailRegisterInput.text,
             Password = PasswordRegisterInput.text,
 
             RequireBothUsernameAndEmail = false
-
         };
-
         PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
-
     }
 
     public void Login()
@@ -120,18 +89,14 @@ public class Authentification : MonoBehaviour
 
         InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
-
                 GetPlayerProfile = true
-
             }
-
         };
         PlayFabClientAPI.LoginWithEmailAddress(request, OnLoginSucess, OnError);
     }
 
     private void OnLoginSucess(LoginResult result)
     {
-
         string name = null;
 
         if (result.InfoResultPayload != null)
@@ -141,9 +106,8 @@ public class Authentification : MonoBehaviour
             PlayerPrefs.SetString("PASSWORD", userPassword);
             //OVO NIJE BEZBEDNO!!!!
         }
-
         WelcomeUserNameText.text = "Welcome " + name;
-      
+        //SubimittName();
         StartCoroutine(LoadNextScene());
     }
 
@@ -153,7 +117,6 @@ public class Authentification : MonoBehaviour
         MessageText.text = "Login in";
         yield return new WaitForSeconds(0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
     }
 
     public void RecoverUser()
@@ -169,7 +132,7 @@ public class Authentification : MonoBehaviour
     private void OnReciverySucces(SendAccountRecoveryEmailResult obj)
     {
         MessageText.text = "Recovery Email send.Go to your email";
-        OpenLoginPage();
+        OpenPages(true, false, false);
     }
 
     private void OnError(PlayFabError Error)
@@ -181,156 +144,60 @@ public class Authentification : MonoBehaviour
     private void OnregisterSucces(RegisterPlayFabUserResult Result)
     {
         MessageText.text = "New Acoocunt is Created";
-        OpenLoginPage();
+        OpenPages(true, false, false);
     }
 
     public void OpenLoginPage()
     {
-
-        LoginPage.SetActive(true);
-        RegisterPage.SetActive(false);
-        RecoveryPage.SetActive(false);
-
+        OpenPages(true, false, false);
     }
 
     public void OpenRegisterPage()
     {
-
-        LoginPage.SetActive(false);
-        RegisterPage.SetActive(true);
-        RecoveryPage.SetActive(false);
-
+        OpenPages(false, true, false);
     }
 
     public void OpenRecoveryPage()
     {
-
-        LoginPage.SetActive(false);
-        RegisterPage.SetActive(false);
-        RecoveryPage.SetActive(true);
-
+        OpenPages(false, false, true);
+    }
+    public void OpenPages(bool LoginP, bool RegisterP, bool RecoveryP)
+    {
+        LoginPage.SetActive(LoginP);
+        RegisterPage.SetActive(RegisterP);
+        RecoveryPage.SetActive(RecoveryP);
     }
 
     #endregion
 
     //Login As Guest
-    public static Authentification Instance;
-
-    public static UnityEvent OnSignInSuccess = new UnityEvent();
-    public static UnityEvent<string> OnSignInFailed = new UnityEvent<string>();
-    public static UnityEvent<string> OnCreateAccountFailed = new UnityEvent<string>();
-    public static UnityEvent<string, string> OnUserDataRetrieved = new UnityEvent<string, string>();
-    public static UnityEvent<string, List<PlayerLeaderboardEntry>> OnLeaderboardRetrieved = new UnityEvent<string, List<PlayerLeaderboardEntry>>();
-    public static UnityEvent<string, StatisticValue> OnStatisticRetrieved = new UnityEvent<string, StatisticValue>();
-
-    public static string playfabID;
-    public static UserAccountInfo userAccountInfo;
-
-    void Awake()
+    #region Guest
+    public void LoginAsGuest()
     {
-        Instance = this;
-    }
-
-    /*
-        ACCOUNT
-    */
-
-    public void SignInWithDevice()
-    {
-        if (GetDeviceId(out string android_id, out string ios_id, out string custom_id))
+        var request = new LoginWithCustomIDRequest
         {
-            if (!string.IsNullOrEmpty(android_id))
+            CustomId = SystemInfo.deviceUniqueIdentifier,
+            CreateAccount = true,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
-                StartCoroutine(LoadNextScene());
-                Debug.Log("Using Android Device ID: " + android_id);
-
-                PlayFabClientAPI.LoginWithAndroidDeviceID(new LoginWithAndroidDeviceIDRequest()
-                {
-                    AndroidDeviceId = android_id,
-                    TitleId = PlayFabSettings.TitleId,
-                    CreateAccount = true
-                }, result => {
-                    Debug.Log($"Successful Login with Android Device ID");
-                    playfabID = result.PlayFabId;
-                    //CheckDisplayName("User", () => OnSignInSuccess.Invoke());
-                }, error => {
-                    Debug.Log($"<color=red>Unsuccessful Login with Android Device ID</color>");
-                    OnSignInFailed.Invoke(error.ErrorMessage);
-                });
+                GetPlayerProfile = true
             }
-            else if (!string.IsNullOrEmpty(ios_id))
-            {
-                StartCoroutine(LoadNextScene());
-                Debug.Log("Using IOS Device ID: " + ios_id);
-
-                PlayFabClientAPI.LoginWithIOSDeviceID(new LoginWithIOSDeviceIDRequest()
-                {
-                    DeviceId = ios_id,
-                    TitleId = PlayFabSettings.TitleId,
-                    CreateAccount = true
-                }, result => {
-                    Debug.Log($"Successful Login with IOS Device ID");
-                    playfabID = result.PlayFabId;
-                    //CheckDisplayName("User", () => OnSignInSuccess.Invoke());
-                }, error => {
-                    Debug.Log($"<color=red>Unsuccessful Login with IOS Device ID</color>");
-                    OnSignInFailed.Invoke(error.ErrorMessage);
-                });
-            }
-        }
-        else
-        {
-            StartCoroutine(LoadNextScene());
-            Debug.Log("Using custom device ID: " + custom_id);
-
-            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
-            {
-                CustomId = custom_id,
-                TitleId = PlayFabSettings.TitleId,
-                CreateAccount = true
-            }, result => {
-                Debug.Log($"Successful Login with custom device ID");
-                playfabID = result.PlayFabId;
-                //CheckDisplayName("User", () => OnSignInSuccess.Invoke());
-            }, error => {
-                Debug.Log($"<color=red>Unsuccessful Login with custom device ID</color>");
-                OnSignInFailed.Invoke(error.ErrorMessage);
-            });
-        }
+        };
+        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSucess, OnError);
     }
 
-    bool GetDeviceId(out string android_id, out string ios_id, out string custom_id)
-    {
-        android_id = string.Empty;
-        ios_id = string.Empty;
-        custom_id = string.Empty;
+    //public void SubimittName()
+    //{
+    //    var request = new UpdateUserTitleDisplayNameRequest
+    //    {
+    //        DisplayName = "Guest"
+    //    };
+    //    PlayFabClientAPI.UpdateUserTitleDisplayName(request, OndisplayNameUpdate, OnError);
+    //}
 
-        if (CheckForSupportedMobilePlatform())
-        {
-#if UNITY_ANDROID
-            //http://answers.unity3d.com/questions/430630/how-can-i-get-android-id-.html
-            AndroidJavaClass clsUnity = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject objActivity = clsUnity.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaObject objResolver = objActivity.Call<AndroidJavaObject>("getContentResolver");
-            AndroidJavaClass clsSecure = new AndroidJavaClass("android.provider.Settings$Secure");
-            android_id = clsSecure.CallStatic<string>("getString", objResolver, "android_id");
-#endif
-
-#if UNITY_IPHONE
-            ios_id = UnityEngine.iOS.Device.vendorIdentifier;
-#endif
-            return true;
-        }
-        else
-        {
-            custom_id = SystemInfo.deviceUniqueIdentifier;
-            return false;
-        }
-    }
-
-    bool CheckForSupportedMobilePlatform()
-    {
-        return Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer;
-    }
-
+    //void OndisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
+    //{
+    //    Debug.Log("OK");
+    //}
+    #endregion
 }
