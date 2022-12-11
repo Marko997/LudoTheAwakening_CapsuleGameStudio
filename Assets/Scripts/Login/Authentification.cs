@@ -36,6 +36,8 @@ public class Authentification : MonoBehaviour
     public GameObject addLoginPanel;
     public GameObject recoverButton;
 
+    public EntityKey token;
+
     #region Button Functions
     public void Start()
     {
@@ -86,7 +88,7 @@ public class Authentification : MonoBehaviour
         {
             Email = EmailLoginInput.text,
             Password = PasswordLoginInput.text,
-
+            
         InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
                 GetPlayerProfile = true
@@ -102,10 +104,15 @@ public class Authentification : MonoBehaviour
         if (result.InfoResultPayload != null)
         {
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
+            token = result.EntityToken.Entity;
             PlayerPrefs.SetString("EMAIL", userEmail);
             PlayerPrefs.SetString("PASSWORD", userPassword);
             //OVO NIJE BEZBEDNO!!!!
         }
+        Debug.Log(token.Type);
+
+
+
         WelcomeUserNameText.text = "Welcome " + name;
         //SubimittName();
         StartCoroutine(LoadNextScene());
@@ -184,7 +191,9 @@ public class Authentification : MonoBehaviour
             }
         };
         PlayFabClientAPI.LoginWithCustomID(request, OnLoginSucess, OnError);
+        //GetToken();
     }
+
 
     //public void SubimittName()
     //{

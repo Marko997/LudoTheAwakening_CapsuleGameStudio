@@ -31,7 +31,17 @@ public class PlayerController : NetworkBehaviour
 
             if (IsOwner)
             {
-                playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+                if(PlayerPrefs.GetString("NAME") == "")
+                {
+                    Debug.Log("EMPTY");
+                    playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+                }
+                else
+                {
+                    playerName.Value = PlayerPrefs.GetString("NAME");
+                }
+                //playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+                
                 playerColor.Value = new Color(UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f));
             }
             else

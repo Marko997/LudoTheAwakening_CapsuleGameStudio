@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5639,9 +5639,12 @@ MonoBehaviour:
   RecoveryPage: {fileID: 996562147}
   WelcomeUSerName: {fileID: 1411260808}
   WelcomeUserNameText: {fileID: 18844009}
-  loginPanel: {fileID: 0}
+  loginPanel: {fileID: 1871623113}
   addLoginPanel: {fileID: 0}
-  recoverButton: {fileID: 0}
+  recoverButton: {fileID: 1221459379}
+  token:
+    Id: 
+    Type: 
 --- !u!4 &1304175168
 Transform:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: -589533958200764653}
   - component: {fileID: 4110592198571067314}
   - component: {fileID: 2113863048857466204}
+  - component: {fileID: 4972598590562170960}
+  - component: {fileID: -5416883405392196248}
   m_Layer: 6
   m_Name: Piece
   m_TagString: Untagged
@@ -65,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6e9fbc2322de40a42bdc8196cd168867, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cdf50f6a28342159917d3a9d491109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceName: 
+  pieceName: SpearMan
   spell: {fileID: 0}
   currentTeam: 0
   currentTile: -1
@@ -125,6 +127,7 @@ MonoBehaviour:
   steps: 0
   isMoving: 0
   isOut: 0
+  isSelected: 0
   board: []
 --- !u!114 &4110592198571067314
 MonoBehaviour:
@@ -138,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e727cb632f6c450cad59cc25675ef95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spell: 0
+  spell: 1
 --- !u!114 &2113863048857466204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,3 +168,37 @@ MonoBehaviour:
   ScaleThreshold: 0.01
   InLocalSpace: 0
   Interpolate: 1
+--- !u!95 &4972598590562170960
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255423109042527737}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f682f44dc4a6885438138b9ddade1a21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5416883405392196248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6255423109042527737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 4972598590562170960}
