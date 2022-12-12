@@ -6,7 +6,7 @@ using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 public class LogOut : MonoBehaviour
 {
-    
+    public GameObject Canvas;
     public void LogOutt()
     {
         PlayFabClientAPI.ForgetAllCredentials();

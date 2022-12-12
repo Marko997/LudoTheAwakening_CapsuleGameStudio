@@ -7,43 +7,26 @@ using UnityEngine.SceneManagement;
 public class CheckInternetConnection : MonoBehaviour
 {
 
-    //public GameObject AuthCanvas;
     public GameObject AuthErrorCanvas;
 
-    // Start is called before the first frame update
-    public void Start()
+    public void Update()
     {
         //StartCoroutine(CheckInternet());
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             AuthErrorCanvas.SetActive(true);
+            AudioListener.pause = true;
         }
         else
         {
             AuthErrorCanvas.SetActive(false);
+            AudioListener.pause = false;
         }
     }
-
-    //public IEnumerator CheckInternet()
+    ////Ovo nam pravi problem sa kanvasom
+    //public void TryAgain()
     //{
-
-    //    UnityWebRequest request = new UnityWebRequest("http://google.com");
-    //    yield return request.SendWebRequest();
-    //    if (request.error != null)
-    //    {
-    //        //Debug.Log(request.error);
-    //        AuthErrorCanvas.SetActive(true);        }
-    //    else
-    //    {
-    //        AuthErrorCanvas.SetActive(false);
-    //    }
-
+    //    //SceneManager.LoadScene("LogingScene");
+    //    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     //}
-
-    public void TryAgain()
-    {
-        //SceneManager.LoadScene("LogingScene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
 }
