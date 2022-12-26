@@ -136,8 +136,6 @@ GameObject:
   - component: {fileID: 8235994}
   - component: {fileID: 8235993}
   - component: {fileID: 8235992}
-  - component: {fileID: 8235997}
-  - component: {fileID: 8235998}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -157,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cd6c4a8e16104447ad025b706ae985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenList: []
 --- !u!114 &8235993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,49 +240,47 @@ RectTransform:
   - {fileID: 661803542}
   - {fileID: 139432242}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &8235997
-MonoBehaviour:
+--- !u!1 &19599822
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235991}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b9cfc629a8158c4da4c8fc395dd7f43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Background: {fileID: 2081016036}
-  MainMenuScreen: {fileID: 1391323420}
-  ShopScreen: {fileID: 1684650861}
-  DeckScreen: {fileID: 1421681114}
-  ProfileScreen: {fileID: 1318123509}
-  SettingsScreen: {fileID: 178046760}
-  EventScreen: {fileID: 1657318699}
-  PremiumPassScreen: {fileID: 1888565045}
-  Currency: {fileID: 1436998138}
-  Hero: {fileID: 1379991224}
-  Canvas: {fileID: 8235991}
-  Image: {fileID: 1464991767}
---- !u!114 &8235998
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 19599823}
+  m_Layer: 0
+  m_Name: ------Settings---------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &19599823
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235991}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 736f39928ce5eb74a9305d6f3bb7e21d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_GameObject: {fileID: 19599822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.6836445, y: 36.41433, z: 4.8661346}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 347390860}
+  - {fileID: 650019275}
+  - {fileID: 497990936}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &23060110
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,6 +694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &106512559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,6 +1147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &138950774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1338,6 +1337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 8
+  screenManager: {fileID: 0}
 --- !u!114 &178046763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,6 +1951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &304570890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2224,12 +2225,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347390858}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 620.3863, y: 1178.8497, z: -1154.5076}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 622.06995, y: 1142.4354, z: -1159.3737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 19599823}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &347390861
@@ -2239,7 +2240,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 347390858}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 736f39928ce5eb74a9305d6f3bb7e21d, type: 3}
   m_Name: 
@@ -3283,6 +3284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &497702488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3390,13 +3392,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497990934}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 609.37994, y: 1182.3585, z: -1206.1019}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 611.0636, y: 1145.9442, z: -1210.968}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 19599823}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &497990937
 MonoBehaviour:
@@ -3417,7 +3419,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497990934}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 736f39928ce5eb74a9305d6f3bb7e21d, type: 3}
   m_Name: 
@@ -4582,13 +4584,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650019273}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 620.3863, y: 1178.8497, z: -1154.5076}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 622.06995, y: 1142.4354, z: -1159.3737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 19599823}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &650019276
 MonoBehaviour:
@@ -4597,7 +4599,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650019273}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 736f39928ce5eb74a9305d6f3bb7e21d, type: 3}
   m_Name: 
@@ -4935,6 +4937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 14
+  screenManager: {fileID: 0}
 --- !u!114 &740791763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5083,6 +5086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &742412631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5353,6 +5357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &781360684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5700,6 +5705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &838513814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5885,7 +5891,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900341503
 GameObject:
@@ -6076,6 +6082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &904319640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6302,7 +6309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5be234306224e47baa21488204d9ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 8235995}
+  canvas: {fileID: 8235991}
   mydropdown: {fileID: 1761233931}
 --- !u!114 &933577143
 MonoBehaviour:
@@ -6311,7 +6318,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 933577137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31f14039afa04f5479928bb5a7ffb045, type: 3}
   m_Name: 
@@ -7635,6 +7642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 11
+  screenManager: {fileID: 0}
 --- !u!114 &1318123512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7963,6 +7971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 4
+  screenManager: {fileID: 0}
 --- !u!114 &1379991230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8061,6 +8070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 3
+  screenManager: {fileID: 0}
 --- !u!114 &1391323423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8273,6 +8283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 4
+  screenManager: {fileID: 0}
 --- !u!114 &1421681117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8399,7 +8410,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1427992837
 GameObject:
@@ -8455,6 +8466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &1427992840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9515,6 +9527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 14
+  screenManager: {fileID: 0}
 --- !u!114 &1541689964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10325,6 +10338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 6
+  screenManager: {fileID: 0}
 --- !u!114 &1657318702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10461,6 +10475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 5
+  screenManager: {fileID: 0}
 --- !u!114 &1684650864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10834,6 +10849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!114 &1724366844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11791,7 +11807,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1887515480
 MonoBehaviour:
@@ -11867,6 +11883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 7
+  screenManager: {fileID: 0}
 --- !u!114 &1888565048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12202,7 +12219,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1989255490
 GameObject:
@@ -12661,7 +12678,7 @@ PrefabInstance:
     - target: {fileID: 5330732910706015332, guid: 165fd8406d77544a2aeaca770bd8a593,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5330732910706015332, guid: 165fd8406d77544a2aeaca770bd8a593,
         type: 3}
@@ -12786,6 +12803,7 @@ GameObject:
   - component: {fileID: 2085718566}
   - component: {fileID: 2085718565}
   - component: {fileID: 2085718564}
+  - component: {fileID: 2085718567}
   m_Layer: 5
   m_Name: LogOut
   m_TagString: Untagged
@@ -12908,6 +12926,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2085718562}
   m_CullTransparentMesh: 1
+--- !u!114 &2085718567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085718562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5963803b0674a44afa10e8695596e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desiredScreenType: 0
+  screenManager: {fileID: 0}
 --- !u!1 &2123323973
 GameObject:
   m_ObjectHideFlags: 0
@@ -13015,7 +13047,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8207534281613674454
 MonoBehaviour:

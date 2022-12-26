@@ -27,7 +27,7 @@ public class TestVibrate : MonoBehaviour
         if (vibrate)
         {
 
-            Handheld.Vibrate();
+            //Handheld.Vibrate(); //Nece da napravi build zbog ovoga kaze ne postoji handheld
             AudioListener.volume = 0;
             
         }

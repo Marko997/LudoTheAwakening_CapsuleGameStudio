@@ -6,14 +6,15 @@ public class ScreenSwitcher : MonoBehaviour
 {
     public ScreenType desiredScreenType;
 
-    ScreenManager screenManager;
+    [SerializeField]ScreenManager screenManager;
     Button menuButton;
 
     private void Start()
     {
+        screenManager = GetComponentInParent<ScreenManager>();
         menuButton = GetComponent<Button>();
         menuButton.onClick.AddListener(OnButtonClicked);
-        screenManager = ScreenManager.Instance;
+        //screenManager = ScreenManager.Instance;
     }
 
     void OnButtonClicked()

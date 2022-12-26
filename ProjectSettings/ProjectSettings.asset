@@ -772,7 +772,10 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Server: ENABLE_PLAYFABSERVER_API
+    Standalone: ENABLE_PLAYFABSERVER_API
+    iPhone: ENABLE_PLAYFABSERVER_API
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
