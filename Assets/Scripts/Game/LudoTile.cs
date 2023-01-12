@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LudoTile : MonoBehaviour
+public class LudoTile
 {
     public Piece[] pieces;
     public Transform tileTransform;

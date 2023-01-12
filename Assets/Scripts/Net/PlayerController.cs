@@ -33,7 +33,7 @@ public class PlayerController : NetworkBehaviour
             {
                 if(PlayerPrefs.GetString("NAME") == "")
                 {
-                    Debug.Log("EMPTY");
+                    //Debug.Log("EMPTY");
                     playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
                 }
                 else

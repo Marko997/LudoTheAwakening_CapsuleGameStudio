@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Globalization;
 
-public class GameManager : NetworkBehaviour
+public class GameManager2 : NetworkBehaviour
 {
     private bool playersSpawned = true;
 
@@ -530,14 +530,10 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
-                if ((piece.currentTile > 0 && piece.currentTile <50) && board[piece.currentTile + 3].GetFirstPiece() != null) 
+                if (piece.currentTile > 0)
                 {
-                    Debug.Log(board[piece.currentTile + piece.eatPower]);
-                    Debug.Log(board[piece.currentTile + 3].GetFirstPiece());
-                    EnableAttackClientRpc(true, clientRpcParams);                   
+                    EnableAttackClientRpc(true, clientRpcParams);
                 }
-            if (!canRollAgain)
-                NextTurn();
         };
         //if (!canRollAgain)
         //    NextTurn();

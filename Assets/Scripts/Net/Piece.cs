@@ -11,7 +11,7 @@ public class Piece : NetworkBehaviour
     public Team currentTeam;
     public int currentTile = -1;
     public Vector3 startPosition;
-    public int eatPower;
+    public int eatPower = 3;
 
     [Header("BOARD MOVEMENT")]
     public int routePosition;
@@ -62,35 +62,53 @@ public class Piece : NetworkBehaviour
         {
             //StartCoroutine(Move(position));
             t = new Task(Move(position));
-            
+            //transform.position = position;
             //isSelected = true;
         }
     }
 
-    IEnumerator Move(Vector3 position)
+    public IEnumerator Move(Vector3 position)
     {
         if (isMoving)
         {
             yield break;
         }
         isMoving = true;
-
+        int lookTileInt = 1;
         while (steps > 0)
-        {
-            Vector3 nextPos = board[currentTile+1].transform.position;
-            Vector3 lookAtTile = board[currentTile + 2].transform.position;
-            while (MoveToNextNode(transform.position,nextPos, lookAtTile))
+        { 
+            routePosition++;
+            if (routePosition == 51)
+            {
+                routePosition++;
+            }
+            if(routePosition > 51)
+            {
+                lookTileInt = 0;
+            }
+            if(routePosition == 50)
+            {
+                lookTileInt = 2;
+            }
+            Vector3 startPos = board[currentTile].tileTransform.position;
+            Vector3 nextPos = board[routePosition].tileTransform.position;
+            Vector3 lookAtTile = board[routePosition + lookTileInt].tileTransform.position;
+            while (MoveToNextNode(startPos, nextPos, lookAtTile))
             {
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
             timeForPointToPoint = 0;
+            if (currentTile == 50)
+            {
+                currentTile++;
+            }
             currentTile++;
             steps--;
-            routePosition++;
+            
         }
         transform.position = position; //put more pawns on same tile (reposition)
-        //isOut = true; //REMOVE THIS AFTER TESTING!!!
+
         if (currentTile > 0)
         {
             isOut = true;
