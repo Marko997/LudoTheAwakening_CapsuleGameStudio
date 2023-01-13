@@ -2930,17 +2930,17 @@ PrefabInstance:
     - target: {fileID: 9126244911158385857, guid: 513a84543e8b2464498932d2b16e3e44,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 250
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 9126244911158385857, guid: 513a84543e8b2464498932d2b16e3e44,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 250
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 9126244911158385857, guid: 513a84543e8b2464498932d2b16e3e44,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 250
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 9126244911158385857, guid: 513a84543e8b2464498932d2b16e3e44,
         type: 3}
@@ -13105,6 +13105,18 @@ MonoBehaviour:
       OverridingTargetPrefab: {fileID: 0}
     - Override: 0
       Prefab: {fileID: 6255423109042527737, guid: 5d8a58d07fdd14c29bc05555b454a941,
+        type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 2705688362003820569, guid: de71cfd17d2dd4baf9ddb2534eab2c0f,
+        type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 5762731836130539421, guid: d62c264a3ccad4151947cbe9fb5d2382,
         type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0

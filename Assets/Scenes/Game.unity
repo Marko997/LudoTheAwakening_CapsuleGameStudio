@@ -5800,6 +5800,12 @@ PrefabInstance:
       objectReference: {fileID: 1399529835}
     - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
         type: 3}
+      propertyPath: piecePrefab
+      value: 
+      objectReference: {fileID: 5762731836130539421, guid: d62c264a3ccad4151947cbe9fb5d2382,
+        type: 3}
+    - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
+        type: 3}
       propertyPath: playerColor
       value: 
       objectReference: {fileID: 310219923}

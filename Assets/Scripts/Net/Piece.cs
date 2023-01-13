@@ -23,9 +23,12 @@ public class Piece : NetworkBehaviour
     public LudoTile[] board;
     public Task t;
 
+    private Animator animator;
+
 
     public override void OnNetworkSpawn()
     {
+        animator = GetComponent<Animator>();
         // Assign the start position field to be restored when piece is eaten
         startPosition = transform.position;
         spell = gameObject.GetComponent<Spell>();
@@ -69,6 +72,8 @@ public class Piece : NetworkBehaviour
 
     public IEnumerator Move(Vector3 position)
     {
+        animator.SetBool("canJump", true);
+        animator.SetBool("loopJump", true);
         if (isMoving)
         {
             yield break;
@@ -76,7 +81,9 @@ public class Piece : NetworkBehaviour
         isMoving = true;
         int lookTileInt = 1;
         while (steps > 0)
-        { 
+        {
+            //animator.SetBool("canJump", true);
+            //animator.Play("Hero_Boy_Jump_Start");
             routePosition++;
             if (routePosition == 51)
             {
@@ -105,7 +112,8 @@ public class Piece : NetworkBehaviour
             }
             currentTile++;
             steps--;
-            
+
+            //animator.SetBool("canJump", false);
         }
         transform.position = position; //put more pawns on same tile (reposition)
 
@@ -113,7 +121,11 @@ public class Piece : NetworkBehaviour
         {
             isOut = true;
         }
-        isMoving = false;   
+        isMoving = false;
+
+        animator.SetBool("loopJump", false);
+        animator.SetBool("canJump", false);
+        
     }
 
     bool MoveToNextNode(Vector3 startPos, Vector3 nextPos, Vector3 lookAtTile)
@@ -126,7 +138,7 @@ public class Piece : NetworkBehaviour
         transform.LookAt(point, transform.up);
 
         pawnPosition.y += 0.5f * Mathf.Sin(Mathf.Clamp01(timeForPointToPoint) * Mathf.PI);
-
+       
         return nextPos != (transform.position = Vector3.Lerp(transform.position, pawnPosition, timeForPointToPoint));
     }
 
