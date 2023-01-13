@@ -146,7 +146,7 @@ public class GameManager : NetworkBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 50.0f, LayerMask.GetMask("ActivePiece")))
+            if (Physics.Raycast(ray, out hit, 1050.0f, LayerMask.GetMask("ActivePiece")))
             {
                 if (Input.GetMouseButtonDown(0)) // Left click on a piece
                 {

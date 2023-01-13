@@ -7,6 +7,8 @@ using TMPro;
 public class PlayerController : NetworkBehaviour
 {
     private bool networkStarted = true;
+    public Camera gameCamera;
+    public GameObject mainCamera;
 
     //Networked fields
     public NetworkVariable<CustomNetworkVariables.NetworkString> playerName = new NetworkVariable<CustomNetworkVariables.NetworkString>("PlayerName",NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -16,6 +18,16 @@ public class PlayerController : NetworkBehaviour
     //Fields
     private TextMeshProUGUI playerNameLabel;
     private GameObject myPLayerListItem;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        //mainCamera = Camera.main.gameObject;
+        //gameCamera.gameObject.SetActive(true);
+        //mainCamera.gameObject.SetActive(false);
+        
+        Debug.Log("spawned");
+    }
 
     public void Update()
     {    
@@ -31,6 +43,7 @@ public class PlayerController : NetworkBehaviour
 
             if (IsOwner)
             {
+                //camera.enabled = true;
                 if(PlayerPrefs.GetString("NAME") == "")
                 {
                     //Debug.Log("EMPTY");
