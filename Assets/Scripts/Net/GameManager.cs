@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Globalization;
+using System;
 
 public class GameManager : NetworkBehaviour
 {
@@ -117,7 +118,7 @@ public class GameManager : NetworkBehaviour
     }
     public void Update()
     {
-        if (playersSpawned)
+        if (playersSpawned && IsServer)
         {
             // Is this is the owner, set the movecompleted value so we can begin our first turn
             if (IsOwner)
@@ -150,7 +151,9 @@ public class GameManager : NetworkBehaviour
             {
                 if (Input.GetMouseButtonDown(0)) // Left click on a piece
                 {
-                    MovePiece(hit.collider.GetComponent<Piece>());
+                    var selectedPiece = hit.collider.GetComponent<Piece>();
+                    selectedPiece.isSelected = true;
+                    MovePiece(selectedPiece);
                 }
             }
         }
@@ -232,6 +235,7 @@ public class GameManager : NetworkBehaviour
         int matchingIndex = 0;
         for (int j = 0; j < paths[(int)piece.currentTeam].Length; j++)
         {
+            //Debug.Log(paths[(int)piece.currentTeam].Length);
             if (paths[(int)piece.currentTeam][j] == piece.currentTile)
             {
                 matchingIndex = j;
@@ -292,7 +296,7 @@ public class GameManager : NetworkBehaviour
         // Assign the values (owner side only)
         playerPieces = new Dictionary<ulong, Piece[]>(4);
         playerCompleted = new Dictionary<ulong, bool>(4);
-
+        
         int playerIndex = 0;
         foreach (KeyValuePair<ulong, NetworkClient> nc in NetworkManager.Singleton.ConnectedClients)
         {
@@ -306,10 +310,18 @@ public class GameManager : NetworkBehaviour
                 go.transform.position = startPosition[playerIndex][i];
                 go.GetComponent<NetworkObject>().SpawnWithOwnership(nc.Key);
                 pieces[i] = go.GetComponent<Piece>();
-                pieces[i].board = board;
+
+                int[] value;
+                if(paths.TryGetValue(((int)pieces[i].currentTeam), out value))
+                {
+                    for (int j = 0; j < value.Length; j++)
+                    {
+                        pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
+                        //Debug.Log(pieces[0].board[j].tileTransform.position);
+                    }
+                }
                 //Sets starting rotation
                 pieces[i].transform.rotation = Quaternion.Euler(0, 180, 0);
-
             }
 
             playerPieces.Add(nc.Key, pieces);
@@ -426,6 +438,7 @@ public class GameManager : NetworkBehaviour
 
         // 1. Move the piece @ the start
         piece.steps = 0;
+        piece.transform.position = board[startPosition].tileTransform.position;
         board[startPosition].AddPiece(piece);
         piece.currentTile = startPosition;
 
@@ -438,6 +451,7 @@ public class GameManager : NetworkBehaviour
             board[startPosition].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;
+            p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
         }
 
@@ -470,7 +484,10 @@ public class GameManager : NetworkBehaviour
 
         // 1. Find the index in the current team's path
         int matchingIndex = FindIndexInPath(piece);
+        //Debug.Log(matchingIndex);
         int targetTile = paths[(int)piece.currentTeam][matchingIndex + currentDiceRoll.Value];
+        //int targetTile = piece.routePosition + currentDiceRoll.Value;
+        Debug.Log(targetTile);
         int previousPosition = piece.currentTile;
 
         // 2. Are we killing any piece?
@@ -485,9 +502,10 @@ public class GameManager : NetworkBehaviour
 
         // 3. Move the piece there
         piece.steps = currentDiceRoll.Value; //adds steps to pawn
-        //piece.currentTile = targetTile;
-        //Debug.Log(targetTile);
+
         board[targetTile].AddPiece(piece);
+        piece.currentTile = targetTile;
+
         board[previousPosition].RemovePiece(piece);
 
         moveCompleted.Value = true;
@@ -530,11 +548,9 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
-                if ((piece.currentTile > 0 && piece.currentTile <50) && board[piece.currentTile + 3].GetFirstPiece() != null) 
+                if ((piece.currentTile > 0 && piece.currentTile < 50) && board[piece.currentTile + 3].GetFirstPiece() != null)
                 {
-                    Debug.Log(board[piece.currentTile + piece.eatPower]);
-                    Debug.Log(board[piece.currentTile + 3].GetFirstPiece());
-                    EnableAttackClientRpc(true, clientRpcParams);                   
+                    EnableAttackClientRpc(true, clientRpcParams);
                 }
             if (!canRollAgain)
                 NextTurn();
@@ -566,7 +582,7 @@ public class GameManager : NetworkBehaviour
         if ((rollCountThisTurn == 0 || canRollAgain) && clientId == currentTurn.Value && moveCompleted.Value)
         {
             // Actually roll
-            int rv = (forceDice == -1) ? Random.Range(1, 7) : forceDice;
+            int rv = (forceDice == -1) ? UnityEngine.Random.Range(1, 7) : forceDice;
             rollCountThisTurn++;
             canRollAgain = false;
             if (rv == 6)

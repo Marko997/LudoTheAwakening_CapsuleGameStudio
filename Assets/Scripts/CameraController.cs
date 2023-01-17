@@ -2,161 +2,260 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CameraStates
+{
+    RtsCam,
+    TargetCam,
+    TopCam,
+    MiddleCam,
+    AngleCam
+}
+
 public class CameraController : MonoBehaviour
 {
-    float mouseZoomSpeed = 15.0f;
-    float touchZoomSpeed = 0.1f;
-    float zoomMinBound = 20.0f;
-    float zoomMaxBound = 60.0f;
-    Camera cam;
+    public Transform target;
+    public float distance = 30.0f;
+    public float xSpeed = 250.0f;
+    public float ySpeed = 120.0f;
+    public float yMinLimit = -20.0f;
+    public float yMaxLimit = 80.0f;
+    public float zoomSpeed = 5.0f;
+    public float zoomMin = 10.0f;
+    public float zoomMax = 40.0f;
+    public float touchSensitivity = 10.0f;
+    public float pinchZoomSpeed = 0.5f;
 
-    [SerializeField] private Transform target;
-    private float distanceToTarget;
+    private float x = 0.0f;
+    private float y = 0.0f;
+    private Vector2 touchStartPosition;
+    private Vector2 touchEndPosition;
+    private Vector2 touchStartPosition2;
+    private Vector2 touchEndPosition2;
+    private float touchStartDistance;
+    private float touchEndDistance;
 
-    float mouseX, mouseY;
 
-    public float rotateSpeed = 100f;
-    public float zoomSpeed = 10f;
-    public float minHeight = 0f;
+    //RTS Camera
+    public float panSpeed = 2f;
+    public float scrollSpeed = 2f;
+    public float minY = 10f;
+    public float maxY = 80f;
+    public Vector2 minPosition = new Vector2(-15, -15);
+    public Vector2 maxPosition = new Vector2(15, 15);
+    //public float zoomSpeed = 0.5f;
 
-    // Start is called before the first frame update
+    private Vector3 lastMousePosition;
+    private Vector3 lastTouchPosition;
+    private bool isPanning;
+    private Vector2 touchDelta;
+
+    
+    public CameraStates state;
+
     void Start()
     {
-        cam = GetComponent<Camera>();
-        distanceToTarget = 50;
-        cam.transform.position = new Vector3(target.position.x, target.position.y + distanceToTarget, target.position.z - distanceToTarget);
-        cam.transform.LookAt(target);
-    }
-    void Zoom2(float scroll, float zoomSpeed)
-    {
-        transform.Translate(Vector3.forward * scroll * zoomSpeed);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        try
+        state = SaveSettings.CameraState;
+
+        switch (state)
         {
-            // Rotate the camera around the target
-            float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
-            float vertical = Input.GetAxis("Mouse Y") * rotateSpeed;
-            transform.Rotate(Vector3.up, horizontal, Space.World);
-            transform.Rotate(Vector3.right, -vertical, Space.Self);
+            case CameraStates.RtsCam:
 
-            // Zoom in and out using the mouse scroll wheel
-            float scroll2 = Input.GetAxis("Mouse ScrollWheel");
-            Zoom(scroll2, zoomSpeed);
 
-            // Keep the camera looking at the target
-            transform.LookAt(target);
+                break;
+            case CameraStates.TargetCam:
+                TargetCamSetup();
+                break;
+            case CameraStates.TopCam:
+                transform.position = new Vector3(0f, 30f, 0f);
+                transform.rotation = Quaternion.Euler(90, 0, 0);
 
-            // Restrict the camera's height so it doesn't go below the target
-            if (transform.position.y < minHeight)
+                break;
+            case CameraStates.MiddleCam:
+                transform.position = new Vector3(0f, 19.33f, -19.33f);
+                transform.rotation = Quaternion.Euler(45, 0, 0);
+
+                break;
+            case CameraStates.AngleCam:
+                transform.position = new Vector3(-20f, 13.3f, -20f);
+                transform.rotation = Quaternion.Euler(26, 45, 0);
+
+                break;
+
+        }
+    }
+
+    
+
+    void LateUpdate()
+    {
+        switch (state)
+        {
+            case CameraStates.RtsCam:
+                RTSCameraControlls();
+
+                break;
+            case CameraStates.TargetCam:
+                TargetCamControlls();
+                break;
+
+        }
+    }
+    #region RTS Camera
+    public void RTSCameraControlls()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            lastMousePosition = Input.mousePosition;
+            isPanning = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            isPanning = false;
+        }
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            lastTouchPosition = Input.GetTouch(0).position;
+            isPanning = true;
+        }
+        else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            isPanning = false;
+        }
+
+        if (isPanning)
+        {
+            Vector3 delta;
+            if (Input.mousePresent)
+                delta = Input.mousePosition - lastMousePosition;
+            else
+                delta = Input.GetTouch(0).deltaPosition;
+            transform.Translate(-delta.x * panSpeed * Time.deltaTime, 0, -delta.y * panSpeed * Time.deltaTime, Space.World);
+            lastMousePosition = Input.mousePosition;
+            if(!Input.mousePresent)
             {
-                transform.position = new Vector3(transform.position.x, minHeight, transform.position.z);
+                lastTouchPosition = Input.GetTouch(0).position;
             }
+            
+        }
+
+        if (Input.touchCount == 2)
+        {
+            Touch touchZero = Input.GetTouch(0);
+            Touch touchOne = Input.GetTouch(1);
+
+            float prevTouchDelta = (touchZero.position - touchZero.deltaPosition - touchOne.position + touchOne.deltaPosition).sqrMagnitude;
+            float touchDelta = (touchZero.position - touchOne.position).sqrMagnitude;
+            float delta = touchDelta - prevTouchDelta;
+
+            Camera.main.fieldOfView += delta * zoomSpeed;
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, minY, maxY);
+        }
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        Vector3 pos = transform.position;
+        pos.y -= scroll * 1000 * scrollSpeed * Time.deltaTime;
+        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+        // Restrict camera position
+        pos.x = Mathf.Clamp(pos.x, minPosition.x, maxPosition.x);
+        pos.z = Mathf.Clamp(pos.z, minPosition.y, maxPosition.y);
+        transform.position = pos;
 
 
+    }
 
+    #endregion
 
-            //if (Input.GetAxis("Mouse ScrollWheel") > 0)
-            //{
-            //    transform.Translate(Vector3.forward * 100 * Time.deltaTime);
-            //}
-            //else if (Input.GetAxis("Mouse ScrollWheel") < 0)
-            //{
-            //    transform.Translate(Vector3.back * 100 * Time.deltaTime);
-            //}
+    #region Target Camera
+    private void TargetCamSetup()
+    {
+        Vector3 angles = transform.eulerAngles;
+        x = angles.y;
+        y = angles.x;
 
-            //transform.LookAt(target);
-
-            //if (Input.GetMouseButton(0))
-            //{
-            //    mouseX += Input.GetAxis("Mouse X") * 10f;
-            //    mouseY -= Input.GetAxis("Mouse Y") * 10f;
-            //    mouseY = Mathf.Clamp(mouseY, -30, 10);
-
-            //    cam.transform.position = target.position;
-
-            //    cam.transform.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-
-            //    cam.transform.Translate(new Vector3(0, distanceToTarget, -distanceToTarget));
-            //    cam.transform.LookAt(target);
-
-            //    //float scroll = Input.GetAxis("Mouse ScrollWheel");
-            //    //Zoom(scroll, mouseZoomSpeed);
-            //}
-
-
-            //Camera rotation
-            if (Input.touches[0].phase == TouchPhase.Moved && Input.touchCount == 1)
+        // Make the rigid body not change rotation
+        if (GetComponent<Rigidbody>())
+        {
+            GetComponent<Rigidbody>().freezeRotation = true;
+        }
+        transform.position = new Vector3(0, zoomMax, 0);
+        distance = zoomMax;
+        Quaternion rotation = Quaternion.Euler(y, x, 0);
+        transform.rotation = rotation;
+    }
+    private void TargetCamControlls()
+    {
+        if (target)
+        {
+            if (Input.GetMouseButton(0))
             {
-                mouseX += Input.touches[0].deltaPosition.x * 0.1f;
-                mouseY -= Input.touches[0].deltaPosition.y * 0.1f;
-                mouseY = Mathf.Clamp(mouseY, -30, 10);
-
-                cam.transform.position = target.position;
-
-                cam.transform.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-
-                cam.transform.Translate(new Vector3(0, distanceToTarget, -distanceToTarget));
-                cam.transform.LookAt(target);
+                x += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+                y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
             }
-            if (Input.touchSupported)
+            distance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            distance = Mathf.Clamp(distance, zoomMin, zoomMax);
+
+            if (Input.touchCount == 1)
             {
-                Debug.Log("update");
-                //PinchZoom
-                if (Input.touchCount == 2)
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
                 {
-                    //Get touch position
-                    Touch tZero = Input.GetTouch(0);
-                    Touch tOne = Input.GetTouch(1);
+                    touchStartPosition = Input.GetTouch(0).position;
+                }
 
-                    //Get possition
-                    Vector2 tZeroPrevious = tZero.position - tZero.deltaPosition;
-                    Vector2 tOnePrevious = tOne.position - tOne.deltaPosition;
-
-                    float oldTouchDistance = Vector2.Distance(tZeroPrevious, tOnePrevious);
-                    float currentDistance = Vector2.Distance(tZero.position, tOne.position);
-
-                    //Get offset value
-
-                    float deltaDistance = oldTouchDistance - currentDistance;
-                    Zoom(deltaDistance, touchZoomSpeed);
-
+                if (Input.GetTouch(0).phase == TouchPhase.Moved)
+                {
+                    touchEndPosition = Input.GetTouch(0).position;
+                    float xDelta = touchStartPosition.x - touchEndPosition.x;
+                    float yDelta = touchStartPosition.y - touchEndPosition.y;
+                    x += xDelta * touchSensitivity * 0.02f;
+                    y -= yDelta * touchSensitivity * 0.02f;
                 }
             }
-            else
+
+            if (Input.touchCount == 2)
             {
-                Debug.Log("this");
-                float scroll = Input.GetAxis("Mouse ScrollWheel");
-                Zoom(scroll, mouseZoomSpeed);
+                Touch touchZero = Input.GetTouch(0);
+                Touch touchOne = Input.GetTouch(1);
+
+                touchStartPosition = touchZero.position - touchOne.position;
+                touchStartPosition2 = touchZero.position;
+                touchStartDistance = touchStartPosition.magnitude;
+
+                if (touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)
+                {
+                    touchEndPosition = touchZero.position - touchOne.position;
+                    touchEndPosition2 = touchZero.position;
+                    touchEndDistance = touchEndPosition.magnitude;
+
+                    float distanceDelta = touchStartDistance - touchEndDistance;
+                    distance -= distanceDelta * pinchZoomSpeed;
+                    distance = Mathf.Clamp(distance, zoomMin, zoomMax);
+                }
             }
-        }
-        catch (System.IndexOutOfRangeException)
-        {
+            y = ClampAngle(y, yMinLimit, yMaxLimit);
 
-            //throw;
-        }
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-        if (cam.fieldOfView < zoomMinBound)
-        {
-            cam.fieldOfView = 30.0f;
-        }
-        else if (cam.fieldOfView > zoomMaxBound)
-        {
-            cam.fieldOfView = 150.0f;
-        }
+            transform.rotation = rotation;
 
+            Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+            Vector3 position = rotation * negDistance + target.position;
 
+            transform.position = position;
+        }
     }
 
-    void Zoom(float DeltaDistanceDiff, float speed)
+    private float ClampAngle(float angle, float min, float max)
     {
-        cam.fieldOfView += DeltaDistanceDiff * speed;
-
-        //Set clamp form cam
-
-        cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, zoomMinBound, zoomMaxBound);
-
+        if (angle < -360)
+        {
+            angle += 360;
+        }
+        if (angle > 360)
+        {
+            angle -= 360;
+        }
+        return Mathf.Clamp(angle, min, max);
     }
+    #endregion
 }

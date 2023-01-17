@@ -84,6 +84,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b9c6e9e41c917143a92dcb4319c8b6c, type: 3}
+--- !u!95 &1668596907047872756 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5031306171250335136, guid: 6b9c6e9e41c917143a92dcb4319c8b6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5979309457501074772}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5762731836130539421 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090673355435344585, guid: 6b9c6e9e41c917143a92dcb4319c8b6c,
@@ -132,6 +138,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-229443243958263361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5762731836130539421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e727cb632f6c450cad59cc25675ef95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spell: 1
 --- !u!114 &1087729429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceName: spearman
-  spell: {fileID: 0}
+  spell: {fileID: -229443243958263361}
   currentTeam: 0
   currentTile: -1
   startPosition: {x: 0, y: 0, z: 0}
@@ -171,3 +190,43 @@ MonoBehaviour:
   isMoving: 0
   isOut: 0
   isSelected: 0
+--- !u!114 &4418999046991137604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5762731836130539421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 1668596907047872756}
+--- !u!114 &6907595948339841732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5762731836130539421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1

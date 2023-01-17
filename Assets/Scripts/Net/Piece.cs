@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class Piece : NetworkBehaviour
 {
@@ -20,8 +21,10 @@ public class Piece : NetworkBehaviour
     public bool isMoving = false;
     public bool isOut = false;
     public bool isSelected = false;
-    public LudoTile[] board;
+    //public LudoTile[] board;
     public Task t;
+
+    public List<LudoTile> board = new List<LudoTile>();
 
     private Animator animator;
 
@@ -40,7 +43,6 @@ public class Piece : NetworkBehaviour
         // Spawn a collider if you're the owner, to allow selection of the pieces
         if (IsOwner)
             gameObject.AddComponent<BoxCollider>();
-            //Debug.Log(currentTeam);
     }
 
     // This is used with the scriptable rendering pipeline to add a select effect
@@ -79,43 +81,36 @@ public class Piece : NetworkBehaviour
             yield break;
         }
         isMoving = true;
-        int lookTileInt = 1;
+        int lookTileInt = 0;
         while (steps > 0)
         {
-            //animator.SetBool("canJump", true);
-            //animator.Play("Hero_Boy_Jump_Start");
             routePosition++;
-            if (routePosition == 51)
-            {
-                routePosition++;
-            }
-            if(routePosition > 51)
-            {
-                lookTileInt = 0;
-            }
-            if(routePosition == 50)
-            {
-                lookTileInt = 2;
-            }
-            Vector3 startPos = board[currentTile].tileTransform.position;
+
+            Vector3 startPos = board[routePosition-1].tileTransform.position;
             Vector3 nextPos = board[routePosition].tileTransform.position;
             Vector3 lookAtTile = board[routePosition + lookTileInt].tileTransform.position;
+
             while (MoveToNextNode(startPos, nextPos, lookAtTile))
             {
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
             timeForPointToPoint = 0;
-            if (currentTile == 50)
-            {
-                currentTile++;
-            }
-            currentTile++;
+            //if (currentTile == 50)
+            //{
+            //    currentTile++;
+            //}
+            //currentTile++;
             steps--;
 
-            //animator.SetBool("canJump", false);
+            if(steps == 0)
+            {
+                transform.position = position;
+                //Debug.Log(position);
+            }
         }
-        transform.position = position; //put more pawns on same tile (reposition)
+
+        //transform.position = position; //put more pawns on same tile (reposition)
 
         if (currentTile > 0)
         {

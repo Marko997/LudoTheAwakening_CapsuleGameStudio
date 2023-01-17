@@ -2775,7 +2775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0.00012207031}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &422705706
@@ -2862,7 +2862,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 637055104}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999636
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4183,8 +4183,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 124277027}
   m_HandleRect: {fileID: 124277026}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.48356044
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4421,7 +4421,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.99999636}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6309,7 +6309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5be234306224e47baa21488204d9ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 8235991}
   mydropdown: {fileID: 1761233931}
 --- !u!114 &933577143
 MonoBehaviour:
@@ -6394,7 +6393,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Top
+  m_Text: RTS
 --- !u!222 &946289653
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11218,7 +11217,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 622277091}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 3
   m_Options:
     m_Options:
     - m_Text: Top
@@ -11226,6 +11225,10 @@ MonoBehaviour:
     - m_Text: Mid
       m_Image: {fileID: 0}
     - m_Text: Angle
+      m_Image: {fileID: 0}
+    - m_Text: RTS
+      m_Image: {fileID: 0}
+    - m_Text: Target
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

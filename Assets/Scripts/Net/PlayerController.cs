@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : NetworkBehaviour
 {
     private bool networkStarted = true;
-    public Camera gameCamera;
-    public GameObject mainCamera;
 
     //Networked fields
     public NetworkVariable<CustomNetworkVariables.NetworkString> playerName = new NetworkVariable<CustomNetworkVariables.NetworkString>("PlayerName",NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
@@ -19,22 +18,11 @@ public class PlayerController : NetworkBehaviour
     private TextMeshProUGUI playerNameLabel;
     private GameObject myPLayerListItem;
 
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        //mainCamera = Camera.main.gameObject;
-        //gameCamera.gameObject.SetActive(true);
-        //mainCamera.gameObject.SetActive(false);
-        
-        Debug.Log("spawned");
-    }
-
     public void Update()
-    {    
+    {
         if (networkStarted)
         {
             RegisterEvents();
-            //networkStarted = true;
 
             myPLayerListItem = Instantiate(LobbyScene.Instance.playerListItemPrefab, Vector3.zero, Quaternion.identity);
             myPLayerListItem.transform.SetParent(LobbyScene.Instance.playerListContainer, false);
@@ -43,8 +31,7 @@ public class PlayerController : NetworkBehaviour
 
             if (IsOwner)
             {
-                //camera.enabled = true;
-                if(PlayerPrefs.GetString("NAME") == "")
+                if (PlayerPrefs.GetString("NAME") == "")
                 {
                     //Debug.Log("EMPTY");
                     playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
