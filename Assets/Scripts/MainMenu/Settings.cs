@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    public Dropdown cameraDropdown;
+    //public Dropdown cameraDropdown;
 
     //Update is called once per frame  
-    void Update()
+    public void CameraDropdown(int index)
     {
-        switch (cameraDropdown.value)
+        //Debug.Log(cameraDropdown.value);
+        switch (index)
         {
             case 0:
                 SaveSettings.CameraState = CameraStates.RtsCam;

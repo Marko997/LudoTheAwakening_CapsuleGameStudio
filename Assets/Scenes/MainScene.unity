@@ -256,6 +256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 19599823}
+  - component: {fileID: 19599824}
   m_Layer: 0
   m_Name: ------Settings---------
   m_TagString: Untagged
@@ -281,6 +282,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &19599824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19599822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5be234306224e47baa21488204d9ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &23060110
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,7 +2171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 327522763}
   m_Layer: 5
-  m_Name: Camera
+  m_Name: CameraDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6190,7 +6203,6 @@ GameObject:
   - component: {fileID: 933577138}
   - component: {fileID: 933577141}
   - component: {fileID: 933577142}
-  - component: {fileID: 933577143}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -6307,19 +6319,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a5be234306224e47baa21488204d9ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mydropdown: {fileID: 1761233931}
---- !u!114 &933577143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 933577137}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f14039afa04f5479928bb5a7ffb045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &946289650
@@ -11233,13 +11232,13 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 933577137}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 19599824}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CameraDropdown
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
