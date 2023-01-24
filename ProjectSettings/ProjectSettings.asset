@@ -773,6 +773,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
+    Android: ENABLE_PLAYFABSERVER_API
     Server: ENABLE_PLAYFABSERVER_API
     Standalone: ENABLE_PLAYFABSERVER_API
     iPhone: ENABLE_PLAYFABSERVER_API

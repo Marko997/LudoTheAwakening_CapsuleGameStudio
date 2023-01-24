@@ -31,6 +31,11 @@ namespace PlayFab.PfEditor
             return coroutine;
         }
 
+        public static void Start(IEnumerator enumerator, WWW www)
+        {
+            throw new NotImplementedException();
+        }
+
 #if UNITY_2018_2_OR_NEWER
         public static EditorCoroutine Start(IEnumerator _routine, UnityWebRequest www)
         {

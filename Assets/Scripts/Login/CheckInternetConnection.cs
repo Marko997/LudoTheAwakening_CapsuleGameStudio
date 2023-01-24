@@ -15,12 +15,12 @@ public class CheckInternetConnection : MonoBehaviour
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
             AuthErrorCanvas.SetActive(true);
-            AudioListener.pause = true;
+            AudioListener.volume = 0;
         }
         else
         {
             AuthErrorCanvas.SetActive(false);
-            AudioListener.pause = false;
+            AudioListener.volume = 1;
         }
     }
     ////Ovo nam pravi problem sa kanvasom
