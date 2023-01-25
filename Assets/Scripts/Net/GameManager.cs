@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Globalization;
 using System;
+using UnityEditor.PackageManager;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class GameManager : NetworkBehaviour
 {
@@ -45,6 +47,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject winnerPrefab;
     [SerializeField] private GameObject winnerPanel;
     [SerializeField] private Button attackButton;
+    [SerializeField] private Sprite[] diceSides;
 
     // CONST
     private const int TEAM_COUNT = 4;
@@ -109,13 +112,14 @@ public class GameManager : NetworkBehaviour
     {
         RegisterEvents();
         OnPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
-        attackButton.interactable = false;//?????
+        //attackButton.interactable = false;//?????
     }
 
     public override void OnDestroy()
     {
         UnregisterEvents();
     }
+
     public void Update()
     {
         if (playersSpawned && IsServer)
@@ -132,14 +136,8 @@ public class GameManager : NetworkBehaviour
             foreach (KeyValuePair<ulong, NetworkClient> nc in NetworkManager.Singleton.ConnectedClients)
             {
                 playerReady.Add(nc.Key, false);
-                var pc = nc.Value.PlayerObject.GetComponent<PlayerController>();
-                if (pc.IsOwner)
-                {
-                    // If this is our player, use that to assign the UI
-                    playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(pc.OwnerClientId)));
-                    playerName.text = pc.playerName.Value;
-                }
             }
+
             playersSpawned = false;
         }
         // If its not our turn, don't update the raycasts
@@ -160,7 +158,7 @@ public class GameManager : NetworkBehaviour
     }
 
 
-    // Piece logic
+    #region Piece logic
     private void MovePiece(Piece piece)
     {
         MovePieceServerRpc(Utility.GetPieceIndex(localPieces, piece));
@@ -245,8 +243,8 @@ public class GameManager : NetworkBehaviour
 
         return matchingIndex;
     }
-
-    // Server side methods
+    #endregion
+    #region Server side methods
     private void NextTurn()
     {
         // 0. Save the previous turn value, so we can check which one is next
@@ -315,7 +313,14 @@ public class GameManager : NetworkBehaviour
                 if(paths.TryGetValue(((int)pieces[i].currentTeam), out value))
                 {
                     for (int j = 0; j < value.Length; j++)
-                    {
+                    { 
+                        //Debug.Log(pc.playerColor.Value);
+                        //if (pieces[i].currentTeam == Team.Red)
+                        //{
+                            
+                        //    pieces[i].board.Add(board[paths[2][j]]);
+                        //    Debug.Log(pieces[i].board[j].tileTransform);
+                        //}
                         pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
                         //Debug.Log(pieces[0].board[j].tileTransform.position);
                     }
@@ -324,14 +329,23 @@ public class GameManager : NetworkBehaviour
                 pieces[i].transform.rotation = Quaternion.Euler(0, 180, 0);
             }
 
+            ClientRpcParams clientRpcParams = new ClientRpcParams()
+            {
+                Send = new ClientRpcSendParams()
+                {
+                    TargetClientIds = new ulong[] { nc.Key }
+                }
+            };
+            ChangeColorAndNameClientRpc(nc.Key, pc.playerName.Value,clientRpcParams);
+
             playerPieces.Add(nc.Key, pieces);
             playerCompleted.Add(nc.Key, false);
 
             playerIndex++;
         }
     }
-
-    // Client side methods
+    #endregion
+    #region Client side methods
     private Piece[] FindLocalPieces()
     {
         // This is for players to find which pieces are theirs, and to assign localPiece
@@ -352,7 +366,7 @@ public class GameManager : NetworkBehaviour
 
         return r;
     }
-
+    #endregion  
     // Buttons
     public void DiceRollButton()
     {
@@ -378,6 +392,7 @@ public class GameManager : NetworkBehaviour
         currentTurn.OnValueChanged += UpdateCurrentTurn;
         currentDiceRoll.OnValueChanged += UpdateDiceUI;
         moveCompleted.OnValueChanged += UpdateMoveCompleted;
+        
     }
     private void UnregisterEvents()
     {
@@ -385,7 +400,12 @@ public class GameManager : NetworkBehaviour
         currentDiceRoll.OnValueChanged -= UpdateDiceUI;
         moveCompleted.OnValueChanged -= UpdateMoveCompleted;
     }
-
+    // Called by OnValueChanged for moveCompleted
+    private void UpdateMoveCompleted(bool prev, bool newValue)
+    {
+        if (newValue)
+            diceRollText.text = "Roll!";
+    }
     // Called by OnValueChanged for currentTurn
     private void UpdateCurrentTurn(ulong prev, ulong newValue)
     {
@@ -396,13 +416,26 @@ public class GameManager : NetworkBehaviour
     private void UpdateDiceUI(int prev, int newValue)
     {
         diceRollText.text = newValue.ToString();
+        StartCoroutine(DiceAnimation(newValue));
     }
-    // Called by OnValueChanged for moveCompleted
-    private void UpdateMoveCompleted(bool prev, bool newValue)
+
+    IEnumerator DiceAnimation(int diceValue)
     {
-        if (newValue)
-            diceRollText.text = "Roll!";
+        for (int i = 0; i <= 10; i++)
+        {
+            // Pick up random value from 0 to 5 (All inclusive)
+            int randomDiceSide = UnityEngine.Random.Range(0, 5);
+
+            // Set sprite to upper face of dice from array according to random value
+            currentTurnColor.sprite = diceSides[randomDiceSide];
+
+            // Pause before next itteration
+            yield return new WaitForSeconds(0.05f);
+        }
+        currentTurnColor.sprite = diceSides[diceValue - 1];
     }
+
+    
 
     // RPCs
     [ServerRpc(RequireOwnership = false)]
@@ -424,11 +457,21 @@ public class GameManager : NetworkBehaviour
                 TargetClientIds = new ulong[] { clientId }
             }
         };
-
         EnableAttackClientRpc(false, clientRpcParams);
+        
 
         NextTurn();
     }
+    [ClientRpc]
+    public void ChangeColorAndNameClientRpc(ulong clientId, string updatedPlayerName, ClientRpcParams clientRpcParams)
+    { 
+        playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
+        attackButton.gameObject.GetComponent<Image>().color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
+        attackButton.interactable = false;
+
+        playerName.text = updatedPlayerName;
+    }
+
     [ServerRpc(RequireOwnership = false)]
     private void EnterPieceServerRpc(int index, ulong clientIndex)
     {
@@ -439,21 +482,15 @@ public class GameManager : NetworkBehaviour
         // 1. Move the piece @ the start
         piece.steps = 0;
         piece.transform.position = board[startPosition].tileTransform.position;
+        //1.a Rotate piece
+        piece.RotatePawn(board[startPosition + 1].tileTransform.position);
+
+
         board[startPosition].AddPiece(piece);
         piece.currentTile = startPosition;
 
-        piece.transform.rotation = Quaternion.Euler(0, 90, 0);
-
         // 2. Are we killing any piece?
-        Piece p = board[startPosition].GetFirstPiece();
-        if (p != null && p.currentTeam != piece.currentTeam)
-        {
-            board[startPosition].RemovePiece(p);
-            p.currentTile = -1;
-            p.isOut = false;
-            p.routePosition = 0;
-            p.PositionClientRpc(-Vector3.one); // start position is set localy
-        }
+        EatEnemyPawn(piece, startPosition);
 
         moveCompleted.Value = true;
         moveCompleted.SetDirty(true);
@@ -467,6 +504,20 @@ public class GameManager : NetworkBehaviour
         };
         DisableInteractionClientRpc(clientRpcParams);
     }
+
+    private void EatEnemyPawn(Piece piece, int startPosition)
+    {
+        Piece p = board[startPosition].GetFirstPiece();
+        if (p != null && p.currentTeam != piece.currentTeam)
+        {
+            board[startPosition].RemovePiece(p);
+            p.currentTile = -1;
+            p.isOut = false;
+            p.routePosition = 0;
+            p.PositionClientRpc(-Vector3.one); // start position is set localy
+        }
+    }
+
     [ServerRpc(RequireOwnership = false)]
     private void MovePieceServerRpc(int indexPos, ServerRpcParams serverRpcParams = default)
     {
@@ -480,25 +531,14 @@ public class GameManager : NetworkBehaviour
             board[piece.currentTile].RemovePiece(piece);
             return;
         }
-        //Remove piece from start position when piece leave house
 
         // 1. Find the index in the current team's path
         int matchingIndex = FindIndexInPath(piece);
-        //Debug.Log(matchingIndex);
         int targetTile = paths[(int)piece.currentTeam][matchingIndex + currentDiceRoll.Value];
-        //int targetTile = piece.routePosition + currentDiceRoll.Value;
-        Debug.Log(targetTile);
         int previousPosition = piece.currentTile;
 
         // 2. Are we killing any piece?
-        Piece p = board[targetTile].GetFirstPiece();
-        if (p != null && p.currentTeam != piece.currentTeam)
-        {
-            board[targetTile].RemovePiece(p);
-            p.currentTile = -1;
-            p.isOut = false;
-            p.PositionClientRpc(-Vector3.one); // start position is set localy
-        }
+        EatEnemyPawn(piece,targetTile);
 
         // 3. Move the piece there
         piece.steps = currentDiceRoll.Value; //adds steps to pawn
@@ -575,6 +615,9 @@ public class GameManager : NetworkBehaviour
         if (!playerReady.ContainsValue(false))
             SpawnAllPlayers();
     }
+
+
+
     [ServerRpc(RequireOwnership = false)]
     public void DiceRollServerRpc(ulong clientId, int forceDice = -1)
     {
@@ -583,6 +626,7 @@ public class GameManager : NetworkBehaviour
         {
             // Actually roll
             int rv = (forceDice == -1) ? UnityEngine.Random.Range(1, 7) : forceDice;
+
             rollCountThisTurn++;
             canRollAgain = false;
             if (rv == 6)

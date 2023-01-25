@@ -13,6 +13,7 @@ public class Piece : NetworkBehaviour
     public int currentTile = -1;
     public Vector3 startPosition;
     public int eatPower = 3;
+    public int lookTileInt = 0;
 
     [Header("BOARD MOVEMENT")]
     public int routePosition;
@@ -81,10 +82,19 @@ public class Piece : NetworkBehaviour
             yield break;
         }
         isMoving = true;
-        int lookTileInt = 0;
+        //lookTileInt = 0;
         while (steps > 0)
         {
             routePosition++;
+
+            if (routePosition == 50)
+            {
+                lookTileInt = 1;
+            }
+            else
+            {
+                lookTileInt = 0;
+            }
 
             Vector3 startPos = board[routePosition-1].tileTransform.position;
             Vector3 nextPos = board[routePosition].tileTransform.position;
@@ -96,17 +106,12 @@ public class Piece : NetworkBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             timeForPointToPoint = 0;
-            //if (currentTile == 50)
-            //{
-            //    currentTile++;
-            //}
-            //currentTile++;
+
             steps--;
 
             if(steps == 0)
             {
-                transform.position = position;
-                //Debug.Log(position);
+                //transform.position = position;
             }
         }
 
@@ -128,15 +133,19 @@ public class Piece : NetworkBehaviour
         timeForPointToPoint += 5f * Time.deltaTime;
         Vector3 pawnPosition = Vector3.Lerp(startPos, nextPos, timeForPointToPoint);
 
-        float directionToFace = Vector3.Dot(transform.up, lookAtTile - transform.position);
-        Vector3 point = lookAtTile - (transform.up * directionToFace);
-        transform.LookAt(point, transform.up);
+        RotatePawn(lookAtTile);
 
         pawnPosition.y += 0.5f * Mathf.Sin(Mathf.Clamp01(timeForPointToPoint) * Mathf.PI);
-       
+
         return nextPos != (transform.position = Vector3.Lerp(transform.position, pawnPosition, timeForPointToPoint));
     }
 
+    public void RotatePawn(Vector3 lookAtTile)
+    {
+        float directionToFace = Vector3.Dot(transform.up, lookAtTile - transform.position);
+        Vector3 point = lookAtTile - (transform.up * directionToFace);
+        transform.LookAt(point, transform.up);
+    }
 }
 
 

@@ -12,7 +12,6 @@ public class PlayerController : NetworkBehaviour
     //Networked fields
     public NetworkVariable<CustomNetworkVariables.NetworkString> playerName = new NetworkVariable<CustomNetworkVariables.NetworkString>("PlayerName",NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
     public NetworkVariable<Color> playerColor = new NetworkVariable<Color>(Color.black, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    //public NetworkVariable<Color> playerColor = new NetworkVariable<Color>(Color.black);
 
     //Fields
     private TextMeshProUGUI playerNameLabel;
@@ -33,14 +32,12 @@ public class PlayerController : NetworkBehaviour
             {
                 if (PlayerPrefs.GetString("NAME") == "")
                 {
-                    //Debug.Log("EMPTY");
                     playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
                 }
                 else
                 {
                     playerName.Value = PlayerPrefs.GetString("NAME");
                 }
-                //playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
                 
                 playerColor.Value = new Color(UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f));
             }

@@ -50,6 +50,7 @@ public class Spell : MonoBehaviour
             spellCasterPiece.board[targetTile].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;
+            p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
         }
     }
