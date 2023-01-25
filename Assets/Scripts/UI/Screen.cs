@@ -6,6 +6,9 @@ public class Screen : MonoBehaviour //Used for setting screen type on main scree
 {
     [SerializeField] public ScreenType screenType;
 
-    //public ScreenType ScreenType { get => screenType; set => screenType = value; }
+    public static float width { get; internal set; }
+    public static float height { get; internal set; }
+
+    public ScreenType ScreenType { get => screenType; set => screenType = value; }
 
 }
