@@ -517,15 +517,22 @@ public class PlayFabAuthService
 #else
         PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
         {
+          
+
+
             TitleId = PlayFabSettings.TitleId,
             CustomId = SystemInfo.deviceUniqueIdentifier,
             CreateAccount = true,
+           
+
+
             InfoRequestParameters = InfoRequestParams
         }, (result) => {
             //Store Identity and session
             _playFabId = result.PlayFabId;
             _sessionTicket = result.SessionTicket;
-
+            //
+           
             //check if we want to get this callback directly or send to event subscribers.
             if (callback == null && OnLoginSuccess != null)
             {

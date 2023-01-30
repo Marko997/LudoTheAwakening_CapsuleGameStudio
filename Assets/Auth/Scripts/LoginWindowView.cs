@@ -171,7 +171,9 @@ public class LoginWindowView : MonoBehaviour
         SceneManager.LoadScene("MainScene");
 
         LoginCanvas.SetActive(false);
+        ///
 
+        PlayerPrefs.SetString("PlayFabCustomID", result.PlayFabId);
     }
 
 
@@ -295,20 +297,25 @@ public class LoginWindowView : MonoBehaviour
 
         _AuthService.Authenticate(Authtypes.Silent);
 
+
+      
+
+
         // Generate a random string as the display name
-        string displayName = RandomString(8);
+        //AuthCanvas.SetActive(false);
+        //string displayName = RandomString(8);
 
         // Make a call to the PlayFab API to update the player's display name
-        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
-            result => Debug.Log("Display name updated: " + displayName),
-            error => Debug.LogError("Failed to update display name: " + error.GenerateErrorReport()));
+        //PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
+        //    result => Debug.Log("Display name updated: " + displayName),
+        //    error => Debug.LogError("Failed to update display name: " + error.GenerateErrorReport()));
     }
-    private string RandomString(int length)
-    {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        return new string(Enumerable.Repeat(chars, length)
-          .Select(s => s[UnityEngine.Random.Range(0, s.Length)]).ToArray());
-    }
+    //private string RandomString(int length)
+    //{
+    //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    //    return new string(Enumerable.Repeat(chars, length)
+    //      .Select(s => s[UnityEngine.Random.Range(0, s.Length)]).ToArray());
+    //}
 
     private void OnLoginFailure(PlayFabError error)
     {
