@@ -12,8 +12,8 @@ public class LogOut : MonoBehaviour
         PlayFabClientAPI.ForgetAllCredentials();
         PlayerPrefs.DeleteAll();
 
-        SceneManager.LoadScene("LoginScene");
-        
+        SceneManager.LoadScene("LoginTest");
+        //SceneManager.LoadScene("LoginScene");
     }
 
 }

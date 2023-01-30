@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Globalization;
 using System;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 using Unity.Collections.LowLevel.Unsafe;
 
 public class GameManager : NetworkBehaviour
@@ -722,3 +723,4 @@ public class GameManager : NetworkBehaviour
             localPieces[i].DisableInteraction();
     }
 }
+#endif

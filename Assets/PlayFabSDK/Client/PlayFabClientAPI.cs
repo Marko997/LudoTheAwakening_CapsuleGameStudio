@@ -13,6 +13,8 @@ namespace PlayFab
     /// </summary>
     public static class PlayFabClientAPI
     {
+        public static Action<LoginResult> OnLoginSuccess;
+
         static PlayFabClientAPI() {}
 
         /// <summary>

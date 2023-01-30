@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 //#if FACEBOOK 
 //using Facebook.Unity;
@@ -51,6 +53,10 @@ public class LoginWindowView : MonoBehaviour
     public GameObject Panel;
     public GameObject Next;
 
+
+    public GameObject LoginCanvas;//Panel je ovo
+    public GameObject AuthCanvas;
+    public GameObject playerinfoIdName;
     //Settings for what data to get from playfab on login.
     public GetPlayerCombinedInfoRequestParams InfoRequestParams;
 
@@ -104,6 +110,8 @@ public class LoginWindowView : MonoBehaviour
         //}
         //
 
+
+
         playerNamePanel.SetActive(false);
 
         playerID.gameObject.SetActive(false);
@@ -141,45 +149,66 @@ public class LoginWindowView : MonoBehaviour
     /// <param name="result"></param>
     private void OnLoginSuccess(PlayFab.ClientModels.LoginResult result)
     {
+        //string name = null;
 
+        //if (result.InfoResultPayload.PlayerProfile != null)
+        //    name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        //if (result.InfoResultPayload.PlayerProfile != null)
+        //    name = result.InfoResultPayload.PlayerProfile.DisplayName;
 
+        //Proverava da li ima Display Name
+        PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnGetAccountInfoSuccess, OnGetAccountInfoFailuree);
         Debug.LogFormat("Logged In as: {0}", result.PlayFabId);
        
         //Show our next screen if we logged in successfully.
         playerID.gameObject.SetActive(true);
 
         playerUserName.gameObject.SetActive(true);
-
-
-        string randomDisplayName = "Guest"+ UnityEngine.Random.Range(1000, 999999);
-        UpdateDisplayName(randomDisplayName);
-        playerUserName.text = randomDisplayName;
-
-
-        //RegisterUserName();
-
-        //string name = null;
-
-
-        //name = result.InfoResultPayload.PlayerProfile.DisplayName;
-        //name = result.InfoResultPayload.PlayerProfile.DisplayName;
-        //InfoResultPayload
-
-
-        // username is already assigned as a string
-
-        // this will get the result from the login and then asks
-
-        // for display name
-        //playerUserName.text = result.InfoResultPayload.PlayerProfile.DisplayName;
-
-
-        playerNamePanel.SetActive(false);
+        
         playerID.text = "ID : " + result.PlayFabId;
+        //playerUserName.text = "Name :" + name;
 
-        Panel.SetActive(false);
-        Next.SetActive(true);
+        SceneManager.LoadScene("MainScene");
 
+        LoginCanvas.SetActive(false);
+
+    }
+
+
+    
+
+    private void OnGetAccountInfoSuccess(GetAccountInfoResult result)
+    {
+
+
+        playerUserName.text = result.AccountInfo.TitleInfo.DisplayName;
+
+        // Check if the player has a display name
+        if (string.IsNullOrEmpty(result.AccountInfo.TitleInfo.DisplayName))
+        {
+            // Show the object if the player does not have a display name
+            playerNamePanel.SetActive(true);
+            Panel.SetActive(true);
+            playerinfoIdName.SetActive(false);
+        }
+        else
+        {
+            // Hide the object if the player has a display name
+            playerNamePanel.SetActive(false);
+            AuthCanvas.SetActive(false);
+            playerinfoIdName.SetActive(true);
+        }
+    }
+
+    private void OnGetAccountInfoFailuree(PlayFabError error)
+    {
+        Debug.LogError("Failed to retrieve player's account info: " + error.GenerateErrorReport());
+    }
+
+
+    void OnGetAccountInfoFailure(PlayFabError error)
+    {
+        Debug.LogError(error.GenerateErrorReport());
     }
 
     /// <summary>
@@ -234,7 +263,9 @@ public class LoginWindowView : MonoBehaviour
         }
 #else
         //Here we have choses what to do when AuthType is None.
+       
         Panel.SetActive(true);
+        
 #endif
         /*
          * Optionally we could Not do the above and force login silently
@@ -264,38 +295,26 @@ public class LoginWindowView : MonoBehaviour
 
         _AuthService.Authenticate(Authtypes.Silent);
 
-        var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
-        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
+        // Generate a random string as the display name
+        string displayName = RandomString(8);
 
+        // Make a call to the PlayFab API to update the player's display name
+        PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
+            result => Debug.Log("Display name updated: " + displayName),
+            error => Debug.LogError("Failed to update display name: " + error.GenerateErrorReport()));
     }
-
-    
+    private string RandomString(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+          .Select(s => s[UnityEngine.Random.Range(0, s.Length)]).ToArray());
+    }
 
     private void OnLoginFailure(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
     }
 
-    public void UpdateDisplayName(string newDisplayName)
-    {
-        var request = new UpdateUserTitleDisplayNameRequest { DisplayName = newDisplayName };
-        playerUserName.text = newDisplayName;
-        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnChangeDisplayNameSuccess, OnChangeDisplayNameError);
-    }
-
-    private void OnChangeDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
-    {
-        Debug.Log("Display name changed successfully to: " + result.DisplayName);
-        playerUserName.text = result.DisplayName;
-    }
-
-    private void OnChangeDisplayNameError(PlayFabError error)
-    {
-        Debug.LogError(error.GenerateErrorReport());
-    }
-
-
-    //iznad login as guest
     /// <summary>
     /// Login Button means they've selected to submit a username (email) / password combo
     /// Note: in this flow if no account is found, it will ask them to register.
@@ -325,6 +344,7 @@ public class LoginWindowView : MonoBehaviour
     /// </summary>
     private void OnRegisterButtonClicked()
     {
+
         if (Password.text != ConfirmPassword.text)
         {
             ProgressBar.UpdateLabel("Passwords do not Match.");
@@ -374,41 +394,6 @@ public class LoginWindowView : MonoBehaviour
         RecoveryPanel.SetActive(false);
         Next.SetActive(false);
     }
-
-
-    void GetPlayerProfile(string playFabId)
-    {
-        PlayFabClientAPI.GetPlayerProfile(new GetPlayerProfileRequest()
-        {
-            PlayFabId = playFabId,
-            ProfileConstraints = new PlayerProfileViewConstraints()
-            {
-                ShowDisplayName = true
-            }
-        },
-        result => Debug.Log("The player's DisplayName profile data is: " + result.PlayerProfile.DisplayName),
-        error => Debug.LogError(error.GenerateErrorReport()));
-    }
-
-    //User Name
-    //public void RegisterUserName()
-    //{
-    //    var request = new RegisterPlayFabUserRequest
-    //    {
-    //        DisplayName = "Misa",
-
-    //        RequireBothUsernameAndEmail = false
-    //    };
-    //    PlayFabClientAPI.RegisterPlayFabUser(request, OnregisterSucces, OnError);
-    //}
-
-    //private void OnregisterSucces(RegisterPlayFabUserResult Result)
-    //{
-    //    Debug.Log("Success created User Name");
-    //    //playerUserName.gameObject.SetActive(false);
-    //    //MessageText.text = "New Acoocunt is Created";
-    //    //OpenPages(true, false, false);
-    //}
 
     public void RecoverUser()
     {
@@ -506,71 +491,28 @@ public class LoginWindowView : MonoBehaviour
     //    });
     //}
 
+    public void SaveDisplayName()
+    {
 
-    ////// display name
+        //playerUserName.text = UserNameRegisterInput.text;
+        var request = new UpdateUserTitleDisplayNameRequest
+        {
+            DisplayName = UserNameRegisterInput.text,
+        };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayUpdate, OnErrorr);
+    }
 
-    //public GameObject canvas;
-    //public InputField displayNameInputField;
-    //public Button changeDisplayNameButton;
+    private void OnErrorr(PlayFabError obj)
+    {
+        Debug.Log("Something is wrong");
+    }
 
-
-
-    //public void OpenCanvas()
-    //{
-    //    canvas.SetActive(true);
-    //}
-
-    //public void ChangeDisplayName()
-    //{
-    //    string newDisplayName = displayNameInputField.text;
-    //    var request = new UpdateUserTitleDisplayNameRequest { DisplayName = newDisplayName };
-    //    PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnChangeDisplayNameSuccess, OnChangeDisplayNameError);
-    //}
-
-    //private void OnChangeDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
-    //{
-    //    Debug.Log("Display name changed successfully to: " + result.DisplayName);
-
-    //    playerUserName.text = result.DisplayName;
-
-    //    canvas.SetActive(false);
-    //}
-
-    //private void OnChangeDisplayNameError(PlayFabError error)
-    //{
-    //    Debug.LogError(error.GenerateErrorReport());
-    //}
-
-    //public GameObject canvas;
-    //public InputField displayNameInputField;
-    //public Button changeDisplayNameButton;
-
-    //public void OpenCanvas()
-    //{
-    //    canvas.SetActive(true);
-    //}
-
-    //public void ChangeDisplayName()
-    //{
-    //    string newDisplayName = displayNameInputField.text;
-    //    PlayerPrefs.SetString("DisplayName", newDisplayName);
-    //    PlayerPrefs.Save();
-    //    var request = new UpdateUserTitleDisplayNameRequest { DisplayName = newDisplayName };
-    //    PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnChangeDisplayNameSuccess, OnChangeDisplayNameError);
-    //}
-
-    //private void OnChangeDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
-    //{
-    //    Debug.Log("Display name changed successfully to: " + result.DisplayName);
-    //    playerUserName.text = result.DisplayName;
-    //    canvas.SetActive(false);
-    //}
-
-    //private void OnChangeDisplayNameError(PlayFabError error)
-    //{
-    //    Debug.LogError(error.GenerateErrorReport());
-    //}
-
+    private void OnDisplayUpdate(UpdateUserTitleDisplayNameResult obj)
+    {
+        Debug.Log("Succes change name");
+        //playerNamePanel.SetActive(false);
+        AuthCanvas.SetActive(false);
+    }
 }
 
 internal class PlayGamesPlatform

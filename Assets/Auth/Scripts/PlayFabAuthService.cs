@@ -202,7 +202,15 @@ public class PlayFabAuthService
                 TitleId = PlayFabSettings.TitleId,
                 CustomId = RememberMeId,
                 CreateAccount = true,
-                InfoRequestParameters = InfoRequestParams
+                //InfoRequestParameters = InfoRequestParams
+
+                //ovo sam dodao za display name 
+                InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+                {
+
+                    GetPlayerProfile = true
+
+                }
             }, (result) =>
             {
                 //Store identity and session

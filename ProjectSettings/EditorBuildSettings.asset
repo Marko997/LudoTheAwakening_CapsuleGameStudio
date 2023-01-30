@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 61e2827d76b423647bef72967e646a20
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/LobbyScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlayfabHostTest.unity
     guid: 41e56e8aa95f144f8a34ee7d36bb6547
+  - enabled: 1
+    path: Assets/Auth/Scenes/LoginTest.unity
+    guid: 9e0253254983a854687633b7c8346eba
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000

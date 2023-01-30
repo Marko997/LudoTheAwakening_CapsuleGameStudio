@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 
 namespace PlayFab.PfEditor
@@ -117,3 +118,4 @@ namespace PlayFab.PfEditor
         }
     }
 }
+#endif

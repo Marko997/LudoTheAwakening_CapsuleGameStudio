@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace PlayFab.UI.Editor
 {
     using UnityEngine;
@@ -25,3 +26,4 @@ namespace PlayFab.UI.Editor
         }
     }
 }
+#endif

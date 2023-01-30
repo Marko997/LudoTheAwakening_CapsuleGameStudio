@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEngine;
 using System;
 using System.Collections;
@@ -170,3 +171,4 @@ namespace PlayFab.PfEditor
         }
     }
 }
+#endif

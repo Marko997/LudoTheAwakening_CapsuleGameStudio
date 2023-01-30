@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using PlayFab.PfEditor.Json;
 using System;
 using System.Globalization;
@@ -116,3 +117,4 @@ namespace PlayFab.PfEditor
 
     }
 }
+#endif
