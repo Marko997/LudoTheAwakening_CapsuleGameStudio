@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class ScreenSwitcher : MonoBehaviour
 {
     public ScreenType desiredScreenType;
+    public bool isPawnMoving = false;
 
     [SerializeField]ScreenManager screenManager;
     Button menuButton;
@@ -19,6 +20,10 @@ public class ScreenSwitcher : MonoBehaviour
 
     void OnButtonClicked()
     {
-        screenManager.SwitchScreen(desiredScreenType);
+        if (!isPawnMoving)
+        {
+            screenManager.SwitchScreen(desiredScreenType);
+        }
+        
     }
 }

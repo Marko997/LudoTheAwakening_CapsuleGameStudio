@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -707,6 +707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &106512559
 MonoBehaviour:
@@ -1160,6 +1161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &138950774
 MonoBehaviour:
@@ -1350,6 +1352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 8
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &178046763
 MonoBehaviour:
@@ -1964,6 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &304570890
 MonoBehaviour:
@@ -3297,6 +3301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &497702488
 MonoBehaviour:
@@ -4950,6 +4955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 14
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &740791763
 MonoBehaviour:
@@ -5099,6 +5105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &742412631
 MonoBehaviour:
@@ -5370,6 +5377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &781360684
 MonoBehaviour:
@@ -5718,6 +5726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &838513814
 MonoBehaviour:
@@ -6095,6 +6104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &904319640
 MonoBehaviour:
@@ -7640,6 +7650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 11
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1318123512
 MonoBehaviour:
@@ -7917,8 +7928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9158528f612de4cbe840030b67d46a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 90
-  pawnHolder: {fileID: 1379991225}
+  pawnHolder: {fileID: 1345728879}
 --- !u!114 &1379991227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7970,6 +7980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 4
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1379991230
 MonoBehaviour:
@@ -8069,6 +8080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 3
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1391323423
 MonoBehaviour:
@@ -8282,6 +8294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 4
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1421681117
 MonoBehaviour:
@@ -8465,6 +8478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1427992840
 MonoBehaviour:
@@ -9526,6 +9540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 14
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1541689964
 MonoBehaviour:
@@ -10337,6 +10352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 6
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1657318702
 MonoBehaviour:
@@ -10474,6 +10490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 5
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1684650864
 MonoBehaviour:
@@ -10602,7 +10619,7 @@ PrefabInstance:
     - target: {fileID: 3123467961551024346, guid: 6b9c6e9e41c917143a92dcb4319c8b6c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -171
+      value: -402
       objectReference: {fileID: 0}
     - target: {fileID: 3123467961551024346, guid: 6b9c6e9e41c917143a92dcb4319c8b6c,
         type: 3}
@@ -10848,6 +10865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1724366844
 MonoBehaviour:
@@ -11886,6 +11904,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 7
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!114 &1888565048
 MonoBehaviour:
@@ -12943,6 +12962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   desiredScreenType: 0
+  isPawnMoving: 0
   screenManager: {fileID: 0}
 --- !u!1 &2123323973
 GameObject:

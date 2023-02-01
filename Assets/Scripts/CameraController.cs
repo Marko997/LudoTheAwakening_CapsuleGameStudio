@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
 
 
     //RTS Camera
-    public float panSpeed = 2f;
+    public float panSpeed = 1f;
     public float scrollSpeed = 2f;
     public float minY = 10f;
     public float maxY = 80f;
