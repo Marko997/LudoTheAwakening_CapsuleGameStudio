@@ -64,6 +64,11 @@ namespace PlayFab
             PlayFabHttp.MakeApiCall("/Client/AddFriend", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
         }
 
+        public static void AddFriend(AddFriendRequest addFriendRequest, Action<AddFriendResult> p1, Action<PlayFabError> p2)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab
         /// ID lookup of any arbitrary service identifier a title wants to add. This identifier should never be used as
@@ -91,6 +96,11 @@ namespace PlayFab
 
             PlayFabHttp.MakeApiCall("/Client/AddOrUpdateContactEmail", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
         }
+
+        //public static void Init(string v)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Adds users to the set of those able to update both the shared data, as well as the set of users in the group. Only users
@@ -145,6 +155,11 @@ namespace PlayFab
 
 
             PlayFabHttp.MakeApiCall("/Client/AndroidDevicePushNotificationRegistration", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
+        }
+
+        public static object GetAuthenticatedPlayer()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

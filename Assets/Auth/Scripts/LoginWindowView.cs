@@ -43,7 +43,11 @@ public class LoginWindowView : MonoBehaviour
     public Toggle RememberMe;
     public Text playerID;
     public Text playerUserName;
-    
+
+    public Text displayNameError;
+    //public Text loginEmailPassError;
+
+
     public PlayFab.UI.ProgressBarView ProgressBar;//OVDE
 
     //Meta references to panels we need to show / hide
@@ -102,16 +106,6 @@ public class LoginWindowView : MonoBehaviour
 
     public void Start()
     {
-        //Display Name
-       // changeDisplayNameButton.onClick.AddListener(OpenCanvas);
-       // if (PlayerPrefs.HasKey("DisplayName"))
-        //{
-            //displayNameInputField.text = PlayerPrefs.GetString("DisplayName");
-        //}
-        //
-
-
-
         playerNamePanel.SetActive(false);
 
         playerID.gameObject.SetActive(false);
@@ -124,7 +118,6 @@ public class LoginWindowView : MonoBehaviour
         PlayFabAuthService.OnDisplayAuthentication += OnDisplayAuthentication;
         PlayFabAuthService.OnLoginSuccess += OnLoginSuccess;
         PlayFabAuthService.OnPlayFabError += OnPlayFaberror;
-
 
         //Bind to UI buttons to perform actions when user interacts with the UI.
         LoginButton.onClick.AddListener(OnLoginClicked);
@@ -168,16 +161,13 @@ public class LoginWindowView : MonoBehaviour
         playerID.text = "ID : " + result.PlayFabId;
         //playerUserName.text = "Name :" + name;
 
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("MainScene");///FriendListTest
 
         LoginCanvas.SetActive(false);
         ///
 
         PlayerPrefs.SetString("PlayFabCustomID", result.PlayFabId);
     }
-
-
-    
 
     private void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
@@ -219,21 +209,29 @@ public class LoginWindowView : MonoBehaviour
     /// <param name="error"></param>
     private void OnPlayFaberror(PlayFabError error)
     {
+        //loginEmailPassError.text = error.ErrorMessage + " please register";
+
         //There are more cases which can be caught, below are some
         //of the basic ones.
         switch (error.Error)
         {
             case PlayFabErrorCode.InvalidEmailAddress:
+                ProgressBar.UpdateLabel("Invalid Email");
+                break;
             case PlayFabErrorCode.InvalidPassword:
+                ProgressBar.UpdateLabel("Invalid Password");
+                break;
             case PlayFabErrorCode.InvalidEmailOrPassword:
                 ProgressBar.UpdateLabel("Invalid Email or Password");
                 break;
 
             case PlayFabErrorCode.AccountNotFound:
+                ProgressBar.UpdateLabel("Account Not Found");
                 RegisterPanel.SetActive(true);
                 return;
             default:
-                ProgressBar.UpdateLabel(error.GenerateErrorReport());
+                //ProgressBar.UpdateLabel(error.GenerateErrorReport());
+                ProgressBar.UpdateLabel("Incorrect Email or Password");
                 break;
 
         }
@@ -298,14 +296,14 @@ public class LoginWindowView : MonoBehaviour
         _AuthService.Authenticate(Authtypes.Silent);
 
 
-      
 
 
-        // Generate a random string as the display name
+
+        /////Generate a random string as the display name
         //AuthCanvas.SetActive(false);
         //string displayName = RandomString(8);
 
-        // Make a call to the PlayFab API to update the player's display name
+        /////Make a call to the PlayFab API to update the player's display name
         //PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
         //    result => Debug.Log("Display name updated: " + displayName),
         //    error => Debug.LogError("Failed to update display name: " + error.GenerateErrorReport()));
@@ -328,7 +326,7 @@ public class LoginWindowView : MonoBehaviour
     /// </summary>
     private void OnLoginClicked()
     {
-        ProgressBar.UpdateLabel(string.Format("Logging In As {0} ...", Username.text));
+        ProgressBar.UpdateLabel(string.Format("Please add email and password to log in,Logging In As {0} ...", Username.text));//Logging In As {0}//Please add email and password to log in
         ProgressBar.UpdateProgress(0f);
         ProgressBar.AnimateProgress(0, 1, () =>
         {
@@ -512,12 +510,13 @@ public class LoginWindowView : MonoBehaviour
     private void OnErrorr(PlayFabError obj)
     {
         Debug.Log("Something is wrong");
+
+        displayNameError.text = obj.ErrorMessage;
     }
 
     private void OnDisplayUpdate(UpdateUserTitleDisplayNameResult obj)
     {
         Debug.Log("Succes change name");
-        //playerNamePanel.SetActive(false);
         AuthCanvas.SetActive(false);
     }
 }

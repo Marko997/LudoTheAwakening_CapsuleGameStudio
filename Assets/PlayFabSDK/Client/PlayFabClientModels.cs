@@ -85,6 +85,8 @@ namespace PlayFab.ClientModels
         /// True if the friend request was processed successfully.
         /// </summary>
         public bool Created;
+
+        public string FriendPlayFabId { get; set; }
     }
 
     [Serializable]
@@ -2123,6 +2125,8 @@ namespace PlayFab.ClientModels
         /// Array of friends found.
         /// </summary>
         public List<FriendInfo> Friends;
+
+        public List<string> FriendIds { get; set; }
     }
 
     [Serializable]
@@ -5306,6 +5310,8 @@ namespace PlayFab.ClientModels
         /// List of the player's lifetime purchase totals, summed by real-money currency
         /// </summary>
         public List<ValueToDateModel> ValuesToDate;
+
+        //public string PlayFabId { get; set; }
     }
 
     [Serializable]

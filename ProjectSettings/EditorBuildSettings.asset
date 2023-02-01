@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Auth/Scenes/LoginTest.unity
     guid: 9e0253254983a854687633b7c8346eba
+  - enabled: 1
+    path: Assets/TestFriendsList/Scene/FriendListTest.unity
+    guid: 2f76a33e552cf934bbd06eea555403b8
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
