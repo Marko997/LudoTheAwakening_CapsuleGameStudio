@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Auth/Scenes/LoginTest.unity
+    path: Assets/Scenes/Login.unity
     guid: 9e0253254983a854687633b7c8346eba
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/TestFriendsList/Scene/FriendListTest.unity
     guid: 2f76a33e552cf934bbd06eea555403b8
   - enabled: 0
-    path: Assets/Scenes/LoginScene.unity
+    path: Assets/Scenes/LoginSceneOld.unity
     guid: 3727a7bdc252a9d4086e631689eaf1f4
   - enabled: 0
     path: 
