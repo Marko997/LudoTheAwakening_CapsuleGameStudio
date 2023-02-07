@@ -86,7 +86,7 @@ namespace PlayFab.ClientModels
         /// </summary>
         public bool Created;
 
-        public string FriendPlayFabId { get; set; }
+        //public string FriendPlayFabId { get; set; }
     }
 
     [Serializable]
@@ -4196,6 +4196,8 @@ namespace PlayFab.ClientModels
         /// title has been selected.
         /// </summary>
         public string TitleId;
+
+        //public bool LoginTitlePlayerAccountEntity { get; set; }
     }
 
     [Serializable]

@@ -124,6 +124,7 @@ public class Authentification : MonoBehaviour
         MessageText.text = "Login in";
         yield return new WaitForSeconds(0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //SceneManager.LoadScene("MainScene"); 
     }
 
     public void RecoverUser()

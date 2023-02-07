@@ -247,6 +247,7 @@ public class PlayFabAuthService
             TitleId = PlayFabSettings.TitleId,
             Email = Email,
             Password = Password,
+            //LoginTitlePlayerAccountEntity = true,
             InfoRequestParameters = InfoRequestParams
         }, (result) =>
         {

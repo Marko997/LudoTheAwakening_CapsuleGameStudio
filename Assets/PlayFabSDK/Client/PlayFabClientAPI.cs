@@ -58,16 +58,26 @@ namespace PlayFab
         {
             var context = (request == null ? null : request.AuthenticationContext) ?? PlayFabSettings.staticPlayer;
             var callSettings = PlayFabSettings.staticSettings;
-            if (!context.IsClientLoggedIn()) throw new PlayFabException(PlayFabExceptionCode.NotLoggedIn,"Must be logged in to call this method");
+            if (!context.IsClientLoggedIn()) throw new PlayFabException(PlayFabExceptionCode.NotLoggedIn, "Must be logged in to call this method");
 
 
             PlayFabHttp.MakeApiCall("/Client/AddFriend", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
-        }
 
-        public static void AddFriend(AddFriendRequest addFriendRequest, Action<AddFriendResult> p1, Action<PlayFabError> p2)
-        {
-            throw new NotImplementedException();
+            //if (!IsClientLoggedIn()) throw new PlayFabException(PlayFabExceptionCode.NotLoggedIn, "Must be logged in to call this method");
+
+            //PlayFabHttp.MakeApiCall("/Client/AddFriend", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders);
+
         }
+        //public static void AddFriend(AddFriendRequest request, Action<AddFriendResult> resultCallback, Action<PlayFabError> errorCallback, object customData = null, Dictionary<string, string> extraHeaders = null)
+        //{
+        //    if (!IsClientLoggedIn()) throw new PlayFabException(PlayFabExceptionCode.NotLoggedIn, "Must be logged in to call this method");
+
+        //    PlayFabHttp.MakeApiCall("/Client/AddFriend", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders);
+        //}
+        //public static void AddFriend(AddFriendRequest addFriendRequest, Action<AddFriendResult> p1, Action<PlayFabError> p2)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         /// <summary>
         /// Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab
@@ -2330,7 +2340,10 @@ namespace PlayFab
             PlayFabHttp.MakeApiCall("/Client/WriteTitleEvent", request, AuthType.LoginSession, resultCallback, errorCallback, customData, extraHeaders, context, callSettings);
         }
 
-
+        //public static void GetEntityToken(AuthenticationModels.GetEntityTokenRequest getEntityTokenRequest, Action<object> value1, Action<object> value2)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
 
