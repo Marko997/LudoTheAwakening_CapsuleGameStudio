@@ -8,18 +8,32 @@ using System.Collections;
 using System.Security.Principal;
 using static UnityEngine.Rendering.DebugUI;
 using PlayFab.AuthenticationModels;
+using UnityEditor.PackageManager;
 
 public class AddFriends : MonoBehaviour
 {
     //void DisplayFriends(List<FriendInfo> friendsCache) { friendsCache.ForEach(f => Debug.Log(f.FriendPlayFabId)); }
-    void DisplayPlayFabError(PlayFabError error) { Debug.Log(error.GenerateErrorReport()); }
-    void DisplayError(string error) { Debug.LogError(error); }
+    void DisplayPlayFabError(PlayFabError error) { 
+        Debug.Log(error.GenerateErrorReport());
+
+        //Text errorText = GameObject.Find("errorText").GetComponent<Text>();
+        errorText.text = error.ErrorMessage;
+    }
+
+    void DisplayError(string error) {
+        Debug.LogError(error);
+
+        //Text errorText = GameObject.Find("errorText").GetComponent<Text>();
+        errorText.text = error;
+    }
 
     public GameObject listingPrefab;
 
     [SerializeField]
     Transform friendScrollView;
     List<FriendInfo> myFriends;
+
+    public Text errorText;
     void DisplayFriends(List<FriendInfo> friendsCache)
     {
         foreach (FriendInfo f in friendsCache)
@@ -48,7 +62,7 @@ public class AddFriends : MonoBehaviour
 
     IEnumerator WaitForFriend()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         GetFriends();
     }
     public void RunWaitFunction()
@@ -69,7 +83,7 @@ public class AddFriends : MonoBehaviour
         }, DisplayPlayFabError);
     }
 
-    enum FriendIdType { PlayFabId, Username, Email, DisplayName };
+    enum FriendIdType { PlayFabId/*, Username, Email, DisplayName*/ };
     void AddFriend(FriendIdType idType, string friendId)
     {
         var request = new AddFriendRequest();
@@ -78,20 +92,21 @@ public class AddFriends : MonoBehaviour
             case FriendIdType.PlayFabId:
                 request.FriendPlayFabId = friendId;
                 break;
-            case FriendIdType.Username:
-                request.FriendUsername = friendId;
-                break;
-            case FriendIdType.Email:
-                request.FriendEmail = friendId;
-                break;
-            case FriendIdType.DisplayName:
-                request.FriendTitleDisplayName = friendId;
-                break;
+            //case FriendIdType.Username:
+            //    request.FriendUsername = friendId;
+            //    break;
+            //case FriendIdType.Email:
+            //    request.FriendEmail = friendId;
+            //    break;
+            //case FriendIdType.DisplayName:
+            //    request.FriendTitleDisplayName = friendId;
+            //    break;
         }
         // Execute request and update friends when we are done
         PlayFabClientAPI.AddFriend(request, result =>
         {
             Debug.Log("Friend added successfully!");
+            errorText.text = "Sucess added friend";
         }, DisplayPlayFabError);
     }
 
@@ -124,20 +139,21 @@ public class AddFriends : MonoBehaviour
             case FriendIdType.PlayFabId:
                request.FriendPlayFabId = friendId;
                 break;
-            case FriendIdType.Username:
-                //request.FriendUsername = friendId;
-                break;
-            case FriendIdType.Email:
-                //request.FriendEmail = friendId;
-                break;
-            case FriendIdType.DisplayName:
-                //request.FriendTitleDisplayName = friendId;
-                break;
+            //case FriendIdType.Username:
+            //    //request.FriendUsername = friendId;
+            //    break;
+            //case FriendIdType.Email:
+            //    //request.FriendEmail = friendId;
+            //    break;
+            //case FriendIdType.DisplayName:
+            //    //request.FriendTitleDisplayName = friendId;
+            //    break;
         }
         //Execute request and update friends when we are done
         PlayFabClientAPI.RemoveFriend(request, result =>
         {
             Debug.Log("Friend deleted successfully!");
+            errorText.text = "Sucess delete friend";
         }, DisplayPlayFabError);
     }
 }
