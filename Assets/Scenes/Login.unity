@@ -8092,7 +8092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36531962a0bd5ef498d0205eab83d3fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ClearPlayerPrefs: 1
+  ClearPlayerPrefs: 0
   Username: {fileID: 719275638}
   Password: {fileID: 1575033968}
   ConfirmPassword: {fileID: 881646527}

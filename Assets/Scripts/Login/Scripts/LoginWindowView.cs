@@ -7,6 +7,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using PlayFab.AuthenticationModels;
 
 //#if FACEBOOK 
 //using Facebook.Unity;
@@ -67,6 +68,17 @@ public class LoginWindowView : MonoBehaviour
     //Reference to our Authentication service
     private PlayFabAuthService _AuthService = PlayFabAuthService.Instance;
 
+
+    //public void GetEntityToken()
+    //{
+    //    PlayFabClientAPI.GetEntityToken(new GetEntityTokenRequest(),
+    //    result => {
+    //        Debug.Log("Successfully obtained EntityToken: " + result.EntityToken);
+    //    },
+    //    error => {
+    //        Debug.LogError("Error obtaining EntityToken: " + error.ErrorMessage);
+    //    });
+    //}
 
     public void Awake()
     {
@@ -142,13 +154,6 @@ public class LoginWindowView : MonoBehaviour
     /// <param name="result"></param>
     private void OnLoginSuccess(PlayFab.ClientModels.LoginResult result)
     {
-        //string name = null;
-
-        //if (result.InfoResultPayload.PlayerProfile != null)
-        //    name = result.InfoResultPayload.PlayerProfile.DisplayName;
-        //if (result.InfoResultPayload.PlayerProfile != null)
-        //    name = result.InfoResultPayload.PlayerProfile.DisplayName;
-
         //Proverava da li ima Display Name
         PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnGetAccountInfoSuccess, OnGetAccountInfoFailuree);
         Debug.LogFormat("Logged In as: {0}", result.PlayFabId);
@@ -161,18 +166,15 @@ public class LoginWindowView : MonoBehaviour
         playerID.text = "ID : " + result.PlayFabId;
         //playerUserName.text = "Name :" + name;
 
-        SceneManager.LoadScene("MainScene");///FriendListTest
+        SceneManager.LoadScene("MainScene");///FriendListTest///MainScene
 
         LoginCanvas.SetActive(false);
-        ///
 
         PlayerPrefs.SetString("PlayFabCustomID", result.PlayFabId);
     }
 
     private void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
-
-
         playerUserName.text = result.AccountInfo.TitleInfo.DisplayName;
 
         // Check if the player has a display name
@@ -209,8 +211,6 @@ public class LoginWindowView : MonoBehaviour
     /// <param name="error"></param>
     private void OnPlayFaberror(PlayFabError error)
     {
-        //loginEmailPassError.text = error.ErrorMessage + " please register";
-
         //There are more cases which can be caught, below are some
         //of the basic ones.
         switch (error.Error)
@@ -233,9 +233,7 @@ public class LoginWindowView : MonoBehaviour
                 //ProgressBar.UpdateLabel(error.GenerateErrorReport());
                 ProgressBar.UpdateLabel("Incorrect Email or Password");
                 break;
-
         }
-
         //Also report to debug console, this is optional.
         Debug.Log(error.Error);
         Debug.LogError(error.GenerateErrorReport());
@@ -246,7 +244,6 @@ public class LoginWindowView : MonoBehaviour
     /// </summary>
     private void OnDisplayAuthentication()
     {
-
 #if FACEBOOK
         if (FB.IsInitialized)
         {
@@ -284,7 +281,6 @@ public class LoginWindowView : MonoBehaviour
     /// </summary>
     private void OnPlayAsGuestClicked()
     {
-
         ProgressBar.UpdateLabel("Logging In As Guest ...");
         ProgressBar.UpdateProgress(0f);
         ProgressBar.AnimateProgress(0, 1, () =>
@@ -294,26 +290,7 @@ public class LoginWindowView : MonoBehaviour
         });
 
         _AuthService.Authenticate(Authtypes.Silent);
-
-
-
-
-
-        /////Generate a random string as the display name
-        //AuthCanvas.SetActive(false);
-        //string displayName = RandomString(8);
-
-        /////Make a call to the PlayFab API to update the player's display name
-        //PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest { DisplayName = displayName },
-        //    result => Debug.Log("Display name updated: " + displayName),
-        //    error => Debug.LogError("Failed to update display name: " + error.GenerateErrorReport()));
     }
-    //private string RandomString(int length)
-    //{
-    //    const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    //    return new string(Enumerable.Repeat(chars, length)
-    //      .Select(s => s[UnityEngine.Random.Range(0, s.Length)]).ToArray());
-    //}
 
     private void OnLoginFailure(PlayFabError error)
     {
@@ -349,7 +326,6 @@ public class LoginWindowView : MonoBehaviour
     /// </summary>
     private void OnRegisterButtonClicked()
     {
-
         if (Password.text != ConfirmPassword.text)
         {
             ProgressBar.UpdateLabel("Passwords do not Match.");
@@ -524,4 +500,3 @@ public class LoginWindowView : MonoBehaviour
 internal class PlayGamesPlatform
 {
 }
-
