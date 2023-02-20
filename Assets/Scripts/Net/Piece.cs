@@ -8,12 +8,15 @@ public class Piece : NetworkBehaviour
 {
     [Header("INFO")]
     public string pieceName;
+    public string cardId;
     public Spell spell;
     public Team currentTeam;
     public int currentTile = -1;
     public Vector3 startPosition;
     public int eatPower = 3;
     public int lookTileInt = 0;
+
+    public GameObject pieceCardImage;
 
     [Header("BOARD MOVEMENT")]
     public int routePosition;

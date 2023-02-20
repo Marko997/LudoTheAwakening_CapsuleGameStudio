@@ -17,6 +17,19 @@ public class PlayerController : NetworkBehaviour
     private TextMeshProUGUI playerNameLabel;
     private GameObject myPLayerListItem;
 
+    public List<string> deckStrings = new List<string>(4);
+    public List<GameObject> pawnContainer = new List<GameObject>(4); //napraviti objekat koji ima sve pijune i singleton je tako da se ovde ubace samo oni koje player ima
+
+    private void Start()
+    { 
+        deckStrings.Add("Spearman");
+        deckStrings.Add("Spearman");
+        deckStrings.Add("Spearman");
+        deckStrings.Add("Spearman");
+
+        
+    }
+
     public void Update()
     {
         if (networkStarted)

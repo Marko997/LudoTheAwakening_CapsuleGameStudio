@@ -290,6 +290,30 @@ public class GameManager : NetworkBehaviour
             }
         }
     }
+
+    private GameObject Swap(string pawnName, List<GameObject> pawns)
+    {
+        switch (pawnName)
+        {
+            case "Spearman":
+                piecePrefab = pawns[0]; //item iz liste game objekata u kojoj se cuvaju heroji
+                break;
+            case "Archer":
+                piecePrefab = pawns[1]; //item iz liste game objekata u kojoj se cuvaju heroji
+                break;
+            case "Macebearer":
+                piecePrefab = pawns[0]; //item iz liste game objekata u kojoj se cuvaju heroji
+                break;
+            case "Slinger":
+                piecePrefab = pawns[1]; //item iz liste game objekata u kojoj se cuvaju heroji
+                break;
+            default:
+                break;
+        }
+        return piecePrefab;
+
+    }
+
     private void SpawnAllPlayers()
     {
         // Assign the values (owner side only)
@@ -305,7 +329,10 @@ public class GameManager : NetworkBehaviour
             PlayerController pc = nc.Value.PlayerObject.GetComponent<PlayerController>();
             for (int i = 0; i < 4; i++)
             {
-                GameObject go = GameObject.Instantiate(piecePrefab);
+                //GameObject go = GameObject.Instantiate(piecePrefab);
+
+                GameObject go = Instantiate(Swap(pc.deckStrings[i], pc.pawnContainer));
+
                 go.transform.position = startPosition[playerIndex][i];
                 go.GetComponent<NetworkObject>().SpawnWithOwnership(nc.Key);
                 pieces[i] = go.GetComponent<Piece>();

@@ -180,11 +180,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceName: spearman
+  cardId: 0
   spell: {fileID: -229443243958263361}
   currentTeam: 0
   currentTile: -1
   startPosition: {x: 0, y: 0, z: 0}
   eatPower: 3
+  lookTileInt: 0
+  pieceCardImage: {fileID: 5435973087940949717, guid: 8e93388a1067b4d959c98a5b023e6a39,
+    type: 3}
   routePosition: 0
   steps: 0
   isMoving: 0
