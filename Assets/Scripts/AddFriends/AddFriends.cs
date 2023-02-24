@@ -33,6 +33,8 @@ public class AddFriends : MonoBehaviour
     Transform friendScrollView;
     List<FriendInfo> myFriends;
 
+    GameObject listing;
+
     public Text errorText;
     void DisplayFriends(List<FriendInfo> friendsCache)
     {
@@ -50,7 +52,7 @@ public class AddFriends : MonoBehaviour
 
             if (isFound == false)
             {
-                GameObject listing = Instantiate(listingPrefab, friendScrollView);
+                listing = Instantiate(listingPrefab, friendScrollView);
                 ListingPrefab tempListing = listing.GetComponent<ListingPrefab>();
                 //Debug.Log(tempListing.playerNameText);
                 //Debug.Log(f.TitleDisplayName);
@@ -155,5 +157,7 @@ public class AddFriends : MonoBehaviour
             Debug.Log("Friend deleted successfully!");
             errorText.text = "Sucess delete friend";
         }, DisplayPlayFabError);
+
+        Destroy(listing);
     }
 }
