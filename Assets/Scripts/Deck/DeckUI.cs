@@ -11,13 +11,15 @@ public class DeckUI : MonoBehaviour
     public List<Piece> playerDeck;
     public List<Piece> playerCollection;
 
-    public Transform[] deckParent;
+    //public Transform[] deckParent;
+    public DeckParentTransformItem[] deckParent;
     public Transform collectionParent;
 
     private void Start()
     {
         GameObject cardObject = null;
         List<GameObject> cardObjects = new List<GameObject>(4);
+
         foreach(var card in playerCollection)
         {
             cardObject = Instantiate(card.pieceCardImage, collectionParent);
@@ -28,33 +30,46 @@ public class DeckUI : MonoBehaviour
             btn.onClick.AddListener(() => MoveCard(card,cardObject));
         }
 
-        LoadDeckFromPlayerPrefs(cardObjects);
+        //LoadDeckFromPlayerPrefs(cardObjects);
     }
     //Move card from collection to deck and reverse
     public void MoveCard(Piece card, GameObject cardObject)
     {
-        if(cardObject.transform.parent != collectionParent)
-        {
-            playerDeck.Remove(card);
-            playerCollection.Add(card);
+        //if(cardObject.transform.parent != collectionParent)
+        //{
+        //playerDeck.Remove(card);
+        //playerCollection.Add(card);
 
-            cardObject.transform.SetParent(collectionParent);
-        }
-        else
+        //cardObject.transform.SetParent(collectionParent);
+        for (int i = 0; i < deckParent.Length; i++)
         {
-            if (playerDeck.Count < MAX_DECK_SIZE)
+            if (!deckParent[i].isOccupied)
             {
-                playerDeck.Add(card);
-                playerCollection.Remove(card);
-
-                cardObject.transform.SetParent(deckParent[0]);
-
-                SaveDeckToPlayerPrefs();
+                cardObject.transform.SetParent(deckParent[i].transform);
             }
+            
         }
+    
+    //else
+    //{
+    //    if (playerDeck.Count < MAX_DECK_SIZE)
+    //    {
+    //        playerDeck.Add(card);
+    //        playerCollection.Remove(card);
 
-        
-    }
+    //        for (int i = 0; i < MAX_DECK_SIZE; i++)
+    //        {
+    //            cardObject.transform.SetParent(deckParent[i]);
+    //        }
+
+
+
+    //        //SaveDeckToPlayerPrefs();
+    //    }
+    //}
+
+
+}
 
     private void SaveDeckToPlayerPrefs()
     {

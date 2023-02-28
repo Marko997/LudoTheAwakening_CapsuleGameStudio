@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 3286254}
   - component: {fileID: 3286253}
   - component: {fileID: 3286252}
+  - component: {fileID: 3286255}
   m_Layer: 5
   m_Name: test
   m_TagString: Untagged
@@ -224,6 +225,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3286250}
   m_CullTransparentMesh: 1
+--- !u!114 &3286255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3286250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239675a5a4b774d1ca4014ec206aca35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOccupied: 0
 --- !u!1 &8235991
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,6 +897,7 @@ GameObject:
   - component: {fileID: 97148674}
   - component: {fileID: 97148676}
   - component: {fileID: 97148675}
+  - component: {fileID: 97148677}
   m_Layer: 5
   m_Name: test (2)
   m_TagString: Untagged
@@ -948,6 +963,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97148673}
   m_CullTransparentMesh: 1
+--- !u!114 &97148677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97148673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239675a5a4b774d1ca4014ec206aca35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOccupied: 0
 --- !u!1 &106512556
 GameObject:
   m_ObjectHideFlags: 0
@@ -5757,7 +5785,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -374}
+  m_AnchoredPosition: {x: 0, y: -2142}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &666985979
@@ -8393,7 +8421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -844.43}
+  m_AnchoredPosition: {x: 0, y: -657}
   m_SizeDelta: {x: 960, y: 154.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1075745693
@@ -8685,6 +8713,7 @@ GameObject:
   - component: {fileID: 1113449772}
   - component: {fileID: 1113449774}
   - component: {fileID: 1113449773}
+  - component: {fileID: 1113449775}
   m_Layer: 5
   m_Name: test (1)
   m_TagString: Untagged
@@ -8750,6 +8779,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113449771}
   m_CullTransparentMesh: 1
+--- !u!114 &1113449775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113449771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239675a5a4b774d1ca4014ec206aca35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOccupied: 0
 --- !u!1 &1117586396
 GameObject:
   m_ObjectHideFlags: 0
@@ -9047,6 +9089,7 @@ GameObject:
   - component: {fileID: 1207702785}
   - component: {fileID: 1207702787}
   - component: {fileID: 1207702786}
+  - component: {fileID: 1207702788}
   m_Layer: 5
   m_Name: test (3)
   m_TagString: Untagged
@@ -9112,6 +9155,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1207702784}
   m_CullTransparentMesh: 1
+--- !u!114 &1207702788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1207702784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 239675a5a4b774d1ca4014ec206aca35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOccupied: 0
 --- !u!1 &1210959127
 GameObject:
   m_ObjectHideFlags: 0
@@ -12425,10 +12481,10 @@ MonoBehaviour:
   - {fileID: 1087729430, guid: d62c264a3ccad4151947cbe9fb5d2382, type: 3}
   - {fileID: 3137397598245538511, guid: 2e4d40f1ca83648b99e03d8ce420df2a, type: 3}
   deckParent:
-  - {fileID: 3286251}
-  - {fileID: 1113449772}
-  - {fileID: 97148674}
-  - {fileID: 1207702785}
+  - {fileID: 3286255}
+  - {fileID: 1113449775}
+  - {fileID: 97148677}
+  - {fileID: 1207702788}
   collectionParent: {fileID: 584022678}
 --- !u!1 &1576391191
 GameObject:
