@@ -8,7 +8,7 @@ using System.Collections;
 using System.Security.Principal;
 using static UnityEngine.Rendering.DebugUI;
 using PlayFab.AuthenticationModels;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 
 public class AddFriends : MonoBehaviour
 {
