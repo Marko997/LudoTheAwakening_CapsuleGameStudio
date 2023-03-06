@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour
     private bool isPanning;
     private Vector2 touchDelta;
 
-    
+    public bool canMoveCamera;
     public CameraStates state;
 
     void Start()
@@ -59,8 +59,6 @@ public class CameraController : MonoBehaviour
         switch (state)
         {
             case CameraStates.RtsCam:
-
-
                 break;
             case CameraStates.TargetCam:
                 TargetCamSetup();
@@ -84,10 +82,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    
-
     void LateUpdate()
     {
+        if (!canMoveCamera) { return; }
         switch (state)
         {
             case CameraStates.RtsCam:

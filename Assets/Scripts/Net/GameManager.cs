@@ -77,6 +77,9 @@ public class GameManager : NetworkBehaviour
 
             paths.Add(teamId, teamPath);
         }
+        var tempPath = paths[2];
+        paths[2] = paths[1];
+        paths[1] = tempPath;
         #endregion
 
         #region Initiate the board []
