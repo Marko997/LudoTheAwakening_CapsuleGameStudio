@@ -24,6 +24,5 @@ public class ScreenSwitcher : MonoBehaviour
         {
             screenManager.SwitchScreen(desiredScreenType);
         }
-        
     }
 }

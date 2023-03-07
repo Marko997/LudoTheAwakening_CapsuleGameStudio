@@ -175,7 +175,7 @@ public class LoginWindowView : MonoBehaviour
 
     private void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
-        playerUserName.text = result.AccountInfo.TitleInfo.DisplayName;
+        playerUserName.text ="Name : " + result.AccountInfo.TitleInfo.DisplayName;
 
         // Check if the player has a display name
         if (string.IsNullOrEmpty(result.AccountInfo.TitleInfo.DisplayName))

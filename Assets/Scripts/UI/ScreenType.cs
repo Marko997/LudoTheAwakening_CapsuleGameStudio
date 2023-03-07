@@ -14,5 +14,6 @@ public enum ScreenType
     ProfileScreen,
     LoginScreen,
     RegisterScreen,
-    MpLobbyScreen
+    MpLobbyScreen,
+    Mod1
 }
