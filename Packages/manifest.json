@@ -9,6 +9,7 @@
     "com.unity.multiplayer.tools": "1.0.0",
     "com.unity.netcode.gameobjects": "1.1.0",
     "com.unity.purchasing.udp": "2.2.5",
+    "com.unity.recorder": "3.0.3",
     "com.unity.render-pipelines.universal": "12.1.9",
     "com.unity.services.mediation": "1.0.5",
     "com.unity.test-framework": "2.0.1-pre.18",

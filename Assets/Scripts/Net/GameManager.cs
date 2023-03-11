@@ -29,6 +29,7 @@ public class GameManager : NetworkBehaviour
     private Dictionary<ulong, bool> playerReady = new Dictionary<ulong, bool>();
     private Dictionary<ulong, Piece[]> playerPieces = new Dictionary<ulong, Piece[]>();
     private Dictionary<ulong, bool> playerCompleted = new Dictionary<ulong, bool>();
+    private Dictionary<ulong, CustomNetworkVariables.NetworkString> playerNames = new Dictionary<ulong, CustomNetworkVariables.NetworkString>();
     private Dictionary<int, int[]> paths;
     private Dictionary<int, Vector3[]> startPosition;
     private LudoTile[] board;
@@ -49,6 +50,13 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject winnerPanel;
     [SerializeField] private Button attackButton;
     [SerializeField] private Sprite[] diceSides;
+
+    //Players info in UI
+    [SerializeField] private Image[] playerImages;
+    [SerializeField] private TextMeshProUGUI[] playerNamesText;
+    [SerializeField] private Color playerColors;
+    [SerializeField] private Image[] otherPlayerDices;
+        
 
     // CONST
     private const int TEAM_COUNT = 4;
@@ -116,7 +124,6 @@ public class GameManager : NetworkBehaviour
     {
         RegisterEvents();
         OnPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
-        //attackButton.interactable = false;//?????
     }
 
     public override void OnDestroy()
@@ -317,12 +324,33 @@ public class GameManager : NetworkBehaviour
 
     }
 
+    [ClientRpc]
+    private void UpdatePlayerNamesClientRpc(ulong key, string name)
+    {
+        playerNames.Add(key, name);
+    }
+
     private void SpawnAllPlayers()
     {
         // Assign the values (owner side only)
         playerPieces = new Dictionary<ulong, Piece[]>(4);
         playerCompleted = new Dictionary<ulong, bool>(4);
-        
+        playerNames = new Dictionary<ulong, CustomNetworkVariables.NetworkString>(4);
+
+        foreach (KeyValuePair<ulong, NetworkClient> nc in NetworkManager.Singleton.ConnectedClients)
+        {
+            PlayerController pc = nc.Value.PlayerObject.GetComponent<PlayerController>();
+            for (int i = 0; i < NetworkManager.Singleton.ConnectedClients.Count; i++)
+            {
+                if (!playerNames.ContainsKey(nc.Key)) {
+                    //playerNames.Add(nc.Key, pc.playerName.Value);
+                    UpdatePlayerNamesClientRpc(nc.Key,pc.playerName.Value);
+                }
+                
+                //playerNames.Add(nc.Key, pc.playerName.Value);
+            }
+        }
+
         int playerIndex = 0;
         foreach (KeyValuePair<ulong, NetworkClient> nc in NetworkManager.Singleton.ConnectedClients)
         {
@@ -367,11 +395,12 @@ public class GameManager : NetworkBehaviour
                     TargetClientIds = new ulong[] { nc.Key }
                 }
             };
+            
             ChangeColorAndNameClientRpc(nc.Key, pc.playerName.Value,clientRpcParams);
 
             playerPieces.Add(nc.Key, pieces);
             playerCompleted.Add(nc.Key, false);
-
+           
             playerIndex++;
         }
     }
@@ -440,33 +469,77 @@ public class GameManager : NetworkBehaviour
     // Called by OnValueChanged for currentTurn
     private void UpdateCurrentTurn(ulong prev, ulong newValue)
     {
-        int teamId = Utility.RetrieveTeamId(newValue);
-        currentTurnColor.color = Utility.TeamToColor((Team)teamId);
+        //int teamId = Utility.RetrieveTeamId(newValue);
+        //currentTurnColor.color = Utility.TeamToColor((Team)teamId);
     }
     // Called by OnValueChanged for currentDiceRoll
     private void UpdateDiceUI(int prev, int newValue)
     {
-        diceRollText.text = newValue.ToString();
+        //diceRollText.text = newValue.ToString();
         StartCoroutine(DiceAnimation(newValue));
     }
 
     IEnumerator DiceAnimation(int diceValue)
     {
-        for (int i = 0; i <= 10; i++)
+        // Pick up random value from 0 to 5 (All inclusive)
+        int randomDiceSide = 0;
+
+        //Roll BIG (main) dice for client device
+        if (currentTurn.Value == NetworkManager.Singleton.LocalClientId)
         {
-            // Pick up random value from 0 to 5 (All inclusive)
-            int randomDiceSide = UnityEngine.Random.Range(0, 5);
+            //vrti samo veliku playerovu kockicu
+            for (int i = 0; i <= 10; i++)
+            {
+                randomDiceSide = UnityEngine.Random.Range(0, 5);
+                // Set sprite to upper face of dice from array according to random value
+                otherPlayerDices[0].sprite = diceSides[randomDiceSide];
 
-            // Set sprite to upper face of dice from array according to random value
-            currentTurnColor.sprite = diceSides[randomDiceSide];
-
-            // Pause before next itteration
-            yield return new WaitForSeconds(0.05f);
+                // Pause before next itteration
+                yield return new WaitForSeconds(0.05f);
+            }
+            otherPlayerDices[0].sprite = diceSides[diceValue - 1];
         }
-        currentTurnColor.sprite = diceSides[diceValue - 1];
-    }
+        else
+        {
+            //Show rolling dice from main client to other clients
+            for (int i = 0; i <= 10; i++)
+            {
+                // Set sprite to upper face of dice from array according to random value
 
-    
+                randomDiceSide = UnityEngine.Random.Range(0, 5);
+
+                //update player 0 (RED) dice animation to other clients
+                if ((i > 0 && i < 4) && (int)NetworkManager.Singleton.LocalClientId == i)
+                {
+                    otherPlayerDices[i].sprite = diceSides[randomDiceSide];
+                }
+
+                //update other clients dice animaiton on player 0 (RED)
+                if ((int)NetworkManager.Singleton.LocalClientId == 0 && i<4)
+                {
+                    otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[randomDiceSide];
+                }
+                
+                // Pause before next itteration
+                yield return new WaitForSeconds(0.05f);
+            }
+
+            for (int j = 1; j < otherPlayerDices.Length; j++)
+            {
+                //update player 0 (RED) dice VALUE to other clients
+                if ((j > 0 && j < 4) && (int)NetworkManager.Singleton.LocalClientId == j)
+                {
+                    otherPlayerDices[j].sprite = diceSides[diceValue - 1];
+                }
+
+                //update other clients dice VALUE on player 0 (RED)
+                if ((int)NetworkManager.Singleton.LocalClientId == 0 && j < 4)
+                {
+                    otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[diceValue - 1];
+                }
+            }
+        } 
+    }
 
     // RPCs
     [ServerRpc(RequireOwnership = false)]
@@ -495,12 +568,54 @@ public class GameManager : NetworkBehaviour
     }
     [ClientRpc]
     public void ChangeColorAndNameClientRpc(ulong clientId, string updatedPlayerName, ClientRpcParams clientRpcParams)
-    { 
-        playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
+    {
+        //playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
+        if (NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            var temp = playerImages[0];
+            playerImages[0] = playerImages[clientId];
+            playerImages[clientId] = temp;
+        }
+        List<ulong> tempList = new List<ulong> { 0, 1, 2, 3 };
+        //tempList.Remove(clientId);
+
+        var listColor = new List<Image>(playerImages);
+        //listColor.RemoveAt((int)clientId);
+
+        var listNames = new List<TextMeshProUGUI>(playerNamesText);
+        //listNames.RemoveAt((int)clientId);
+        //playerNames.Remove(clientId);
+
+        var temp2 = playerNames[clientId];
+        playerNames[clientId] = playerNames[0];
+        playerNames[0] = temp2;
+
+        for (int i = 0; i < listColor.Count; i++)
+        {
+            listColor[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));  
+        }
+
+        for (int i = 0; i < playerNames.Count; i++)
+        {
+            //if (listNames[i] == playerNames[(ulong)i])
+            //{
+                listNames[i].text = playerNames[(ulong)i];
+            //}
+        }
+
+        //var temp3 = otherPlayerDices[NetworkManager.Singleton.LocalClientId];
+        //otherPlayerDices[NetworkManager.Singleton.LocalClientId] = otherPlayerDices[0];
+        //otherPlayerDices[0] = temp3;
+        //Debug.Log(otherPlayerDices[0].name);
+
+        //Updates player image color
+        //playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
+
         attackButton.gameObject.GetComponent<Image>().color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
         attackButton.interactable = false;
 
-        playerName.text = updatedPlayerName;
+        //playerName.text = updatedPlayerName;
+        //playerNamesText[clientId].text = updatedPlayerName;
     }
 
     [ServerRpc(RequireOwnership = false)]

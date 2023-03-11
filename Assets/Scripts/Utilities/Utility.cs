@@ -3,9 +3,9 @@ using UnityEngine;
 public enum Team
 {
     Red = 0,
-    Green = 1,
+    Green = 3,
     Yellow = 2,
-    Blue = 3
+    Blue = 1
 }
 
 public class Utility : MonoBehaviour

@@ -56,6 +56,8 @@ public class CameraController : MonoBehaviour
     {
         state = SaveSettings.CameraState;
 
+       
+
         switch (state)
         {
             case CameraStates.RtsCam:
@@ -84,7 +86,7 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!canMoveCamera) { return; }
+        if (UIElement.isUIElementPressed) { return; }
         switch (state)
         {
             case CameraStates.RtsCam:
@@ -255,4 +257,5 @@ public class CameraController : MonoBehaviour
         return Mathf.Clamp(angle, min, max);
     }
     #endregion
+
 }
