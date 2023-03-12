@@ -42,8 +42,8 @@ public class LoginWindowView : MonoBehaviour
     public Button CancelRegisterButton;
     public Button CancelRecoveryButton;
     public Toggle RememberMe;
-    public Text playerID;
-    public Text playerUserName;
+    //public Text playerID;
+    //public Text playerUserName;
 
     public Text displayNameError;
     //public Text loginEmailPassError;
@@ -120,7 +120,7 @@ public class LoginWindowView : MonoBehaviour
     {
         playerNamePanel.SetActive(false);
 
-        playerID.gameObject.SetActive(false);
+        //playerID.gameObject.SetActive(false);
         //Hide all our panels until we know what UI to display
         Panel.SetActive(false);
         Next.SetActive(false);
@@ -159,11 +159,11 @@ public class LoginWindowView : MonoBehaviour
         Debug.LogFormat("Logged In as: {0}", result.PlayFabId);
        
         //Show our next screen if we logged in successfully.
-        playerID.gameObject.SetActive(true);
+        //playerID.gameObject.SetActive(true);
 
-        playerUserName.gameObject.SetActive(true);
+        //playerUserName.gameObject.SetActive(true);
         
-        playerID.text = "ID : " + result.PlayFabId;
+        //playerID.text = "ID : " + result.PlayFabId;
         //playerUserName.text = "Name :" + name;
 
         SceneManager.LoadScene("MainScene");///FriendListTest///MainScene
@@ -175,7 +175,7 @@ public class LoginWindowView : MonoBehaviour
 
     private void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
-        playerUserName.text ="Name : " + result.AccountInfo.TitleInfo.DisplayName;
+        //playerUserName.text ="Name : " + result.AccountInfo.TitleInfo.DisplayName;
 
         // Check if the player has a display name
         if (string.IsNullOrEmpty(result.AccountInfo.TitleInfo.DisplayName))
@@ -190,7 +190,7 @@ public class LoginWindowView : MonoBehaviour
             // Hide the object if the player has a display name
             playerNamePanel.SetActive(false);
             AuthCanvas.SetActive(false);
-            playerinfoIdName.SetActive(true);
+            //playerinfoIdName.SetActive(true);/////ovooo pogledaj
         }
     }
 
