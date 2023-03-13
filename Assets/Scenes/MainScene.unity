@@ -11975,7 +11975,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1371154799}
+      - m_Target: {fileID: 1013339344}
         m_TargetAssemblyTypeName: ChangeDisplayNameName, Assembly-CSharp
         m_MethodName: SaveDisplayName
         m_Mode: 1
@@ -12384,8 +12384,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1013339342}
   - component: {fileID: 1013339343}
+  - component: {fileID: 1013339344}
   m_Layer: 5
-  m_Name: Changename_Screen
+  m_Name: ChangeName_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12428,6 +12429,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenType: 16
+--- !u!114 &1013339344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013339341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ed3bca8b61066449509dd143646f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserNameRegisterInput: {fileID: 1015033124}
+  displayNameError: {fileID: 1750844566}
 --- !u!1 &1015033122
 GameObject:
   m_ObjectHideFlags: 0
@@ -14103,7 +14118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.7009888, y: -173.78003}
+  m_AnchoredPosition: {x: 1.7010498, y: -173.78003}
   m_SizeDelta: {x: -817.604, y: -3716.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1146860417
@@ -16705,7 +16720,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1371154797}
   - component: {fileID: 1371154798}
-  - component: {fileID: 1371154799}
   m_Layer: 5
   m_Name: Profile__Screen
   m_TagString: Untagged
@@ -16753,20 +16767,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenType: 11
---- !u!114 &1371154799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371154796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0ed3bca8b61066449509dd143646f0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UserNameRegisterInput: {fileID: 1015033124}
-  displayNameError: {fileID: 1750844566}
 --- !u!1 &1374312147
 GameObject:
   m_ObjectHideFlags: 0
@@ -21844,7 +21844,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1711402823}
   m_HandleRect: {fileID: 1711402822}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

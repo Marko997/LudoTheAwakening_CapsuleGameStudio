@@ -75,15 +75,16 @@ public class ChangeDisplayNameName : MonoBehaviour
     ////////////////////////    //ChangeDisplayNameCanvas.SetActive(false);
     ////////////////////////}
 
+
     public InputField UserNameRegisterInput;
     public Text displayNameError;
-    public GameObject ChangeDisplayNameCanvas;
-    private const string lastChangeTimeKey = "LastChangeTime";
-    private const float changeNameInterval = 24 * 60 * 60; // 3 sata u sekundama
+    //public GameObject ChangeDisplayNameCanvas;
+    private const string lastLogoutTimeKey = "LastLogoutTime";
+    private const float changeNameInterval = 24 * 60 * 60; // 24 sata u sekundama
 
     public void SaveDisplayName()
     {
-        // proverite da li je dovoljno prošlo vreme od poslednje promene imena
+        // proverite da li je dovoljno prošlo vreme od poslednjeg izlogovanja
         if (CanChangeName())
         {
             var request = new UpdateUserTitleDisplayNameRequest
@@ -92,29 +93,31 @@ public class ChangeDisplayNameName : MonoBehaviour
             };
             PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayUpdate, OnErrorr);
 
-            // saèuvajte trenutno vreme kao vreme poslednje promene imena
-            PlayerPrefs.SetString(lastChangeTimeKey, DateTime.Now.ToString());
+            // saèuvajte trenutno vreme kao vreme poslednje promene imena i izlogovanja
+            var now = DateTime.Now;
+            PlayerPrefs.SetString(lastLogoutTimeKey, now.ToString());
+            //PlayerPrefs.SetString(lastChangeTimeKey, now.ToString());
         }
         else
         {
-            displayNameError.text = "Morate da saèekate 24 sata da bi ste ponovo mogli da promenite ime.";
+            displayNameError.text = "Morate da saèekate 24 sata da biste ponovo mogli da promenite ime.";
         }
     }
 
     private bool CanChangeName()
     {
-        // dobijte vreme poslednje promene imena iz PlayerPrefs
-        string lastChangeTimeStr = PlayerPrefs.GetString(lastChangeTimeKey, "");
-        if (string.IsNullOrEmpty(lastChangeTimeStr))
+        // dobijte vreme poslednjeg izlogovanja iz PlayerPrefs
+        string lastLogoutTimeStr = PlayerPrefs.GetString(lastLogoutTimeKey, "");
+        if (string.IsNullOrEmpty(lastLogoutTimeStr))
         {
-            return true; // korisnik nikada ranije nije promenio ime, pa mu dozvolite da promeni ime
+            return true; // korisnik se nikada nije izlogovao, pa mu dozvolite da promeni ime
         }
 
-        // konvertujte poslednje vreme promene imena u DateTime format
-        DateTime lastChangeTime = DateTime.Parse(lastChangeTimeStr);
+        // konvertujte poslednje vreme izlogovanja u DateTime format
+        DateTime lastLogoutTime = DateTime.Parse(lastLogoutTimeStr);
 
-        // proverite da li je prošlo dovoljno vreme od poslednje promene imena
-        return (DateTime.Now - lastChangeTime).TotalSeconds >= changeNameInterval;
+        // proverite da li je prošlo dovoljno vreme od poslednjeg izlogovanja
+        return (DateTime.Now - lastLogoutTime).TotalSeconds >= changeNameInterval;
     }
 
     private void OnErrorr(PlayFabError obj)
@@ -128,7 +131,7 @@ public class ChangeDisplayNameName : MonoBehaviour
     {
         Debug.Log("Success change name");
         UserNameRegisterInput.text = obj.DisplayName; // ažuriranje teksta u polju
-        ChangeDisplayNameCanvas.SetActive(false);
+                                                      //ChangeDisplayNameCanvas.SetActive(false);
     }
 
 }

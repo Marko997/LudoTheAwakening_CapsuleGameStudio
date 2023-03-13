@@ -61,7 +61,7 @@ public class LoginWindowView : MonoBehaviour
 
     public GameObject LoginCanvas;//Panel je ovo
     public GameObject AuthCanvas;
-    public GameObject playerinfoIdName;
+    //public GameObject playerinfoIdName;
     //Settings for what data to get from playfab on login.
     public GetPlayerCombinedInfoRequestParams InfoRequestParams;
 
@@ -183,7 +183,7 @@ public class LoginWindowView : MonoBehaviour
             // Show the object if the player does not have a display name
             playerNamePanel.SetActive(true);
             Panel.SetActive(true);
-            playerinfoIdName.SetActive(false);
+            //playerinfoIdName.SetActive(false);
         }
         else
         {

@@ -1462,12 +1462,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: YES
---- !u!1 &502366042 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4541758699732791734, guid: 17f6f8fff149aa04ca952bf459987bb8,
-    type: 3}
-  m_PrefabInstance: {fileID: 4541758700199448300}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &524537326
 GameObject:
   m_ObjectHideFlags: 0
@@ -7768,7 +7762,6 @@ MonoBehaviour:
   Next: {fileID: 59636491}
   LoginCanvas: {fileID: 1358179789}
   AuthCanvas: {fileID: 604548231}
-  playerinfoIdName: {fileID: 502366042}
   InfoRequestParams:
     GetCharacterInventories: 0
     GetCharacterList: 0
