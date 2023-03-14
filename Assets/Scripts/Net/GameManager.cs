@@ -592,7 +592,8 @@ public class GameManager : NetworkBehaviour
 
         for (int i = 0; i < listColor.Count; i++)
         {
-            listColor[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));  
+            listColor[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));
+            otherPlayerDices[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));
         }
 
         for (int i = 0; i < playerNames.Count; i++)
