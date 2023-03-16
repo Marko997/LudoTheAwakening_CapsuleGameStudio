@@ -569,54 +569,46 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void ChangeColorAndNameClientRpc(ulong clientId, string updatedPlayerName, ClientRpcParams clientRpcParams)
     {
-        //playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
         if (NetworkManager.Singleton.LocalClientId == clientId)
         {
             var temp = playerImages[0];
             playerImages[0] = playerImages[clientId];
             playerImages[clientId] = temp;
         }
+        //Lists for player backround color also player images should be here
         List<ulong> tempList = new List<ulong> { 0, 1, 2, 3 };
-        //tempList.Remove(clientId);
 
         var listColor = new List<Image>(playerImages);
-        //listColor.RemoveAt((int)clientId);
 
+        //Lists for showing player names
         var listNames = new List<TextMeshProUGUI>(playerNamesText);
-        //listNames.RemoveAt((int)clientId);
-        //playerNames.Remove(clientId);
 
         var temp2 = playerNames[clientId];
         playerNames[clientId] = playerNames[0];
         playerNames[0] = temp2;
 
+        //List for dice colors for every player
+        List<ulong> tempList2 = new List<ulong> { 0, 1, 2, 3 };
+        var temp3 = tempList2[(int)clientId];
+        tempList2[(int)clientId] = tempList2[0];
+        tempList2[0] = temp3;
+
+        //setting background and dice color
         for (int i = 0; i < listColor.Count; i++)
         {
             listColor[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));
-            otherPlayerDices[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));
+            otherPlayerDices[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList2[i])));
         }
 
+        //setting names
         for (int i = 0; i < playerNames.Count; i++)
         {
-            //if (listNames[i] == playerNames[(ulong)i])
-            //{
-                listNames[i].text = playerNames[(ulong)i];
-            //}
+            listNames[i].text = playerNames[(ulong)i];
         }
 
-        //var temp3 = otherPlayerDices[NetworkManager.Singleton.LocalClientId];
-        //otherPlayerDices[NetworkManager.Singleton.LocalClientId] = otherPlayerDices[0];
-        //otherPlayerDices[0] = temp3;
-        //Debug.Log(otherPlayerDices[0].name);
-
-        //Updates player image color
-        //playerColor.color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
-
+        //setting color of attack button
         attackButton.gameObject.GetComponent<Image>().color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
         attackButton.interactable = false;
-
-        //playerName.text = updatedPlayerName;
-        //playerNamesText[clientId].text = updatedPlayerName;
     }
 
     [ServerRpc(RequireOwnership = false)]
