@@ -463,8 +463,8 @@ public class GameManager : NetworkBehaviour
     // Called by OnValueChanged for moveCompleted
     private void UpdateMoveCompleted(bool prev, bool newValue)
     {
-        if (newValue)
-            diceRollText.text = "Roll!";
+        //if (newValue)
+        //    diceRollText.text = "Roll!";
     }
     // Called by OnValueChanged for currentTurn
     private void UpdateCurrentTurn(ulong prev, ulong newValue)
@@ -501,6 +501,7 @@ public class GameManager : NetworkBehaviour
         }
         else
         {
+            int turn = 0;
             //Show rolling dice from main client to other clients
             for (int i = 0; i <= 10; i++)
             {
@@ -515,11 +516,14 @@ public class GameManager : NetworkBehaviour
                 }
 
                 //update other clients dice animaiton on player 0 (RED)
-                if ((int)NetworkManager.Singleton.LocalClientId == 0 && i<4)
+                if ((int)NetworkManager.Singleton.LocalClientId == 0 && i < 4)
                 {
+                    //otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[randomDiceSide];
                     otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[randomDiceSide];
+                    turn = (int)currentTurn.Value;
+                    continue;
                 }
-                
+
                 // Pause before next itteration
                 yield return new WaitForSeconds(0.05f);
             }
@@ -535,11 +539,12 @@ public class GameManager : NetworkBehaviour
                 //update other clients dice VALUE on player 0 (RED)
                 if ((int)NetworkManager.Singleton.LocalClientId == 0 && j < 4)
                 {
-                    otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[diceValue - 1];
+                    Debug.Log(turn);
+                    otherPlayerDices[turn].sprite = diceSides[diceValue - 1];
                 }
             }
         } 
-    }
+        }
 
     // RPCs
     [ServerRpc(RequireOwnership = false)]
