@@ -16,5 +16,6 @@ public enum ScreenType
     RegisterScreen,
     MpLobbyScreen,
     Mod1,
-    ChangeName
+    ChangeName,
+    Mail
 }
