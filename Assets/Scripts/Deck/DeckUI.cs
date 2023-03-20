@@ -26,53 +26,47 @@ public class DeckUI : MonoBehaviour
             cardObjects.Add(cardObject);
 
             Button btn = cardObject.AddComponent<Button>();
-
-            btn.onClick.AddListener(() => MoveCard(card,cardObject));
+            var copyCard = card;
+            var copyCardObject = cardObject;
+            btn.onClick.AddListener(() => MoveCard(copyCard, copyCardObject));
         }
-
-        //LoadDeckFromPlayerPrefs(cardObjects);
+        LoadDeckFromPlayerPrefs(cardObjects);
     }
     //Move card from collection to deck and reverse
     public void MoveCard(Piece card, GameObject cardObject)
     {
-        //if(cardObject.transform.parent != collectionParent)
-        //{
-        //playerDeck.Remove(card);
-        //playerCollection.Add(card);
-
-        //cardObject.transform.SetParent(collectionParent);
-        for (int i = 0; i < deckParent.Length; i++)
+        if (cardObject.transform.parent == collectionParent) //Adds card to deck, removes from collection
         {
-            if (!deckParent[i].isOccupied)
+            playerDeck.Add(card);
+            playerCollection.Remove(card);
+
+            //cardObject.transform.SetParent(collectionParent);
+            for (int i = 0; i < deckParent.Length; i++)
             {
-                cardObject.transform.SetParent(deckParent[i].transform);
+                if (!deckParent[i].isOccupied)
+                {
+                    cardObject.transform.SetParent(deckParent[i].transform);
+                    //cardObject.transform.localPosition = Vector3.zero;
+                    deckParent[i].isOccupied = true;
+                    break;
+                }
+
             }
-            
+            SaveDeckToPlayerPrefs();  
         }
-    
-    //else
-    //{
-    //    if (playerDeck.Count < MAX_DECK_SIZE)
-    //    {
-    //        playerDeck.Add(card);
-    //        playerCollection.Remove(card);
+        else //Removes card from deck, adds card to collection
+        {
+            cardObject.GetComponentInParent<DeckParentTransformItem>().isOccupied = false;
+            cardObject.transform.SetParent(collectionParent);
 
-    //        for (int i = 0; i < MAX_DECK_SIZE; i++)
-    //        {
-    //            cardObject.transform.SetParent(deckParent[i]);
-    //        }
-
-
-
-    //        //SaveDeckToPlayerPrefs();
-    //    }
-    //}
-
-
-}
+            playerDeck.Remove(card);
+            playerCollection.Add(card);
+        }
+    }
 
     private void SaveDeckToPlayerPrefs()
     {
+        Debug.Log("Saved to deck!");
         PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.cardId).ToArray()));
         PlayerPrefs.Save();
     }
@@ -81,21 +75,18 @@ public class DeckUI : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Deck"))
         {
+            Debug.Log("Loaded to deck!");
             string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
-            //foreach (var cardID in cardIDs)
-            //{
-            //    Piece card = playerCollection.FirstOrDefault(c => c.cardId == cardID);
 
-            //    if(card != null)
-            //    {
-            //        playerDeck.Add(card);
-            //        playerCollection.Remove(card);
-
-            //        Transform cardTransform = card.gameObject.transform;
-            //        cardTransform.SetParent(deckParent[0]);
-            //    }
-            //}
-
+            foreach (var cardID in cardIDs.Select((value, i) => new { i, value}))
+            {
+                Piece card = playerCollection.FirstOrDefault(c => c.cardId == cardID.value);
+                Debug.Log(card);
+                if (card != null)
+                {
+                    MoveCard(card, cardObjects[cardID.i]);
+                }
+            }
         }
     }
 }

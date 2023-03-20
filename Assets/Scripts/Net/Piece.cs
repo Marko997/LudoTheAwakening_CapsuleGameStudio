@@ -32,6 +32,8 @@ public class Piece : NetworkBehaviour
 
     private Animator animator;
 
+    public GameObject selector;
+
 
     public override void OnNetworkSpawn()
     {
@@ -39,6 +41,11 @@ public class Piece : NetworkBehaviour
         // Assign the start position field to be restored when piece is eaten
         startPosition = transform.position;
         spell = gameObject.GetComponent<Spell>();
+
+        selector = Instantiate(selector);
+        selector.transform.SetParent(this.transform);
+        selector.transform.position = this.transform.position;
+        selector.SetActive(false);
 
         int teamId = Utility.RetrieveTeamId(OwnerClientId);
         currentTeam = (Team)teamId;
@@ -53,10 +60,12 @@ public class Piece : NetworkBehaviour
     public void EnableInteraction()
     {
         gameObject.layer = LayerMask.NameToLayer("ActivePiece");
+        selector.SetActive(true);
     }
     public void DisableInteraction()
     {
         gameObject.layer = LayerMask.NameToLayer("Piece");
+        selector.SetActive(false);
     }
 
     [ClientRpc]

@@ -194,6 +194,8 @@ MonoBehaviour:
   isMoving: 0
   isOut: 0
   isSelected: 0
+  selector: {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267,
+    type: 3}
 --- !u!114 &4418999046991137604
 MonoBehaviour:
   m_ObjectHideFlags: 0

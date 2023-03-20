@@ -1833,13 +1833,14 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   eatPower: 3
   lookTileInt: 0
-  pieceCardImage: {fileID: 5435973087940949717, guid: 8e93388a1067b4d959c98a5b023e6a39,
+  pieceCardImage: {fileID: 5435973087940949717, guid: 2f83f2616b1da404fb904b80df25e1ac,
     type: 3}
   routePosition: 0
   steps: 0
   isMoving: 0
   isOut: 0
   isSelected: 0
+  selector: {fileID: 0}
 --- !u!114 &4556629544006638825
 MonoBehaviour:
   m_ObjectHideFlags: 0
