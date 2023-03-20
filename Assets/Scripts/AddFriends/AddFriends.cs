@@ -126,7 +126,7 @@ public class AddFriends : MonoBehaviour
 
     public void OpenCloseFriends()
     {
-        friendPanel.SetActive(!friendPanel.activeInHierarchy);
+        friendPanel.SetActive(true);//(!friendPanel.activeInHierarchy)
     }
 
     public void DeleteFriendRequest()

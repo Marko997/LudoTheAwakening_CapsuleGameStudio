@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
@@ -9,6 +10,8 @@ public class ScreenSwitcher : MonoBehaviour
 
     [SerializeField]ScreenManager screenManager;
     Button menuButton;
+
+    public string desiredPanelName;
 
     private void Start()
     {
@@ -25,4 +28,12 @@ public class ScreenSwitcher : MonoBehaviour
             screenManager.SwitchScreen(desiredScreenType);
         }
     }
+    public void OpenFriendsPanel()
+    {
+        if (!isPawnMoving)
+        {
+            screenManager.SwitchScreen(ScreenType.Friends);
+        }
+    }
+    
 }

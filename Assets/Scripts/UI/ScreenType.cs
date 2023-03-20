@@ -17,5 +17,6 @@ public enum ScreenType
     MpLobbyScreen,
     Mod1,
     ChangeName,
-    Mail
+    Mail,
+    Friends
 }
