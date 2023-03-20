@@ -64,6 +64,10 @@ public class GameManager : NetworkBehaviour
     private const int TILE_IN_PATH_PRIOR_TO_GOAL = 52;
     private const int TILE_OFFSET_IN_BETWEEN_TEAM = 13;
 
+    //Timer
+    public int duration;
+    private int remainingDuration;
+
     // Callbacks
     private void Awake()
     {
@@ -256,6 +260,31 @@ public class GameManager : NetworkBehaviour
     }
     #endregion
     #region Server side methods
+    //Started working on timer, problem with losing track of turns, couldnt roll dice on any client for some reason
+    private void BeginTimer(int second)
+    {
+        remainingDuration = second;
+        if (switcherCoroutine != null)
+        {
+            StopCoroutine(switcherCoroutine);
+        }
+        switcherCoroutine = StartCoroutine(UpdateTimer());
+    }
+
+    private IEnumerator UpdateTimer()
+    {
+        while (remainingDuration >= 0)
+        {
+            //update UI
+            remainingDuration--;
+            Debug.Log(remainingDuration);
+            yield return new WaitForSeconds(1f);
+        }
+        //OnEnd();
+        Debug.Log("Should switch turn");
+        NextTurn();
+    }
+    private Coroutine switcherCoroutine;
     private void NextTurn()
     {
         // 0. Save the previous turn value, so we can check which one is next
@@ -263,7 +292,9 @@ public class GameManager : NetworkBehaviour
 
         // 1. Reset the roll count, used in the 3x 6 in a row roll turn skip
         rollCountThisTurn = 0;
-
+        //duration = 10;
+        
+        //BeginTimer(duration);
         // 2. Create an array with the client IDs
         ulong[] turnIds = NetworkManager.Singleton.ConnectedClients.Keys.ToArray();
 
@@ -430,6 +461,7 @@ public class GameManager : NetworkBehaviour
     // Buttons
     public void DiceRollButton()
     {
+        //currentDiceRoll.OnValueChanged += UpdateDiceUI;
         DiceRollServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void DiceRollButton(int forceDice)
@@ -497,7 +529,7 @@ public class GameManager : NetworkBehaviour
                 // Pause before next itteration
                 yield return new WaitForSeconds(0.05f);
             }
-            otherPlayerDices[0].sprite = diceSides[diceValue - 1];
+            otherPlayerDices[0].sprite = diceSides[diceValue - 1];            
         }
         else
         {
@@ -741,6 +773,7 @@ public class GameManager : NetworkBehaviour
         };
         //if (!canRollAgain)
         //    NextTurn();
+
     }
 
     [ClientRpc]
