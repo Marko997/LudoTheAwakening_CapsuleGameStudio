@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class DeckUI : MonoBehaviour
 
     private void Start()
     {
+        //PlayerPrefs.DeleteKey("Deck");
         GameObject cardObject = null;
         List<GameObject> cardObjects = new List<GameObject>(4);
 
@@ -66,8 +68,7 @@ public class DeckUI : MonoBehaviour
 
     private void SaveDeckToPlayerPrefs()
     {
-        Debug.Log("Saved to deck!");
-        PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.cardId).ToArray()));
+        PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.pieceName).ToArray()));
         PlayerPrefs.Save();
     }
 
@@ -75,13 +76,12 @@ public class DeckUI : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("Deck"))
         {
-            Debug.Log("Loaded to deck!");
             string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
 
-            foreach (var cardID in cardIDs.Select((value, i) => new { i, value}))
+            foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
             {
-                Piece card = playerCollection.FirstOrDefault(c => c.cardId == cardID.value);
-                Debug.Log(card);
+                Piece card = playerCollection.FirstOrDefault(c => c.pieceName == cardID.value);
+
                 if (card != null)
                 {
                     MoveCard(card, cardObjects[cardID.i]);

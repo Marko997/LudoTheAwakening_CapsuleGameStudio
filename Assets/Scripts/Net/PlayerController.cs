@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -21,13 +22,16 @@ public class PlayerController : NetworkBehaviour
     public List<GameObject> pawnContainer = new List<GameObject>(4); //napraviti objekat koji ima sve pijune i singleton je tako da se ovde ubace samo oni koje player ima
 
     private void Start()
-    { 
-        deckStrings.Add("Spearman");
-        deckStrings.Add("Spearman");
-        deckStrings.Add("Spearman");
-        deckStrings.Add("Spearman");
+    {
+        if (PlayerPrefs.HasKey("Deck"))
+        {
+            string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
 
-        
+            foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
+            {
+                deckStrings.Add(cardID.value);
+            }
+        }
     }
 
     public void Update()
