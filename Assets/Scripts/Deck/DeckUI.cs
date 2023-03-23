@@ -39,6 +39,8 @@ public class DeckUI : MonoBehaviour
     {
         if (cardObject.transform.parent == collectionParent) //Adds card to deck, removes from collection
         {
+            //cardObject.transform.position = deckParent[i]
+
             playerDeck.Add(card);
             playerCollection.Remove(card);
 
@@ -48,7 +50,7 @@ public class DeckUI : MonoBehaviour
                 if (!deckParent[i].isOccupied)
                 {
                     cardObject.transform.SetParent(deckParent[i].transform);
-                    //cardObject.transform.localPosition = Vector3.zero;
+                    cardObject.transform.position = deckParent[i].transform.position;
                     deckParent[i].isOccupied = true;
                     break;
                 }

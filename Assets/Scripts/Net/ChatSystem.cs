@@ -106,7 +106,6 @@ public class ChatSystem : NetworkBehaviour
 
     void ShowRedEmoji(int emojiIndex)
     {
-        Debug.Log(emojiIndex);
         //Update emoji on self
         allChatDisplayIcons[0].gameObject.SetActive(true);
         allChatDisplayIcons[0].sprite = emojis[emojiIndex];

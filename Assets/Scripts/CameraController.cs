@@ -52,11 +52,13 @@ public class CameraController : MonoBehaviour
     public bool canMoveCamera;
     public CameraStates state;
 
+    private Vector3 previousPosition;
+
     void Start()
     {
         state = SaveSettings.CameraState;
 
-       
+        previousPosition = transform.position;
 
         switch (state)
         {
@@ -82,6 +84,11 @@ public class CameraController : MonoBehaviour
                 break;
 
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        transform.position = previousPosition;
     }
 
     void LateUpdate()

@@ -11,6 +11,19 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public GameObject playerListItemPrefab;
     public TMP_InputField playerNameInput;
 
+    public GameObject startButton;
+
+    private void Update()
+    {
+        if(!NetworkManager.Singleton.IsHost)
+        {
+            startButton.SetActive(false);
+        }
+        else {
+            startButton.SetActive(true);
+        }
+    }
+
     #region Buttons
     //Main
     public void OnMainHostButton()

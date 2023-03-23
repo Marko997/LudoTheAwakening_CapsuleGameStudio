@@ -13,7 +13,7 @@ public class Piece : NetworkBehaviour
     public Team currentTeam;
     public int currentTile = -1;
     public Vector3 startPosition;
-    public int eatPower = 3;
+    public int eatPower;
     public int lookTileInt = 0;
 
     public GameObject pieceCardImage;
@@ -53,7 +53,12 @@ public class Piece : NetworkBehaviour
 
         // Spawn a collider if you're the owner, to allow selection of the pieces
         if (IsOwner)
+        {
             gameObject.AddComponent<BoxCollider>();
+            gameObject.GetComponent<BoxCollider>().size = new Vector3(1f,2.5f,1f);
+            gameObject.GetComponent<BoxCollider>().center = new Vector3(0f,1.25f,0f);
+        }
+            
     }
 
     // This is used with the scriptable rendering pipeline to add a select effect
@@ -121,13 +126,13 @@ public class Piece : NetworkBehaviour
 
             steps--;
 
-            //if(steps == 0)
-            //{
-            //    transform.position = position;
-            //}
+            if (steps == 0)
+            {
+                transform.position = position;
+            }
         }
 
-        transform.position = position; //put more pawns on same tile (reposition)
+        //transform.position = position; //put more pawns on same tile (reposition)
 
         if (currentTile > 0)
         {

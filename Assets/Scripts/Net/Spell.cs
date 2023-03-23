@@ -14,7 +14,7 @@ public class Spell : MonoBehaviour
 
     public SpellType spell;
 
-    public void CastSpell(int targetTile)
+    public void CastSpell(int targetTile, LudoTile[] board)
     {
         Piece spellCasterPiece = gameObject.GetComponent<Piece>();
         if (!spellCasterPiece.isOut) { return; }
@@ -25,26 +25,34 @@ public class Spell : MonoBehaviour
         {
             case SpellType.ARCHER:
                 spellCasterPiece.eatPower = 3;
-                EatPieceServerRpc(targetTile, spellCasterPiece);
+                //Debug.Log(targetTile);
+                //Debug.Log(spellCasterPiece.currentTile);
+                EatPieceServerRpc(targetTile, spellCasterPiece,board);
                 break;
             case SpellType.SPEARMAN:
                 spellCasterPiece.eatPower = 1;
-                EatPieceServerRpc(targetTile, spellCasterPiece);
+                //Debug.Log(targetTile);
+                //Debug.Log(spellCasterPiece.currentTile);
+                EatPieceServerRpc(targetTile, spellCasterPiece, board);
                 break;
             case SpellType.SLINGSHOOTMAN:
                 spellCasterPiece.eatPower = 2;
-                EatPieceServerRpc(targetTile, spellCasterPiece);
+                EatPieceServerRpc(targetTile, spellCasterPiece, board);
                 break;
             case SpellType.MACEBEARER:
                 spellCasterPiece.eatPower = -1;
-                EatPieceServerRpc(targetTile, spellCasterPiece);
+                EatPieceServerRpc(targetTile, spellCasterPiece, board);
+                break;
+            default:
+                Debug.Log("Spell not found");
                 break;
         }
     }
     [ServerRpc]
-    private static void EatPieceServerRpc(int targetTile, Piece spellCasterPiece)
+    private static void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board)
     {
-        Piece p = spellCasterPiece.board[targetTile].GetFirstPiece();
+        Piece p = board[targetTile].GetFirstPiece();
+
         if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
         {
             spellCasterPiece.board[targetTile].RemovePiece(p);

@@ -160,7 +160,7 @@ public class GameManager : NetworkBehaviour
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 1050.0f, LayerMask.GetMask("ActivePiece")))
+            if (Physics.Raycast(ray, out hit, 10500.0f, LayerMask.GetMask("ActivePiece")))
             {
                 if (Input.GetMouseButtonDown(0)) // Left click on a piece
                 {
@@ -470,6 +470,7 @@ public class GameManager : NetworkBehaviour
     }
     public void AttackButton()
     {
+        Debug.Log("AttackButton");
         AttackServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void EndButton()
@@ -571,7 +572,6 @@ public class GameManager : NetworkBehaviour
                 //update other clients dice VALUE on player 0 (RED)
                 if ((int)NetworkManager.Singleton.LocalClientId == 0 && j < 4)
                 {
-                    Debug.Log(turn);
                     otherPlayerDices[turn].sprite = diceSides[diceValue - 1];
                 }
             }
@@ -582,14 +582,15 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void AttackServerRpc(ulong clientId)
     {
+        Debug.Log("AttackServerRpc");
         for (int i = 0; i < playerPieces[clientId].Length; i++)
         {
             Piece selectedPiece = playerPieces[clientId][i];
-            if (selectedPiece.isSelected)
-            {
-                selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower);
-                selectedPiece.isSelected = false;
-            }
+            //if (selectedPiece.isSelected)
+            //{
+                selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower, board);
+                //selectedPiece.isSelected = false;
+            //}
         }
         ClientRpcParams clientRpcParams = new ClientRpcParams()
         {
@@ -764,7 +765,7 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
-                if ((piece.currentTile > 0 && piece.currentTile < 50) && board[piece.currentTile + 3].GetFirstPiece() != null)
+                if ((piece.currentTile > 0 && piece.currentTile < 50) && board[piece.currentTile + piece.eatPower].GetFirstPiece() != null)
                 {
                     EnableAttackClientRpc(true, clientRpcParams);
                 }
