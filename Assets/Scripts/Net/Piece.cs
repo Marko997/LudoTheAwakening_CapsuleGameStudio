@@ -126,13 +126,13 @@ public class Piece : NetworkBehaviour
 
             steps--;
 
-            if (steps == 0)
-            {
-                transform.position = position;
-            }
+            //if (steps == 0)
+            //{
+                //transform.position = position;
+            //}
         }
 
-        //transform.position = position; //put more pawns on same tile (reposition)
+        transform.position = position; //put more pawns on same tile (reposition)
 
         if (currentTile > 0)
         {

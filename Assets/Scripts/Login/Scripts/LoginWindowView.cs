@@ -157,12 +157,12 @@ public class LoginWindowView : MonoBehaviour
         //Proverava da li ima Display Name
         PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnGetAccountInfoSuccess, OnGetAccountInfoFailuree);
         Debug.LogFormat("Logged In as: {0}", result.PlayFabId);
-       
+
         //Show our next screen if we logged in successfully.
         //playerID.gameObject.SetActive(true);
 
         //playerUserName.gameObject.SetActive(true);
-        
+
         //playerID.text = "ID : " + result.PlayFabId;
         //playerUserName.text = "Name :" + name;
 
@@ -190,6 +190,9 @@ public class LoginWindowView : MonoBehaviour
             // Hide the object if the player has a display name
             playerNamePanel.SetActive(false);
             AuthCanvas.SetActive(false);
+
+            PlayerPrefs.SetString("NAME", result.AccountInfo.TitleInfo.DisplayName);
+            Debug.Log(PlayerPrefs.GetString("NAME"));
             //playerinfoIdName.SetActive(true);/////ovooo pogledaj
         }
     }

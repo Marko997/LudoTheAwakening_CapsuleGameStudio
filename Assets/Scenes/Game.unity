@@ -1997,7 +1997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.30789426, b: 0.30789426, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2223,7 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.30789426, b: 0.30789426, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2983,6 +2983,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
         type: 3}
+      propertyPath: playerImageSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
+        type: 3}
       propertyPath: playerNamesText.Array.data[0]
       value: 
       objectReference: {fileID: 1399529835}
@@ -3021,6 +3026,30 @@ PrefabInstance:
       propertyPath: otherPlayerDices.Array.data[3]
       value: 
       objectReference: {fileID: 1864776862}
+    - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
+        type: 3}
+      propertyPath: playerImageSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 07feb1795ef9a3b408cb1d541bd3f983,
+        type: 3}
+    - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
+        type: 3}
+      propertyPath: playerImageSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: a938619121394004cbfda6c1d7e71b7e,
+        type: 3}
+    - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
+        type: 3}
+      propertyPath: playerImageSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1313b59ad781d8d429478ac92718feb7,
+        type: 3}
+    - target: {fileID: 4436017580439003266, guid: 85b5876d63a674d1e8f013e01b80b8d3,
+        type: 3}
+      propertyPath: playerImageSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: f2d327b1c5d2ea344a137231cc8573c4,
+        type: 3}
     - target: {fileID: 5763105851991726867, guid: 85b5876d63a674d1e8f013e01b80b8d3,
         type: 3}
       propertyPath: m_RootOrder
@@ -4096,7 +4125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.30789426, b: 0.30789426, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9047,7 +9076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.30789426, b: 0.30789426, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

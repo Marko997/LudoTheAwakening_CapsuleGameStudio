@@ -51,21 +51,22 @@ public class LudoTile
                 break;
 
             case 2:
-                ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.25f));
-                ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.25f));
+                //ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.25f));
+                ps[0].PositionClientRpc(tileTransform.position + tileTransform.right * 0.95f);
+                ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
                 break;
 
             case 3:
-                ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.25f));
-                ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.25f));
-                ps[2].PositionClientRpc(tileTransform.position + (-tileTransform.up * 0.25f));
+                ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.95f));
+                ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
+                ps[2].PositionClientRpc(tileTransform.position + (-tileTransform.up * 0.95f));
                 break;
 
             case 4:
-                ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.25f));
-                ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.25f));
-                ps[2].PositionClientRpc(tileTransform.position + (tileTransform.up * 0.25f));
-                ps[3].PositionClientRpc(tileTransform.position + (-tileTransform.up * 0.25f));
+                ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.95f));
+                ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
+                ps[2].PositionClientRpc(tileTransform.position + (tileTransform.up * 0.95f));
+                ps[3].PositionClientRpc(tileTransform.position + (-tileTransform.up * 0.95f));
                 break;
         }
     }

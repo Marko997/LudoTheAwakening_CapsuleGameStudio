@@ -8,8 +8,11 @@ public class GetPlayerInfo : MonoBehaviour
     public Text displayNameText;
     public Text playerIdText;
 
-    public void Update()
+    //bool isDataRecieved;
+
+    public void Start()
     {
+        //if (isDataRecieved) { return; }
         GetAccountInfoRequest request = new GetAccountInfoRequest();
         PlayFabClientAPI.GetAccountInfo(request, OnGetAccountInfoSuccess, OnGetAccountInfoError);
     }
@@ -18,6 +21,8 @@ public class GetPlayerInfo : MonoBehaviour
     {
         string displayName = result.AccountInfo.TitleInfo.DisplayName;
         string playerId = result.AccountInfo.PlayFabId;
+
+        
 
         displayNameText.text = "Name: " + displayName;
         playerIdText.text = "ID: " + playerId;

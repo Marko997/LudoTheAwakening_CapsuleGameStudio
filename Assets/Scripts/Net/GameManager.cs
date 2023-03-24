@@ -30,6 +30,7 @@ public class GameManager : NetworkBehaviour
     private Dictionary<ulong, Piece[]> playerPieces = new Dictionary<ulong, Piece[]>();
     private Dictionary<ulong, bool> playerCompleted = new Dictionary<ulong, bool>();
     private Dictionary<ulong, CustomNetworkVariables.NetworkString> playerNames = new Dictionary<ulong, CustomNetworkVariables.NetworkString>();
+    private Dictionary<ulong, int> allPlayerImages = new Dictionary<ulong, int>();
     private Dictionary<int, int[]> paths;
     private Dictionary<int, Vector3[]> startPosition;
     private LudoTile[] board;
@@ -56,6 +57,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI[] playerNamesText;
     [SerializeField] private Color playerColors;
     [SerializeField] private Image[] otherPlayerDices;
+    public Sprite[] playerImageSprites;
         
 
     // CONST
@@ -343,10 +345,10 @@ public class GameManager : NetworkBehaviour
                 piecePrefab = pawns[1]; //item iz liste game objekata u kojoj se cuvaju heroji
                 break;
             case "Macebearer":
-                piecePrefab = pawns[0]; //item iz liste game objekata u kojoj se cuvaju heroji
+                piecePrefab = pawns[2]; //item iz liste game objekata u kojoj se cuvaju heroji
                 break;
             case "Slinger":
-                piecePrefab = pawns[1]; //item iz liste game objekata u kojoj se cuvaju heroji
+                piecePrefab = pawns[3]; //item iz liste game objekata u kojoj se cuvaju heroji
                 break;
             default:
                 break;
@@ -356,9 +358,10 @@ public class GameManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void UpdatePlayerNamesClientRpc(ulong key, string name)
+    private void UpdatePlayerNamesClientRpc(ulong key, string name, int playerImageIndex)
     {
         playerNames.Add(key, name);
+        allPlayerImages.Add(key, playerImageIndex);
     }
 
     private void SpawnAllPlayers()
@@ -373,12 +376,10 @@ public class GameManager : NetworkBehaviour
             PlayerController pc = nc.Value.PlayerObject.GetComponent<PlayerController>();
             for (int i = 0; i < NetworkManager.Singleton.ConnectedClients.Count; i++)
             {
-                if (!playerNames.ContainsKey(nc.Key)) {
-                    //playerNames.Add(nc.Key, pc.playerName.Value);
-                    UpdatePlayerNamesClientRpc(nc.Key,pc.playerName.Value);
+                if (!playerNames.ContainsKey(nc.Key))
+                {
+                    UpdatePlayerNamesClientRpc(nc.Key,pc.playerName.Value, pc.playerImageIndex.Value);
                 }
-                
-                //playerNames.Add(nc.Key, pc.playerName.Value);
             }
         }
 
@@ -634,7 +635,12 @@ public class GameManager : NetworkBehaviour
         //setting background and dice color
         for (int i = 0; i < listColor.Count; i++)
         {
-            listColor[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));
+            //listColor[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList[i])));
+            if (allPlayerImages.ContainsKey((ulong)i))
+            {
+                listColor[i].sprite = playerImageSprites[allPlayerImages[(ulong)i]];
+            }
+            
             otherPlayerDices[i].color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(tempList2[i])));
         }
 
