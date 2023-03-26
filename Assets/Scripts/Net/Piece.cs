@@ -30,7 +30,7 @@ public class Piece : NetworkBehaviour
 
     public List<LudoTile> board = new List<LudoTile>();
 
-    private Animator animator;
+    public Animator animator;
 
     public GameObject selector;
 
@@ -49,7 +49,7 @@ public class Piece : NetworkBehaviour
 
         int teamId = Utility.RetrieveTeamId(OwnerClientId);
         currentTeam = (Team)teamId;
-        GetComponent<MeshRenderer>().material.color = Utility.TeamToColor(currentTeam);
+        //GetComponent<MeshRenderer>().material.color = Utility.TeamToColor(currentTeam);
 
         // Spawn a collider if you're the owner, to allow selection of the pieces
         if (IsOwner)
@@ -92,8 +92,8 @@ public class Piece : NetworkBehaviour
 
     public IEnumerator Move(Vector3 position)
     {
-        animator.SetBool("canJump", true);
-        animator.SetBool("loopJump", true);
+        animator.SetBool("isJumping", true);
+        //animator.SetBool("loopJump", true);
         if (isMoving)
         {
             yield break;
@@ -140,8 +140,8 @@ public class Piece : NetworkBehaviour
         }
         isMoving = false;
 
-        animator.SetBool("loopJump", false);
-        animator.SetBool("canJump", false);
+        animator.SetBool("isJumping", false);
+        //animator.SetBool("canJump", false);
         
     }
 

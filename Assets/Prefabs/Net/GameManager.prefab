@@ -45,8 +45,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63f03147bc99b4e68bf2e2c6647d0027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecePrefab: {fileID: 6255423109042527737, guid: 5d8a58d07fdd14c29bc05555b454a941,
-    type: 3}
+  piecePrefab: {fileID: 145858, guid: a366033adc7e545a980b9b704cbdb365, type: 3}
+  pathContainer: {fileID: 0}
+  startPositionContainer: {fileID: 0}
+  canAttack: 0
+  currentTurnColor: {fileID: 0}
+  diceRollText: {fileID: 0}
+  playerColor: {fileID: 0}
+  playerName: {fileID: 0}
+  winnerContainer: {fileID: 0}
+  winnerPrefab: {fileID: 0}
+  winnerPanel: {fileID: 0}
+  attackButton: {fileID: 0}
+  diceSides: []
+  playerImages: []
+  playerNamesText: []
+  playerColors: {r: 0, g: 0, b: 0, a: 0}
+  otherPlayerDices: []
+  playerImageSprites: []
+  duration: 0
 --- !u!114 &4285021989655667457
 MonoBehaviour:
   m_ObjectHideFlags: 0

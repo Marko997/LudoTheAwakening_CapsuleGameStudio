@@ -19139,7 +19139,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 775816704}
   m_HandleRect: {fileID: 775816703}
   m_Direction: 0
-  m_Value: 1.0000006
+  m_Value: 1.0000005
   m_Size: 0.15375677
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -20869,10 +20869,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDeck: []
   playerCollection:
-  - {fileID: 1087729430, guid: d62c264a3ccad4151947cbe9fb5d2382, type: 3}
-  - {fileID: 3137397598245538511, guid: 2e4d40f1ca83648b99e03d8ce420df2a, type: 3}
-  - {fileID: 1087729430, guid: d62c264a3ccad4151947cbe9fb5d2382, type: 3}
-  - {fileID: 3137397598245538511, guid: 2e4d40f1ca83648b99e03d8ce420df2a, type: 3}
+  - {fileID: 6401555423951547556, guid: afe8fd528f2bb432a8383f421e58dbc2, type: 3}
+  - {fileID: 5263314571609556816, guid: 9f9046165fbd74d8ea84f02f6226cd76, type: 3}
+  - {fileID: 3412414896249422614, guid: a366033adc7e545a980b9b704cbdb365, type: 3}
+  - {fileID: -2323923318578776042, guid: 91f8fb5db471b456aa010b77456f186a, type: 3}
   deckParent:
   - {fileID: 3286255}
   - {fileID: 1113449775}
@@ -28622,14 +28622,12 @@ MonoBehaviour:
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
     - Override: 0
-      Prefab: {fileID: 5762731836130539421, guid: d62c264a3ccad4151947cbe9fb5d2382,
-        type: 3}
+      Prefab: {fileID: 123088, guid: afe8fd528f2bb432a8383f421e58dbc2, type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}
     - Override: 0
-      Prefab: {fileID: 7364274512187859535, guid: 2e4d40f1ca83648b99e03d8ce420df2a,
-        type: 3}
+      Prefab: {fileID: 179124, guid: 9f9046165fbd74d8ea84f02f6226cd76, type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}

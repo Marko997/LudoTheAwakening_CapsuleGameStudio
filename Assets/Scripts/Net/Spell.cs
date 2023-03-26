@@ -47,6 +47,7 @@ public class Spell : MonoBehaviour
                 Debug.Log("Spell not found");
                 break;
         }
+        spellCasterPiece.animator.SetBool("isAttacking",false);
     }
     [ServerRpc]
     private static void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board)

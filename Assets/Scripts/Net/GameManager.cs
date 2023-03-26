@@ -589,6 +589,7 @@ public class GameManager : NetworkBehaviour
             Piece selectedPiece = playerPieces[clientId][i];
             //if (selectedPiece.isSelected)
             //{
+            selectedPiece.animator.SetBool("isAttacking",true);
                 selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower, board);
                 //selectedPiece.isSelected = false;
             //}
