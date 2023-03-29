@@ -10125,8 +10125,11 @@ MonoBehaviour:
   isOut: 0
   isSelected: 0
   animator: {fileID: 0}
-  selector: {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267,
-    type: 3}
+  selector:
+  - {fileID: 3824598131369237827, guid: a7d66f49978b74499b7f94c24ce28ebb, type: 3}
+  - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
+  - {fileID: 3824598131369237827, guid: 18e03b55275cb4c9387e70f628ebe04f, type: 3}
+  - {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267, type: 3}
 --- !u!114 &-6676457157315969204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10181,7 +10184,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TransitionStateInfoList: []
+  TransitionStateInfoList:
+  - Layer: 0
+    OriginatingState: -1913499983
+    DestinationState: -1481439722
+    TransitionDuration: 0.25
+    TriggerNameHash: -1481439722
+    TransitionIndex: 1
   m_Animator: {fileID: 9589574}
 --- !u!1 &156840
 GameObject:

@@ -515,6 +515,7 @@ public class GameManager : NetworkBehaviour
 
     IEnumerator DiceAnimation(int diceValue)
     {
+        Debug.Log(diceValue);
         // Pick up random value from 0 to 5 (All inclusive)
         int randomDiceSide = 0;
 
@@ -665,13 +666,12 @@ public class GameManager : NetworkBehaviour
 
         // 1. Move the piece @ the start
         piece.steps = 0;
-        piece.transform.position = board[startPosition].tileTransform.position;
-        //1.a Rotate piece
-        piece.RotatePawn(board[startPosition + 1].tileTransform.position);
-
 
         board[startPosition].AddPiece(piece);
         piece.currentTile = startPosition;
+
+        //1.a Rotate piece
+        piece.RotatePawn(board[startPosition + 1].tileTransform.position);
 
         // 2. Are we killing any piece?
         EatEnemyPawn(piece, startPosition);
@@ -694,6 +694,7 @@ public class GameManager : NetworkBehaviour
         Piece p = board[startPosition].GetFirstPiece();
         if (p != null && p.currentTeam != piece.currentTeam)
         {
+            p.animator.SetTrigger("death");
             board[startPosition].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;
@@ -712,7 +713,6 @@ public class GameManager : NetworkBehaviour
         if (piece.currentTile == -1)
         {
             EnterPieceServerRpc(indexPos, clientId);
-            board[piece.currentTile].RemovePiece(piece);
             return;
         }
 
@@ -722,7 +722,7 @@ public class GameManager : NetworkBehaviour
         int previousPosition = piece.currentTile;
 
         // 2. Are we killing any piece?
-        EatEnemyPawn(piece,targetTile);
+        //EatEnemyPawn(piece,targetTile);
 
         // 3. Move the piece there
         piece.steps = currentDiceRoll.Value; //adds steps to pawn
@@ -772,6 +772,7 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
+                EatEnemyPawn(piece,targetTile); //moved here so enemy pawn is eaten when peace reach that tile
                 if ((piece.currentTile > 0 && piece.currentTile < 50) && board[piece.currentTile + piece.eatPower].GetFirstPiece() != null)
                 {
                     EnableAttackClientRpc(true, clientRpcParams);
@@ -827,6 +828,12 @@ public class GameManager : NetworkBehaviour
                     canRollAgain = true;
                 }
             }
+
+            if(currentDiceRoll.Value == rv) // check if new roll is same as old one and do roll animation again
+            {
+                StartCoroutine(DiceAnimation(rv));
+            }
+
             currentDiceRoll.Value = rv;
             currentDiceRoll.SetDirty(true);
 
@@ -865,6 +872,7 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     public void AddWinnerToTheListClientRpc(string playerName)
     {
+        Debug.Log(playerName);
         // Sent to all clients when a player finishes
         string preString = "";
         int cc = winnerContainer.childCount;

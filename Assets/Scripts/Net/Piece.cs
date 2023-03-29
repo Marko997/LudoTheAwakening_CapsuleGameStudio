@@ -32,8 +32,7 @@ public class Piece : NetworkBehaviour
 
     public Animator animator;
 
-    public GameObject selector;
-
+    public GameObject[] selector;
 
     public override void OnNetworkSpawn()
     {
@@ -42,10 +41,10 @@ public class Piece : NetworkBehaviour
         startPosition = transform.position;
         spell = gameObject.GetComponent<Spell>();
 
-        selector = Instantiate(selector);
-        selector.transform.SetParent(this.transform);
-        selector.transform.position = this.transform.position;
-        selector.SetActive(false);
+        selector[NetworkManager.Singleton.LocalClientId] = Instantiate(selector[NetworkManager.Singleton.LocalClientId]);
+        selector[NetworkManager.Singleton.LocalClientId].transform.SetParent(this.transform);
+        selector[NetworkManager.Singleton.LocalClientId].transform.position = this.transform.position;
+        selector[NetworkManager.Singleton.LocalClientId].SetActive(false);
 
         int teamId = Utility.RetrieveTeamId(OwnerClientId);
         currentTeam = (Team)teamId;
@@ -65,12 +64,12 @@ public class Piece : NetworkBehaviour
     public void EnableInteraction()
     {
         gameObject.layer = LayerMask.NameToLayer("ActivePiece");
-        selector.SetActive(true);
+        selector[NetworkManager.Singleton.LocalClientId].SetActive(true);
     }
     public void DisableInteraction()
     {
         gameObject.layer = LayerMask.NameToLayer("Piece");
-        selector.SetActive(false);
+        selector[NetworkManager.Singleton.LocalClientId].SetActive(false);
     }
 
     [ClientRpc]
@@ -80,6 +79,7 @@ public class Piece : NetworkBehaviour
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
+            animator.ResetTrigger("death");
         }
         else
         {
@@ -92,7 +92,7 @@ public class Piece : NetworkBehaviour
 
     public IEnumerator Move(Vector3 position)
     {
-        animator.SetBool("isJumping", true);
+        //animator.SetBool("isJumping", true);
         //animator.SetBool("loopJump", true);
         if (isMoving)
         {
@@ -102,6 +102,7 @@ public class Piece : NetworkBehaviour
         //lookTileInt = 0;
         while (steps > 0)
         {
+            animator.SetTrigger("jump");
             routePosition++;
 
             if (routePosition == 50)
@@ -125,11 +126,12 @@ public class Piece : NetworkBehaviour
             timeForPointToPoint = 0;
 
             steps--;
-
-            //if (steps == 0)
-            //{
+            //animator.ResetTrigger("jump");
+            if (steps == 0)
+            {
+                animator.ResetTrigger("jump");
                 //transform.position = position;
-            //}
+            }
         }
 
         transform.position = position; //put more pawns on same tile (reposition)
