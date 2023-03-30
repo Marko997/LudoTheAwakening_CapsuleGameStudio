@@ -35,5 +35,13 @@ public class ScreenSwitcher : MonoBehaviour
             screenManager.SwitchScreen(ScreenType.Friends);
         }
     }
-    
+
+    public void OpenChangeIconPanel()
+    {
+        if (!isPawnMoving)
+        {
+            screenManager.SwitchScreen(ScreenType.ProfileIcon);
+        }
+    }
+
 }

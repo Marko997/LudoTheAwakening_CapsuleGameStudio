@@ -18,5 +18,6 @@ public enum ScreenType
     Mod1,
     ChangeName,
     Mail,
-    Friends
+    Friends,
+    ProfileIcon
 }
