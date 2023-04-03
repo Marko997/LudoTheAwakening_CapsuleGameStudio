@@ -2009,8 +2009,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300092, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4288,7 +4288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25.28247}
+  m_AnchoredPosition: {x: 0, y: -25.282043}
   m_SizeDelta: {x: 0, y: -467.115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &248907636
@@ -5881,8 +5881,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300092, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -7609,7 +7609,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -33.698975}
+  m_AnchoredPosition: {x: 0, y: -33.698547}
   m_SizeDelta: {x: 0, y: -422.594}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &420771941
@@ -9888,7 +9888,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -9909,13 +9909,25 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 95435875}
+  m_TargetGraphic: {fileID: 1409402712}
   toggleTransition: 1
   graphic: {fileID: 1864321170}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1650664155}
+        m_TargetAssemblyTypeName: ToogleContoller, Assembly-CSharp
+        m_MethodName: SaveToggle1State
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &553499701
 GameObject:
@@ -13752,7 +13764,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -268.09998, y: 0}
+  m_AnchoredPosition: {x: -268.09995, y: 0}
   m_SizeDelta: {x: -900, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &781554914
@@ -17466,7 +17478,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300092, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17723,7 +17735,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -17751,6 +17763,18 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1650664155}
+        m_TargetAssemblyTypeName: ToogleContoller, Assembly-CSharp
+        m_MethodName: SaveToggle3State
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 497990937}
         m_TargetAssemblyTypeName: TestVibrate, Assembly-CSharp
         m_MethodName: VibrateToggle
@@ -17763,7 +17787,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &1056078231
 GameObject:
   m_ObjectHideFlags: 0
@@ -18998,7 +19022,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -4.385498, y: 293.59302}
+  m_AnchoredPosition: {x: -4.3855896, y: 293.59302}
   m_SizeDelta: {x: -219.461, y: 122.862}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1112286274
@@ -19381,7 +19405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -218.12, y: 563}
+  m_AnchoredPosition: {x: -218.11996, y: 563}
   m_SizeDelta: {x: -648.298, y: 161.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1132036893
@@ -20304,7 +20328,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300118, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ba9ef376d81b074e935fd0f5f7bd821, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -24105,8 +24129,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 775816704}
   m_HandleRect: {fileID: 775816703}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -25280,7 +25304,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -25308,6 +25332,18 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1650664155}
+        m_TargetAssemblyTypeName: ToogleContoller, Assembly-CSharp
+        m_MethodName: SaveToggle2State
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 347390859}
         m_TargetAssemblyTypeName: MuteAudio, Assembly-CSharp
         m_MethodName: MuteToggle
@@ -26004,7 +26040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -219.44507, y: 744.2374}
+  m_AnchoredPosition: {x: -219.44504, y: 744.2374}
   m_SizeDelta: {x: -628.517, y: 161.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1549980411
@@ -27106,7 +27142,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -5.304199, y: 160.23743}
+  m_AnchoredPosition: {x: -5.3041687, y: 160.23743}
   m_SizeDelta: {x: -222.67, y: 155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1599793576
@@ -27905,6 +27941,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1650664153}
   - component: {fileID: 1650664154}
+  - component: {fileID: 1650664155}
   m_Layer: 5
   m_Name: Settings__Screen
   m_TagString: Untagged
@@ -27951,6 +27988,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenType: 8
+--- !u!114 &1650664155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650664152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c378c82637c47148abae901ac81a469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggle1: {fileID: 548176230}
+  toggle2: {fileID: 1512615593}
+  toggle3: {fileID: 1051768436}
 --- !u!1 &1655095946
 GameObject:
   m_ObjectHideFlags: 0
@@ -29577,7 +29629,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300118, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ba9ef376d81b074e935fd0f5f7bd821, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30420,7 +30472,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300118, guid: 1eaee135ce037439d925cee5e41ce026, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7ba9ef376d81b074e935fd0f5f7bd821, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -32501,7 +32553,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -4.385498, y: 157}
+  m_AnchoredPosition: {x: -4.3855896, y: 157}
   m_SizeDelta: {x: -219.461, y: 122.862}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1993463456
@@ -33575,7 +33627,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -218.12, y: 363.3324}
+  m_AnchoredPosition: {x: -218.11996, y: 363.3324}
   m_SizeDelta: {x: -648.298, y: 161.19}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2050959450
