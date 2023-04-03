@@ -583,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cdf50f6a28342159917d3a9d491109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pieceName: Slinger
+  pieceName: Crossbowman
   cardId: 
   spell: {fileID: 1746288943546074787}
   currentTeam: 0

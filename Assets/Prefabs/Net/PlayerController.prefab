@@ -57,10 +57,11 @@ MonoBehaviour:
   - {fileID: 155500, guid: 91f8fb5db471b456aa010b77456f186a, type: 3}
   - {fileID: 145858, guid: a366033adc7e545a980b9b704cbdb365, type: 3}
   allPlayerImages:
-  - {fileID: 21300000, guid: 07feb1795ef9a3b408cb1d541bd3f983, type: 3}
-  - {fileID: 21300000, guid: a938619121394004cbfda6c1d7e71b7e, type: 3}
-  - {fileID: 21300000, guid: 1313b59ad781d8d429478ac92718feb7, type: 3}
-  - {fileID: 21300000, guid: f2d327b1c5d2ea344a137231cc8573c4, type: 3}
+  - {fileID: 21300000, guid: 45868f90f05e94caa98660ee83df1d49, type: 3}
+  - {fileID: 21300000, guid: 45868f90f05e94caa98660ee83df1d49, type: 3}
+  - {fileID: 21300000, guid: e7ebdfc13ba92404d97aa1a22d2dba85, type: 3}
+  - {fileID: 21300000, guid: 4f5ae26ac9b244fcd9605ec4264583ca, type: 3}
+  - {fileID: 21300000, guid: c2f84d21abb4a4790ae04e84512ebfe8, type: 3}
 --- !u!114 &8207928270722757619
 MonoBehaviour:
   m_ObjectHideFlags: 0

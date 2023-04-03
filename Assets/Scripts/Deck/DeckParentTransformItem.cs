@@ -5,9 +5,4 @@ using UnityEngine;
 public class DeckParentTransformItem : MonoBehaviour
 {
     public bool isOccupied;
-
-    private void Start()
-    {
-        isOccupied = false;
-    }
 }
