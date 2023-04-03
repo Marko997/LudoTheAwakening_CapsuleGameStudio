@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5435973087940949720}
   - component: {fileID: 5435973087940949723}
   m_Layer: 5
-  m_Name: Crossbow_Image
+  m_Name: Crossbowman_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 256a4d5a12111451a8537be3e8efe990, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1ee5ed59aaf664ac7b719a00dac51179, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

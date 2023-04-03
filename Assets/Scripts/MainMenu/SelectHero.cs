@@ -6,6 +6,7 @@ using UnityEngine;
 public class SelectHero : MonoBehaviour
 {
     [SerializeField] GameObject[] heroes;
+    [SerializeField] HeroRotatorY heroRotator;
 
     private void Start()
     {
@@ -15,22 +16,22 @@ public class SelectHero : MonoBehaviour
     public void UpdateMainPawn()
     {
         string[] deckArray = PlayerPrefs.GetString("Deck").Split(',');
-        ChangePawn(Array.IndexOf(deckArray, deckArray[0]));
-        Debug.Log(Array.IndexOf(deckArray, deckArray[0]));
+        ChangePawn(deckArray[0]);
     }
 
-    public void ChangePawn(int pawnIndex)
+    public void ChangePawn(string cardName)
     {
+
         for (int i = 0; i < heroes.Length; i++)
         {
-
-            if (i == pawnIndex)
+            if(heroes[i].name == "TT_"+cardName) //hardcoded name!
             {
-                heroes[pawnIndex].gameObject.SetActive(true);
+                heroes[i].SetActive(true);
+                heroRotator.pawnHolder = heroes[i].transform;
             }
             else
             {
-                heroes[i].gameObject.SetActive(false);
+                heroes[i].SetActive(false);
             }
         }
     }

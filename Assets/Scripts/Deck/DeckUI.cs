@@ -18,7 +18,7 @@ public class DeckUI : MonoBehaviour
 
     private void Start()
     {
-        PlayerPrefs.DeleteKey("Deck");
+        //PlayerPrefs.DeleteKey("Deck");
         GameObject cardObject = null;
         List<GameObject> cardObjects = new List<GameObject>(4);
 
@@ -32,24 +32,27 @@ public class DeckUI : MonoBehaviour
             var copyCardObject = cardObject;
             btn.onClick.AddListener(() => MoveCard(copyCard, copyCardObject));
         }
-        LoadDeckFromPlayerPrefs(cardObjects);
+
+        string[] deckArray = PlayerPrefs.GetString("Deck").Split(',');
+        if(deckArray.Length == 4)
+        {
+            LoadDeckFromPlayerPrefs(cardObjects);
+        }
+        
     }
     //Move card from collection to deck and reverse
     public void MoveCard(Piece card, GameObject cardObject)
     {
         if (cardObject.transform.parent == collectionParent) //Adds card to deck, removes from collection
         {
-            //cardObject.transform.position = deckParent[i]
-            int emptyIndex = playerDeck.FindIndex(item => item == null);
-            if(emptyIndex == -1) { emptyIndex = 0; }
-            playerDeck.Insert(emptyIndex, card);
+            playerDeck.Add(card);
             playerCollection.Remove(card);
 
-            //cardObject.transform.SetParent(collectionParent);
             for (int i = 0; i < deckParent.Length; i++)
             {
                 if (!deckParent[i].isOccupied)
                 {
+                    //Debug.Log(cardObject);
                     cardObject.transform.SetParent(deckParent[i].transform);
                     cardObject.transform.position = deckParent[i].transform.position;
                     deckParent[i].isOccupied = true;
@@ -73,13 +76,10 @@ public class DeckUI : MonoBehaviour
 
     private void SaveDeckToPlayerPrefs()
     {
-        if(playerDeck.Count() < 4)
-        {
-            PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.pieceName).ToArray()));
-            PlayerPrefs.Save();
-            Debug.Log(PlayerPrefs.GetString("Deck"));
-        }
-        
+        PlayerPrefs.DeleteKey("Deck");
+
+        PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.pieceName).ToArray()));
+        PlayerPrefs.Save();
     }
 
     private void LoadDeckFromPlayerPrefs(List<GameObject> cardObjects)
@@ -88,13 +88,14 @@ public class DeckUI : MonoBehaviour
         {
             string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
 
-            foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
+            foreach (var cardID in cardIDs.Reverse().Select((value, i) => new { i, value }))
             {
                 Piece card = playerCollection.FirstOrDefault(c => c.pieceName == cardID.value);
+                GameObject cardObject = cardObjects.FirstOrDefault(x => x.name == cardID.value+"_Image(Clone)");
 
                 if (card != null)
                 {
-                    MoveCard(card, cardObjects[cardID.i]);
+                    MoveCard(card, cardObject);
                 }
             }
         }
