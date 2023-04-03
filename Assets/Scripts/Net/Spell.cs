@@ -19,8 +19,6 @@ public class Spell : MonoBehaviour
         Piece spellCasterPiece = gameObject.GetComponent<Piece>();
         if (!spellCasterPiece.isOut) { return; }
 
-        Debug.Log("SPELL CASTED");
-
         switch (spell)
         {
             case SpellType.ARCHER:
@@ -28,12 +26,14 @@ public class Spell : MonoBehaviour
                 //Debug.Log(targetTile);
                 //Debug.Log(spellCasterPiece.currentTile);
                 EatPieceServerRpc(targetTile, spellCasterPiece,board);
+                spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
                 break;
             case SpellType.SPEARMAN:
                 spellCasterPiece.eatPower = 1;
                 //Debug.Log(targetTile);
                 //Debug.Log(spellCasterPiece.currentTile);
                 EatPieceServerRpc(targetTile, spellCasterPiece, board);
+                //spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
                 break;
             case SpellType.SLINGSHOOTMAN:
                 spellCasterPiece.eatPower = 2;
@@ -47,10 +47,11 @@ public class Spell : MonoBehaviour
                 Debug.Log("Spell not found");
                 break;
         }
-        spellCasterPiece.animator.SetBool("isAttacking",false);
+        //spellCasterPiece.animator.SetBool("isAttacking",false);
+        //spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
     }
     [ServerRpc]
-    private static void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board)
+    private void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board) //it was static I don't know way
     {
         Piece p = board[targetTile].GetFirstPiece();
 
@@ -62,5 +63,14 @@ public class Spell : MonoBehaviour
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
         }
+
+        //spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
+        StartCoroutine(WaitForAttackToFinish(spellCasterPiece));
+    }
+
+    IEnumerator WaitForAttackToFinish(Piece p)
+    {
+        yield return new WaitForSeconds(0.8f);
+        p.UpdateAnimationStateServerRpc(AnimationState.Idle);
     }
 }

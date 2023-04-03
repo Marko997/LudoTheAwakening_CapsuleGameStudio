@@ -3,6 +3,15 @@ using Unity.Netcode;
 using System.Collections;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using UnityEngine.ProBuilder.Shapes;
+
+public enum AnimationState
+{
+    Idle,
+    Walk,
+    Attack,
+    Death
+}
 
 public class Piece : NetworkBehaviour
 {
@@ -24,7 +33,7 @@ public class Piece : NetworkBehaviour
     float timeForPointToPoint = 0f;
     public bool isMoving = false;
     public bool isOut = false;
-    public bool isSelected = false;
+    
     //public LudoTile[] board;
     public Task t;
 
@@ -33,6 +42,14 @@ public class Piece : NetworkBehaviour
     public Animator animator;
 
     public GameObject[] selector;
+
+    public Material[] allPawnColorMaterials;
+
+    public GameObject head;
+    public GameObject body;
+
+    public NetworkVariable<AnimationState> networkAnimationState = new NetworkVariable<AnimationState>();
+    public NetworkVariable<bool> isSelected = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
     {
@@ -49,6 +66,8 @@ public class Piece : NetworkBehaviour
         int teamId = Utility.RetrieveTeamId(OwnerClientId);
         currentTeam = (Team)teamId;
         //GetComponent<MeshRenderer>().material.color = Utility.TeamToColor(currentTeam);
+        head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+        body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
 
         // Spawn a collider if you're the owner, to allow selection of the pieces
         if (IsOwner)
@@ -58,6 +77,42 @@ public class Piece : NetworkBehaviour
             gameObject.GetComponent<BoxCollider>().center = new Vector3(0f,1.25f,0f);
         }
             
+    }
+
+    private void Update()
+    {
+        ClientVisuals();
+    }
+
+    [ServerRpc]
+    public void UpdateAnimationStateServerRpc(AnimationState newAnimState)
+    {
+        Debug.Log("works "+newAnimState);
+        networkAnimationState.Value = newAnimState;
+    }
+
+    private void ClientVisuals()
+    {
+        switch (networkAnimationState.Value)
+        {
+            case AnimationState.Idle:
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isDead", false);
+                animator.ResetTrigger("attack");
+                break;
+            case AnimationState.Walk:
+                animator.SetBool("isWalking", true);
+                break;
+            case AnimationState.Attack:
+                //animator.SetBool("isAttacking", true);
+                animator.SetTrigger("attack");
+                break;
+            case AnimationState.Death:
+                animator.SetBool("isDead", true);
+                break;
+            default:
+                break;
+        }
     }
 
     // This is used with the scriptable rendering pipeline to add a select effect
@@ -79,12 +134,22 @@ public class Piece : NetworkBehaviour
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
-            animator.ResetTrigger("death");
+            UpdateAnimationStateServerRpc(AnimationState.Idle);
         }
         else
         {
             //StartCoroutine(Move(position));
             t = new Task(Move(position));
+
+            t.Finished += delegate (bool manual)
+            {
+                if (!manual) {
+                    //animator.ResetTrigger("jump");
+                    //transform.position = position;
+                }
+                    
+            };
+
             //transform.position = position;
             //isSelected = true;
         }
@@ -92,17 +157,23 @@ public class Piece : NetworkBehaviour
 
     public IEnumerator Move(Vector3 position)
     {
-        //animator.SetBool("isJumping", true);
-        //animator.SetBool("loopJump", true);
         if (isMoving)
         {
             yield break;
         }
         isMoving = true;
         //lookTileInt = 0;
+
+        if(steps > 0)
+        {
+            UpdateAnimationStateServerRpc(AnimationState.Walk);
+        }
+
         while (steps > 0)
         {
-            animator.SetTrigger("jump");
+            //animator.SetBool("isWalking",true);
+            
+
             routePosition++;
 
             if (routePosition == 50)
@@ -129,7 +200,7 @@ public class Piece : NetworkBehaviour
             //animator.ResetTrigger("jump");
             if (steps == 0)
             {
-                animator.ResetTrigger("jump");
+                //animator.ResetTrigger("Walk");
                 //transform.position = position;
             }
         }
@@ -140,11 +211,7 @@ public class Piece : NetworkBehaviour
         {
             isOut = true;
         }
-        isMoving = false;
-
-        animator.SetBool("isJumping", false);
-        //animator.SetBool("canJump", false);
-        
+        isMoving = false;     
     }
 
     bool MoveToNextNode(Vector3 startPos, Vector3 nextPos, Vector3 lookAtTile)

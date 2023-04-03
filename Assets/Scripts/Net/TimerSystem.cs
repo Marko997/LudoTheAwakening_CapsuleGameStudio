@@ -11,6 +11,6 @@ public class TimerSystem : NetworkBehaviour
     private int duration;
     private int remainingDuration;
 
-    GameManager gm;
+    //GameManager gm;
 
 }

@@ -548,7 +548,7 @@ Animator:
   m_GameObject: {fileID: 145858}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 02ded044b8e0963439276550f50be6f9, type: 3}
-  m_Controller: {fileID: 9100000, guid: c711440971f9b4ca9983e72469394632, type: 2}
+  m_Controller: {fileID: 9100000, guid: 844901ae669184b4bad4bac7c6e0efcd, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -591,19 +591,29 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   eatPower: 2
   lookTileInt: 0
-  pieceCardImage: {fileID: 5435973087940949717, guid: 2f83f2616b1da404fb904b80df25e1ac,
+  pieceCardImage: {fileID: 5435973087940949717, guid: 124512b7f3f954230aacf66f72dba303,
     type: 3}
   routePosition: 0
   steps: 0
   isMoving: 0
   isOut: 0
-  isSelected: 0
-  animator: {fileID: 0}
+  animator: {fileID: 9546602}
   selector:
   - {fileID: 3824598131369237827, guid: a7d66f49978b74499b7f94c24ce28ebb, type: 3}
   - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
   - {fileID: 3824598131369237827, guid: 18e03b55275cb4c9387e70f628ebe04f, type: 3}
   - {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267, type: 3}
+  allPawnColorMaterials:
+  - {fileID: 2100000, guid: 98a7fdcb4ebb44344b4afe0424d44b82, type: 2}
+  - {fileID: 2100000, guid: 19f3b2158b0cd134798555d774de0b3f, type: 2}
+  - {fileID: 2100000, guid: 26fed0ad2288580409bf94257121cd0f, type: 2}
+  - {fileID: 2100000, guid: f9ec407a080d408459742617c9dc6607, type: 2}
+  head: {fileID: 126234}
+  body: {fileID: 190108}
+  networkAnimationState:
+    m_InternalValue: 0
+  isSelected:
+    m_InternalValue: 0
 --- !u!114 &2529378630077241535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,16 +671,10 @@ MonoBehaviour:
   TransitionStateInfoList:
   - Layer: 0
     OriginatingState: -1913499983
-    DestinationState: -1481439722
+    DestinationState: 1868095946
     TransitionDuration: 0.25
-    TriggerNameHash: -1481439722
-    TransitionIndex: 1
-  - Layer: 0
-    OriginatingState: -1913499983
-    DestinationState: -1569243679
-    TransitionDuration: 0.25
-    TriggerNameHash: -414722770
-    TransitionIndex: 2
+    TriggerNameHash: 1203776827
+    TransitionIndex: 0
   m_Animator: {fileID: 9546602}
 --- !u!1 &145882
 GameObject:

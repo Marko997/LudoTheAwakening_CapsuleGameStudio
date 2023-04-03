@@ -977,7 +977,7 @@ Animator:
   m_GameObject: {fileID: 179124}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 02ded044b8e0963439276550f50be6f9, type: 3}
-  m_Controller: {fileID: 9100000, guid: c711440971f9b4ca9983e72469394632, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6e74b04bca85e401193cbe7a815857b6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1026,13 +1026,23 @@ MonoBehaviour:
   steps: 0
   isMoving: 0
   isOut: 0
-  isSelected: 0
-  animator: {fileID: 0}
+  animator: {fileID: 9563318}
   selector:
   - {fileID: 3824598131369237827, guid: a7d66f49978b74499b7f94c24ce28ebb, type: 3}
   - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
   - {fileID: 3824598131369237827, guid: 18e03b55275cb4c9387e70f628ebe04f, type: 3}
   - {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267, type: 3}
+  allPawnColorMaterials:
+  - {fileID: 2100000, guid: 98a7fdcb4ebb44344b4afe0424d44b82, type: 2}
+  - {fileID: 2100000, guid: 19f3b2158b0cd134798555d774de0b3f, type: 2}
+  - {fileID: 2100000, guid: 26fed0ad2288580409bf94257121cd0f, type: 2}
+  - {fileID: 2100000, guid: f9ec407a080d408459742617c9dc6607, type: 2}
+  head: {fileID: 160892}
+  body: {fileID: 182528}
+  networkAnimationState:
+    m_InternalValue: 0
+  isSelected:
+    m_InternalValue: 0
 --- !u!114 &3721388459658165088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1089,17 +1099,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransitionStateInfoList:
   - Layer: 0
-    OriginatingState: -1913499983
-    DestinationState: -1481439722
+    OriginatingState: -354315882
+    DestinationState: 1543134416
     TransitionDuration: 0.25
-    TriggerNameHash: -1481439722
-    TransitionIndex: 1
-  - Layer: 0
-    OriginatingState: -1913499983
-    DestinationState: -1569243679
-    TransitionDuration: 0.25
-    TriggerNameHash: -414722770
-    TransitionIndex: 2
+    TriggerNameHash: 1203776827
+    TransitionIndex: 0
   m_Animator: {fileID: 9563318}
 --- !u!1 &179158
 GameObject:

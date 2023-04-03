@@ -45,4 +45,20 @@ public class Utility : MonoBehaviour
                 return Color.white;
         }
     }
+    public static int TeamToMaterial(Team t)
+    {
+        switch (t)
+        {
+            case Team.Red:
+                return 0;
+            case Team.Green:
+                return 3;
+            case Team.Yellow:
+                return 2;
+            case Team.Blue:
+                return 1;
+            default:
+                return -1;
+        }
+    }
 }

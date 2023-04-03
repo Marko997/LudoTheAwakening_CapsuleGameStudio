@@ -18,7 +18,7 @@ public class DeckUI : MonoBehaviour
 
     private void Start()
     {
-        //PlayerPrefs.DeleteKey("Deck");
+        PlayerPrefs.DeleteKey("Deck");
         GameObject cardObject = null;
         List<GameObject> cardObjects = new List<GameObject>(4);
 
@@ -40,8 +40,9 @@ public class DeckUI : MonoBehaviour
         if (cardObject.transform.parent == collectionParent) //Adds card to deck, removes from collection
         {
             //cardObject.transform.position = deckParent[i]
-
-            playerDeck.Add(card);
+            int emptyIndex = playerDeck.FindIndex(item => item == null);
+            if(emptyIndex == -1) { emptyIndex = 0; }
+            playerDeck.Insert(emptyIndex, card);
             playerCollection.Remove(card);
 
             //cardObject.transform.SetParent(collectionParent);
@@ -63,15 +64,22 @@ public class DeckUI : MonoBehaviour
             cardObject.GetComponentInParent<DeckParentTransformItem>().isOccupied = false;
             cardObject.transform.SetParent(collectionParent);
 
-            playerDeck.Remove(card);
+            int index = playerDeck.IndexOf(card);
+            playerDeck.RemoveAt(index);
             playerCollection.Add(card);
+
         }
     }
 
     private void SaveDeckToPlayerPrefs()
     {
-        PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.pieceName).ToArray()));
-        PlayerPrefs.Save();
+        if(playerDeck.Count() < 4)
+        {
+            PlayerPrefs.SetString("Deck", string.Join(",", playerDeck.Select(c => c.pieceName).ToArray()));
+            PlayerPrefs.Save();
+            Debug.Log(PlayerPrefs.GetString("Deck"));
+        }
+        
     }
 
     private void LoadDeckFromPlayerPrefs(List<GameObject> cardObjects)

@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -129,6 +129,7 @@ public class GameManager : NetworkBehaviour
     private void Start()
     {
         RegisterEvents();
+        RepositionCamera(NetworkManager.Singleton.LocalClientId);
         OnPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
     }
 
@@ -167,13 +168,38 @@ public class GameManager : NetworkBehaviour
                 if (Input.GetMouseButtonDown(0)) // Left click on a piece
                 {
                     var selectedPiece = hit.collider.GetComponent<Piece>();
-                    selectedPiece.isSelected = true;
+                    selectedPiece.isSelected.Value = true;
                     MovePiece(selectedPiece);
                 }
             }
         }
     }
 
+    //Camera
+    private void RepositionCamera(ulong clientId)
+    {
+        switch (clientId)
+        {
+            case 0:
+                Camera.main.transform.position = new Vector3(-50f,90f,50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f,135f,0f); 
+                break;
+            case 1:
+                Camera.main.transform.position = new Vector3(50f, 90f, -50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, -45f, 0f);
+                break;
+            case 2:
+                Camera.main.transform.position = new Vector3(50f, 90f, 50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, -135f, 0f);
+                break;
+            case 3:
+                Camera.main.transform.position = new Vector3(-50f, 90f, -50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, 45f, 0f);
+                break;
+            default:
+                break;
+        }
+    }
 
     #region Piece logic
     private void MovePiece(Piece piece)
@@ -263,30 +289,30 @@ public class GameManager : NetworkBehaviour
     #endregion
     #region Server side methods
     //Started working on timer, problem with losing track of turns, couldnt roll dice on any client for some reason
-    private void BeginTimer(int second)
-    {
-        remainingDuration = second;
-        if (switcherCoroutine != null)
-        {
-            StopCoroutine(switcherCoroutine);
-        }
-        switcherCoroutine = StartCoroutine(UpdateTimer());
-    }
+    //private void BeginTimer(int second)
+    //{
+    //    remainingDuration = second;
+    //    if (switcherCoroutine != null)
+    //    {
+    //        StopCoroutine(switcherCoroutine);
+    //    }
+    //    switcherCoroutine = StartCoroutine(UpdateTimer());
+    //}
 
-    private IEnumerator UpdateTimer()
-    {
-        while (remainingDuration >= 0)
-        {
-            //update UI
-            remainingDuration--;
-            Debug.Log(remainingDuration);
-            yield return new WaitForSeconds(1f);
-        }
-        //OnEnd();
-        Debug.Log("Should switch turn");
-        NextTurn();
-    }
-    private Coroutine switcherCoroutine;
+    //private IEnumerator UpdateTimer()
+    //{
+    //    while (remainingDuration >= 0)
+    //    {
+    //        //update UI
+    //        remainingDuration--;
+    //        Debug.Log(remainingDuration);
+    //        yield return new WaitForSeconds(1f);
+    //    }
+    //    //OnEnd();
+    //    Debug.Log("Should switch turn");
+    //    NextTurn();
+    //}
+    //private Coroutine switcherCoroutine;
     private void NextTurn()
     {
         // 0. Save the previous turn value, so we can check which one is next
@@ -404,16 +430,10 @@ public class GameManager : NetworkBehaviour
                 if(paths.TryGetValue(((int)pieces[i].currentTeam), out value))
                 {
                     for (int j = 0; j < value.Length; j++)
-                    { 
-                        //Debug.Log(pc.playerColor.Value);
-                        //if (pieces[i].currentTeam == Team.Red)
-                        //{
-                            
-                        //    pieces[i].board.Add(board[paths[2][j]]);
-                        //    Debug.Log(pieces[i].board[j].tileTransform);
-                        //}
+                    {
+                        pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
                         pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
-                        //Debug.Log(pieces[0].board[j].tileTransform.position);
                     }
                 }
                 //Sets starting rotation
@@ -515,7 +535,6 @@ public class GameManager : NetworkBehaviour
 
     IEnumerator DiceAnimation(int diceValue)
     {
-        Debug.Log(diceValue);
         // Pick up random value from 0 to 5 (All inclusive)
         int randomDiceSide = 0;
 
@@ -584,16 +603,16 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void AttackServerRpc(ulong clientId)
     {
-        Debug.Log("AttackServerRpc");
         for (int i = 0; i < playerPieces[clientId].Length; i++)
         {
             Piece selectedPiece = playerPieces[clientId][i];
-            //if (selectedPiece.isSelected)
-            //{
-            selectedPiece.animator.SetBool("isAttacking",true);
+            if (selectedPiece.isSelected.Value)
+            {
+                selectedPiece.UpdateAnimationStateServerRpc(AnimationState.Attack);
+                //selectedPiece.animator.SetBool("isAttacking",true);
                 selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower, board);
-                //selectedPiece.isSelected = false;
-            //}
+                selectedPiece.isSelected.Value = false;
+            }
         }
         ClientRpcParams clientRpcParams = new ClientRpcParams()
         {
@@ -694,12 +713,14 @@ public class GameManager : NetworkBehaviour
         Piece p = board[startPosition].GetFirstPiece();
         if (p != null && p.currentTeam != piece.currentTeam)
         {
-            p.animator.SetTrigger("death");
+            //p.animator.SetBool("isDead",true);
+            p.UpdateAnimationStateServerRpc(AnimationState.Death);
             board[startPosition].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
+            //p.animator.SetBool("isDead", false);
         }
     }
 
@@ -772,10 +793,16 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
+                //piece.animator.SetBool("isWalking",false);
+                piece.UpdateAnimationStateServerRpc(AnimationState.Idle);
                 EatEnemyPawn(piece,targetTile); //moved here so enemy pawn is eaten when peace reach that tile
-                if ((piece.currentTile > 0 && piece.currentTile < 50) && board[piece.currentTile + piece.eatPower].GetFirstPiece() != null)
+                if ((piece.currentTile > 0 && piece.currentTile < 50) &&
+                    (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
                     EnableAttackClientRpc(true, clientRpcParams);
+                }
+                if(piece.currentTile == 57) {
+                piece.gameObject.SetActive(false);
                 }
             if (!canRollAgain)
                 NextTurn();
@@ -800,7 +827,7 @@ public class GameManager : NetworkBehaviour
         // If all players are ready, spawn all the networked pieces
         if (!playerReady.ContainsValue(false))
             SpawnAllPlayers();
-    }
+    } 
 
 
 
@@ -914,5 +941,14 @@ public class GameManager : NetworkBehaviour
         for (int i = 0; i < localPieces.Length; i++)
             localPieces[i].DisableInteraction();
     }
+
+    public void Disconnect()
+    {
+        //LobbyScene.isGameLeft = true;
+        NetworkManager.Singleton.Shutdown();
+        Destroy(NetworkManager.Singleton.gameObject);
+        //NetworkManager.Singleton.SceneManager.LoadScene("MainScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        SceneManager.LoadScene("MainScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        
+    }
 }
-#endif
