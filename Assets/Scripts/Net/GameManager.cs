@@ -168,11 +168,35 @@ public class GameManager : NetworkBehaviour
                 if (Input.GetMouseButtonDown(0)) // Left click on a piece
                 {
                     var selectedPiece = hit.collider.GetComponent<Piece>();
-                    selectedPiece.isSelected.Value = true;
+                    //selectedPiece.isSelected.Value = true;
+                    if (selectedPiece.GetComponent<NetworkObject>().IsOwner && selectedPiece.currentTile != -1)
+                    {
+                        UpdateIsSelected(selectedPiece,true);
+                        Debug.Log(selectedPiece.isSelected.Value + " " + selectedPiece);
+                    }
+                    
                     MovePiece(selectedPiece);
                 }
             }
         }
+    }
+    public void UpdateIsSelected(Piece selectedPiece, bool value)
+    {
+        selectedPiece.isSelected.Value = value;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateIsSelectedServerRpc(bool selectedPieceValue, bool newValue)
+    {
+        selectedPieceValue = newValue;
+        Debug.Log(selectedPieceValue);
+        UpdateIsSelectedClientRpc(selectedPieceValue,newValue);
+    }
+    [ClientRpc]
+    public void UpdateIsSelectedClientRpc(bool selectedPieceValue, bool newValue)
+    {
+        selectedPieceValue = newValue;
+        Debug.Log(selectedPieceValue);
     }
 
     //Camera
@@ -597,21 +621,28 @@ public class GameManager : NetworkBehaviour
                 }
             }
         } 
-        }
+    }
 
     // RPCs
+
+
+
     [ServerRpc(RequireOwnership = false)]
     private void AttackServerRpc(ulong clientId)
     {
         for (int i = 0; i < playerPieces[clientId].Length; i++)
         {
             Piece selectedPiece = playerPieces[clientId][i];
+            Debug.Log(selectedPiece.isSelected.Value);
             if (selectedPiece.isSelected.Value)
             {
                 selectedPiece.UpdateAnimationStateServerRpc(AnimationState.Attack);
                 //selectedPiece.animator.SetBool("isAttacking",true);
                 selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower, board);
-                selectedPiece.isSelected.Value = false;
+                //selectedPiece.isSelected.Value = false;
+                //selectedPiece.UpdateIsSelectedServerRpc(false);
+                UpdateIsSelected(selectedPiece,false);
+                Debug.Log(selectedPiece.isSelected.Value);
             }
         }
         ClientRpcParams clientRpcParams = new ClientRpcParams()
@@ -698,6 +729,8 @@ public class GameManager : NetworkBehaviour
         moveCompleted.Value = true;
         moveCompleted.SetDirty(true);
 
+        UpdateIsSelected(piece, false);
+
         ClientRpcParams clientRpcParams = new ClientRpcParams
         {
             Send = new ClientRpcSendParams
@@ -711,16 +744,15 @@ public class GameManager : NetworkBehaviour
     private void EatEnemyPawn(Piece piece, int startPosition)
     {
         Piece p = board[startPosition].GetFirstPiece();
+        Debug.Log(p);
         if (p != null && p.currentTeam != piece.currentTeam)
         {
-            //p.animator.SetBool("isDead",true);
             p.UpdateAnimationStateServerRpc(AnimationState.Death);
             board[startPosition].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
-            //p.animator.SetBool("isDead", false);
         }
     }
 
@@ -793,19 +825,28 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
-                //piece.animator.SetBool("isWalking",false);
+            {
                 piece.UpdateAnimationStateServerRpc(AnimationState.Idle);
-                EatEnemyPawn(piece,targetTile); //moved here so enemy pawn is eaten when peace reach that tile
+
+                EatEnemyPawn(piece, targetTile); //moved here so enemy pawn is eaten when peace reach that tile
+
                 if ((piece.currentTile > 0 && piece.currentTile < 50) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
                     EnableAttackClientRpc(true, clientRpcParams);
                 }
-                if(piece.currentTile == 57) {
-                piece.gameObject.SetActive(false);
+                else
+                {
+                    UpdateIsSelected(piece,false);
                 }
-            if (!canRollAgain)
-                NextTurn();
+                
+                if (piece.currentTile == 57)
+                {
+                    piece.gameObject.SetActive(false);
+                }
+                if (!canRollAgain)
+                    NextTurn();
+            }
         };
         //if (!canRollAgain)
         //    NextTurn();

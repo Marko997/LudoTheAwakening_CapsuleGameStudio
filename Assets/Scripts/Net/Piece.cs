@@ -84,7 +84,7 @@ public class Piece : NetworkBehaviour
         ClientVisuals();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership =false)]
     public void UpdateAnimationStateServerRpc(AnimationState newAnimState)
     {
         Debug.Log("works "+newAnimState);
@@ -134,7 +134,7 @@ public class Piece : NetworkBehaviour
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
-            UpdateAnimationStateServerRpc(AnimationState.Idle);
+            //UpdateAnimationStateServerRpc(AnimationState.Idle);
         }
         else
         {
@@ -145,7 +145,7 @@ public class Piece : NetworkBehaviour
             {
                 if (!manual) {
                     //animator.ResetTrigger("jump");
-                    //transform.position = position;
+                    transform.position = position;
                 }
                     
             };
@@ -205,7 +205,7 @@ public class Piece : NetworkBehaviour
             }
         }
 
-        transform.position = position; //put more pawns on same tile (reposition)
+        //transform.position = position; //put more pawns on same tile (reposition)
 
         if (currentTile > 0)
         {
@@ -232,6 +232,7 @@ public class Piece : NetworkBehaviour
         Vector3 point = lookAtTile - (transform.up * directionToFace);
         transform.LookAt(point, transform.up);
     }
+
 }
 
 

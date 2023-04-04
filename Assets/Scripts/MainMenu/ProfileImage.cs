@@ -14,14 +14,14 @@ public class ProfileImage : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("IMAGE"));
+        //Debug.Log(PlayerPrefs.GetInt("IMAGE"));
         PlayerPrefs.DeleteKey("IMAGE");
         mainPlayerImage.sprite = allPlayerImages[PlayerPrefs.GetInt("IMAGE")].GetComponent<Image>().sprite;
 
         int indexButton = 1;
         foreach (var item in allPlayerImages.Skip(1))
         {
-            Debug.Log(indexButton);
+            //Debug.Log(indexButton);
             var image = Instantiate(item, imagesParent);
             var copy = image;
             var ind = indexButton;

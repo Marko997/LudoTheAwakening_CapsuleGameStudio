@@ -57,7 +57,7 @@ public class Spell : MonoBehaviour
 
         if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
         {
-            spellCasterPiece.board[targetTile].RemovePiece(p);
+            board[targetTile].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;
             p.routePosition = 0;
