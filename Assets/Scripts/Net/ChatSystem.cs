@@ -13,7 +13,7 @@ public class ChatSystem : NetworkBehaviour
 
 
     bool isChatOppened;
-    bool isTurningOffRunning = false;
+    //bool isTurningOffRunning = false;
 
     NetworkVariable<int> chatEmojiIndex = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     NetworkVariable<int> chatEmojiIndex1 = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -249,7 +249,7 @@ public class ChatSystem : NetworkBehaviour
         timerCoroutine = StartCoroutine(TurnOffAfterDelay(allChatDisplayIcons[3].gameObject)); // Start the new coroutine
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
         UnregisterEvents();
     }

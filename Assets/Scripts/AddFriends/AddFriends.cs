@@ -76,8 +76,9 @@ public class AddFriends : MonoBehaviour
     {
         PlayFabClientAPI.GetFriendsList(new GetFriendsListRequest
         {
-            IncludeSteamFriends = false,
-            IncludeFacebookFriends = false
+            ExternalPlatformFriends = ExternalFriendSources.None,
+            //IncludeSteamFriends = false,
+            //IncludeFacebookFriends = false
         }, result =>
         {
             _friends = result.Friends;
