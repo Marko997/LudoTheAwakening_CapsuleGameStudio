@@ -7,7 +7,7 @@ public class ShareButton : MonoBehaviour
 {
     public Button shareButton;
     private bool isFocus = false;
-    //private bool isProcessing = false;
+    private bool isProcessing = false;
 
     void Start()
     {
