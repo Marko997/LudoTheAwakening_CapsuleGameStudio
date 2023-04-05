@@ -61,4 +61,21 @@ public class Utility : MonoBehaviour
                 return -1;
         }
     }
+
+    public static Quaternion TeamToRotataion(Team t)
+    {
+        switch (t)
+        {
+            case Team.Red:
+                return new Quaternion(0, 180, 0,0);
+            case Team.Green:
+                return new Quaternion(0, -90, 0,0);
+            case Team.Yellow:
+                return new Quaternion(0, 90, 0,0);
+            case Team.Blue:
+                return new Quaternion(0,0,0,0);
+            default:
+                return new Quaternion(0, 180, 0,0);
+        }
+    }
 }

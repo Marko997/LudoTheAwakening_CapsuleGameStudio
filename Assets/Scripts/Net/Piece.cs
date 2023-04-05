@@ -65,7 +65,8 @@ public class Piece : NetworkBehaviour
 
         int teamId = Utility.RetrieveTeamId(OwnerClientId);
         currentTeam = (Team)teamId;
-        //GetComponent<MeshRenderer>().material.color = Utility.TeamToColor(currentTeam);
+
+        //Change material
         head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
         body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
 
@@ -75,8 +76,7 @@ public class Piece : NetworkBehaviour
             gameObject.AddComponent<BoxCollider>();
             gameObject.GetComponent<BoxCollider>().size = new Vector3(1f,2.5f,1f);
             gameObject.GetComponent<BoxCollider>().center = new Vector3(0f,1.25f,0f);
-        }
-            
+        }    
     }
 
     private void Update()
@@ -87,7 +87,6 @@ public class Piece : NetworkBehaviour
     [ServerRpc(RequireOwnership =false)]
     public void UpdateAnimationStateServerRpc(AnimationState newAnimState)
     {
-        Debug.Log("works "+newAnimState);
         networkAnimationState.Value = newAnimState;
     }
 
@@ -134,7 +133,7 @@ public class Piece : NetworkBehaviour
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
-            //UpdateAnimationStateServerRpc(AnimationState.Idle);
+            UpdateAnimationStateServerRpc(AnimationState.Idle);
         }
         else
         {
@@ -149,7 +148,6 @@ public class Piece : NetworkBehaviour
                 }
                     
             };
-
             //transform.position = position;
             //isSelected = true;
         }
@@ -171,9 +169,6 @@ public class Piece : NetworkBehaviour
 
         while (steps > 0)
         {
-            //animator.SetBool("isWalking",true);
-            
-
             routePosition++;
 
             if (routePosition == 50)
@@ -197,10 +192,9 @@ public class Piece : NetworkBehaviour
             timeForPointToPoint = 0;
 
             steps--;
-            //animator.ResetTrigger("jump");
+
             if (steps == 0)
             {
-                //animator.ResetTrigger("Walk");
                 //transform.position = position;
             }
         }

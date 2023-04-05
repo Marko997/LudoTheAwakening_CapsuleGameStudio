@@ -7,6 +7,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using UnityEngine.UI;
 
 public class LobbyScene : MonoSingleton<LobbyScene>
 {
@@ -18,9 +19,12 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public TMP_InputField playerNameInput;
 
     public GameObject startButton;
+    public GameObject connectButton;
 
     public TextMeshProUGUI joinCode;
     public TMP_InputField codeInput;
+
+    public GameObject slider;
 
     private async void Start()
     {
@@ -42,6 +46,11 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         {
             startButton.SetActive(true);
         }
+        if(codeInput.text != null && codeInput.text.Length == 6)
+        {
+            connectButton.GetComponent<Button>().interactable = true;
+        }
+
     }
 
     void Cleanup()
@@ -57,9 +66,10 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     //Main
     public async void OnMainHostButton()
     {
+        slider.SetActive(true);
         try
         {
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3); //this is for 4 players host + 3
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3, "europe-central2"); //this is for 4 players host + 3
 
             string _joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
@@ -76,7 +86,11 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         }
 
         NetworkManager.Singleton.StartHost();
-        //animator.SetTrigger("Lobby");
+
+        if (NetworkManager.Singleton.IsListening)
+        {
+            slider.SetActive(false);
+        }
     }
 
     public void OnConnectButtonPressed()
@@ -86,6 +100,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public async void OnMainConnectButton(string joinCode)
     {
+        slider.SetActive(true);
         try
         {
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
@@ -100,7 +115,15 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         }
 
         NetworkManager.Singleton.StartClient();
-        //animator.SetTrigger("Lobby");
+
+        NetworkManager.Singleton.OnClientConnectedCallback += ClientConnected;
+            
+    }
+
+    private void ClientConnected(ulong clientId)
+    {
+        slider.SetActive(false);
+        joinCode.gameObject.SetActive(false);
     }
 
     //Lobby

@@ -57,6 +57,7 @@ public class Spell : MonoBehaviour
 
         if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
         {
+            p.UpdateAnimationStateServerRpc(AnimationState.Death);
             board[targetTile].RemovePiece(p);
             p.currentTile = -1;
             p.isOut = false;

@@ -171,16 +171,14 @@ public class GameManager : NetworkBehaviour
                     //selectedPiece.isSelected.Value = true;
                     if (selectedPiece.GetComponent<NetworkObject>().IsOwner && selectedPiece.currentTile != -1)
                     {
-                        UpdateIsSelected(selectedPiece,true);
-                        Debug.Log(selectedPiece.isSelected.Value + " " + selectedPiece);
+                        UpdatePieceIsSelected(selectedPiece,true);
                     }
-                    
                     MovePiece(selectedPiece);
                 }
             }
         }
     }
-    public void UpdateIsSelected(Piece selectedPiece, bool value)
+    public void UpdatePieceIsSelected(Piece selectedPiece, bool value)
     {
         selectedPiece.isSelected.Value = value;
     }
@@ -461,7 +459,7 @@ public class GameManager : NetworkBehaviour
                     }
                 }
                 //Sets starting rotation
-                pieces[i].transform.rotation = Quaternion.Euler(0, 180, 0);
+                pieces[i].transform.rotation = Utility.TeamToRotataion(pieces[i].currentTeam);
             }
 
             ClientRpcParams clientRpcParams = new ClientRpcParams()
@@ -641,7 +639,7 @@ public class GameManager : NetworkBehaviour
                 selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower, board);
                 //selectedPiece.isSelected.Value = false;
                 //selectedPiece.UpdateIsSelectedServerRpc(false);
-                UpdateIsSelected(selectedPiece,false);
+                UpdatePieceIsSelected(selectedPiece,false);
                 Debug.Log(selectedPiece.isSelected.Value);
             }
         }
@@ -729,7 +727,7 @@ public class GameManager : NetworkBehaviour
         moveCompleted.Value = true;
         moveCompleted.SetDirty(true);
 
-        UpdateIsSelected(piece, false);
+        UpdatePieceIsSelected(piece, false);
 
         ClientRpcParams clientRpcParams = new ClientRpcParams
         {
@@ -744,7 +742,7 @@ public class GameManager : NetworkBehaviour
     private void EatEnemyPawn(Piece piece, int startPosition)
     {
         Piece p = board[startPosition].GetFirstPiece();
-        Debug.Log(p);
+        Debug.Log(p +" "+ piece);
         if (p != null && p.currentTeam != piece.currentTeam)
         {
             p.UpdateAnimationStateServerRpc(AnimationState.Death);
@@ -837,7 +835,7 @@ public class GameManager : NetworkBehaviour
                 }
                 else
                 {
-                    UpdateIsSelected(piece,false);
+                    UpdatePieceIsSelected(piece,false);
                 }
                 
                 if (piece.currentTile == 57)
