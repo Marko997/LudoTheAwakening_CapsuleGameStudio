@@ -144,7 +144,7 @@ public class Piece : NetworkBehaviour
             {
                 if (!manual) {
                     //animator.ResetTrigger("jump");
-                    transform.position = position;
+                    //transform.position = position;
                 }
                     
             };

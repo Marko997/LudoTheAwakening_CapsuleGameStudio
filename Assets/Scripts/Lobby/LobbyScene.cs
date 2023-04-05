@@ -117,6 +117,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         NetworkManager.Singleton.StartClient();
 
         NetworkManager.Singleton.OnClientConnectedCallback += ClientConnected;
+        NetworkManager.Singleton.OnClientDisconnectCallback += ClientDisConnected;
             
     }
 
@@ -125,14 +126,24 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         slider.SetActive(false);
         joinCode.gameObject.SetActive(false);
     }
+    private void ClientDisConnected(ulong clientId)
+    {
+        NetworkManager.Singleton.Shutdown();
+    }
 
     //Lobby
 
     public void OnLobbyBackButton()
     {
-        //animator.SetTrigger("Main");
         NetworkManager.Singleton.Shutdown();
     }
+
+    [ServerRpc]
+    public void DisconnectClientFromServerServerRpc(ulong id)
+    {
+        NetworkManager.Singleton.DisconnectClient(id);
+    }
+
     public void OnLobbyStartButton()
     {
         NetworkManager.Singleton.SceneManager.LoadScene("Game",UnityEngine.SceneManagement.LoadSceneMode.Single);

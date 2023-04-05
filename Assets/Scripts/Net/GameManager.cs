@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +50,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject winnerPanel;
     [SerializeField] private Button attackButton;
     [SerializeField] private Sprite[] diceSides;
+    [SerializeField] private TextMeshProUGUI currentTurnText;
 
     //Players info in UI
     [SerializeField] private Image[] playerImages;
@@ -131,6 +131,32 @@ public class GameManager : NetworkBehaviour
         RegisterEvents();
         RepositionCamera(NetworkManager.Singleton.LocalClientId);
         OnPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
+
+        UpdateCurrentTurnColorAndText();
+        
+    }
+
+    public void UpdateCurrentTurnColorAndText()
+    {
+        if (!IsServer) { return; }
+        string name;
+        foreach (var client in NetworkManager.Singleton.ConnectedClients)
+        {
+            if (client.Key == currentTurn.Value)
+            {
+                name = client.Value.PlayerObject.GetComponent<PlayerController>().playerName.Value;
+                UpdateCurrentTurnTextClientRpc(name, currentTurn.Value);
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void UpdateCurrentTurnTextClientRpc(string name, ulong currentTurnId)
+    {
+        //currentTurnText.text = name;
+        currentTurnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId(currentTurnId));
+        Debug.Log(currentTurnId);
+        currentTurnText.text = $"{name} has turn!";
     }
 
     public override void OnDestroy()
@@ -545,6 +571,18 @@ public class GameManager : NetworkBehaviour
     // Called by OnValueChanged for currentTurn
     private void UpdateCurrentTurn(ulong prev, ulong newValue)
     {
+        string name;
+        if (!IsServer) { return; }
+        
+        foreach(var client in NetworkManager.Singleton.ConnectedClients)
+        {
+            if(client.Key == newValue)
+            {
+                name = client.Value.PlayerObject.GetComponent<PlayerController>().playerName.Value;
+                //currentTurnText.text = $"{name} has turn!";
+                UpdateCurrentTurnTextClientRpc(name,newValue);
+            }
+        }   
         //int teamId = Utility.RetrieveTeamId(newValue);
         //currentTurnColor.color = Utility.TeamToColor((Team)teamId);
     }
@@ -718,6 +756,8 @@ public class GameManager : NetworkBehaviour
         board[startPosition].AddPiece(piece);
         piece.currentTile = startPosition;
 
+        piece.transform.position = board[startPosition].tileTransform.position;
+
         //1.a Rotate piece
         piece.RotatePawn(board[startPosition + 1].tileTransform.position);
 
@@ -827,6 +867,8 @@ public class GameManager : NetworkBehaviour
                 piece.UpdateAnimationStateServerRpc(AnimationState.Idle);
 
                 EatEnemyPawn(piece, targetTile); //moved here so enemy pawn is eaten when peace reach that tile
+
+                piece.transform.position = board[targetTile].tileTransform.position;// make piece to go to target tile and repostion it
 
                 if ((piece.currentTile > 0 && piece.currentTile < 50) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))

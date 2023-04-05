@@ -5,6 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using LoginResult = PlayFab.ClientModels.LoginResult;
 using System;
+using static UnityEngine.Rendering.DebugUI;
 
 #if FACEBOOK
 using Facebook.Unity;
@@ -162,23 +163,29 @@ public class PlayFabAuthService
 
             case Authtypes.Silent:
                 SilentlyAuthenticate();
+                PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 break;
 
             case Authtypes.EmailAndPassword:
                 AuthenticateEmailPassword();
+                PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 break;
             case Authtypes.RegisterPlayFabAccount:
                 AddAccountAndPassword();
+                PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 break;
             case Authtypes.Steam:
                 AuthenticateSteam();
+                PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 break;
             case Authtypes.Facebook:
                 AuthenticateFacebook();
+                PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 break;
 
             case Authtypes.Google:
                 AuthenticateGooglePlayGames();
+                PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 break;
 
         }
@@ -433,7 +440,7 @@ public class PlayFabAuthService
     }
 
 
-    private void SilentlyAuthenticate(System.Action<LoginResult> callback = null)
+    public void SilentlyAuthenticate(System.Action<LoginResult> callback = null)
     {
 #if UNITY_ANDROID  && !UNITY_EDITOR
 

@@ -26578,7 +26578,6 @@ GameObject:
   - component: {fileID: 1582189075}
   - component: {fileID: 1582189074}
   - component: {fileID: 1582189073}
-  - component: {fileID: 1582189072}
   m_Layer: 5
   m_Name: MP__Room-Player__List__Container
   m_TagString: Untagged
@@ -26606,22 +26605,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -169.71}
   m_SizeDelta: {x: 0, y: 1372.4}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1582189072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582189070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3809706375
-  AlwaysReplicateAsRoot: 0
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
 --- !u!114 &1582189073
 MonoBehaviour:
   m_ObjectHideFlags: 0
