@@ -195,7 +195,7 @@ public class GameManager : NetworkBehaviour
                 {
                     var selectedPiece = hit.collider.GetComponent<Piece>();
                     //selectedPiece.isSelected.Value = true;
-                    if (selectedPiece.GetComponent<NetworkObject>().IsOwner && selectedPiece.currentTile != -1)
+                    if (selectedPiece.GetComponent<NetworkObject>().IsOwner)
                     {
                         UpdatePieceIsSelected(selectedPiece,true);
                     }
@@ -762,6 +762,15 @@ public class GameManager : NetworkBehaviour
         piece.RotatePawn(board[startPosition + 1].tileTransform.position);
 
         // 2. Are we killing any piece?
+        //Piece p = board[startPosition].GetEnemyPiece(piece);
+        //if (p != null && p.currentTeam != piece.currentTeam)
+        //{
+        //    board[startPosition].RemovePiece(p);
+        //    p.currentTile = -1;
+        //    p.PositionClientRpc(-Vector3.one); // start position is set localy
+        //}
+
+
         EatEnemyPawn(piece, startPosition);
 
         moveCompleted.Value = true;
@@ -781,8 +790,9 @@ public class GameManager : NetworkBehaviour
 
     private void EatEnemyPawn(Piece piece, int startPosition)
     {
-        Piece p = board[startPosition].GetFirstPiece();
-        Debug.Log(p +" "+ piece);
+        Piece p = board[startPosition].GetEnemyPiece(piece);
+        //Debug.Log(board[startPosition].PieceCount());
+        //Debug.Log(p +" "+ piece);
         if (p != null && p.currentTeam != piece.currentTeam)
         {
             p.UpdateAnimationStateServerRpc(AnimationState.Death);
@@ -791,6 +801,7 @@ public class GameManager : NetworkBehaviour
             p.isOut = false;
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
+            p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
         }
     }
 

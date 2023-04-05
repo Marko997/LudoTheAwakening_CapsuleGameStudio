@@ -90,4 +90,15 @@ public class LudoTile
         return null;
     }
 
+    public Piece GetEnemyPiece(Piece myPiece)
+    {
+        for (int i = 0; i < pieces.Length; i++)
+            if (pieces[i] != null && myPiece.currentTeam != pieces[i].currentTeam)
+            {
+                Debug.Log($"{pieces[i]} {pieces[i].currentTeam}");
+                return pieces[i];
+            }
+        return null;
+    }
+
 }
