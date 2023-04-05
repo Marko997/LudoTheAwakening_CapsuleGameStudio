@@ -1178,7 +1178,7 @@ MonoBehaviour:
   logoCanvas: {fileID: 702246930}
   sliderAnimationSpeed: 0
   sliderMoveDelay: 0
-  loadingText: {fileID: 1125179981}
+  progressText: {fileID: 1125179981}
 --- !u!4 &1307307198
 Transform:
   m_ObjectHideFlags: 0
