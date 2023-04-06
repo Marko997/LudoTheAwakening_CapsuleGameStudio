@@ -537,7 +537,6 @@ public class GameManager : NetworkBehaviour
     }
     public void AttackButton()
     {
-        Debug.Log("AttackButton");
         AttackServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void EndButton()
@@ -685,8 +684,8 @@ public class GameManager : NetworkBehaviour
                 TargetClientIds = new ulong[] { clientId }
             }
         };
-        EnableAttackClientRpc(false, clientRpcParams);
-        
+        //EnableAttackClientRpc(false, clientRpcParams);
+        EnableAttackServerRpc(false, clientId);
 
         NextTurn();
     }
@@ -872,7 +871,8 @@ public class GameManager : NetworkBehaviour
                 if ((piece.currentTile > 0 && piece.currentTile < 50) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
-                    EnableAttackClientRpc(true, clientRpcParams);
+                    //EnableAttackClientRpc(true, clientRpcParams);
+                    EnableAttackServerRpc(true, clientId);
                 }
                 else
                 {
@@ -884,7 +884,8 @@ public class GameManager : NetworkBehaviour
                 {
                     piece.gameObject.SetActive(false);
                 }
-                if (!canRollAgain)
+                if (!canRollAgain && !canAttack)
+                    //Debug.Log(canAttack);
                     NextTurn();
             }
         };
@@ -892,11 +893,27 @@ public class GameManager : NetworkBehaviour
         //    NextTurn();
 
     }
+    [ServerRpc(RequireOwnership = false)]
+    private void EnableAttackServerRpc(bool state, ulong clientId)
+    {
+        canAttack = state;
+
+        ClientRpcParams clientRpcParams = new ClientRpcParams
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { clientId }
+            }
+        };
+
+        EnableAttackClientRpc(state, clientRpcParams);
+    }
 
     [ClientRpc]
     private void EnableAttackClientRpc(bool state, ClientRpcParams clientRpcParams)
     {
         canAttack = state;
+        Debug.Log(canAttack);
         attackButton.interactable = canAttack;
     }
 
@@ -969,6 +986,8 @@ public class GameManager : NetworkBehaviour
                     }
                 };
                 EnableInteractionClientRpc(pieceYouCanMove, clientRpcParams);
+                //EnableAttackClientRpc(false,clientRpcParams);
+                EnableAttackServerRpc(false, clientId);
             }
             else
             {
