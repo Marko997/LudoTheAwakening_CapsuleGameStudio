@@ -58,7 +58,8 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private Color playerColors;
     [SerializeField] private Image[] otherPlayerDices;
     public Sprite[] playerImageSprites;
-        
+
+    public TextMeshProUGUI winnerText;
 
     // CONST
     private const int TEAM_COUNT = 4;
@@ -841,7 +842,7 @@ public class GameManager : NetworkBehaviour
                 string playerName = networkedClient.PlayerObject.GetComponent<PlayerController>().playerName.Value;
                 AddWinnerToTheListClientRpc(playerName);
                 playerCompleted[serverRpcParams.Receive.SenderClientId] = true;
-
+                winnerText.text = playerName;
                 int i = 0;
                 foreach (KeyValuePair<ulong, bool> pd in playerCompleted)
                     if (!pd.Value)
@@ -868,7 +869,7 @@ public class GameManager : NetworkBehaviour
 
                 piece.transform.position = board[targetTile].tileTransform.position;// make piece to go to target tile and repostion it
 
-                if ((piece.currentTile > 0 && piece.currentTile < 50) &&
+                if ((piece.currentTile > 0 && piece.currentTile < 50 - piece.eatPower) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
                     //EnableAttackClientRpc(true, clientRpcParams);
