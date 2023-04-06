@@ -155,7 +155,7 @@ public class GameManager : NetworkBehaviour
     {
         //currentTurnText.text = name;
         currentTurnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId(currentTurnId));
-        Debug.Log(currentTurnId);
+        //Debug.Log(currentTurnId);
         currentTurnText.text = $"{name} has turn!";
     }
 
@@ -197,31 +197,29 @@ public class GameManager : NetworkBehaviour
                     //selectedPiece.isSelected.Value = true;
                     if (selectedPiece.GetComponent<NetworkObject>().IsOwner)
                     {
-                        UpdatePieceIsSelected(selectedPiece,true);
+                        selectedPiece.UpdateIsSelectedStateServerRpc(true);
                     }
                     MovePiece(selectedPiece);
                 }
             }
         }
     }
-    public void UpdatePieceIsSelected(Piece selectedPiece, bool value)
-    {
-        selectedPiece.isSelected.Value = value;
-    }
+    //public void UpdatePieceIsSelected(Piece selectedPiece, bool value)
+    //{
+    //    selectedPiece.isSelected.Value = value;
+    //}
 
     [ServerRpc(RequireOwnership = false)]
-    public void UpdateIsSelectedServerRpc(bool selectedPieceValue, bool newValue)
+    public void UpdateIsSelectedServerRpc(int indexPos, bool newValue, ServerRpcParams serverRpcParams = default)
     {
-        selectedPieceValue = newValue;
-        Debug.Log(selectedPieceValue);
-        UpdateIsSelectedClientRpc(selectedPieceValue,newValue);
+        ulong clientId = serverRpcParams.Receive.SenderClientId;
+        Piece selectedPiece = playerPieces[clientId][indexPos];
+
+        selectedPiece.isSelected.Value = newValue;
+        Debug.Log(selectedPiece.isSelected.Value);
+        //UpdateIsSelectedClientRpc(selectedPieceValue,newValue);
     }
-    [ClientRpc]
-    public void UpdateIsSelectedClientRpc(bool selectedPieceValue, bool newValue)
-    {
-        selectedPieceValue = newValue;
-        Debug.Log(selectedPieceValue);
-    }
+
 
     //Camera
     private void RepositionCamera(ulong clientId)
@@ -669,16 +667,15 @@ public class GameManager : NetworkBehaviour
         for (int i = 0; i < playerPieces[clientId].Length; i++)
         {
             Piece selectedPiece = playerPieces[clientId][i];
-            Debug.Log(selectedPiece.isSelected.Value);
+
             if (selectedPiece.isSelected.Value)
             {
                 selectedPiece.UpdateAnimationStateServerRpc(AnimationState.Attack);
-                //selectedPiece.animator.SetBool("isAttacking",true);
+
                 selectedPiece.spell.CastSpell(selectedPiece.currentTile + selectedPiece.eatPower, board);
-                //selectedPiece.isSelected.Value = false;
-                //selectedPiece.UpdateIsSelectedServerRpc(false);
-                UpdatePieceIsSelected(selectedPiece,false);
-                Debug.Log(selectedPiece.isSelected.Value);
+
+                selectedPiece.UpdateIsSelectedStateServerRpc(false);
+                //UpdatePieceIsSelected(selectedPiece,false);
             }
         }
         ClientRpcParams clientRpcParams = new ClientRpcParams()
@@ -761,22 +758,13 @@ public class GameManager : NetworkBehaviour
         //1.a Rotate piece
         piece.RotatePawn(board[startPosition + 1].tileTransform.position);
 
-        // 2. Are we killing any piece?
-        //Piece p = board[startPosition].GetEnemyPiece(piece);
-        //if (p != null && p.currentTeam != piece.currentTeam)
-        //{
-        //    board[startPosition].RemovePiece(p);
-        //    p.currentTile = -1;
-        //    p.PositionClientRpc(-Vector3.one); // start position is set localy
-        //}
-
-
         EatEnemyPawn(piece, startPosition);
 
         moveCompleted.Value = true;
         moveCompleted.SetDirty(true);
 
-        UpdatePieceIsSelected(piece, false);
+        //UpdatePieceIsSelected(piece, false);
+        piece.UpdateIsSelectedStateServerRpc(false);
 
         ClientRpcParams clientRpcParams = new ClientRpcParams
         {
@@ -888,7 +876,8 @@ public class GameManager : NetworkBehaviour
                 }
                 else
                 {
-                    UpdatePieceIsSelected(piece,false);
+                    //UpdatePieceIsSelected(piece,false);
+                    piece.UpdateIsSelectedStateServerRpc(false);
                 }
                 
                 if (piece.currentTile == 57)

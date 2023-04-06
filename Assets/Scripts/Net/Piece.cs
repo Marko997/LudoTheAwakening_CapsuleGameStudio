@@ -49,7 +49,10 @@ public class Piece : NetworkBehaviour
     public GameObject body;
 
     public NetworkVariable<AnimationState> networkAnimationState = new NetworkVariable<AnimationState>();
-    public NetworkVariable<bool> isSelected = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    //public NetworkVariable<bool> isSelected = new NetworkVariable<bool>(false,NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isSelected = new NetworkVariable<bool>();
+
+    public bool isSelectedLocal = false;
 
     public override void OnNetworkSpawn()
     {
@@ -82,6 +85,23 @@ public class Piece : NetworkBehaviour
     private void Update()
     {
         ClientVisuals();
+        //UpdateIsSelected();
+        
+    }
+    private void UpdateIsSelected()
+    {
+        if(isSelected.Value == true) {
+            isSelectedLocal = true;
+        }
+        else {
+            isSelectedLocal = false;
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateIsSelectedStateServerRpc(bool newValue)
+    {
+        isSelected.Value = newValue;
     }
 
     [ServerRpc(RequireOwnership =false)]
