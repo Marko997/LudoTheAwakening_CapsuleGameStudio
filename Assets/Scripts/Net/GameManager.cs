@@ -748,12 +748,16 @@ public class GameManager : NetworkBehaviour
         int startPosition = paths[teamId][0];
 
         // 1. Move the piece @ the start
-        piece.steps = 0;
+        //piece.steps = 0;
+        piece.UpdateStepsValueClientRpc(0);
+
+        //piece.transform.position = board[startPosition].tileTransform.position;
 
         board[startPosition].AddPiece(piece);
         piece.currentTile = startPosition;
 
-        piece.transform.position = board[startPosition].tileTransform.position;
+        //piece.transform.position = board[startPosition].tileTransform.position;
+        //board[startPosition].RepositionPieces();
 
         //1.a Rotate piece
         piece.RotatePawn(board[startPosition + 1].tileTransform.position);
@@ -779,8 +783,7 @@ public class GameManager : NetworkBehaviour
     private void EatEnemyPawn(Piece piece, int startPosition)
     {
         Piece p = board[startPosition].GetEnemyPiece(piece);
-        //Debug.Log(board[startPosition].PieceCount());
-        //Debug.Log(p +" "+ piece);
+
         if (p != null && p.currentTeam != piece.currentTeam)
         {
             p.UpdateAnimationStateServerRpc(AnimationState.Death);
@@ -815,7 +818,8 @@ public class GameManager : NetworkBehaviour
         //EatEnemyPawn(piece,targetTile);
 
         // 3. Move the piece there
-        piece.steps = currentDiceRoll.Value; //adds steps to pawn
+        //piece.steps = currentDiceRoll.Value; //adds steps to pawn
+        piece.UpdateStepsValueClientRpc(currentDiceRoll.Value);
 
         board[targetTile].AddPiece(piece);
         piece.currentTile = targetTile;
@@ -842,7 +846,10 @@ public class GameManager : NetworkBehaviour
                 string playerName = networkedClient.PlayerObject.GetComponent<PlayerController>().playerName.Value;
                 AddWinnerToTheListClientRpc(playerName);
                 playerCompleted[serverRpcParams.Receive.SenderClientId] = true;
-                winnerText.text = playerName;
+
+                //winnerText.text = playerName;
+                UpdateWinnerNameClientRpc(playerName);
+
                 int i = 0;
                 foreach (KeyValuePair<ulong, bool> pd in playerCompleted)
                     if (!pd.Value)
@@ -867,8 +874,6 @@ public class GameManager : NetworkBehaviour
 
                 EatEnemyPawn(piece, targetTile); //moved here so enemy pawn is eaten when peace reach that tile
 
-                piece.transform.position = board[targetTile].tileTransform.position;// make piece to go to target tile and repostion it
-
                 if ((piece.currentTile > 0 && piece.currentTile < 50 - piece.eatPower) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
@@ -886,13 +891,9 @@ public class GameManager : NetworkBehaviour
                     piece.gameObject.SetActive(false);
                 }
                 if (!canRollAgain && !canAttack)
-                    //Debug.Log(canAttack);
                     NextTurn();
             }
         };
-        //if (!canRollAgain)
-        //    NextTurn();
-
     }
     [ServerRpc(RequireOwnership = false)]
     private void EnableAttackServerRpc(bool state, ulong clientId)
@@ -909,12 +910,17 @@ public class GameManager : NetworkBehaviour
 
         EnableAttackClientRpc(state, clientRpcParams);
     }
+    [ClientRpc]
+    private void UpdateWinnerNameClientRpc(string name)
+    {
+        winnerText.text = name;
+    }
 
     [ClientRpc]
     private void EnableAttackClientRpc(bool state, ClientRpcParams clientRpcParams)
     {
         canAttack = state;
-        Debug.Log(canAttack);
+        //Debug.Log(canAttack);
         attackButton.interactable = canAttack;
     }
 

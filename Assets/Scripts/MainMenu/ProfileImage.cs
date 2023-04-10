@@ -15,7 +15,7 @@ public class ProfileImage : MonoBehaviour
     private void Start()
     {
         //Debug.Log(PlayerPrefs.GetInt("IMAGE"));
-        PlayerPrefs.DeleteKey("IMAGE");
+        //PlayerPrefs.DeleteKey("IMAGE");
         mainPlayerImage.sprite = allPlayerImages[PlayerPrefs.GetInt("IMAGE")].GetComponent<Image>().sprite;
 
         int indexButton = 1;

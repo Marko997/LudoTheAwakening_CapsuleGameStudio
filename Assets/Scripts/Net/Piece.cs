@@ -157,19 +157,17 @@ public class Piece : NetworkBehaviour
         }
         else
         {
-            //StartCoroutine(Move(position));
+            
             t = new Task(Move(position));
-
+            //if (IsClient) { return; }
             t.Finished += delegate (bool manual)
             {
-                if (!manual) {
-                    //animator.ResetTrigger("jump");
+                if (!manual)
+                {
+                    //Debug.Log("Finished");
                     //transform.position = position;
                 }
-                    
             };
-            //transform.position = position;
-            //isSelected = true;
         }
     }
 
@@ -180,7 +178,6 @@ public class Piece : NetworkBehaviour
             yield break;
         }
         isMoving = true;
-        //lookTileInt = 0;
 
         if(steps > 0)
         {
@@ -212,20 +209,32 @@ public class Piece : NetworkBehaviour
             timeForPointToPoint = 0;
 
             steps--;
-
+            UpdateStepsValueClientRpc(steps);
             if (steps == 0)
             {
+                Debug.Log(steps);
                 //transform.position = position;
             }
         }
 
         //transform.position = position; //put more pawns on same tile (reposition)
 
+        if (steps == 0)
+        {
+            transform.position = position;
+            Debug.Log(transform.position);
+        }
+
         if (currentTile > 0)
         {
             isOut = true;
         }
         isMoving = false;     
+    }
+    [ClientRpc]
+    public void UpdateStepsValueClientRpc(int stepsNewValue)
+    {
+        steps = stepsNewValue;
     }
 
     bool MoveToNextNode(Vector3 startPos, Vector3 nextPos, Vector3 lookAtTile)

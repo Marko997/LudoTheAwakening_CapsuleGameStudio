@@ -692,9 +692,9 @@ MonoBehaviour:
   allPlayerImages:
   - {fileID: 5435973087940949717, guid: a054e47c3ed8c49e1ae4edb9a04161e7, type: 3}
   - {fileID: 5435973087940949717, guid: a054e47c3ed8c49e1ae4edb9a04161e7, type: 3}
-  - {fileID: 5435973087940949717, guid: 9b9a75c1397e444a0a87b425bb9a61c2, type: 3}
-  - {fileID: 5435973087940949717, guid: 74deca3bde2764d78938a9cfe3ae4ff3, type: 3}
   - {fileID: 5435973087940949717, guid: 822c423f99d0a499abae7a9753ed11c3, type: 3}
+  - {fileID: 5435973087940949717, guid: 74deca3bde2764d78938a9cfe3ae4ff3, type: 3}
+  - {fileID: 5435973087940949717, guid: 9b9a75c1397e444a0a87b425bb9a61c2, type: 3}
   imagesParent: {fileID: 1384286116}
 --- !u!1 &23060110
 GameObject:
@@ -4244,7 +4244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 5, y: 125.485596}
+  m_AnchoredPosition: {x: 5, y: 125.48572}
   m_SizeDelta: {x: 385, y: 350}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &213445913
@@ -6093,7 +6093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &315882905
 RectTransform:
   m_ObjectHideFlags: 0
