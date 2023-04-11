@@ -49,6 +49,7 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject winnerPrefab;
     [SerializeField] private GameObject winnerPanel;
     [SerializeField] private Button attackButton;
+    [SerializeField] private Button rollButton;
     [SerializeField] private Sprite[] diceSides;
     [SerializeField] private TextMeshProUGUI currentTurnText;
 
@@ -70,6 +71,11 @@ public class GameManager : NetworkBehaviour
     //Timer
     public int duration;
     private int remainingDuration;
+
+    //Audio
+    [SerializeField] private AudioSource source;
+    [SerializeField] private AudioClip diceSound;
+    [SerializeField] private AudioClip attackSound;
 
     // Callbacks
     private void Awake()
@@ -134,6 +140,11 @@ public class GameManager : NetworkBehaviour
         OnPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
 
         UpdateCurrentTurnColorAndText();
+
+        if(currentTurn.Value == NetworkManager.LocalClientId)
+        {
+            rollButton.interactable = true;
+        }
         
     }
 
@@ -188,6 +199,8 @@ public class GameManager : NetworkBehaviour
         // If its not our turn, don't update the raycasts
         if (currentTurn.Value == NetworkManager.Singleton.LocalClientId)
         {
+            //rollButton.interactable = true;
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 10500.0f, LayerMask.GetMask("ActivePiece")))
@@ -205,10 +218,6 @@ public class GameManager : NetworkBehaviour
             }
         }
     }
-    //public void UpdatePieceIsSelected(Piece selectedPiece, bool value)
-    //{
-    //    selectedPiece.isSelected.Value = value;
-    //}
 
     [ServerRpc(RequireOwnership = false)]
     public void UpdateIsSelectedServerRpc(int indexPos, bool newValue, ServerRpcParams serverRpcParams = default)
@@ -217,10 +226,7 @@ public class GameManager : NetworkBehaviour
         Piece selectedPiece = playerPieces[clientId][indexPos];
 
         selectedPiece.isSelected.Value = newValue;
-        Debug.Log(selectedPiece.isSelected.Value);
-        //UpdateIsSelectedClientRpc(selectedPieceValue,newValue);
     }
-
 
     //Camera
     private void RepositionCamera(ulong clientId)
@@ -335,31 +341,6 @@ public class GameManager : NetworkBehaviour
     }
     #endregion
     #region Server side methods
-    //Started working on timer, problem with losing track of turns, couldnt roll dice on any client for some reason
-    //private void BeginTimer(int second)
-    //{
-    //    remainingDuration = second;
-    //    if (switcherCoroutine != null)
-    //    {
-    //        StopCoroutine(switcherCoroutine);
-    //    }
-    //    switcherCoroutine = StartCoroutine(UpdateTimer());
-    //}
-
-    //private IEnumerator UpdateTimer()
-    //{
-    //    while (remainingDuration >= 0)
-    //    {
-    //        //update UI
-    //        remainingDuration--;
-    //        Debug.Log(remainingDuration);
-    //        yield return new WaitForSeconds(1f);
-    //    }
-    //    //OnEnd();
-    //    Debug.Log("Should switch turn");
-    //    NextTurn();
-    //}
-    //private Coroutine switcherCoroutine;
     private void NextTurn()
     {
         // 0. Save the previous turn value, so we can check which one is next
@@ -388,14 +369,16 @@ public class GameManager : NetworkBehaviour
                 {
                     ulong prevLead = turnIds[0];
                     for (int j = 1; j < turnIds.Length; j++)
+                    {
                         turnIds[j - 1] = turnIds[j];
+                    }
                     turnIds[turnIds.Length - 1] = prevLead;
                 }
 
                 break;
             }
         }
-
+       
         // If the next player's is done with the game, skip him
         for (int i = 1; i < turnIds.Length; i++)
         {
@@ -404,6 +387,14 @@ public class GameManager : NetworkBehaviour
                 currentTurn.Value = turnIds[i];
                 break;
             }
+        }
+    }
+    [ClientRpc]
+    private void TurnOffRollDiceClientRpc(ulong clientId, bool value)
+    {
+        if(clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            rollButton.interactable = value;
         }
     }
 
@@ -530,6 +521,8 @@ public class GameManager : NetworkBehaviour
     public void DiceRollButton()
     {
         //currentDiceRoll.OnValueChanged += UpdateDiceUI;
+        source.clip = diceSound;
+        source.Play();
         DiceRollServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void DiceRollButton(int forceDice)
@@ -538,6 +531,8 @@ public class GameManager : NetworkBehaviour
     }
     public void AttackButton()
     {
+        source.clip = attackSound;
+        source.Play();
         AttackServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void EndButton()
@@ -579,6 +574,8 @@ public class GameManager : NetworkBehaviour
                 name = client.Value.PlayerObject.GetComponent<PlayerController>().playerName.Value;
                 //currentTurnText.text = $"{name} has turn!";
                 UpdateCurrentTurnTextClientRpc(name,newValue);
+                TurnOffRollDiceClientRpc(newValue, true);
+                TurnOffRollDiceClientRpc(prev, false);
             }
         }   
         //int teamId = Utility.RetrieveTeamId(newValue);
@@ -588,10 +585,10 @@ public class GameManager : NetworkBehaviour
     private void UpdateDiceUI(int prev, int newValue)
     {
         //diceRollText.text = newValue.ToString();
-        StartCoroutine(DiceAnimation(newValue));
+        StartCoroutine(DiceAnimation(newValue, (ulong)newValue));
     }
 
-    IEnumerator DiceAnimation(int diceValue)
+    IEnumerator DiceAnimation(int diceValue, ulong prevClient)
     {
         // Pick up random value from 0 to 5 (All inclusive)
         int randomDiceSide = 0;
@@ -609,7 +606,8 @@ public class GameManager : NetworkBehaviour
                 // Pause before next itteration
                 yield return new WaitForSeconds(0.05f);
             }
-            otherPlayerDices[0].sprite = diceSides[diceValue - 1];            
+            otherPlayerDices[0].sprite = diceSides[diceValue - 1];
+            //(prevClient, false);
         }
         else
         {
@@ -654,7 +652,8 @@ public class GameManager : NetworkBehaviour
                     otherPlayerDices[turn].sprite = diceSides[diceValue - 1];
                 }
             }
-        } 
+        }
+        //TurnOffRollDiceClientRpc((ulong)prev);
     }
 
     // RPCs
@@ -885,9 +884,15 @@ public class GameManager : NetworkBehaviour
                     //UpdatePieceIsSelected(piece,false);
                     piece.UpdateIsSelectedStateServerRpc(false);
                 }
-                
+                if (piece.currentTile == 56)//jump at the end
+                {
+                    //piece.UpdateAnimationStateServerRpc(AnimationState.Jump);
+                }
+
                 if (piece.currentTile == 57)
                 {
+                    piece.source.clip = piece.endSound;
+                    piece.source.Play();
                     piece.gameObject.SetActive(false);
                 }
                 if (!canRollAgain && !canAttack)
@@ -963,7 +968,7 @@ public class GameManager : NetworkBehaviour
 
             if(currentDiceRoll.Value == rv) // check if new roll is same as old one and do roll animation again
             {
-                StartCoroutine(DiceAnimation(rv));
+                StartCoroutine(DiceAnimation(rv, clientId));
             }
 
             currentDiceRoll.Value = rv;
@@ -993,11 +998,13 @@ public class GameManager : NetworkBehaviour
                     }
                 };
                 EnableInteractionClientRpc(pieceYouCanMove, clientRpcParams);
+                
                 //EnableAttackClientRpc(false,clientRpcParams);
                 EnableAttackServerRpc(false, clientId);
             }
             else
             {
+                //TurnOffRollDiceClientRpc(clientId, false);
                 NextTurn();
             }
         }

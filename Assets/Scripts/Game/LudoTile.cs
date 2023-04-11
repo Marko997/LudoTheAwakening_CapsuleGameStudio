@@ -42,7 +42,7 @@ public class LudoTile
         for (int i = 0; i < pieces.Length; i++)
             if (pieces[i] != null)
                 ps.Add(pieces[i]);
-        Debug.Log(pieceCount);
+        //Debug.Log(pieceCount);
         // Position all pieces based on count
         switch (pieceCount)
         {

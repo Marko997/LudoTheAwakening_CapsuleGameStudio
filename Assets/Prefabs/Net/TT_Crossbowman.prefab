@@ -614,6 +614,10 @@ MonoBehaviour:
     m_InternalValue: 0
   isSelected:
     m_InternalValue: 0
+  isSelectedLocal: 0
+  source: {fileID: 0}
+  jumpSound: {fileID: 8300000, guid: 6fb22b748184747919bff3bfcb6f735f, type: 3}
+  endSound: {fileID: 8300000, guid: 8ccdea1eb4dc843579dc1ca0a42075e3, type: 3}
 --- !u!114 &2529378630077241535
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,8 @@ public enum AnimationState
     Idle,
     Walk,
     Attack,
-    Death
+    Death,
+    Jump
 }
 
 public class Piece : NetworkBehaviour
@@ -24,6 +25,7 @@ public class Piece : NetworkBehaviour
     public Vector3 startPosition;
     public int eatPower;
     public int lookTileInt = 0;
+    public float _JumpSize = 10f;
 
     public GameObject pieceCardImage;
 
@@ -54,6 +56,10 @@ public class Piece : NetworkBehaviour
 
     public bool isSelectedLocal = false;
 
+    public AudioSource source;
+    public AudioClip jumpSound;
+    public AudioClip endSound;
+
     public override void OnNetworkSpawn()
     {
         animator = GetComponent<Animator>();
@@ -79,7 +85,9 @@ public class Piece : NetworkBehaviour
             gameObject.AddComponent<BoxCollider>();
             gameObject.GetComponent<BoxCollider>().size = new Vector3(1f,2.5f,1f);
             gameObject.GetComponent<BoxCollider>().center = new Vector3(0f,1.25f,0f);
-        }    
+        }
+        source = FindObjectOfType<AudioSource>();
+        
     }
 
     private void Update()
@@ -118,6 +126,7 @@ public class Piece : NetworkBehaviour
                 animator.SetBool("isWalking", false);
                 animator.SetBool("isDead", false);
                 animator.ResetTrigger("attack");
+                animator.ResetTrigger("jump");
                 break;
             case AnimationState.Walk:
                 animator.SetBool("isWalking", true);
@@ -128,6 +137,9 @@ public class Piece : NetworkBehaviour
                 break;
             case AnimationState.Death:
                 animator.SetBool("isDead", true);
+                break;
+            case AnimationState.Jump:
+                animator.SetTrigger("jump");
                 break;
             default:
                 break;
@@ -153,22 +165,19 @@ public class Piece : NetworkBehaviour
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
-            UpdateAnimationStateServerRpc(AnimationState.Idle);
+            //UpdateAnimationStateServerRpc(AnimationState.Idle);
+            StartCoroutine(WaitForDeathToFinish());
         }
         else
         {
-            
+            source.clip = jumpSound;
             t = new Task(Move(position));
-            //if (IsClient) { return; }
-            t.Finished += delegate (bool manual)
-            {
-                if (!manual)
-                {
-                    //Debug.Log("Finished");
-                    //transform.position = position;
-                }
-            };
         }
+    }
+    public IEnumerator WaitForDeathToFinish()
+    {
+        yield return new WaitForSeconds(2f);
+        UpdateAnimationStateServerRpc(AnimationState.Idle);
     }
 
     public IEnumerator Move(Vector3 position)
@@ -186,6 +195,7 @@ public class Piece : NetworkBehaviour
 
         while (steps > 0)
         {
+            source.Play();
             routePosition++;
 
             if (routePosition == 50)
@@ -201,7 +211,14 @@ public class Piece : NetworkBehaviour
             Vector3 nextPos = board[routePosition].tileTransform.position;
             Vector3 lookAtTile = board[routePosition + lookTileInt].tileTransform.position;
 
-            while (MoveToNextNode(startPos, nextPos, lookAtTile))
+            float jumpSize = 0.5f;
+            if (board[56].tileTransform.position == nextPos)
+            {
+                UpdateAnimationStateServerRpc(AnimationState.Jump);
+                jumpSize = _JumpSize;
+            }
+
+            while (MoveToNextNode(startPos, nextPos, lookAtTile, jumpSize))
             {
                 yield return null;
             }
@@ -212,7 +229,7 @@ public class Piece : NetworkBehaviour
             UpdateStepsValueClientRpc(steps);
             if (steps == 0)
             {
-                Debug.Log(steps);
+                //Debug.Log(steps);
                 //transform.position = position;
             }
         }
@@ -222,7 +239,6 @@ public class Piece : NetworkBehaviour
         if (steps == 0)
         {
             transform.position = position;
-            Debug.Log(transform.position);
         }
 
         if (currentTile > 0)
@@ -237,14 +253,14 @@ public class Piece : NetworkBehaviour
         steps = stepsNewValue;
     }
 
-    bool MoveToNextNode(Vector3 startPos, Vector3 nextPos, Vector3 lookAtTile)
+    bool MoveToNextNode(Vector3 startPos, Vector3 nextPos, Vector3 lookAtTile, float jumpSize = 0.5f)
     {
         timeForPointToPoint += 5f * Time.deltaTime;
         Vector3 pawnPosition = Vector3.Lerp(startPos, nextPos, timeForPointToPoint);
 
         RotatePawn(lookAtTile);
 
-        pawnPosition.y += 0.5f * Mathf.Sin(Mathf.Clamp01(timeForPointToPoint) * Mathf.PI);
+        pawnPosition.y += jumpSize * Mathf.Sin(Mathf.Clamp01(timeForPointToPoint) * Mathf.PI);
 
         return nextPos != (transform.position = Vector3.Lerp(transform.position, pawnPosition, timeForPointToPoint));
     }
