@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
 
+public enum PlayerTypes
+{
+    CPU,
+    HUMAN
+}
+
 public class PlayerController : NetworkBehaviour
 {
     private bool networkStarted = true;
@@ -26,58 +32,72 @@ public class PlayerController : NetworkBehaviour
     public List<GameObject> pawnContainer = new List<GameObject>(4); //napraviti objekat koji ima sve pijune i singleton je tako da se ovde ubace samo oni koje player ima
     public List<Sprite> allPlayerImages = new List<Sprite>();
 
+    public PlayerTypes PlayerType;
+
     private void Start()
     {
-        if (PlayerPrefs.HasKey("Deck"))
+        if (PlayerType == PlayerTypes.HUMAN)
         {
-            string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
-
-            foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
+            if (PlayerPrefs.HasKey("Deck"))
             {
-                deckStrings.Add(cardID.value);
+                string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
+
+                foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
+                {
+                    deckStrings.Add(cardID.value);
+                }
             }
         }
     }
 
     public void Update()
     {
-        if (networkStarted)
-        {
-            RegisterEvents();
-
-            myPLayerListItem = Instantiate(LobbyScene.Instance.playerListItemPrefab, Vector3.zero, Quaternion.identity);
-            myPLayerListItem.transform.SetParent(LobbyScene.Instance.playerListContainer, false);
-
-            playerNameLabel = myPLayerListItem.GetComponentInChildren<TextMeshProUGUI>();
-            playerImage = myPLayerListItem.GetComponent<Image>();
-
-            if (IsOwner)
+        //if (PlayerType == PlayerTypes.HUMAN)
+        //{
+            if (networkStarted)
             {
-                if (PlayerPrefs.GetString("NAME") == "")
+                RegisterEvents();
+
+                myPLayerListItem = Instantiate(LobbyScene.Instance.playerListItemPrefab, Vector3.zero, Quaternion.identity);
+                myPLayerListItem.transform.SetParent(LobbyScene.Instance.playerListContainer, false);
+
+                playerNameLabel = myPLayerListItem.GetComponentInChildren<TextMeshProUGUI>();
+                playerImage = myPLayerListItem.GetComponent<Image>();
+
+                if (IsOwner)
                 {
-                    playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+                    if (PlayerPrefs.GetString("NAME") == "")
+                    {
+                        playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+                    }
+                    else
+                    {
+                        playerName.Value = PlayerPrefs.GetString("NAME");
+                    }
+                    if (PlayerPrefs.GetInt("IMAGE") == 0)
+                    {
+                        playerImageIndex.Value = UnityEngine.Random.Range(1, 4);
+                    }
+                    else
+                    {
+                        playerImageIndex.Value = PlayerPrefs.GetInt("IMAGE");
+                    }
                 }
                 else
                 {
-                    playerName.Value = PlayerPrefs.GetString("NAME");
+                    playerNameLabel.text = playerName.Value;
+                    playerImage.sprite = allPlayerImages[playerImageIndex.Value];
                 }
-                if (PlayerPrefs.GetInt("IMAGE") == 0)
-                {
-                    playerImageIndex.Value = UnityEngine.Random.Range(1, 4);
-                }
-                else
-                {
-                    playerImageIndex.Value = PlayerPrefs.GetInt("IMAGE");
-                }
-            }
-            else
+
+            if(PlayerType == PlayerTypes.CPU)
             {
-                playerNameLabel.text = playerName.Value;
-                playerImage.sprite = allPlayerImages[playerImageIndex.Value];
+                playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+                playerImageIndex.Value = UnityEngine.Random.Range(1, 4);
             }
 
-            networkStarted = false;
-        }
+                networkStarted = false;
+            }
+        //}
     }
 
     public override void OnDestroy()

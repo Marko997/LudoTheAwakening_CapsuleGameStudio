@@ -26,8 +26,13 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public GameObject slider;
 
+    private bool bots;
+
+    public PlayerController bot1;
+
     private async void Start()
     {
+        bots = true;
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
         {
@@ -87,8 +92,15 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
         NetworkManager.Singleton.StartHost();
 
+        
+
         if (NetworkManager.Singleton.IsListening)
         {
+            if (bots)
+            {
+                var bot = Instantiate(bot1);
+                bot.GetComponent<NetworkObject>().Spawn();
+            }
             slider.SetActive(false);
         }
     }
@@ -146,7 +158,12 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public void OnLobbyStartButton()
     {
-        NetworkManager.Singleton.SceneManager.LoadScene("Game",UnityEngine.SceneManagement.LoadSceneMode.Single);
+        if (!bots)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+
+        NetworkManager.Singleton.SceneManager.LoadScene("BotsGame", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
     public void OnLobbySubmitNameChange()
     {
