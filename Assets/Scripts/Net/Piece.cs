@@ -89,6 +89,42 @@ public class Piece : NetworkBehaviour
         source = FindObjectOfType<AudioSource>();
         
     }
+    private void Start()
+    {
+        if (GetComponentInParent<PlayerController>() == null)
+        {
+            return;
+        }
+        if(GetComponentInParent<PlayerController>().PlayerType == PlayerTypes.CPU)
+        {
+            animator = GetComponent<Animator>();
+            // Assign the start position field to be restored when piece is eaten
+            startPosition = transform.position;
+            spell = gameObject.GetComponent<Spell>();
+
+            selector[1] = Instantiate(selector[1]);
+            selector[1].transform.SetParent(this.transform);
+            selector[1].transform.position = this.transform.position;
+            selector[1].SetActive(false);
+
+            int teamId = Utility.RetrieveTeamId(1);
+            currentTeam = (Team)teamId;
+
+            //Change material
+            head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+            body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+
+            // Spawn a collider if you're the owner, to allow selection of the pieces
+            if (IsOwner)
+            {
+                gameObject.AddComponent<BoxCollider>();
+                gameObject.GetComponent<BoxCollider>().size = new Vector3(1f, 2.5f, 1f);
+                gameObject.GetComponent<BoxCollider>().center = new Vector3(0f, 1.25f, 0f);
+            }
+            source = FindObjectOfType<AudioSource>();
+
+        }
+    }
 
     private void Update()
     {

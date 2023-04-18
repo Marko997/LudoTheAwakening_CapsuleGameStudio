@@ -8,6 +8,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class LobbyScene : MonoSingleton<LobbyScene>
 {
@@ -30,9 +31,11 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public PlayerController bot1;
 
+    public static List<PlayerController> botsList = new List<PlayerController>();
+
     private async void Start()
     {
-        bots = true;
+        bots = false;
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
         {
@@ -100,6 +103,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
             {
                 var bot = Instantiate(bot1);
                 bot.GetComponent<NetworkObject>().Spawn();
+                botsList.Add(bot);
             }
             slider.SetActive(false);
         }

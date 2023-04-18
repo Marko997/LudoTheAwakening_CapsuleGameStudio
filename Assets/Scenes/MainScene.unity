@@ -33844,6 +33844,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5330732910706015331, guid: 165fd8406d77544a2aeaca770bd8a593,
         type: 3}
+      propertyPath: bot1
+      value: 
+      objectReference: {fileID: 8207928270722757618, guid: 9c3ec8c65f5b24ca0ac7f9de14e9522f,
+        type: 3}
+    - target: {fileID: 5330732910706015331, guid: 165fd8406d77544a2aeaca770bd8a593,
+        type: 3}
       propertyPath: slider
       value: 
       objectReference: {fileID: 269193092}
@@ -35397,6 +35403,12 @@ MonoBehaviour:
       OverridingTargetPrefab: {fileID: 0}
     - Override: 0
       Prefab: {fileID: 145858, guid: a366033adc7e545a980b9b704cbdb365, type: 3}
+      SourcePrefabToOverride: {fileID: 0}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
+    - Override: 0
+      Prefab: {fileID: 8207928270722757516, guid: 9c3ec8c65f5b24ca0ac7f9de14e9522f,
+        type: 3}
       SourcePrefabToOverride: {fileID: 0}
       SourceHashToOverride: 0
       OverridingTargetPrefab: {fileID: 0}

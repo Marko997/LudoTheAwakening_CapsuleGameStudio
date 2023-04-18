@@ -79,6 +79,7 @@ public class BotsGameManager : NetworkBehaviour
 
     //BOTS
     [SerializeField] private GameObject blueBot;
+    [SerializeField] private List<PlayerController> playerList = new List<PlayerController>();
 
     // Callbacks
     private void Awake()
@@ -142,41 +143,14 @@ public class BotsGameManager : NetworkBehaviour
         RepositionCamera(NetworkManager.Singleton.LocalClientId);
         OnPlayerReadyServerRpc(NetworkManager.Singleton.LocalClientId);
 
+        SpawnBots();
+
         UpdateCurrentTurnColorAndText();
 
-        if(currentTurn.Value == NetworkManager.LocalClientId)
+        if(currentTurn.Value == 0)
         {
             rollButton.interactable = true;
         }
-        
-    }
-
-    public void UpdateCurrentTurnColorAndText()
-    {
-        if (!IsServer) { return; }
-        string name;
-        foreach (var client in NetworkManager.Singleton.ConnectedClients)
-        {
-            if (client.Key == currentTurn.Value)
-            {
-                name = client.Value.PlayerObject.GetComponent<PlayerController>().playerName.Value;
-                UpdateCurrentTurnTextClientRpc(name, currentTurn.Value);
-            }
-        }
-    }
-
-    [ClientRpc]
-    public void UpdateCurrentTurnTextClientRpc(string name, ulong currentTurnId)
-    {
-        //currentTurnText.text = name;
-        currentTurnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId(currentTurnId));
-        //Debug.Log(currentTurnId);
-        currentTurnText.text = $"{name} has turn!";
-    }
-
-    public override void OnDestroy()
-    {
-        UnregisterEvents();
     }
 
     public void Update()
@@ -200,7 +174,7 @@ public class BotsGameManager : NetworkBehaviour
             playersSpawned = false;
         }
         // If its not our turn, don't update the raycasts
-        if (currentTurn.Value == NetworkManager.Singleton.LocalClientId)
+        if (currentTurn.Value == 0)
         {
             //rollButton.interactable = true;
 
@@ -220,7 +194,48 @@ public class BotsGameManager : NetworkBehaviour
                 }
             }
         }
+
+        if (currentTurn.Value == 1)
+        {
+            StartCoroutine(CpuDiceRoll());
+        }
     }
+
+    private IEnumerator CpuDiceRoll()
+    {
+        yield return new WaitForSeconds(2f);
+        DiceRollServerRpc(1);
+    }
+
+    public void UpdateCurrentTurnColorAndText()
+    {
+        if (!IsServer) { return; }
+        string name;
+        foreach (var client in playerList)
+        {
+            if (client.playerId == currentTurn.Value)
+            {
+                name = client.GetComponent<PlayerController>().playerName.Value;
+                UpdateCurrentTurnTextClientRpc(name, currentTurn.Value);
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void UpdateCurrentTurnTextClientRpc(string name, ulong currentTurnId)
+    {
+        //currentTurnText.text = name;
+        currentTurnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId(currentTurnId));
+        //Debug.Log(currentTurnId);
+        currentTurnText.text = $"{name} has turn!";
+    }
+
+    public override void OnDestroy()
+    {
+        UnregisterEvents();
+    }
+
+    
 
     [ServerRpc(RequireOwnership = false)]
     public void UpdateIsSelectedServerRpc(int indexPos, bool newValue, ServerRpcParams serverRpcParams = default)
@@ -352,10 +367,11 @@ public class BotsGameManager : NetworkBehaviour
         // 1. Reset the roll count, used in the 3x 6 in a row roll turn skip
         rollCountThisTurn = 0;
         //duration = 10;
-        
+
         //BeginTimer(duration);
         // 2. Create an array with the client IDs
-        ulong[] turnIds = NetworkManager.Singleton.ConnectedClients.Keys.ToArray();
+        //ulong[] turnIds = NetworkManager.Singleton.ConnectedClients.Keys.ToArray();
+        ulong[] turnIds = {0, 1};
 
         // 3. Ensure the current player is at the begening of the array, this will swap positions until it is true
         // ex : Blue's turn : [0,2,3,4] -> [4,0,2,3]
@@ -431,6 +447,63 @@ public class BotsGameManager : NetworkBehaviour
         allPlayerImages.Add(key, playerImageIndex);
     }
 
+    private void SpawnBots()
+    {
+        //playerPieces = new Dictionary<ulong, Piece[]>(4);
+        //playerCompleted = new Dictionary<ulong, bool>(4);
+        //playerNames = new Dictionary<ulong, CustomNetworkVariables.NetworkString>(4);
+        foreach (var botPlayerController in LobbyScene.botsList)
+        {
+            //PlayerController pc = nc.Value.PlayerObject.GetComponent<PlayerController>();
+            for (int i = 0; i < LobbyScene.botsList.Count; i++)
+            {
+                if (!playerNames.ContainsKey(1))
+                {
+                    UpdatePlayerNamesClientRpc(1, botPlayerController.playerName.Value, botPlayerController.playerImageIndex.Value);
+                }
+            }
+        }
+        int playerIndex = 1;
+        foreach (var botPlayerController in LobbyScene.botsList)
+        {
+            Piece[] pieces = new Piece[4];
+
+            // Spawn 4 Networked pieces for every active player
+            for (int i = 0; i < 4; i++)
+            {
+                //GameObject go = GameObject.Instantiate(piecePrefab);
+
+                //GameObject go = Instantiate(Swap(botPlayerController.deckStrings[i], botPlayerController.pawnContainer));
+                GameObject go = Instantiate(piecePrefab, botPlayerController.transform);
+
+                go.transform.position = startPosition[playerIndex][i];
+
+                pieces[i] = go.GetComponent<Piece>();
+
+                int[] value;
+                if (paths.TryGetValue(((int)pieces[i].currentTeam), out value))
+                {
+                    for (int j = 0; j < value.Length; j++)
+                    {
+                        pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
+                    }
+                }
+                //Sets starting rotation
+                pieces[i].transform.rotation = Utility.TeamToRotataion(pieces[i].currentTeam);
+            }
+
+            playerPieces.Add(1, pieces);
+            playerCompleted.Add(1, false);
+            botPlayerController.playerId = 1;
+            playerList.Add(botPlayerController);
+
+            playerIndex++;
+        }
+
+    }
+
     private void SpawnAllPlayers()
     {
         // Assign the values (owner side only)
@@ -445,7 +518,7 @@ public class BotsGameManager : NetworkBehaviour
             {
                 if (!playerNames.ContainsKey(nc.Key))
                 {
-                    UpdatePlayerNamesClientRpc(nc.Key,pc.playerName.Value, pc.playerImageIndex.Value);
+                    UpdatePlayerNamesClientRpc(nc.Key, pc.playerName.Value, pc.playerImageIndex.Value);
                 }
             }
         }
@@ -468,7 +541,7 @@ public class BotsGameManager : NetworkBehaviour
                 pieces[i] = go.GetComponent<Piece>();
 
                 int[] value;
-                if(paths.TryGetValue(((int)pieces[i].currentTeam), out value))
+                if (paths.TryGetValue(((int)pieces[i].currentTeam), out value))
                 {
                     for (int j = 0; j < value.Length; j++)
                     {
@@ -488,14 +561,19 @@ public class BotsGameManager : NetworkBehaviour
                     TargetClientIds = new ulong[] { nc.Key }
                 }
             };
-            
-            ChangeColorAndNameClientRpc(nc.Key, pc.playerName.Value,clientRpcParams);
+
+            ChangeColorAndNameClientRpc(nc.Key, pc.playerName.Value, clientRpcParams);
 
             playerPieces.Add(nc.Key, pieces);
             playerCompleted.Add(nc.Key, false);
-           
+
+            pc.playerId = 0;
+
+            playerList.Add(pc);
+
             playerIndex++;
         }
+
     }
     #endregion
     #region Client side methods
@@ -570,11 +648,11 @@ public class BotsGameManager : NetworkBehaviour
         string name;
         if (!IsServer) { return; }
         
-        foreach(var client in NetworkManager.Singleton.ConnectedClients)
+        foreach(var client in playerList)
         {
-            if(client.Key == newValue)
+            if(client.playerId == newValue)
             {
-                name = client.Value.PlayerObject.GetComponent<PlayerController>().playerName.Value;
+                name = client.GetComponent<PlayerController>().playerName.Value;
                 //currentTurnText.text = $"{name} has turn!";
                 UpdateCurrentTurnTextClientRpc(name,newValue);
                 TurnOffRollDiceClientRpc(newValue, true);
