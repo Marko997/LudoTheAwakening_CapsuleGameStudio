@@ -13,7 +13,8 @@ public class LudoTile
             if (pieces[i] == null)
             {
                 pieces[i] = piece;
-                RepositionPieces();
+                //if (pieces[i+1].currentTeam != piece.currentTeam) { return; }
+                RepositionPieces(piece);
                 break;
             }
         }
@@ -25,12 +26,12 @@ public class LudoTile
             if (pieces[i] == piece)
             {
                 pieces[i] = null;
-                RepositionPieces();
+                RepositionPieces(piece);
                 break;
             }
         }
     }
-    public void RepositionPieces()
+    public void RepositionPieces(Piece p)
     {
         // If there is no more pieces on the board
         int pieceCount = PieceCount();
@@ -42,7 +43,7 @@ public class LudoTile
         for (int i = 0; i < pieces.Length; i++)
             if (pieces[i] != null)
                 ps.Add(pieces[i]);
-        //Debug.Log(pieceCount);
+
         // Position all pieces based on count
         switch (pieceCount)
         {
@@ -51,18 +52,38 @@ public class LudoTile
                 break;
 
             case 2:
-                //ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.25f));
+                if (ps[0].currentTeam != p.currentTeam)
+                {
+                    ps[0].PositionClientRpc(tileTransform.position);
+                    ps[1].PositionClientRpc(tileTransform.position);
+                    return;
+                }
                 ps[0].PositionClientRpc(tileTransform.position + tileTransform.right * 0.95f);
                 ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
                 break;
 
             case 3:
+                if (ps[0].currentTeam != p.currentTeam)
+                {
+                    ps[0].PositionClientRpc(tileTransform.position);
+                    ps[1].PositionClientRpc(tileTransform.position);
+                    ps[2].PositionClientRpc(tileTransform.position);
+                    return;
+                }
                 ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.95f));
                 ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
                 ps[2].PositionClientRpc(tileTransform.position + (-tileTransform.up * 0.95f));
                 break;
 
             case 4:
+                if (ps[0].currentTeam != p.currentTeam)
+                {
+                    ps[0].PositionClientRpc(tileTransform.position);
+                    ps[1].PositionClientRpc(tileTransform.position);
+                    ps[2].PositionClientRpc(tileTransform.position);
+                    ps[3].PositionClientRpc(tileTransform.position);
+                    return;
+                }
                 ps[0].PositionClientRpc(tileTransform.position + (tileTransform.right * 0.95f));
                 ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
                 ps[2].PositionClientRpc(tileTransform.position + (tileTransform.up * 0.95f));

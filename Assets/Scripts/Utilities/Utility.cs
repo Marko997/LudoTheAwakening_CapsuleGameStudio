@@ -52,11 +52,11 @@ public class Utility : MonoBehaviour
             case Team.Red:
                 return 0;
             case Team.Green:
-                return 3;
-            case Team.Yellow:
-                return 2;
-            case Team.Blue:
                 return 1;
+            case Team.Yellow:
+                return 3;
+            case Team.Blue:
+                return 2;
             default:
                 return -1;
         }

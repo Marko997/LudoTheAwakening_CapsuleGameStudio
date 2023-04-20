@@ -98,9 +98,9 @@ public class GameManager : NetworkBehaviour
 
             paths.Add(teamId, teamPath);
         }
-        var tempPath = paths[2];
-        paths[2] = paths[1];
-        paths[1] = tempPath;
+        //var tempPath = paths[2];
+        //paths[2] = paths[1];
+        //paths[1] = tempPath;
         #endregion
 
         #region Initiate the board []
@@ -238,12 +238,12 @@ public class GameManager : NetworkBehaviour
                 Camera.main.transform.rotation = Quaternion.Euler(50f,135f,0f); 
                 break;
             case 1:
-                Camera.main.transform.position = new Vector3(50f, 90f, -50f);
-                Camera.main.transform.rotation = Quaternion.Euler(50f, -45f, 0f);
-                break;
-            case 2:
                 Camera.main.transform.position = new Vector3(50f, 90f, 50f);
                 Camera.main.transform.rotation = Quaternion.Euler(50f, -135f, 0f);
+                break;
+            case 2:
+                Camera.main.transform.position = new Vector3(50f, 90f, -50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, -45f, 0f);
                 break;
             case 3:
                 Camera.main.transform.position = new Vector3(-50f, 90f, -50f);
@@ -411,7 +411,7 @@ public class GameManager : NetworkBehaviour
             case "Macebearer":
                 piecePrefab = pawns[2]; //item iz liste game objekata u kojoj se cuvaju heroji
                 break;
-            case "Slinger":
+            case "Crossbowman":
                 piecePrefab = pawns[3]; //item iz liste game objekata u kojoj se cuvaju heroji
                 break;
             default:
@@ -469,12 +469,11 @@ public class GameManager : NetworkBehaviour
                 {
                     for (int j = 0; j < value.Length; j++)
                     {
-                        pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
-                        pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
                         pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
                     }
                 }
                 //Sets starting rotation
+
                 pieces[i].transform.rotation = Utility.TeamToRotataion(pieces[i].currentTeam);
             }
 
@@ -607,52 +606,104 @@ public class GameManager : NetworkBehaviour
                 yield return new WaitForSeconds(0.05f);
             }
             otherPlayerDices[0].sprite = diceSides[diceValue - 1];
-            //(prevClient, false);
         }
         else
         {
-            int turn = 0;
-            //Show rolling dice from main client to other clients
-            for (int i = 0; i <= 10; i++)
+            int turn = (int)currentTurn.Value;
+            switch (NetworkManager.Singleton.LocalClientId)
             {
-                // Set sprite to upper face of dice from array according to random value
+                case 0://Updates other players dice on player 0 (RED)
+                    for (int i = 0; i <= 10; i++)
+                    {
+                        // Set sprite to upper face of dice from array according to random value
+                        randomDiceSide = UnityEngine.Random.Range(0, 5);
 
-                randomDiceSide = UnityEngine.Random.Range(0, 5);
+                        otherPlayerDices[turn].sprite = diceSides[randomDiceSide];
 
-                //update player 0 (RED) dice animation to other clients
-                if ((i > 0 && i < 4) && (int)NetworkManager.Singleton.LocalClientId == i)
-                {
-                    otherPlayerDices[i].sprite = diceSides[randomDiceSide];
-                }
-
-                //update other clients dice animaiton on player 0 (RED)
-                if ((int)NetworkManager.Singleton.LocalClientId == 0 && i < 4)
-                {
-                    //otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[randomDiceSide];
-                    otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[randomDiceSide];
-                    turn = (int)currentTurn.Value;
-                    continue;
-                }
-
-                // Pause before next itteration
-                yield return new WaitForSeconds(0.05f);
-            }
-
-            for (int j = 1; j < otherPlayerDices.Length; j++)
-            {
-                //update player 0 (RED) dice VALUE to other clients
-                if ((j > 0 && j < 4) && (int)NetworkManager.Singleton.LocalClientId == j)
-                {
-                    otherPlayerDices[j].sprite = diceSides[diceValue - 1];
-                }
-
-                //update other clients dice VALUE on player 0 (RED)
-                if ((int)NetworkManager.Singleton.LocalClientId == 0 && j < 4)
-                {
+                        // Pause before next itteration
+                        yield return new WaitForSeconds(0.05f);
+                    }
                     otherPlayerDices[turn].sprite = diceSides[diceValue - 1];
-                }
+                    break;
+                default:
+                    if (turn == 0)
+                    {
+                        for (int i = 0; i <= 10; i++)
+                        {
+                            // Set sprite to upper face of dice from array according to random value
+                            randomDiceSide = UnityEngine.Random.Range(0, 5);
+
+                            otherPlayerDices[NetworkManager.Singleton.LocalClientId].sprite = diceSides[randomDiceSide];
+
+                            // Pause before next itteration
+                            yield return new WaitForSeconds(0.05f);
+                        }
+
+                        otherPlayerDices[NetworkManager.Singleton.LocalClientId].sprite = diceSides[diceValue - 1];
+                    }
+                    else
+                    {
+                        for (int i = 0; i <= 10; i++)
+                        {
+                            // Set sprite to upper face of dice from array according to random value
+                            randomDiceSide = UnityEngine.Random.Range(0, 5);
+
+                            otherPlayerDices[turn].sprite = diceSides[randomDiceSide];
+
+                            // Pause before next itteration
+                            yield return new WaitForSeconds(0.05f);
+                        }
+
+                        otherPlayerDices[turn].sprite = diceSides[diceValue - 1];
+                    }
+                    break;
             }
         }
+        //else //OLD DICE ROLL code left if in case if new one doesnt work!!!
+        //{
+        //    int turn = 0;
+        //    //Show rolling dice from main client to other clients
+        //    for (int i = 0; i <= 10; i++)
+        //    {
+        //        // Set sprite to upper face of dice from array according to random value
+        //        randomDiceSide = UnityEngine.Random.Range(0, 5);
+
+        //        //update player 0 (RED) dice animation to other clients
+        //        if ((i > 0 && i < 4) && (int)NetworkManager.Singleton.LocalClientId == i)
+        //        {
+        //           otherPlayerDices[i].sprite = diceSides[randomDiceSide];
+        //        }
+
+        //        //update other clients dice animaiton on player 0 (RED)
+        //        if ((int)NetworkManager.Singleton.LocalClientId == 0 && i < 4)
+        //        {
+        //            otherPlayerDices[(int)currentTurn.Value].sprite = diceSides[randomDiceSide];
+        //            turn = (int)currentTurn.Value;
+        //            continue;
+        //        }
+
+        //        //update current turn client to other clients
+        //        //if(currentTurn.Value == )
+
+        //        // Pause before next itteration
+        //        yield return new WaitForSeconds(0.05f);
+        //    }
+
+        //    for (int j = 1; j < otherPlayerDices.Length; j++)
+        //    {
+        //        //update player 0 (RED) dice VALUE to other clients
+        //        if ((j > 0 && j < 4) && (int)NetworkManager.Singleton.LocalClientId == j)
+        //        {
+        //            otherPlayerDices[j].sprite = diceSides[diceValue - 1];
+        //        }
+
+        //        //update other clients dice VALUE on player 0 (RED)
+        //        if ((int)NetworkManager.Singleton.LocalClientId == 0 && j < 4)
+        //        {
+        //            otherPlayerDices[turn].sprite = diceSides[diceValue - 1];
+        //        }
+        //    }
+        //}
         //TurnOffRollDiceClientRpc((ulong)prev);
     }
 
@@ -792,6 +843,10 @@ public class GameManager : NetworkBehaviour
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
             p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+
+            canRollAgain = true;
+            TurnOffRollDiceClientRpc(currentTurn.Value,true);
+            
         }
     }
 
@@ -876,7 +931,6 @@ public class GameManager : NetworkBehaviour
                 if ((piece.currentTile > 0 && piece.currentTile < 50 - piece.eatPower) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
-                    //EnableAttackClientRpc(true, clientRpcParams);
                     EnableAttackServerRpc(true, clientId);
                 }
                 else
@@ -895,6 +949,7 @@ public class GameManager : NetworkBehaviour
                     piece.source.Play();
                     piece.gameObject.SetActive(false);
                 }
+                Debug.Log(canRollAgain);
                 if (!canRollAgain && !canAttack)
                     NextTurn();
             }

@@ -591,6 +591,7 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   eatPower: 2
   lookTileInt: 0
+  _JumpSize: 10
   pieceCardImage: {fileID: 5435973087940949717, guid: 124512b7f3f954230aacf66f72dba303,
     type: 3}
   routePosition: 0
@@ -600,14 +601,14 @@ MonoBehaviour:
   animator: {fileID: 9546602}
   selector:
   - {fileID: 3824598131369237827, guid: a7d66f49978b74499b7f94c24ce28ebb, type: 3}
-  - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
   - {fileID: 3824598131369237827, guid: 18e03b55275cb4c9387e70f628ebe04f, type: 3}
+  - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
   - {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267, type: 3}
   allPawnColorMaterials:
   - {fileID: 2100000, guid: 98a7fdcb4ebb44344b4afe0424d44b82, type: 2}
+  - {fileID: 2100000, guid: f9ec407a080d408459742617c9dc6607, type: 2}
   - {fileID: 2100000, guid: 19f3b2158b0cd134798555d774de0b3f, type: 2}
   - {fileID: 2100000, guid: 26fed0ad2288580409bf94257121cd0f, type: 2}
-  - {fileID: 2100000, guid: f9ec407a080d408459742617c9dc6607, type: 2}
   head: {fileID: 126234}
   body: {fileID: 190108}
   networkAnimationState:
