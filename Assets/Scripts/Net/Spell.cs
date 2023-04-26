@@ -51,7 +51,7 @@ public class Spell : MonoBehaviour
         //spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
     }
     [ServerRpc]
-    private void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board) //it was static I don't know way
+    public void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board) //it was static I don't know way
     {
         Piece p = board[targetTile].GetFirstPiece();
 

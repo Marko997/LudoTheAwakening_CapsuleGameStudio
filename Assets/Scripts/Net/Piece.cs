@@ -201,12 +201,15 @@ public class Piece : NetworkBehaviour
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
+            //Debug.Log(startPosition);
             //UpdateAnimationStateServerRpc(AnimationState.Idle);
             StartCoroutine(WaitForDeathToFinish());
         }
         else
         {
+            //Debug.Log(startPosition+" "+name);
             source.clip = jumpSound;
+            //transform.position = position;
             t = new Task(Move(position));
         }
     }

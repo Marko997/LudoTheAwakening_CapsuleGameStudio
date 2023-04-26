@@ -796,6 +796,7 @@ public class GameManager : NetworkBehaviour
         int teamId = Utility.RetrieveTeamId(clientIndex);
         Piece piece = playerPieces[clientIndex][index];
         int startPosition = paths[teamId][0];
+        piece.isOut = true;
 
         // 1. Move the piece @ the start
         //piece.steps = 0;
@@ -812,7 +813,13 @@ public class GameManager : NetworkBehaviour
         //1.a Rotate piece
         piece.RotatePawn(board[startPosition + 1].tileTransform.position);
 
-        EatEnemyPawn(piece, startPosition);
+        //EatEnemyPawn(piece, startPosition);
+
+        piece.t.Finished += delegate (bool manual)
+        {
+            if (!manual)
+            { EatEnemyPawn(piece, startPosition); }
+        };
 
         moveCompleted.Value = true;
         moveCompleted.SetDirty(true);
@@ -842,6 +849,7 @@ public class GameManager : NetworkBehaviour
             p.isOut = false;
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
+
             p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
 
             canRollAgain = true;

@@ -52,12 +52,14 @@ public class LudoTile
                 break;
 
             case 2:
+                Debug.Log(pieceCount);
                 if (ps[0].currentTeam != p.currentTeam)
                 {
                     ps[0].PositionClientRpc(tileTransform.position);
                     ps[1].PositionClientRpc(tileTransform.position);
-                    return;
+                    break;
                 }
+                Debug.Log("nooo");
                 ps[0].PositionClientRpc(tileTransform.position + tileTransform.right * 0.95f);
                 ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
                 break;
