@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using System.Linq;
 
 public class Spell : MonoBehaviour
 {
@@ -53,16 +54,34 @@ public class Spell : MonoBehaviour
     [ServerRpc]
     public void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board) //it was static I don't know way
     {
-        Piece p = board[targetTile].GetFirstPiece();
+        //Piece p = board[targetTile].GetFirstPiece();
 
-        if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
+        //if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
+        //{
+        //    p.UpdateAnimationStateServerRpc(AnimationState.Death);
+        //    board[targetTile].RemovePiece(p);
+        //    p.currentTile = -1;
+        //    p.isOut = false;
+        //    p.routePosition = 0;
+        //    p.PositionClientRpc(-Vector3.one); // start position is set localy
+        //}
+        Piece[] pList = board[targetTile].GetEnemyPieces(spellCasterPiece);
+
+        if (pList.Count() == 0) { return; }
+
+        foreach (var p in pList)
         {
-            p.UpdateAnimationStateServerRpc(AnimationState.Death);
-            board[targetTile].RemovePiece(p);
-            p.currentTile = -1;
-            p.isOut = false;
-            p.routePosition = 0;
-            p.PositionClientRpc(-Vector3.one); // start position is set localy
+            if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
+            {
+                p.UpdateAnimationStateServerRpc(AnimationState.Death);
+                board[targetTile].RemovePiece2(p, spellCasterPiece);
+                p.currentTile = -1;
+                p.isOut = false;
+                p.routePosition = 0;
+                p.PositionClientRpc(-Vector3.one);
+                p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+            }
+
         }
 
         //spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);

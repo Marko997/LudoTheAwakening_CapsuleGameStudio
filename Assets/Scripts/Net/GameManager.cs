@@ -270,15 +270,15 @@ public class GameManager : NetworkBehaviour
         else
         {
             // If theres two or more here
-            if (board[paths[(int)piece.currentTeam][0]].PieceCount() > 1)
-            {
-                // If its not our team
-                if (board[paths[(int)piece.currentTeam][0]].GetFirstPiece().currentTeam != piece.currentTeam)
-                {
-                    // A blocker is formed by the enemy team, can't spawn
-                    return false;
-                }
-            }
+            //if (board[paths[(int)piece.currentTeam][0]].PieceCount() > 1)
+            //{
+            //    // If its not our team
+            //    if (board[paths[(int)piece.currentTeam][0]].GetFirstPiece().currentTeam != piece.currentTeam)
+            //    {
+            //        // A blocker is formed by the enemy team, can't spawn
+            //        return false;
+            //    }
+            //}
         }
 
         // 1. Find the index in the current team's path
@@ -299,15 +299,16 @@ public class GameManager : NetworkBehaviour
             // Initial path, prior to the safe zone
             if (i <= TILE_IN_PATH_PRIOR_TO_GOAL)
             {
+                Debug.Log(pieceCount);
                 // If no one is here, or a single piece, continue
-                if (pieceCount < 2)
+                if (pieceCount < 5)
                     continue;
 
                 // If theres more than one piece, and its our team
                 if (board[targetTile].GetFirstPiece().currentTeam == piece.currentTeam)
                     continue;
                 else
-                    return false;
+                    return true;
             }
             // Pieces of the same team can't stack in the house
             else if (i < 56)
@@ -821,7 +822,7 @@ public class GameManager : NetworkBehaviour
             { EatEnemyPawn(piece, startPosition); }
         };
 
-        moveCompleted.Value = true;
+    moveCompleted.Value = true;
         moveCompleted.SetDirty(true);
 
         //UpdatePieceIsSelected(piece, false);
@@ -839,23 +840,26 @@ public class GameManager : NetworkBehaviour
 
     private void EatEnemyPawn(Piece piece, int startPosition)
     {
-        Piece p = board[startPosition].GetEnemyPiece(piece);
+        Piece[] pList = board[startPosition].GetEnemyPieces(piece);
 
-        if (p != null && p.currentTeam != piece.currentTeam)
+        if (pList.Count() == 0) { return; }
+
+        foreach (var p in pList)
         {
-            p.UpdateAnimationStateServerRpc(AnimationState.Death);
-            board[startPosition].RemovePiece(p);
-            p.currentTile = -1;
-            p.isOut = false;
-            p.routePosition = 0;
-            p.PositionClientRpc(-Vector3.one); // start position is set localy
+            if (p != null && p.currentTeam != piece.currentTeam)
+            {
+                p.UpdateAnimationStateServerRpc(AnimationState.Death);
+                board[startPosition].RemovePiece2(p, piece);
+                p.currentTile = -1;
+                p.isOut = false;
+                p.routePosition = 0;
+                p.PositionClientRpc(-Vector3.one);
+                p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+            }
 
-            p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
-
-            canRollAgain = true;
-            TurnOffRollDiceClientRpc(currentTurn.Value,true);
-            
         }
+        canRollAgain = true;
+        TurnOffRollDiceClientRpc(currentTurn.Value, true);
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -957,7 +961,7 @@ public class GameManager : NetworkBehaviour
                     piece.source.Play();
                     piece.gameObject.SetActive(false);
                 }
-                Debug.Log(canRollAgain);
+                //Debug.Log(canRollAgain);
                 if (!canRollAgain && !canAttack)
                     NextTurn();
             }

@@ -197,19 +197,16 @@ public class Piece : NetworkBehaviour
     [ClientRpc]
     public void PositionClientRpc(Vector3 position)
     {
+        Debug.Log(name + " " + position);
         // If -1, put the piece on its starting position
         if (position == -Vector3.one)
         {
             transform.position = startPosition;
-            //Debug.Log(startPosition);
-            //UpdateAnimationStateServerRpc(AnimationState.Idle);
             StartCoroutine(WaitForDeathToFinish());
         }
         else
         {
-            //Debug.Log(startPosition+" "+name);
             source.clip = jumpSound;
-            //transform.position = position;
             t = new Task(Move(position));
         }
     }

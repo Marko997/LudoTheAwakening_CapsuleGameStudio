@@ -14,7 +14,7 @@ public class LudoTile
             {
                 pieces[i] = piece;
                 //if (pieces[i+1].currentTeam != piece.currentTeam) { return; }
-                RepositionPieces(piece);
+                RepositionPieces(piece,null);
                 break;
             }
         }
@@ -26,12 +26,24 @@ public class LudoTile
             if (pieces[i] == piece)
             {
                 pieces[i] = null;
-                RepositionPieces(piece);
+                RepositionPieces(piece,null);
                 break;
             }
         }
     }
-    public void RepositionPieces(Piece p)
+    public void RemovePiece2(Piece piece, Piece eaterPiece)
+    {
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            if (pieces[i] == piece)
+            {
+                pieces[i] = null;
+                //RepositionPieces(piece, eaterPiece);
+                break;
+            }
+        }
+    }
+    public void RepositionPieces(Piece p, Piece eaterPiece)
     {
         // If there is no more pieces on the board
         int pieceCount = PieceCount();
@@ -52,20 +64,20 @@ public class LudoTile
                 break;
 
             case 2:
-                Debug.Log(pieceCount);
                 if (ps[0].currentTeam != p.currentTeam)
                 {
+                    
                     ps[0].PositionClientRpc(tileTransform.position);
                     ps[1].PositionClientRpc(tileTransform.position);
                     break;
                 }
-                Debug.Log("nooo");
+                //Debug.Log(ps[0].currentTeam +" "+ eaterPiece.currentTeam);
                 ps[0].PositionClientRpc(tileTransform.position + tileTransform.right * 0.95f);
                 ps[1].PositionClientRpc(tileTransform.position + (-tileTransform.right * 0.95f));
                 break;
 
             case 3:
-                if (ps[0].currentTeam != p.currentTeam)
+                if (ps[0].currentTeam != p.currentTeam && ps[1].currentTeam != p.currentTeam)
                 {
                     ps[0].PositionClientRpc(tileTransform.position);
                     ps[1].PositionClientRpc(tileTransform.position);
@@ -111,6 +123,22 @@ public class LudoTile
                 return pieces[i];
 
         return null;
+    }
+
+    public Piece[] GetEnemyPieces(Piece myPiece)
+    {
+        List<Piece> piecesEat = new List<Piece>();
+        for (int i = 0; i < pieces.Length; i++)
+        {
+            if (pieces[i] != null && myPiece.currentTeam != pieces[i].currentTeam)
+            {
+                //Debug.Log(pieces[i] + " " + piecesEat.Count);
+                piecesEat.Add(pieces[i]);
+                //Debug.Log(piecesEat.Count);
+
+            }
+        }
+        return piecesEat.ToArray();
     }
 
     public Piece GetEnemyPiece(Piece myPiece)
