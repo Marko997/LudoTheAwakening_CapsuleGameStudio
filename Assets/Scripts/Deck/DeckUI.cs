@@ -88,7 +88,7 @@ public class DeckUI : MonoBehaviour
         {
             string[] cardIDs = PlayerPrefs.GetString("Deck").Split(',');
 
-            foreach (var cardID in cardIDs.Reverse().Select((value, i) => new { i, value }))
+            foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
             {
                 Piece card = playerCollection.FirstOrDefault(c => c.pieceName == cardID.value);
                 GameObject cardObject = cardObjects.FirstOrDefault(x => x.name == cardID.value+"_Image(Clone)");

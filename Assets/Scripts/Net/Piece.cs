@@ -86,9 +86,16 @@ public class Piece : NetworkBehaviour
             gameObject.GetComponent<BoxCollider>().size = new Vector3(1f,2.5f,1f);
             gameObject.GetComponent<BoxCollider>().center = new Vector3(0f,1.25f,0f);
         }
-        source = FindObjectOfType<AudioSource>();
+        //source = FindObjectOfType<AudioSource>();
+        //AsignAudioClientRpc();
         
     }
+    [ClientRpc]
+    private void AsignAudioClientRpc()
+    {
+        source = FindObjectOfType<AudioSource>();
+    }
+
     private void Start()
     {
         if (GetComponentInParent<PlayerController>() == null)
@@ -242,6 +249,7 @@ public class Piece : NetworkBehaviour
             {
                 lookTileInt = 0;
             }
+
 
             Vector3 startPos = board[routePosition-1].tileTransform.position;
             Vector3 nextPos = board[routePosition].tileTransform.position;

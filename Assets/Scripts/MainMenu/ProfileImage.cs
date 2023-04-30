@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class ProfileImage : MonoBehaviour
 {
     [SerializeField] private Image mainPlayerImage;
+    [SerializeField] private Image mainPlayerImageMainScene;
     [SerializeField] private GameObject[] allPlayerImages;
 
     [SerializeField] private Transform imagesParent;
@@ -17,6 +18,7 @@ public class ProfileImage : MonoBehaviour
         //Debug.Log(PlayerPrefs.GetInt("IMAGE"));
         //PlayerPrefs.DeleteKey("IMAGE");
         mainPlayerImage.sprite = allPlayerImages[PlayerPrefs.GetInt("IMAGE")].GetComponent<Image>().sprite;
+        mainPlayerImageMainScene.sprite = allPlayerImages[PlayerPrefs.GetInt("IMAGE")].GetComponent<Image>().sprite;
 
         int indexButton = 1;
         foreach (var item in allPlayerImages.Skip(1))
@@ -32,8 +34,8 @@ public class ProfileImage : MonoBehaviour
 
     public void UpdatePlayerImage(int index)//Index cannot be 0
     {
-        Debug.Log("updated "+index);
         PlayerPrefs.SetInt("IMAGE",index);
         mainPlayerImage.sprite = allPlayerImages[index].GetComponent<Image>().sprite;
+        mainPlayerImageMainScene.sprite = allPlayerImages[index].GetComponent<Image>().sprite;
     }
 }
