@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00f4d4965ae148f6b22d400363ab618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   playerColor:
     m_InternalValue: {r: 0, g: 0, b: 0, a: 1}
   playerImageIndex:
@@ -52,10 +53,10 @@ MonoBehaviour:
   playerImage: {fileID: 0}
   deckStrings: []
   pawnContainer:
-  - {fileID: 123088, guid: afe8fd528f2bb432a8383f421e58dbc2, type: 3}
-  - {fileID: 179124, guid: 9f9046165fbd74d8ea84f02f6226cd76, type: 3}
-  - {fileID: 155500, guid: 91f8fb5db471b456aa010b77456f186a, type: 3}
-  - {fileID: 145858, guid: a366033adc7e545a980b9b704cbdb365, type: 3}
+  - {fileID: 5443893454052793057, guid: 83b9150f5bf7845d98476cdbef74abc5, type: 3}
+  - {fileID: 5047480193501460239, guid: d6ac375a9d62240c6b7dbe78b3b42723, type: 3}
+  - {fileID: 6067343141195501496, guid: 1d53d5b1977364c8586ab2676ee8a949, type: 3}
+  - {fileID: 2443938618801711637, guid: 3c45716614eda4e78a50aad26361687e, type: 3}
   allPlayerImages:
   - {fileID: 21300000, guid: 45868f90f05e94caa98660ee83df1d49, type: 3}
   - {fileID: 21300000, guid: 45868f90f05e94caa98660ee83df1d49, type: 3}
