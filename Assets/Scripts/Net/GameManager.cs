@@ -299,7 +299,7 @@ public class GameManager : NetworkBehaviour
             // Initial path, prior to the safe zone
             if (i <= TILE_IN_PATH_PRIOR_TO_GOAL)
             {
-                Debug.Log(pieceCount);
+                //Debug.Log(pieceCount);
                 // If no one is here, or a single piece, continue
                 if (pieceCount < 5)
                     continue;
@@ -787,7 +787,7 @@ public class GameManager : NetworkBehaviour
         }
 
         //setting color of attack button
-        attackButton.gameObject.GetComponent<Image>().color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
+        //attackButton.gameObject.GetComponent<Image>().color = Utility.TeamToColor(((Team)Utility.RetrieveTeamId(clientId)));
         attackButton.interactable = false;
     }
 

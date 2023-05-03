@@ -1,15 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-157636678885439068
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WeaponsPBRMaskTint
-  m_Shader: {fileID: 4800000, guid: ed9f374832d68ab4388663ce4218dbab, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: -6465566751694194690, guid: cd8f260f93c08de4f8f6f7f2b5d3546e,
+    type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -19,6 +34,26 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_07e733e00f35424da4eb1fa0e7788158:
+        m_Texture: {fileID: 2800000, guid: 02eeea426ccf4f64f8dac04dd28993d5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_1d75964074f841a6a59fe0aee3c4ee05:
+        m_Texture: {fileID: 2800000, guid: 9382655bab09a455da527549c79e9b0e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_48F7EBCA:
+        m_Texture: {fileID: 2800000, guid: 01f56f4fbc9874870b369a060cbafe14, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_55FDBEBE:
+        m_Texture: {fileID: 2800000, guid: 2afae25753fea4022b8c5099176816a0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_811EFFB:
+        m_Texture: {fileID: 2800000, guid: b7c0e5c91903c4ef087ea6813541bc95, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Albedo:
         m_Texture: {fileID: 2800000, guid: 38b382e7bd7903c46b22b86a315739f8, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -79,7 +114,27 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - Vector1_147A751B: 3
+    - Vector1_28C8683: 3
+    - Vector1_6AEDE23: 3
+    - Vector1_D15D16DF: 3
+    - Vector1_D682A6C5: 3
+    - Vector1_E784DED5: 3
+    - Vector1_F1794ABA: 2
     - _BumpScale: 1
     - _Color01Power: 2.43
     - _Color02Power: 2.35
@@ -99,6 +154,8 @@ Material:
     - _OcclusionStrength: 1
     - _OverallBrightness: 1.4
     - _Parallax: 0.02
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -106,6 +163,13 @@ Material:
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
+    - Color_22DC93C2: {r: 0.3208624, g: 0.6886792, b: 0, a: 1}
+    - Color_31457282: {r: 0.14414936, g: 0.5566037, b: 0, a: 1}
+    - Color_593132F8: {r: 0.34499514, g: 0.6132076, b: 0, a: 0}
+    - Color_B672769A: {r: 0.34089714, g: 0.5, b: 0, a: 0}
+    - Color_C5D962E7: {r: 0.35996988, g: 0.6509434, b: 0, a: 0}
+    - Color_E64BA0E: {r: 0.4181791, g: 0.754717, b: 0, a: 0}
+    - Color_df356a6b29d64aee805a61f7bcdc2368: {r: 8, g: 8, b: 8, a: 0}
     - _Color: {r: 0.8679245, g: 0.08597365, b: 0.10194189, a: 1}
     - _Color01: {r: 0, g: 0.18325584, b: 0.8113208, a: 0}
     - _Color02: {r: 0.019357419, g: 0.2614079, b: 0.8207547, a: 0}
@@ -114,3 +178,4 @@ Material:
     - _Color05: {r: 0.010412939, g: 0.17347722, b: 0.735849, a: 0}
     - _Color06: {r: 0.08223567, g: 0.4035265, b: 0.8301887, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

@@ -76,8 +76,8 @@ public class Piece : NetworkBehaviour
         currentTeam = (Team)teamId;
 
         //Change material
-        head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
-        body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+        //head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+        //body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
 
         // Spawn a collider if you're the owner, to allow selection of the pieces
         if (IsOwner)
@@ -118,8 +118,8 @@ public class Piece : NetworkBehaviour
             currentTeam = (Team)teamId;
 
             //Change material
-            head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
-            body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+            //head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+            //body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
 
             // Spawn a collider if you're the owner, to allow selection of the pieces
             if (IsOwner)
@@ -204,7 +204,7 @@ public class Piece : NetworkBehaviour
     [ClientRpc]
     public void PositionClientRpc(Vector3 position)
     {
-        Debug.Log(name + " " + position);
+        //Debug.Log(name + " " + position);
         // If -1, put the piece on its starting position
         if (position == -Vector3.one)
         {

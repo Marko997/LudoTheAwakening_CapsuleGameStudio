@@ -8,7 +8,7 @@ using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using PlayFab.AuthenticationModels;
-
+using TMPro;
 //#if FACEBOOK 
 //using Facebook.Unity;
 //#endif
@@ -25,9 +25,9 @@ public class LoginWindowView : MonoBehaviour
     public bool ClearPlayerPrefs;
 
     //Meta fields for objects in the UI
-    public InputField Username;
-    public InputField Password;
-    public InputField ConfirmPassword;
+    public TMP_InputField Username;
+    public TMP_InputField Password;
+    public TMP_InputField ConfirmPassword;
 
     public Button LoginButton;
     public Button PlayAsGuestButton;
@@ -36,7 +36,7 @@ public class LoginWindowView : MonoBehaviour
     public Button RegisterButton;
     public Button RecoveryButton;
 
-    public InputField UserNameRegisterInput;
+    public TMP_InputField UserNameRegisterInput;
 
     [SerializeField] InputField EmailRecoverryInput;
     public Button CancelRegisterButton;
