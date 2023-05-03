@@ -45,7 +45,8 @@ public class Piece : NetworkBehaviour
 
     public GameObject[] selector;
 
-    public Material[] allPawnColorMaterials;
+    public Material[] allPawnBodyColorMaterials;
+    public Material[] allPawnHeadColorMaterials;
 
     public GameObject head;
     public GameObject body;
@@ -59,6 +60,8 @@ public class Piece : NetworkBehaviour
     public AudioSource source;
     public AudioClip jumpSound;
     public AudioClip endSound;
+
+    public GameObject deathEffect;
 
     public override void OnNetworkSpawn()
     {
@@ -76,8 +79,8 @@ public class Piece : NetworkBehaviour
         currentTeam = (Team)teamId;
 
         //Change material
-        //head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
-        //body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+        head.GetComponent<SkinnedMeshRenderer>().material = allPawnHeadColorMaterials[Utility.TeamToMaterial(currentTeam)];
+        body.GetComponent<SkinnedMeshRenderer>().material = allPawnBodyColorMaterials[Utility.TeamToMaterial(currentTeam)];
 
         // Spawn a collider if you're the owner, to allow selection of the pieces
         if (IsOwner)
@@ -94,6 +97,22 @@ public class Piece : NetworkBehaviour
     private void AsignAudioClientRpc()
     {
         source = FindObjectOfType<AudioSource>();
+    }
+
+    [ClientRpc]
+    public void ActivateDeathEffectClientRpc(ulong clientId)
+    {
+        if(clientId == NetworkManager.Singleton.LocalClientId)
+        {
+            deathEffect.SetActive(true);
+            deathEffect.GetComponent<ParticleSystem>().Play();
+            StopDeathEffect();
+        }
+    }
+    private IEnumerator StopDeathEffect()
+    {
+        yield return new WaitForSeconds(2);
+        deathEffect.SetActive(false);
     }
 
     private void Start()
@@ -119,7 +138,9 @@ public class Piece : NetworkBehaviour
 
             //Change material
             //head.GetComponent<MeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
-            //body.GetComponent<Renderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];
+            //body.GetComponent<SkinnedMeshRenderer>().material = allPawnColorMaterials[Utility.TeamToMaterial(currentTeam)];//Change material
+            //head.GetComponent<SkinnedMeshRenderer>().material.color = Utility.TeamToColor(currentTeam);
+            //body.GetComponent<Renderer>().material.color = Utility.TeamToColor(currentTeam);
 
             // Spawn a collider if you're the owner, to allow selection of the pieces
             if (IsOwner)

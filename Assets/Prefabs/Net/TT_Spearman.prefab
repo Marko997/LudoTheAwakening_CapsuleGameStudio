@@ -1088,13 +1088,18 @@ MonoBehaviour:
   - {fileID: 3824598131369237827, guid: 18e03b55275cb4c9387e70f628ebe04f, type: 3}
   - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
   - {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267, type: 3}
-  allPawnColorMaterials:
-  - {fileID: 2100000, guid: 98a7fdcb4ebb44344b4afe0424d44b82, type: 2}
-  - {fileID: 2100000, guid: f9ec407a080d408459742617c9dc6607, type: 2}
-  - {fileID: 2100000, guid: 19f3b2158b0cd134798555d774de0b3f, type: 2}
-  - {fileID: 2100000, guid: 26fed0ad2288580409bf94257121cd0f, type: 2}
-  head: {fileID: 0}
-  body: {fileID: 0}
+  allPawnBodyColorMaterials:
+  - {fileID: 2100000, guid: bd5de239b866a4b759f0c864b8fe5d6e, type: 2}
+  - {fileID: 2100000, guid: 0464f6c676c7c4cec8ddb32c61f01f05, type: 2}
+  - {fileID: 2100000, guid: 6f063c326848f43dbaa211de11980821, type: 2}
+  - {fileID: 2100000, guid: ea2b3e1e7eecd4424ab8b8d283cb9101, type: 2}
+  allPawnHeadColorMaterials:
+  - {fileID: 2100000, guid: c09def2084cba4fc0a63ee4354cc4820, type: 2}
+  - {fileID: 2100000, guid: e23e5fb3454d64a13a8ad4884b968e75, type: 2}
+  - {fileID: 2100000, guid: d8e33e1dd6d32414682daf1c39b64e84, type: 2}
+  - {fileID: 2100000, guid: 59c3fffdf7ea44118a14b6ed2b3c3eaf, type: 2}
+  head: {fileID: 5443893454072266158}
+  body: {fileID: 5443893454094434297}
   networkAnimationState:
     m_InternalValue: 0
   isSelected:

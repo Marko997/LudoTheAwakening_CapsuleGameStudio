@@ -819,7 +819,7 @@ public class GameManager : NetworkBehaviour
         piece.t.Finished += delegate (bool manual)
         {
             if (!manual)
-            { EatEnemyPawn(piece, startPosition); }
+            { EatEnemyPawn(piece, startPosition,clientIndex); }
         };
 
     moveCompleted.Value = true;
@@ -838,7 +838,7 @@ public class GameManager : NetworkBehaviour
         DisableInteractionClientRpc(clientRpcParams);
     }
 
-    private void EatEnemyPawn(Piece piece, int startPosition)
+    private void EatEnemyPawn(Piece piece, int startPosition, ulong clientIndex)
     {
         Piece[] pList = board[startPosition].GetEnemyPieces(piece);
 
@@ -855,6 +855,7 @@ public class GameManager : NetworkBehaviour
                 p.routePosition = 0;
                 p.PositionClientRpc(-Vector3.one);
                 p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+                p.ActivateDeathEffectClientRpc(clientIndex);
             }
 
         }
@@ -938,7 +939,7 @@ public class GameManager : NetworkBehaviour
             {
                 piece.UpdateAnimationStateServerRpc(AnimationState.Idle);
 
-                EatEnemyPawn(piece, targetTile); //moved here so enemy pawn is eaten when peace reach that tile
+                EatEnemyPawn(piece, targetTile,clientId); //moved here so enemy pawn is eaten when peace reach that tile
 
                 if ((piece.currentTile > 0 && piece.currentTile < 50 - piece.eatPower) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))

@@ -485,8 +485,8 @@ public class BotsGameManager : NetworkBehaviour
                 {
                     for (int j = 0; j < value.Length; j++)
                     {
-                        pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
-                        pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        //pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        //pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
                         pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
                     }
                 }
@@ -545,8 +545,8 @@ public class BotsGameManager : NetworkBehaviour
                 {
                     for (int j = 0; j < value.Length; j++)
                     {
-                        pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
-                        pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        //pieces[i].head.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
+                        //pieces[i].body.GetComponent<Renderer>().material = pieces[i].allPawnColorMaterials[((int)pieces[i].currentTeam)];
                         pieces[i].board.Add(board[paths[((int)pieces[i].currentTeam)][j]]);
                     }
                 }
