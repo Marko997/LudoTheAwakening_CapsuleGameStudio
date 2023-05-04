@@ -2,11 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
+using TMPro; 
 
 public class GetPlayerInfo : MonoBehaviour
 {
-    public Text displayNameText;
-    public Text playerIdText;
+    public TMP_Text displayNameText;
+    public TMP_Text playerIdText;
 
     //bool isDataRecieved;
 
