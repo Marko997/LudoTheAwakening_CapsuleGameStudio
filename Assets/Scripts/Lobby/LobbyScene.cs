@@ -35,6 +35,8 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     private async void Start()
     {
+        SoundManager.Initialize();
+
         bots = false;
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)

@@ -18,11 +18,13 @@ public class ScreenSwitcher : MonoBehaviour
         screenManager = GetComponentInParent<ScreenManager>();
         menuButton = GetComponent<Button>();
         menuButton.onClick.AddListener(OnButtonClicked);
+        menuButton.AddButtonSounds();
         //screenManager = ScreenManager.Instance;
     }
 
     void OnButtonClicked()
     {
+
         if (!isPawnMoving)
         {
             screenManager.SwitchScreen(desiredScreenType);

@@ -327,7 +327,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 19dbd1e15f3cd4a1b94ce6e58d14ebe2, type: 2}
+  - {fileID: 2100000, guid: 0464f6c676c7c4cec8ddb32c61f01f05, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1266,6 +1266,7 @@ MonoBehaviour:
   source: {fileID: 1346004097611060046}
   jumpSound: {fileID: 8300000, guid: 6fb22b748184747919bff3bfcb6f735f, type: 3}
   endSound: {fileID: 8300000, guid: 8ccdea1eb4dc843579dc1ca0a42075e3, type: 3}
+  deathEffect: {fileID: 0}
 --- !u!82 &1346004097611060046
 AudioSource:
   m_ObjectHideFlags: 0
