@@ -7,7 +7,8 @@ public static class SoundManager
 {
     public enum Sound
     {
-        ButtonClick
+        ButtonClick,
+        MainMenuBackground
     }
 
     public static Dictionary<Sound, float> soundTimerDictionary;
