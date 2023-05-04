@@ -22,8 +22,6 @@ public class GetPlayerInfo : MonoBehaviour
         string displayName = result.AccountInfo.TitleInfo.DisplayName;
         string playerId = result.AccountInfo.PlayFabId;
 
-        
-
         displayNameText.text = "Name: " + displayName;
         playerIdText.text = "ID: " + playerId;
     }
