@@ -93,6 +93,7 @@ public class ChatSystem : NetworkBehaviour
 
     void OnChatButtonPressed()
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         if (isChatOppened)
         {
             chatEmojiDisplay.SetActive(false);
@@ -106,6 +107,7 @@ public class ChatSystem : NetworkBehaviour
 
     void ShowRedEmoji(int emojiIndex)
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         //Update emoji on self
         allChatDisplayIcons[0].gameObject.SetActive(true);
         allChatDisplayIcons[0].sprite = emojis[emojiIndex];
@@ -121,6 +123,7 @@ public class ChatSystem : NetworkBehaviour
 
     void ShowBlueEmoji(int emojiIndex)
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         allChatDisplayIcons[0].gameObject.SetActive(true);
         allChatDisplayIcons[0].sprite = emojis[emojiIndex];
 
@@ -136,6 +139,7 @@ public class ChatSystem : NetworkBehaviour
     }
     void ShowYellowEmoji(int emojiIndex)
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         allChatDisplayIcons[0].gameObject.SetActive(true);
         allChatDisplayIcons[0].sprite = emojis[emojiIndex];
 
@@ -151,6 +155,7 @@ public class ChatSystem : NetworkBehaviour
     }
     void ShowGreenEmoji(int emojiIndex)
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         allChatDisplayIcons[0].gameObject.SetActive(true);
         allChatDisplayIcons[0].sprite = emojis[emojiIndex];
 

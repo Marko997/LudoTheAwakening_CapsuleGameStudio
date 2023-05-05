@@ -8,7 +8,11 @@ public static class SoundManager
     public enum Sound
     {
         ButtonClick,
-        MainMenuBackground
+        MainMenuBackground,
+        DiceRoll,
+        AttackClick,
+        LevelPassed,
+        PieceJump
     }
 
     public static Dictionary<Sound, float> soundTimerDictionary;
@@ -25,7 +29,6 @@ public static class SoundManager
     {
         if (CanPlaySound(sound))
         {
-
             GameObject soundGameObject = new GameObject("Sound");
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
 
@@ -43,7 +46,6 @@ public static class SoundManager
                 oneSoundGameObject = new GameObject("One Click Sound");
                 oneSoundAudioSource = oneSoundGameObject.AddComponent<AudioSource>();
             }
-
             oneSoundAudioSource.PlayOneShot(GetAudioClip(sound));
         }
     }

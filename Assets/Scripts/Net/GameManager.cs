@@ -72,11 +72,6 @@ public class GameManager : NetworkBehaviour
     public int duration;
     private int remainingDuration;
 
-    //Audio
-    [SerializeField] private AudioSource source;
-    [SerializeField] private AudioClip diceSound;
-    [SerializeField] private AudioClip attackSound;
-
     // Callbacks
     private void Awake()
     {
@@ -521,8 +516,7 @@ public class GameManager : NetworkBehaviour
     public void DiceRollButton()
     {
         //currentDiceRoll.OnValueChanged += UpdateDiceUI;
-        source.clip = diceSound;
-        source.Play();
+        SoundManager.PlayOneSound(SoundManager.Sound.DiceRoll);
         DiceRollServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void DiceRollButton(int forceDice)
@@ -531,8 +525,7 @@ public class GameManager : NetworkBehaviour
     }
     public void AttackButton()
     {
-        source.clip = attackSound;
-        source.Play();
+        SoundManager.PlayOneSound(SoundManager.Sound.AttackClick);
         AttackServerRpc(NetworkManager.Singleton.LocalClientId);
     }
     public void EndButton()

@@ -165,6 +165,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public void OnLobbyStartButton()
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         if (!bots)
         {
             NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);

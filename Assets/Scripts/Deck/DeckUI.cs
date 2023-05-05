@@ -16,11 +16,18 @@ public class DeckUI : MonoBehaviour
     public DeckParentTransformItem[] deckParent;
     public Transform collectionParent;
 
+    public Button closeButton;
+    public GameObject errorPanel;
+
     private void Start()
     {
         //PlayerPrefs.DeleteKey("Deck");
         GameObject cardObject = null;
         List<GameObject> cardObjects = new List<GameObject>(4);
+
+        //Close button setup for not letting player to save less than 4 pawns in deck
+        closeButton.GetComponent<ScreenSwitcher>().menuButton.onClick.RemoveListener(closeButton.GetComponent<ScreenSwitcher>().OnButtonClicked);
+        closeButton.onClick.AddListener(OnDeckCloseButtonClicked);
 
         foreach(var card in playerCollection)
         {
@@ -40,9 +47,31 @@ public class DeckUI : MonoBehaviour
         }
         
     }
+
+    public void OnDeckCloseButtonClicked()
+    {
+        if (playerDeck.Count < MAX_DECK_SIZE)
+        {
+            closeButton.GetComponent<ScreenSwitcher>().menuButton.onClick.RemoveListener(closeButton.GetComponent<ScreenSwitcher>().OnButtonClicked);
+            errorPanel.SetActive(true);
+            StartCoroutine(CloseErrorPanel());
+        }
+        else
+        {
+            StopCoroutine(CloseErrorPanel());
+            closeButton.GetComponent<ScreenSwitcher>().OnButtonClicked();
+        }
+    }
+
+    public IEnumerator CloseErrorPanel()
+    {
+        yield return new WaitForSeconds(2);
+        errorPanel.SetActive(false);
+    }
     //Move card from collection to deck and reverse
     public void MoveCard(Piece card, GameObject cardObject)
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         if (cardObject.transform.parent == collectionParent) //Adds card to deck, removes from collection
         {
             playerDeck.Add(card);

@@ -9,11 +9,11 @@ public class ScreenSwitcher : MonoBehaviour
     public bool isPawnMoving = false;
 
     [SerializeField]ScreenManager screenManager;
-    Button menuButton;
+    public Button menuButton;
 
     public string desiredPanelName;
 
-    private void Start()
+    private void Awake()
     {
         screenManager = GetComponentInParent<ScreenManager>();
         menuButton = GetComponent<Button>();
@@ -22,7 +22,7 @@ public class ScreenSwitcher : MonoBehaviour
         //screenManager = ScreenManager.Instance;
     }
 
-    void OnButtonClicked()
+    public void OnButtonClicked()
     {
 
         if (!isPawnMoving)
