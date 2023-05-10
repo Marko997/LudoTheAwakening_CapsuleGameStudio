@@ -79,7 +79,7 @@ public class Spell : MonoBehaviour
                 p.isOut = false;
                 p.routePosition = 0;
                 p.PositionClientRpc(-Vector3.one);
-                p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+                p.transform.Rotate(0, Utility.TeamToRotataion(p.currentTeam), 0);
             }
 
         }

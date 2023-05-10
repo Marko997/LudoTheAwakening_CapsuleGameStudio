@@ -61,21 +61,55 @@ public class Utility : MonoBehaviour
                 return -1;
         }
     }
-
-    public static Quaternion TeamToRotataion(Team t)
+    public static Quaternion TeamToRotataionOld(Team t)
     {
         switch (t)
         {
             case Team.Red:
-                return new Quaternion(0, 180, 0,0);
+                return new Quaternion(0, 180, 0, 0);
             case Team.Green:
-                return new Quaternion(0, -90, 0,0);
+                return new Quaternion(0, -90, 0, 0);
             case Team.Yellow:
-                return new Quaternion(0, 90, 0,0);
+                return new Quaternion(0, 90, 0, 0);
             case Team.Blue:
-                return new Quaternion(0,0,0,0);
+                return new Quaternion(0, 0, 0, 0);
             default:
-                return new Quaternion(0, 180, 0,0);
+                return new Quaternion(0, 180, 0, 0);
+        }
+    }
+
+    public static int TeamToRotataion(Team t)
+    {
+        switch (t)
+        {
+            case Team.Red:
+                return 180;
+            case Team.Green:
+                return -90;
+            case Team.Yellow:
+                return 90;
+            case Team.Blue:
+                return 0;
+            default:
+                return 180;
+        }
+    }
+
+    public static Quaternion ClientToRotataion(int clientId)
+    {
+        switch (clientId)
+        {
+            case 0:
+                return new Quaternion(0, 180, 0, 0);
+            case 1:
+                return new Quaternion(0, 180, 0, 0);
+            case 2:
+                return new Quaternion(0, 0, 0, 0);
+            case 3:
+                return new Quaternion(0, 0, 0, 0);
+            default:
+                Debug.Log("Default roration");
+                return new Quaternion(0, 180, 0, 0);
         }
     }
 }

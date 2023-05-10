@@ -104,8 +104,8 @@ public class Piece : NetworkBehaviour
     {
         if(clientId == NetworkManager.Singleton.LocalClientId)
         {
-            deathEffect.SetActive(true);
-            deathEffect.GetComponent<ParticleSystem>().Play();
+            //deathEffect.SetActive(true);
+            //deathEffect.GetComponent<ParticleSystem>().Play();
             StopDeathEffect();
         }
     }

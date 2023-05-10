@@ -491,7 +491,7 @@ public class BotsGameManager : NetworkBehaviour
                     }
                 }
                 //Sets starting rotation
-                pieces[i].transform.rotation = Utility.TeamToRotataion(pieces[i].currentTeam);
+                pieces[i].transform.Rotate(0, Utility.TeamToRotataion(pieces[i].currentTeam), 0);
             }
 
             playerPieces.Add(1, pieces);
@@ -551,7 +551,7 @@ public class BotsGameManager : NetworkBehaviour
                     }
                 }
                 //Sets starting rotation
-                pieces[i].transform.rotation = Utility.TeamToRotataion(pieces[i].currentTeam);
+                pieces[i].transform.Rotate(0, Utility.TeamToRotataion(pieces[i].currentTeam), 0);
             }
 
             ClientRpcParams clientRpcParams = new ClientRpcParams()
@@ -872,7 +872,7 @@ public class BotsGameManager : NetworkBehaviour
             p.isOut = false;
             p.routePosition = 0;
             p.PositionClientRpc(-Vector3.one); // start position is set localy
-            p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+            p.transform.Rotate(0, Utility.TeamToRotataion(p.currentTeam), 0);
         }
     }
 

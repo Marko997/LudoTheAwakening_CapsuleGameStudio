@@ -470,7 +470,10 @@ public class GameManager : NetworkBehaviour
                 }
                 //Sets starting rotation
 
-                pieces[i].transform.rotation = Utility.TeamToRotataion(pieces[i].currentTeam);
+                //pieces[i].transform.rotation.y = 0;//Utility.TeamToRotataion(pieces[i].currentTeam);
+                pieces[i].transform.Rotate(0, Utility.TeamToRotataion(pieces[i].currentTeam), 0);
+                Debug.Log(pieces[i].transform.rotation);
+                //pieces[i].transform.rotation = Utility.ClientToRotataion(playerIndex);
             }
 
             ClientRpcParams clientRpcParams = new ClientRpcParams()
@@ -847,7 +850,7 @@ public class GameManager : NetworkBehaviour
                 p.isOut = false;
                 p.routePosition = 0;
                 p.PositionClientRpc(-Vector3.one);
-                p.transform.rotation = Utility.TeamToRotataion(p.currentTeam);
+                p.transform.Rotate(0, Utility.TeamToRotataion(p.currentTeam), 0);
                 p.ActivateDeathEffectClientRpc(clientIndex);
             }
 
@@ -934,7 +937,7 @@ public class GameManager : NetworkBehaviour
 
                 EatEnemyPawn(piece, targetTile,clientId); //moved here so enemy pawn is eaten when peace reach that tile
 
-                if ((piece.currentTile > 0 && piece.currentTile < 50 - piece.eatPower) &&
+                if ((piece.currentTile > 0 && piece.currentTile < 49 - piece.eatPower) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
                     EnableAttackServerRpc(true, clientId);

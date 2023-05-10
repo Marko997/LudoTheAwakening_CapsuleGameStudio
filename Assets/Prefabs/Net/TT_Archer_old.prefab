@@ -1028,17 +1028,15 @@ MonoBehaviour:
   steps: 0
   isMoving: 0
   isOut: 0
+  board: []
   animator: {fileID: 9563318}
   selector:
   - {fileID: 3824598131369237827, guid: a7d66f49978b74499b7f94c24ce28ebb, type: 3}
   - {fileID: 3824598131369237827, guid: 18e03b55275cb4c9387e70f628ebe04f, type: 3}
   - {fileID: 3824598131369237827, guid: 0c8b06e913c9e4f50a78456578d571e8, type: 3}
   - {fileID: 3824598131369237827, guid: f6fee29f98c544ceca84f8a03e1ba267, type: 3}
-  allPawnColorMaterials:
-  - {fileID: 2100000, guid: 98a7fdcb4ebb44344b4afe0424d44b82, type: 2}
-  - {fileID: 2100000, guid: f9ec407a080d408459742617c9dc6607, type: 2}
-  - {fileID: 2100000, guid: 19f3b2158b0cd134798555d774de0b3f, type: 2}
-  - {fileID: 2100000, guid: 26fed0ad2288580409bf94257121cd0f, type: 2}
+  allPawnBodyColorMaterials: []
+  allPawnHeadColorMaterials: []
   head: {fileID: 160892}
   body: {fileID: 182528}
   networkAnimationState:
@@ -1049,6 +1047,7 @@ MonoBehaviour:
   source: {fileID: -8609193604469910495}
   jumpSound: {fileID: 8300000, guid: 6fb22b748184747919bff3bfcb6f735f, type: 3}
   endSound: {fileID: 8300000, guid: 8ccdea1eb4dc843579dc1ca0a42075e3, type: 3}
+  deathEffect: {fileID: 0}
 --- !u!114 &3721388459658165088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,6 +1109,12 @@ MonoBehaviour:
     TransitionDuration: 0.25
     TriggerNameHash: 1203776827
     TransitionIndex: 0
+  - Layer: 0
+    OriginatingState: -354315882
+    DestinationState: -956390275
+    TransitionDuration: 0.25
+    TriggerNameHash: 1203776827
+    TransitionIndex: 3
   m_Animator: {fileID: 9563318}
 --- !u!82 &-8609193604469910495
 AudioSource:
