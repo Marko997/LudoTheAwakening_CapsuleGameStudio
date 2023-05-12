@@ -9,9 +9,11 @@ public class GetPlayerInfo : MonoBehaviour
     public TMP_Text displayNameText;
     public TMP_Text playerIdText;
 
+    public TMP_Text errorChangeName;
+
     //bool isDataRecieved;
 
-    public void Start()
+    public void Update()
     {
         //if (isDataRecieved) { return; }
         GetAccountInfoRequest request = new GetAccountInfoRequest();
@@ -31,6 +33,13 @@ public class GetPlayerInfo : MonoBehaviour
 
     void OnGetAccountInfoError(PlayFabError error)
     {
-        Debug.Log("Error getting account info: " + error.ErrorMessage);
+        Debug.Log("Error: " + error.ErrorMessage);//getting account info
+        errorChangeName.text = error.ErrorMessage;
+    }
+
+    public void OnChangeNameClicked()
+    { 
+        displayNameText.text = "Name: " + PlayerPrefs.GetString("NAME");
+        Debug.Log(PlayerPrefs.GetString("NAME"));
     }
 }

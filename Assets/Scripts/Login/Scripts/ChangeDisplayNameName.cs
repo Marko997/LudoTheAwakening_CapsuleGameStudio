@@ -8,6 +8,8 @@ using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using PlayFab.AuthenticationModels;
+using TMPro;
+using UnityEditor.PackageManager.Requests;
 
 public class ChangeDisplayNameName : MonoBehaviour
 {
@@ -77,10 +79,13 @@ public class ChangeDisplayNameName : MonoBehaviour
 
 
     public InputField UserNameRegisterInput;
-    public Text displayNameError;
+    public TMP_Text displayNameError;
     //public GameObject ChangeDisplayNameCanvas;
     private const string lastLogoutTimeKey = "LastLogoutTime";
-    private const float changeNameInterval = 24 * 60 * 60; // 24 sata u sekundama
+    private const float changeNameInterval = 0; // 24 sata u sekundama//24 * 60 * 60
+
+    private string errorMessage;
+
 
     public void SaveDisplayName()
     {
@@ -91,8 +96,9 @@ public class ChangeDisplayNameName : MonoBehaviour
             {
                 DisplayName = UserNameRegisterInput.text,
             };
-            PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayUpdate, OnErrorr);
-
+            //PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayUpdate, OnErrorr);
+            PlayerPrefs.SetString("NAME", UserNameRegisterInput.text);
+            Debug.Log(PlayerPrefs.GetString("NAME"));
             // sa�uvajte trenutno vreme kao vreme poslednje promene imena i izlogovanja
             var now = DateTime.Now;
             PlayerPrefs.SetString(lastLogoutTimeKey, now.ToString());
@@ -100,7 +106,7 @@ public class ChangeDisplayNameName : MonoBehaviour
         }
         else
         {
-            displayNameError.text = "Morate da sacekate 24 sata da biste ponovo mogli da promenite ime.";
+            displayNameError.text = "Must to wait 3 hours to change name.";
         }
     }
 
@@ -124,7 +130,7 @@ public class ChangeDisplayNameName : MonoBehaviour
     {
         Debug.Log("Something is wrong");
 
-        displayNameError.text = obj.ErrorMessage;
+        errorMessage = obj.ErrorMessage;
     }
 
     private void OnDisplayUpdate(UpdateUserTitleDisplayNameResult obj)
@@ -134,4 +140,16 @@ public class ChangeDisplayNameName : MonoBehaviour
                                                       //ChangeDisplayNameCanvas.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (!CanChangeName())
+        {
+            displayNameError.text = "Morate da sacekate 24 sata da biste ponovo mogli da promenite ime.";
+        }
+        else if (!string.IsNullOrEmpty(errorMessage))
+        {
+            displayNameError.text = errorMessage;
+            errorMessage = null;
+        }
+    }
 }
