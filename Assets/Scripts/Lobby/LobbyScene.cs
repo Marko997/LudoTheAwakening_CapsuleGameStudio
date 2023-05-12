@@ -9,6 +9,7 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Unity.Services.Lobbies;
 
 public class LobbyScene : MonoSingleton<LobbyScene>
 {
@@ -26,6 +27,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public TMP_InputField codeInput;
 
     public GameObject slider;
+    public GameObject wrongCodeText;
 
     private bool bots;
 
@@ -80,7 +82,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         slider.SetActive(true);
         try
         {
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3, "europe-central2"); //this is for 4 players host + 3
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(4, "europe-central2"); //this is for 4 players host + 3
 
             string _joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
 
@@ -119,7 +121,9 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public async void OnMainConnectButton(string joinCode)
     {
+        wrongCodeText.SetActive(false);
         slider.SetActive(true);
+        codeInput.text = "";
         try
         {
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
@@ -127,10 +131,15 @@ public class LobbyScene : MonoSingleton<LobbyScene>
             RelayServerData relayServerData = new RelayServerData(joinAllocation, "dtls");
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(relayServerData);
+            
         }
         catch (RelayServiceException ex)
         {
-            Debug.Log(ex);
+            Debug.Log("Join code wrong");
+            slider.SetActive(false);
+            wrongCodeText.SetActive(true);
+
+            throw;
         }
 
         NetworkManager.Singleton.StartClient();
@@ -139,6 +148,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         NetworkManager.Singleton.OnClientDisconnectCallback += ClientDisConnected;
             
     }
+
 
     private void ClientConnected(ulong clientId)
     {
@@ -156,6 +166,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     {
         NetworkManager.Singleton.Shutdown();
     }
+
 
     [ServerRpc]
     public void DisconnectClientFromServerServerRpc(ulong id)

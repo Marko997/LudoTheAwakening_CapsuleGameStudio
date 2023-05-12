@@ -27,7 +27,7 @@ public class Spell : MonoBehaviour
                 //Debug.Log(targetTile);
                 //Debug.Log(spellCasterPiece.currentTile);
                 EatPieceServerRpc(targetTile, spellCasterPiece,board);
-                spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
+                //spellCasterPiece.UpdateAnimationStateServerRpc(AnimationState.Idle);
                 break;
             case SpellType.SPEARMAN:
                 spellCasterPiece.eatPower = 1;
@@ -42,6 +42,7 @@ public class Spell : MonoBehaviour
                 break;
             case SpellType.MACEBEARER:
                 spellCasterPiece.eatPower = -1;
+                spellCasterPiece.transform.Rotate(0,-180,0);
                 EatPieceServerRpc(targetTile, spellCasterPiece, board);
                 break;
             default:
@@ -54,17 +55,6 @@ public class Spell : MonoBehaviour
     [ServerRpc]
     public void EatPieceServerRpc(int targetTile, Piece spellCasterPiece, LudoTile[] board) //it was static I don't know way
     {
-        //Piece p = board[targetTile].GetFirstPiece();
-
-        //if (p != null && p.currentTeam != spellCasterPiece.currentTeam)
-        //{
-        //    p.UpdateAnimationStateServerRpc(AnimationState.Death);
-        //    board[targetTile].RemovePiece(p);
-        //    p.currentTile = -1;
-        //    p.isOut = false;
-        //    p.routePosition = 0;
-        //    p.PositionClientRpc(-Vector3.one); // start position is set localy
-        //}
         Piece[] pList = board[targetTile].GetEnemyPieces(spellCasterPiece);
 
         if (pList.Count() == 0) { return; }
@@ -92,5 +82,10 @@ public class Spell : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         p.UpdateAnimationStateServerRpc(AnimationState.Idle);
+
+        if(p.pieceName == "Macebearer")
+        {
+            p.transform.Rotate(0, 180, 0);
+        }
     }
 }

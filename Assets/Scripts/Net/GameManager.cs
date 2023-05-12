@@ -469,11 +469,7 @@ public class GameManager : NetworkBehaviour
                     }
                 }
                 //Sets starting rotation
-
-                //pieces[i].transform.rotation.y = 0;//Utility.TeamToRotataion(pieces[i].currentTeam);
                 pieces[i].transform.Rotate(0, Utility.TeamToRotataion(pieces[i].currentTeam), 0);
-                Debug.Log(pieces[i].transform.rotation);
-                //pieces[i].transform.rotation = Utility.ClientToRotataion(playerIndex);
             }
 
             ClientRpcParams clientRpcParams = new ClientRpcParams()
@@ -734,8 +730,11 @@ public class GameManager : NetworkBehaviour
         };
         //EnableAttackClientRpc(false, clientRpcParams);
         EnableAttackServerRpc(false, clientId);
-
-        NextTurn();
+        if (!canRollAgain)
+        {
+            NextTurn();
+        }
+        
     }
     [ClientRpc]
     public void ChangeColorAndNameClientRpc(ulong clientId, string updatedPlayerName, ClientRpcParams clientRpcParams)
@@ -941,6 +940,7 @@ public class GameManager : NetworkBehaviour
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
                     EnableAttackServerRpc(true, clientId);
+                    canRollAgain = true;
                 }
                 else
                 {
@@ -958,7 +958,6 @@ public class GameManager : NetworkBehaviour
                     piece.source.Play();
                     piece.gameObject.SetActive(false);
                 }
-                //Debug.Log(canRollAgain);
                 if (!canRollAgain && !canAttack)
                     NextTurn();
             }
@@ -968,6 +967,7 @@ public class GameManager : NetworkBehaviour
     private void EnableAttackServerRpc(bool state, ulong clientId)
     {
         canAttack = state;
+        //canRollAgain = state;
 
         ClientRpcParams clientRpcParams = new ClientRpcParams
         {

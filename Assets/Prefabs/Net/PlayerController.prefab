@@ -59,10 +59,10 @@ MonoBehaviour:
   - {fileID: 2443938618801711637, guid: 3c45716614eda4e78a50aad26361687e, type: 3}
   allPlayerImages:
   - {fileID: 21300000, guid: 45868f90f05e94caa98660ee83df1d49, type: 3}
-  - {fileID: 21300000, guid: 45868f90f05e94caa98660ee83df1d49, type: 3}
-  - {fileID: 21300000, guid: e7ebdfc13ba92404d97aa1a22d2dba85, type: 3}
-  - {fileID: 21300000, guid: 4f5ae26ac9b244fcd9605ec4264583ca, type: 3}
-  - {fileID: 21300000, guid: c2f84d21abb4a4790ae04e84512ebfe8, type: 3}
+  - {fileID: 21300000, guid: 7b69ff89d00644b428cc450c53aed27c, type: 3}
+  - {fileID: 21300000, guid: 285075c996fc243b9b937c7b59cfbaa5, type: 3}
+  - {fileID: 21300000, guid: 7b721ba9bb8a04770916f1b5d945a07c, type: 3}
+  - {fileID: 21300000, guid: 9e9a682ce229a4ed58addb63b8572bb5, type: 3}
   PlayerType: 1
 --- !u!114 &8207928270722757619
 MonoBehaviour:

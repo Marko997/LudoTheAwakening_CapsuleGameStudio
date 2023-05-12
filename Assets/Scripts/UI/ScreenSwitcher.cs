@@ -8,7 +8,7 @@ public class ScreenSwitcher : MonoBehaviour
     public ScreenType desiredScreenType;
     public bool isPawnMoving = false;
 
-    [SerializeField]ScreenManager screenManager;
+    [SerializeField] ScreenManager screenManager;
     public Button menuButton;
 
     public string desiredPanelName;

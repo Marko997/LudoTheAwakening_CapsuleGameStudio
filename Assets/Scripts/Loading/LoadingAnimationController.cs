@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class LoadingAnimationController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class LoadingAnimationController : MonoBehaviour
     public float sliderAnimationSpeed;
     public float sliderMoveDelay;
     public PlayFabAuthService AuthService = PlayFabAuthService.Instance;
-    public Text progressText;
+    public TMP_Text progressText;
 
     private string[] loadingMessages = { "Rolling dice", "Polishing board", "Polishing weapons", "Logging in" };
     private int currentIndex = 0;
