@@ -67,7 +67,7 @@ public class CharacterShowcase : MonoSingleton<CharacterShowcase>
                 heroType.text = "Melee";
                 eatPower.text = "-1 tile";
                 description.text = "Hits using mace.\nKills an enemy on " +
-                                    "tile behind him after moving on board.";
+                                    "the tile behind him after moving on board.";
                 break;
 
         }

@@ -88,4 +88,91 @@ public class Spell : MonoBehaviour
             p.transform.Rotate(0, 180, 0);
         }
     }
+
+
+    public void CastBotSpell()
+    {
+        Pawn spellCasterPiece = gameObject.GetComponent<Pawn>();
+        if (!spellCasterPiece.isOut) { return; }
+
+        Node eatNode = null;
+
+        switch (spell)
+        {
+            case SpellType.ARCHER:
+                spellCasterPiece.eatPower = 3;
+
+                eatNode = spellCasterPiece.fullRoute[spellCasterPiece.routePosition + spellCasterPiece.eatPower];
+
+                if (eatNode.isTaken)
+                {
+                    if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
+                    {
+                        var currentRotation = transform.rotation;
+                        spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
+                        //KICK THE OTHER STONE
+                        eatNode.pawn.ReturnToBase();
+                        //transform.rotation = currentRotation;
+                    }
+                }
+
+                break;
+            case SpellType.SPEARMAN:
+                spellCasterPiece.eatPower = 1;
+
+                eatNode = spellCasterPiece.fullRoute[spellCasterPiece.routePosition + spellCasterPiece.eatPower];
+
+                if (eatNode.isTaken)
+                {
+                    if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
+                    {
+                        //KICK THE OTHER STONE
+                        eatNode.pawn.ReturnToBase();
+                    }
+                }
+                break;
+            case SpellType.SLINGSHOOTMAN:
+                spellCasterPiece.eatPower = 2;
+
+                eatNode = spellCasterPiece.fullRoute[spellCasterPiece.routePosition + spellCasterPiece.eatPower];
+
+                if (eatNode.isTaken)
+                {
+                    if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
+                    {
+                        //KICK THE OTHER STONE
+                        eatNode.pawn.ReturnToBase();
+                    }
+                }
+                break;
+            case SpellType.MACEBEARER:
+                spellCasterPiece.transform.Rotate(0, -180, 0);
+
+                spellCasterPiece.eatPower = -1;
+
+                eatNode = spellCasterPiece.fullRoute[spellCasterPiece.routePosition + spellCasterPiece.eatPower];
+
+                if (eatNode.isTaken)
+                {
+                    if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
+                    {
+                        //KICK THE OTHER STONE
+                        eatNode.pawn.ReturnToBase();
+                    }
+                }
+                spellCasterPiece.transform.Rotate(0, 180, 0);
+                break;
+            default:
+                Debug.Log("Spell not found");
+                break;
+        }
+        StartCoroutine(WaitForAttackAnimation(spellCasterPiece));
+        
+    }
+
+    IEnumerator WaitForAttackAnimation(Pawn spellCasterPiece)
+    {
+        yield return new WaitForSeconds(1);
+        spellCasterPiece.ChangeAnimationState(PawnAnimationState.Idle);
+    }
 }

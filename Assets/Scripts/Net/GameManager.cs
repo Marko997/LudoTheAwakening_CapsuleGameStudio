@@ -163,7 +163,7 @@ public class GameManager : NetworkBehaviour
         //currentTurnText.text = name;
         currentTurnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId(currentTurnId));
         //Debug.Log(currentTurnId);
-        currentTurnText.text = $"{name} has turn!";
+        currentTurnText.text = $"It's {name}'s turn!";
     }
 
     public override void OnDestroy()

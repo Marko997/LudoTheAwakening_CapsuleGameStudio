@@ -38,7 +38,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_811EFFB:
-        m_Texture: {fileID: 2800000, guid: 8834f173295c34f328c5468b3684ee89, type: 3}
+        m_Texture: {fileID: 2800000, guid: 503f4e7d913054439a796f603ea004ff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Albedo:

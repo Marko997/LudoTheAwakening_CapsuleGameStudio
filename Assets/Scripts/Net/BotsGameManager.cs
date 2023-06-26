@@ -1078,10 +1078,19 @@ public class BotsGameManager : NetworkBehaviour
                         TargetClientIds = new ulong[] { clientId }
                     }
                 };
-                EnableInteractionClientRpc(pieceYouCanMove, clientRpcParams);
+                if (playerList[(int)clientId].PlayerType == PlayerTypes.CPU)
+                {
+                    Debug.Log("Bot Moved piece");
+                    EnableInteractionClientRpc(pieceYouCanMove, clientRpcParams);
+                }
+                else
+                {
+                    EnableInteractionClientRpc(pieceYouCanMove, clientRpcParams);
+
+                    //EnableAttackClientRpc(false,clientRpcParams);
+                    EnableAttackServerRpc(false, clientId);
+                }
                 
-                //EnableAttackClientRpc(false,clientRpcParams);
-                EnableAttackServerRpc(false, clientId);
             }
             else
             {

@@ -10,6 +10,8 @@ using Unity.Services.Relay.Models;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Unity.Services.Lobbies;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LobbyScene : MonoSingleton<LobbyScene>
 {
@@ -28,6 +30,9 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     public GameObject slider;
     public GameObject wrongCodeText;
+    public TMP_Text loadingText;
+
+    public Button botsPlayButton;
 
     private bool bots;
 
@@ -41,6 +46,9 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         SoundManager.PlayOneSound(SoundManager.Sound.MainMenuBackground);
 
         bots = false;
+
+        botsPlayButton.onClick.AddListener(StartBotGame);
+
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
         {
@@ -64,6 +72,28 @@ public class LobbyScene : MonoSingleton<LobbyScene>
             connectButton.GetComponent<Button>().interactable = true;
         }
 
+    }
+
+    private void StartBotGame()
+    {
+        StartCoroutine(StartBotGameDealy());
+    }
+
+    IEnumerator StartBotGameDealy()
+    {
+        slider.SetActive(true);
+        float randomSeconds = Random.Range(0, 10);
+
+        while (randomSeconds > 0f) // Check if the elapsed time is less than 1 second
+        {
+            if(randomSeconds >= 1f && randomSeconds <= 2f)
+            {
+                loadingText.text = "Match found! Starting...";
+            }
+            randomSeconds -= Time.deltaTime; // Increase the elapsed time
+            yield return null; // Wait for the next frame
+        }
+        SceneManager.LoadScene("BotsGame");
     }
 
     void Cleanup()

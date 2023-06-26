@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using PlayFab.AuthenticationModels;
 using TMPro;
-using UnityEditor.PackageManager.Requests;
+//using UnityEditor.PackageManager.Requests;
 
 public class ChangeDisplayNameName : MonoBehaviour
 {
