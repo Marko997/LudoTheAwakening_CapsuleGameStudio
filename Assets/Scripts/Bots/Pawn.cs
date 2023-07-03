@@ -159,7 +159,7 @@ public class Pawn : MonoBehaviour
         //WIN CONDITION CHECK
         if (WinCondition())
         {
-            //BotGameManager.Instance.ReportWinning();
+            BotGameManager.Instance.ReportWinning();
         }
 
         //SWITCH THE PLAYER

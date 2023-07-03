@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NUnit.Framework.Interfaces;
+using UnityEngine.SceneManagement;
 
 public enum States
 {
@@ -44,6 +45,7 @@ public class BotGameManager : MonoBehaviour
     public GameObject gameOverScreen;
 
     public TMP_Text turnText;
+    public TMP_Text winningPlayerText;
 
     public string[] firstNameList = { "Ludo", "Rolling", "Lucky", "Hero", "Royal", "Knight", "Master", "Champ", "Star", "Legend" };
     public string[] lastNameList = { "Swift", "Blaze", "Ace", "Gamer", "Pro", "Victor", "King", "Queen", "Supreme", "Elite" };
@@ -54,6 +56,7 @@ public class BotGameManager : MonoBehaviour
     public Image[] allPlayerImages;
 
     public GameObject diceShine;
+    public GameObject endScreen;
 
     private void Awake()
     {
@@ -382,19 +385,27 @@ public class BotGameManager : MonoBehaviour
             }
         }
 
-        if (playerList[activePlayer].hasWon && available > 1)
+        if (playerList[activePlayer].hasWon)
         {
-            SetNextActivePlayer();
-            return;
-        }
-        else if (available < 2)
-        {
-            //GAME OVER SCREEN
             gameOverScreen.SetActive(true);
-
+            winningPlayerText.text = playerList[activePlayer].playerName;
             state = States.WAITING;
             return;
         }
+
+        //if (playerList[activePlayer].hasWon && available > 1)
+        //{
+        //    SetNextActivePlayer();
+        //    return;
+        //}
+        //else if (available < 2)
+        //{
+        //    //GAME OVER SCREEN
+        //    gameOverScreen.SetActive(true);
+
+        //    state = States.WAITING;
+        //    return;
+        //}
 
         //Show text whose turn is
         turnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId((ulong)activePlayer));
@@ -418,21 +429,21 @@ public class BotGameManager : MonoBehaviour
         turnPossible = possible;
     }
 
-    //public void ReportWinning()
-    //{
-    //    //SHOW UI
-    //    playerList[activePlayer].hasWon = true;
+    public void ReportWinning()
+    {
+        //SHOW UI
+        playerList[activePlayer].hasWon = true;
 
-    //    //SAVE WINNERS
-    //    for (int i = 0; i < SaveSettings.winners.Length; i++)
-    //    {
-    //        if (SaveSettings.winners[i] == "")
-    //        {
-    //            SaveSettings.winners[i] = playerList[activePlayer].playerName;
-    //            break;
-    //        }
-    //    }
-    //}
+        //SAVE WINNERS
+        //for (int i = 0; i < SaveSettings.winners.Length; i++)
+        //{
+        //    if (SaveSettings.winners[i] == "")
+        //    {
+        //        SaveSettings.winners[i] = playerList[activePlayer].playerName;
+        //        break;
+        //    }
+        //}
+    }
 
     //---------------------HUMAN INPUT ------------------------//
     void ActivateRollButton(bool buttonState)
@@ -577,7 +588,7 @@ public class BotGameManager : MonoBehaviour
 
     public void SwitchScene(string sceneToSwitch)
     {
-        //SceneManager.LoadScene("LoadingScene");
+        SceneManager.LoadScene(sceneToSwitch);
         //LevelLoaderManager.sceneToLoad = sceneToSwitch;
     }
 }
