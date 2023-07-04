@@ -23,9 +23,11 @@ public class BotGameManager : MonoBehaviour
     public int activePlayer;
     bool switchingPLayer;
     bool turnPossible = true;
+    public bool hasBeenClicked = false;
 
     public bool canRollAgain;
-    int sixRollCountPerTurn;
+    public int sixRollCountPerTurn;
+    int numberOfRollsWithoutSix;
 
     //HUMAN INPUTS
     //roll dice button
@@ -373,6 +375,8 @@ public class BotGameManager : MonoBehaviour
         activePlayer++;
         activePlayer %= playerList.Count;
 
+        hasBeenClicked = false;
+
         //Reset roll count
         sixRollCountPerTurn = 0;
 
@@ -450,7 +454,7 @@ public class BotGameManager : MonoBehaviour
     {
         rollButton.GetComponent<Button>().interactable = buttonState;
         diceShine.SetActive(buttonState);
-        rollButton.GetComponent<Button>().onClick.AddListener(()=>HumanRollDice());
+        //rollButton.GetComponent<Button>().onClick.AddListener(()=>HumanRollDice());
     }
     void ActivateAttackButton(bool buttonState)
     {
@@ -477,18 +481,42 @@ public class BotGameManager : MonoBehaviour
         ActivateRollButton(false);
     }
 
+    bool IsAnyPawnOut()
+    {
+        for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
+        {
+            if (playerList[activePlayer].allPawns[i].ReturnIsOut())
+            {
+                return false;
+            }
+
+        }return true;
+    }
+
     //ON ROLL DICE BUTTON
     public void HumanRollDice(int forceDice = -1)
     {
+        if (hasBeenClicked) { return; }
         if (sixRollCountPerTurn == 0 || canRollAgain)
         {
+            hasBeenClicked = true;
             sixRollCountPerTurn++;
             canRollAgain = false;
+            numberOfRollsWithoutSix++;
 
-            rollButton.GetComponent<Button>().onClick.RemoveAllListeners();
+            //rollButton.GetComponent<Button>().onClick.RemoveAllListeners();
 
-            rolledHumanDice = (forceDice == -1) ? Random.Range(1, 7) : forceDice;
+            if (numberOfRollsWithoutSix == 3 && IsAnyPawnOut())
+            {
+                rolledHumanDice = 6;
+                numberOfRollsWithoutSix = 0;
+            }
+            else
+            {
+                rolledHumanDice = (forceDice == -1) ? Random.Range(1, 7) : forceDice;
+            }
 
+            Debug.Log(rolledHumanDice);
             rollButton.GetComponent<Image>().sprite = diceSides[rolledHumanDice - 1];
 
             //MOVABLE PAWN LIST

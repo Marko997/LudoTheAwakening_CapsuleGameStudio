@@ -260,6 +260,11 @@ public class Pawn : MonoBehaviour
             goalNode.pawn.ReturnToBase();
         }
 
+        if (steps == 0)
+        {
+            BotGameManager.Instance.hasBeenClicked = false;
+        }
+
         goalNode.pawn = this;
         goalNode.isTaken = true;
 
