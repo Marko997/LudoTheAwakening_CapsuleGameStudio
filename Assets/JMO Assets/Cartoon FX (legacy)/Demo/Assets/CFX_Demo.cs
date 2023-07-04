@@ -89,7 +89,7 @@ public class CFX_Demo : MonoBehaviour
 	
 	void OnGUI()
 	{
-		GUILayout.BeginArea(new Rect(5,20,Screen.width-10,30));
+		GUILayout.BeginArea(new Rect(5,20,ScreenCustom.width-10,30));
 		GUILayout.BeginHorizontal();
 		
 		GUILayout.Label("Effect", GUILayout.Width(50));

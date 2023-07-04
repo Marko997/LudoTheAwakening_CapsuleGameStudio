@@ -199,6 +199,8 @@ public class BotGameManager : MonoBehaviour
 
     public void AttackSpellCast()
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.AttackClick);
+
         for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
         {
             Pawn selectedPiece = playerList[activePlayer].allPawns[i];
@@ -227,6 +229,8 @@ public class BotGameManager : MonoBehaviour
 
     void RollDice()
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.DiceRoll);
+
         int diceNumber = Random.Range(1, 7);
 
         switch (activePlayer)
@@ -472,14 +476,14 @@ public class BotGameManager : MonoBehaviour
         }
     }
 
-    public void HumanRoll()
-    {
-        ActivateRollButton(false);
-    }
-    public void HumanRoll(int forceDice)
-    {
-        ActivateRollButton(false);
-    }
+    //public void HumanRoll()
+    //{
+    //    ActivateRollButton(false);
+    //}
+    //public void HumanRoll(int forceDice)
+    //{
+    //    ActivateRollButton(false);
+    //}
 
     bool IsAnyPawnOut()
     {
@@ -496,6 +500,8 @@ public class BotGameManager : MonoBehaviour
     //ON ROLL DICE BUTTON
     public void HumanRollDice(int forceDice = -1)
     {
+        SoundManager.PlayOneSound(SoundManager.Sound.DiceRoll);
+
         if (hasBeenClicked) { return; }
         if (sixRollCountPerTurn == 0 || canRollAgain)
         {
@@ -516,7 +522,6 @@ public class BotGameManager : MonoBehaviour
                 rolledHumanDice = (forceDice == -1) ? Random.Range(1, 7) : forceDice;
             }
 
-            Debug.Log(rolledHumanDice);
             rollButton.GetComponent<Image>().sprite = diceSides[rolledHumanDice - 1];
 
             //MOVABLE PAWN LIST

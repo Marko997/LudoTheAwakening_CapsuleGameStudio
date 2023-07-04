@@ -114,6 +114,7 @@ public class Pawn : MonoBehaviour
 
         while (steps > 0)
         {
+            SoundManager.PlayOneSound(SoundManager.Sound.PieceJump);
             routePosition++;
 
             Vector3 nextPos = fullRoute[routePosition].gameObject.transform.position;

@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ScreenManager : MonoBehaviour//: MonoSingleton<ScreenManager>
 {
-    public List<Screen> screenList;
-    private Screen lastActiveScreen;
+    public List<ScreenCustom> screenList;
+    private ScreenCustom lastActiveScreen;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class ScreenManager : MonoBehaviour//: MonoSingleton<ScreenManager>
     }
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        screenList = GetComponentsInChildren<Screen>().ToList();
+        screenList = GetComponentsInChildren<ScreenCustom>().ToList();
 
         screenList.ForEach(x => x.gameObject.SetActive(false));
 
@@ -40,7 +40,7 @@ public class ScreenManager : MonoBehaviour//: MonoSingleton<ScreenManager>
         {
             lastActiveScreen.gameObject.SetActive(false);
         }
-        Screen desiredScreen = screenList.Find(x => x.screenType == type);
+        ScreenCustom desiredScreen = screenList.Find(x => x.screenType == type);
 
         if (desiredScreen == null)
         {
