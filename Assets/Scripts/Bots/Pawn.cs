@@ -136,6 +136,11 @@ public class Pawn : MonoBehaviour
 
         }
 
+        if (steps == 0)
+        {
+            BotGameManager.Instance.hasBeenClicked = false;
+        }
+
         goalNode = fullRoute[routePosition];
         //CHECK POSSIBLE KICK
         if (goalNode.isTaken)
