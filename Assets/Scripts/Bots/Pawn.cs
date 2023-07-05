@@ -148,7 +148,7 @@ public class Pawn : MonoBehaviour
         {
             //KICK THE OTHER STONE
             goalNode.pawn.ReturnToBase();
-            BotGameManager.Instance.canRollAgain = true;
+            
         }
 
         currentNode.pawn = null;
@@ -159,8 +159,6 @@ public class Pawn : MonoBehaviour
 
         currentNode = goalNode;
         goalNode = null;
-
-        //REPORT TO GAMEMANAGER
 
         //WIN CONDITION CHECK
         if (WinCondition())
@@ -173,9 +171,20 @@ public class Pawn : MonoBehaviour
         {
             if (BotGameManager.Instance.playerList[BotGameManager.Instance.activePlayer].playerType == BotPlayerTypes.HUMAN)
             {
-                if((routePosition > 0 && routePosition < 49 - eatPower) && fullRoute[routePosition + eatPower].isTaken && pawnId != fullRoute[routePosition+eatPower].pawn.pawnId) //CHECK FOR ATTACK
+                if(routePosition > 0 && routePosition < 43 - eatPower) //CHECK FOR ATTACK
                 {
-                    BotGameManager.Instance.state = States.ATTACK;
+                    if(fullRoute[routePosition + eatPower].isTaken && pawnId != fullRoute[routePosition + eatPower].pawn.pawnId)
+                    {
+                        BotGameManager.Instance.state = States.ATTACK;
+                    }
+                    else if (!BotGameManager.Instance.canRollAgain) //CHECK FOR SWITCHING PLAYER
+                    {
+                        BotGameManager.Instance.state = States.SWITCH_PLAYER;
+                    }
+                    else //ROLL DICE AGAIN
+                    {
+                        BotGameManager.Instance.state = States.ROLL_DICE;
+                    }
                 }
                 else if(!BotGameManager.Instance.canRollAgain) //CHECK FOR SWITCHING PLAYER
                 {
@@ -355,6 +364,7 @@ public class Pawn : MonoBehaviour
             yield return null;
         }
         BotGameManager.Instance.ReportTurnPossible(true);
+        BotGameManager.Instance.canRollAgain = true;
     }
 
     bool WinCondition()
