@@ -27,15 +27,22 @@ public class ProfileImage : MonoBehaviour
             var image = Instantiate(item, imagesParent);
             var copy = image;
             var ind = indexButton;
-            copy.GetComponent<Button>().onClick.AddListener(() => UpdatePlayerImage(ind));
+            copy.AddComponent<ScreenSwitcher>();
+            copy.GetComponent<Button>().onClick.AddListener(() => UpdatePlayerImage(ind, copy));
+            
+            
             indexButton++;
         }
     }
 
-    public void UpdatePlayerImage(int index)//Index cannot be 0
+    public void UpdatePlayerImage(int index, GameObject button)//Index cannot be 0
     {
         PlayerPrefs.SetInt("IMAGE",index);
         mainPlayerImage.sprite = allPlayerImages[index].GetComponent<Image>().sprite;
         mainPlayerImageMainScene.sprite = allPlayerImages[index].GetComponent<Image>().sprite;
+
+        button.GetComponent<ScreenSwitcher>().desiredScreenType = ScreenType.MainMenu;
+        button.GetComponent<ScreenSwitcher>().OnButtonClicked();
+        
     }
 }

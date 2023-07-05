@@ -5,79 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
-using UnityEngine.SceneManagement;
-using System.Linq;
-using PlayFab.AuthenticationModels;
 using TMPro;
-//using UnityEditor.PackageManager.Requests;
-
 public class ChangeDisplayNameName : MonoBehaviour
 {
-
-    ////// public InputField UserNameRegisterInput;
-    ////// public Text displayNameError;
-    //////// public GameObject ChangeDisplayNameCanvas;
-
-    ////// public void SaveDisplayName()
-    ////// {
-
-    //////     //playerUserName.text = UserNameRegisterInput.text;
-    //////     var request = new UpdateUserTitleDisplayNameRequest
-    //////     {
-    //////         DisplayName = UserNameRegisterInput.text,
-    //////     };
-    //////     PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayUpdate, OnErrorr);
-    ////// }
-
-    ////// private void OnErrorr(PlayFabError obj)
-    ////// {
-    //////     Debug.Log("Something is wrong");
-
-    //////     displayNameError.text = obj.ErrorMessage;
-    ////// }
-
-    ////// private void OnDisplayUpdate(UpdateUserTitleDisplayNameResult obj)
-    ////// {
-    //////     Debug.Log("Succes change name");
-    //////     UserNameRegisterInput.text = obj.DisplayName; // a�uriranje teksta u polju
-    //////     //ChangeDisplayNameCanvas.SetActive(false);
-    ////// }
-
-    //////private void OnDisplayUpdate(UpdateUserTitleDisplayNameResult obj)
-    //////{
-    //////    Debug.Log("Succes change name");
-    //////    //ChangeDisplayNameCanvas.SetActive(false);
-    //////}
-
-
-    ////////////////////////public InputField UserNameRegisterInput;
-    ////////////////////////public Text displayNameError;
-    //////////////////////////public GameObject ChangeDisplayNameCanvas;
-
-    ////////////////////////public void SaveDisplayName()
-    ////////////////////////{
-    ////////////////////////    var request = new UpdateUserTitleDisplayNameRequest
-    ////////////////////////    {
-    ////////////////////////        DisplayName = UserNameRegisterInput.text,
-    ////////////////////////    };
-    ////////////////////////    PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayUpdate, OnErrorr);
-    ////////////////////////}
-
-    ////////////////////////private void OnErrorr(PlayFabError obj)
-    ////////////////////////{
-    ////////////////////////    Debug.Log("Something is wrong");
-
-    ////////////////////////    displayNameError.text = obj.ErrorMessage;
-    ////////////////////////}
-
-    ////////////////////////private void OnDisplayUpdate(UpdateUserTitleDisplayNameResult obj)
-    ////////////////////////{
-    ////////////////////////    Debug.Log("Success change name");
-    ////////////////////////    UserNameRegisterInput.text = obj.DisplayName; // a�uriranje teksta u polju
-    ////////////////////////    //ChangeDisplayNameCanvas.SetActive(false);
-    ////////////////////////}
-
-
     public InputField UserNameRegisterInput;
     public TMP_Text displayNameError;
     //public GameObject ChangeDisplayNameCanvas;
@@ -102,7 +32,6 @@ public class ChangeDisplayNameName : MonoBehaviour
             // sa�uvajte trenutno vreme kao vreme poslednje promene imena i izlogovanja
             var now = DateTime.Now;
             PlayerPrefs.SetString(lastLogoutTimeKey, now.ToString());
-            //PlayerPrefs.SetString(lastChangeTimeKey, now.ToString());
         }
         else
         {
