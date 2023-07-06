@@ -27,7 +27,7 @@ public class BotGameManager : MonoBehaviour
 
     public bool canRollAgain;
     public int sixRollCountPerTurn;
-    int numberOfRollsWithoutSix;
+    public int numberOfRollsWithoutSix;
 
     //HUMAN INPUTS
     //roll dice button
@@ -489,12 +489,16 @@ public class BotGameManager : MonoBehaviour
     {
         for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
         {
-            if (playerList[activePlayer].allPawns[i].ReturnIsOut())
+            if(playerList[activePlayer].allPawns[i].routePosition > 43)
             {
                 return false;
             }
+            if (playerList[activePlayer].allPawns[i].ReturnIsOut())
+            {
+                return true;
+            }
 
-        }return true;
+        }return false;
     }
 
     //ON ROLL DICE BUTTON
@@ -506,14 +510,16 @@ public class BotGameManager : MonoBehaviour
         if (sixRollCountPerTurn == 0 || canRollAgain)
         {
             hasBeenClicked = true;
-            sixRollCountPerTurn++;
             canRollAgain = false;
-            numberOfRollsWithoutSix++;
-
-            //rollButton.GetComponent<Button>().onClick.RemoveAllListeners();
-
-            if (numberOfRollsWithoutSix == 3 && IsAnyPawnOut())
+            if (!IsAnyPawnOut())
             {
+                Debug.Log("No pawns on board adding plus 1");
+                numberOfRollsWithoutSix++;
+            }
+
+            if (numberOfRollsWithoutSix == 3 && !IsAnyPawnOut())
+            {
+                Debug.Log("Works " + !IsAnyPawnOut());
                 rolledHumanDice = 6;
                 numberOfRollsWithoutSix = 0;
             }
@@ -529,6 +535,8 @@ public class BotGameManager : MonoBehaviour
 
             if(rolledHumanDice == 6)
             {
+                sixRollCountPerTurn++;
+                numberOfRollsWithoutSix = 0;
                 if(sixRollCountPerTurn == 3)
                 {
                     state = States.SWITCH_PLAYER;
@@ -539,7 +547,6 @@ public class BotGameManager : MonoBehaviour
                     canRollAgain = true;
                 }
             }
-            //ActivateRollButton(false);
             //START NODE FULL CHECK
             //is start node occupied
             bool startNodeFull = false;

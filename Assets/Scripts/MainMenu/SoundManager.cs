@@ -23,6 +23,7 @@ public static class SoundManager
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
         soundTimerDictionary[Sound.ButtonClick] = 0f;
+        soundTimerDictionary[Sound.DiceRoll] = 5f;
     }
 
     public static void PlaySound(Sound sound) //this creates and destroys every time
@@ -56,25 +57,25 @@ public static class SoundManager
         {
             default:
                 return true;
-            //case Sound.ButtonClick:
-            //    if (soundTimerDictionary.ContainsKey(sound))
-            //    {
-            //        float lastTimePlayed = soundTimerDictionary[sound];
-            //        float playerMoveTimerMax = .05f; //delay
-            //        if(lastTimePlayed + playerMoveTimerMax < Time.time)
-            //        {
-            //            soundTimerDictionary[sound] = Time.time;
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return true;
-            //    }
+            case Sound.ButtonClick:
+                if (soundTimerDictionary.ContainsKey(sound))
+                {
+                    float lastTimePlayed = soundTimerDictionary[sound];
+                    float playerMoveTimerMax = .05f; //delay
+                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
+                    {
+                        soundTimerDictionary[sound] = Time.time;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
         }
     }
 
