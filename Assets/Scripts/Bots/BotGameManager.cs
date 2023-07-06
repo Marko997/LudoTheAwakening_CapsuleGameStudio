@@ -36,7 +36,7 @@ public class BotGameManager : MonoBehaviour
     public GameObject attackButton;
     public int rolledHumanDice;
 
-    [SerializeField] private Sprite[] diceSides;
+    public Sprite[] diceSides;
 
     //STATEMACHINE
     public States state;

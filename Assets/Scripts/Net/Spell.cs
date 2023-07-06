@@ -112,7 +112,8 @@ public class Spell : MonoBehaviour
                         spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
-                        //transform.rotation = currentRotation;
+                        eatNode.isTaken = false;
+                        eatNode.pawn = null;
                     }
                 }
 
@@ -126,8 +127,12 @@ public class Spell : MonoBehaviour
                 {
                     if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
                     {
+                        spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
+
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
+                        eatNode.isTaken = false;
+                        eatNode.pawn = null;
                     }
                 }
                 break;
@@ -140,13 +145,15 @@ public class Spell : MonoBehaviour
                 {
                     if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
                     {
+                        spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
+                        eatNode.isTaken = false;
+                        eatNode.pawn = null;
                     }
                 }
                 break;
             case SpellType.MACEBEARER:
-                spellCasterPiece.transform.Rotate(0, -180, 0);
 
                 spellCasterPiece.eatPower = -1;
 
@@ -156,11 +163,13 @@ public class Spell : MonoBehaviour
                 {
                     if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
                     {
+                        spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
+                        eatNode.isTaken = false;
+                        eatNode.pawn = null;
                     }
                 }
-                spellCasterPiece.transform.Rotate(0, 180, 0);
                 break;
             default:
                 Debug.Log("Spell not found");

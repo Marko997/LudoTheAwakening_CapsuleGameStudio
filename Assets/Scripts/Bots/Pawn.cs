@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum PawnAnimationState
 {
@@ -131,15 +132,20 @@ public class Pawn : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
             //timeForPointToPoint = 0;
+
+            //if(routePosition > 44)
+            //{
+            //    isOut = false;
+            //}
+
             steps--;
             doneSteps++;
-
-
         }
 
         if (steps == 0)
         {
             BotGameManager.Instance.hasBeenClicked = false;
+            BotGameManager.Instance.rollButton.GetComponent<Image>().sprite = BotGameManager.Instance.diceSides[6];
         }
 
         goalNode = fullRoute[routePosition];
@@ -278,6 +284,7 @@ public class Pawn : MonoBehaviour
         if (steps == 0)
         {
             BotGameManager.Instance.hasBeenClicked = false;
+            BotGameManager.Instance.rollButton.GetComponent<Image>().sprite = BotGameManager.Instance.diceSides[6];
         }
 
         goalNode.pawn = this;
@@ -336,27 +343,26 @@ public class Pawn : MonoBehaviour
 
     public void StartTheMove(int diceNumber)
     {
-
         steps = diceNumber;
         StartCoroutine(Move(diceNumber));
     }
 
     public void ReturnToBase()
     {
-
         StartCoroutine(ReturnEatenPawn());
     }
 
     IEnumerator ReturnEatenPawn()
     {
-
         BotGameManager.Instance.ReportTurnPossible(false);
         routePosition = 0;
         currentNode = null;
         goalNode = null;
         isOut = false;
         doneSteps = 0;
-        //transform.rotation = baseRotation; DODAJ KASNIJE
+        transform.Rotate(0, Utility.TeamToRotataion((Team)Utility.RetrieveTeamId((ulong)pawnId)),0);
+
+        BotGameManager.Instance.canRollAgain = true;
 
         Vector3 baseNodePos = baseNode.gameObject.transform.position;
         while (MoveToNextNode(baseNodePos, 100f))
@@ -364,7 +370,6 @@ public class Pawn : MonoBehaviour
             yield return null;
         }
         BotGameManager.Instance.ReportTurnPossible(true);
-        BotGameManager.Instance.canRollAgain = true;
     }
 
     bool WinCondition()
