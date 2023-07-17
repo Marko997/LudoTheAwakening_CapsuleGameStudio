@@ -513,13 +513,11 @@ public class BotGameManager : MonoBehaviour
             canRollAgain = false;
             if (!IsAnyPawnOut())
             {
-                Debug.Log("No pawns on board adding plus 1");
                 numberOfRollsWithoutSix++;
             }
 
             if (numberOfRollsWithoutSix == 3 && !IsAnyPawnOut())
             {
-                Debug.Log("Works " + !IsAnyPawnOut());
                 rolledHumanDice = 6;
                 numberOfRollsWithoutSix = 0;
             }

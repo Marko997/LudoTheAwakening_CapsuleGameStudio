@@ -28,7 +28,9 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public TextMeshProUGUI joinCode;
     public TMP_InputField codeInput;
 
-    public GameObject slider;
+    public GameObject matchmakingWaitingScreen;
+    public GameObject partyScreen;
+    public GameObject closeButton;
     public GameObject wrongCodeText;
     public TMP_Text loadingText;
 
@@ -81,7 +83,8 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     IEnumerator StartBotGameDealy()
     {
-        slider.SetActive(true);
+        partyScreen.SetActive(false);
+        matchmakingWaitingScreen.SetActive(true);
         float randomSeconds = Random.Range(0, 10);
 
         while (randomSeconds > 0f) // Check if the elapsed time is less than 1 second
@@ -89,6 +92,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
             if(randomSeconds >= 1f && randomSeconds <= 2f)
             {
                 loadingText.text = "Match found! Starting...";
+                closeButton.SetActive(false);
             }
             randomSeconds -= Time.deltaTime; // Increase the elapsed time
             yield return null; // Wait for the next frame
@@ -109,7 +113,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     //Main
     public async void OnMainHostButton()
     {
-        slider.SetActive(true);
+        matchmakingWaitingScreen.SetActive(true);
         try
         {
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(4, "europe-central2"); //this is for 4 players host + 3
@@ -140,7 +144,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
                 bot.GetComponent<NetworkObject>().Spawn();
                 botsList.Add(bot);
             }
-            slider.SetActive(false);
+            matchmakingWaitingScreen.SetActive(false);
         }
     }
 
@@ -152,7 +156,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public async void OnMainConnectButton(string joinCode)
     {
         wrongCodeText.SetActive(false);
-        slider.SetActive(true);
+        matchmakingWaitingScreen.SetActive(true);
         codeInput.text = "";
         try
         {
@@ -166,7 +170,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         catch (RelayServiceException ex)
         {
             Debug.Log("Join code wrong");
-            slider.SetActive(false);
+            matchmakingWaitingScreen.SetActive(false);
             wrongCodeText.SetActive(true);
 
             throw;
@@ -182,7 +186,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     private void ClientConnected(ulong clientId)
     {
-        slider.SetActive(false);
+        matchmakingWaitingScreen.SetActive(false);
         joinCode.gameObject.SetActive(false);
     }
     private void ClientDisConnected(ulong clientId)

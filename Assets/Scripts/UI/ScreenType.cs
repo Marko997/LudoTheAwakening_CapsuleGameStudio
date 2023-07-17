@@ -19,5 +19,6 @@ public enum ScreenType
     ChangeName,
     Mail,
     Friends,
-    ProfileIcon
+    ProfileIcon,
+    ComingSoon
 }
