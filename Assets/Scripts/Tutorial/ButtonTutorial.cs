@@ -5,10 +5,13 @@ using UnityEngine.UI;
 
 public class ButtonTutorial : Tutorial
 {
-    public List<Button> Buttons = new List<Button>(); 
+    public List<GameObject> Buttons = new List<GameObject>();
+    bool isHappening = false;
 
     public override void CheckIfHappening()
     {
+        if (isHappening) { return; }
+
         for (int i = 0; i < Buttons.Count; i++)
         {
             if (Buttons[i].GetComponent<CustomTutorialButton>().isClicked)
@@ -19,7 +22,15 @@ public class ButtonTutorial : Tutorial
         }
         if (Buttons.Count == 0)
         {
-            TutorialManager.Instance.CompletedTutorial();
+            StartCoroutine(WaitForScreen());
+            isHappening = true;
         }
+        
+    }
+    IEnumerator WaitForScreen()
+    {
+        yield return new WaitForSeconds(0.12f);
+        TutorialManager.Instance.CompletedTutorial();
+
     }
 }

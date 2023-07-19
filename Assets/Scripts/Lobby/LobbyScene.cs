@@ -49,6 +49,13 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
         bots = false;
 
+        if(PlayerPrefs.GetString("TUTORIAL") == "")
+        {
+            //Destroy(botsPlayButton.gameObject.GetComponent<ScreenSwitcher>());
+            botsPlayButton.GetComponent<ScreenSwitcher>().menuButton.onClick.RemoveListener(botsPlayButton.GetComponent<ScreenSwitcher>().OnButtonClicked);
+
+        }
+
         botsPlayButton.onClick.AddListener(StartBotGame);
 
         await UnityServices.InitializeAsync();
@@ -61,6 +68,11 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     private void Update()
     {
+        if(TutorialManager.Instance.isAllTutorialsCompleted)
+        {
+            botsPlayButton.GetComponent<ScreenSwitcher>().menuButton.onClick.AddListener(botsPlayButton.GetComponent<ScreenSwitcher>().OnButtonClicked);
+            botsPlayButton.onClick.AddListener(StartBotGame);
+        }
         if (!NetworkManager.Singleton.IsHost)
         {
             startButton.SetActive(false);
@@ -78,6 +90,12 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     private void StartBotGame()
     {
+        //if (PlayerPrefs.GetString("TUTORIAL") == "")
+        if(!TutorialManager.Instance.isAllTutorialsCompleted)
+        {
+            Debug.Log("SHOW UI");
+            return;
+        }
         StartCoroutine(StartBotGameDealy());
     }
 

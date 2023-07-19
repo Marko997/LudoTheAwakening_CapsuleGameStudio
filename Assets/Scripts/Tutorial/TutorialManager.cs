@@ -10,11 +10,21 @@ public class TutorialManager : MonoBehaviour
 
     //UI
     public TMP_Text expText;
+    public GameObject tutorialBackground;
+    public GameObject pawnHolder;
     public GameObject popUp;
-    public Button buttonToPress;
+    public GameObject buttonToPress;
 
-    private Tutorial currentTutorial;
+    public GameObject finalBackgroud;
+
+    public Tutorial currentTutorial;
     private Transform previousButtonParent;
+    private Transform previousExpTextParent;
+
+    public CustomTutorialButton zeroTutorialButton;
+    public CustomTutorialButton firstTutorialButton;
+
+    public bool isAllTutorialsCompleted = false;
 
     private static TutorialManager instance;
     public static TutorialManager Instance
@@ -38,12 +48,21 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.DeleteKey("TUTORIAL");
         //turn on when tutorial creating is finished
-        //if(PlayerPrefs.GetString("TUTORIAL") == "FINISHED")
-        //{
-        //    expText.gameObject.SetActive(false);
-        //    return;
-        //}
+        if (PlayerPrefs.GetString("TUTORIAL") == "FINISHED")
+        {
+            expText.gameObject.SetActive(false);
+            tutorialBackground.SetActive(false);
+            pawnHolder.SetActive(true);
+            return;
+        }
+        else
+        {
+            expText.gameObject.SetActive(true);
+            tutorialBackground.SetActive(true);
+            pawnHolder.SetActive(false);
+        }
         SetNextTutorial(0);
     }
 
@@ -71,7 +90,6 @@ public class TutorialManager : MonoBehaviour
     public void SetNextTutorial(int currentOrder)
     {
         currentTutorial = GetTutorialByOrder(currentOrder);
-
         if (!currentTutorial)
         {
             CompletedAllTutorials();
@@ -79,23 +97,54 @@ public class TutorialManager : MonoBehaviour
         }
         
         expText.text = currentTutorial.Explanation;
+        previousExpTextParent = expText.transform.parent;
+
         popUp = currentTutorial.popUp;
         popUp.SetActive(true);
+        expText.transform.SetParent(popUp.transform.GetChild(0), false);
+        expText.transform.localPosition = new Vector3(0f,0f,0f);
+
+        //buttonToPress = null;
         buttonToPress = currentTutorial.buttonToPress;
         previousButtonParent = buttonToPress.transform.parent;
+
+        if(currentTutorial.Order == 4){ return;} //We dont need to change button parent for this tutorial
+        if (currentTutorial.Order == 5) { return; } //We dont need to change button parent for this tutorial
         buttonToPress.transform.SetParent(popUp.transform,true);
     }
 
     public void CompletedTutorial()
     {
-        buttonToPress.transform.SetParent(previousButtonParent, true);
+        //ADD check for order if that tutId needs hero panel turn panel on or off
+        if(currentTutorial.Order < 4 || currentTutorial.Order > 5) //Since we didn't move a button to new parent no need to return it back
+        {
+            buttonToPress.transform.SetParent(previousButtonParent, true); 
+        }
+        buttonToPress.GetComponent<CustomTutorialButton>().isClicked = false;
+        expText.transform.SetParent(previousExpTextParent, true);
         popUp.SetActive(false);
-        SetNextTutorial(currentTutorial.Order++);
+        Debug.Log(currentTutorial.Order + 1);
+        SetNextTutorial(currentTutorial.Order+1);
+        
     }
 
     public void CompletedAllTutorials()
     {
-        PlayerPrefs.SetString("TUTORIAL", "FINISHED");
+        //PlayerPrefs.SetString("TUTORIAL", "FINISHED");
+        StartCoroutine(TurnOffTutorial());
+    }
+
+    IEnumerator TurnOffTutorial()
+    {
+        finalBackgroud.SetActive(true);
+        expText.transform.SetParent(finalBackgroud.transform, false);
+        expText.transform.localPosition = new Vector3(0f, 0f, 0f);
+
         expText.text = "You have completed all the tutorials, hoerah!!";
+        pawnHolder.SetActive(true);
+        isAllTutorialsCompleted = true;
+        yield return new WaitForSeconds(2f);
+
+        finalBackgroud.SetActive(false);
     }
 }

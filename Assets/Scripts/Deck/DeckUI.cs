@@ -12,6 +12,9 @@ public class DeckUI : MonoBehaviour
     public List<Piece> playerDeck;
     public List<Piece> playerCollection;
 
+    public List<Piece> tutorialPlayerDeck;
+    public List<GameObject> tutorialPlayerCollection;
+
     //public Transform[] deckParent;
     public DeckParentTransformItem[] deckParent;
     public Transform collectionParent;
@@ -29,23 +32,47 @@ public class DeckUI : MonoBehaviour
         closeButton.GetComponent<ScreenSwitcher>().menuButton.onClick.RemoveListener(closeButton.GetComponent<ScreenSwitcher>().OnButtonClicked);
         closeButton.onClick.AddListener(OnDeckCloseButtonClicked);
 
-        foreach(var card in playerCollection)
+        if(PlayerPrefs.GetString("TUTORIAL") == "")
         {
-            cardObject = Instantiate(card.pieceCardImage, collectionParent);
-            cardObjects.Add(cardObject);
+            //if(TutorialManager.Instance.currentTutorial.Order == 3)//check for tutorial number 4 but its still 3 when script is initialized
+            //{
+            //    Button btn = tutorialPlayerCollection[0].gameObject.GetComponent<Button>();
+            //    btn.onClick.AddListener(() => MoveCard(tutorialPlayerCollection[0].gameObject.AddComponent<Piece>(), tutorialPlayerCollection[0].gameObject, btn));
+            //    return;
+            //}
+            for (int i = 0; i < tutorialPlayerCollection.Count; i++)
+            {
+                Button btn1 = tutorialPlayerCollection[i].gameObject.GetComponent<Button>();
 
-            Button btn = cardObject.AddComponent<Button>();
-            var copyCard = card;
-            var copyCardObject = cardObject;
-            btn.onClick.AddListener(() => MoveCard(copyCard, copyCardObject));
+                var copyCard = playerCollection[i];
+                var copyCardObject = tutorialPlayerCollection[i].gameObject;
+
+                btn1.onClick.AddListener(() => MoveCard(copyCard, copyCardObject, btn1));
+            }
         }
-
-        string[] deckArray = PlayerPrefs.GetString("Deck").Split(',');
-        if(deckArray.Length == 4)
+        else
         {
-            LoadDeckFromPlayerPrefs(cardObjects);
+            foreach (var tutCard in tutorialPlayerCollection)
+            {
+                Destroy(tutCard);
+            }
+            foreach (var card in playerCollection)
+            {
+                cardObject = Instantiate(card.pieceCardImage, collectionParent);
+                cardObjects.Add(cardObject);
+
+                Button btn = cardObject.AddComponent<Button>();
+                var copyCard = card;
+                var copyCardObject = cardObject;
+                btn.onClick.AddListener(() => MoveCard(copyCard, copyCardObject));
+            }
+
+            string[] deckArray = PlayerPrefs.GetString("Deck").Split(',');
+            if (deckArray.Length == 4)
+            {
+                LoadDeckFromPlayerPrefs(cardObjects);
+            }
         }
-        
     }
 
     public void OnDeckCloseButtonClicked()
@@ -69,7 +96,7 @@ public class DeckUI : MonoBehaviour
         errorPanel.SetActive(false);
     }
     //Move card from collection to deck and reverse
-    public void MoveCard(Piece card, GameObject cardObject)
+    public void MoveCard(Piece card, GameObject cardObject, Button btn=null)
     {
         SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
         if (cardObject.transform.parent == collectionParent) //Adds card to deck, removes from collection
@@ -101,6 +128,13 @@ public class DeckUI : MonoBehaviour
             playerCollection.Add(card);
 
         }
+
+
+        if (PlayerPrefs.GetString("TUTORIAL") == "")
+        {
+            RemoveTutorialOnClick(btn);
+            //Destroy(card);
+        }
     }
 
     private void SaveDeckToPlayerPrefs()
@@ -128,5 +162,10 @@ public class DeckUI : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void RemoveTutorialOnClick(Button btn)
+    {
+        btn.onClick.RemoveAllListeners();
     }
 }

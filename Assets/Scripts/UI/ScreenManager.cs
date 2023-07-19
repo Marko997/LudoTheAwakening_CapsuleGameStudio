@@ -40,6 +40,7 @@ public class ScreenManager : MonoBehaviour//: MonoSingleton<ScreenManager>
         {
             lastActiveScreen.gameObject.SetActive(false);
         }
+
         ScreenCustom desiredScreen = screenList.Find(x => x.screenType == type);
 
         if (desiredScreen == null)

@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class Tutorial : MonoBehaviour
 {
     public int Order;
+    [TextArea(2,10)]
     public string Explanation;
     public GameObject popUp;
-    public Button buttonToPress;
+    public GameObject buttonToPress;
 
 
     private void Awake()
