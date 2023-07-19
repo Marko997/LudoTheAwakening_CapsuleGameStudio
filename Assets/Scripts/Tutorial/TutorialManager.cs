@@ -48,7 +48,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.DeleteKey("TUTORIAL");
+        //PlayerPrefs.DeleteKey("TUTORIAL");
         //turn on when tutorial creating is finished
         if (PlayerPrefs.GetString("TUTORIAL") == "FINISHED")
         {
@@ -130,7 +130,7 @@ public class TutorialManager : MonoBehaviour
 
     public void CompletedAllTutorials()
     {
-        //PlayerPrefs.SetString("TUTORIAL", "FINISHED");
+        PlayerPrefs.SetString("TUTORIAL", "FINISHED");
         StartCoroutine(TurnOffTutorial());
     }
 

@@ -90,12 +90,8 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     private void StartBotGame()
     {
-        //if (PlayerPrefs.GetString("TUTORIAL") == "")
-        if(!TutorialManager.Instance.isAllTutorialsCompleted)
-        {
-            Debug.Log("SHOW UI");
-            return;
-        }
+        if (PlayerPrefs.GetString("TUTORIAL") == "") { return; }
+        
         StartCoroutine(StartBotGameDealy());
     }
 
