@@ -35,6 +35,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public TMP_Text loadingText;
 
     public Button botsPlayButton;
+    public Button mpPlayButton;
 
     private bool bots;
 
@@ -57,6 +58,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         }
 
         botsPlayButton.onClick.AddListener(StartBotGame);
+        mpPlayButton.onClick.AddListener(StartBotGame);
 
         await UnityServices.InitializeAsync();
         if (!AuthenticationService.Instance.IsSignedIn)
