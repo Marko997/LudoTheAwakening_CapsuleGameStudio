@@ -95,14 +95,14 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        if(currentTutorial.Order == 4 || currentTutorial.Order == 5) //turn off deck close button, so player don't break the tutorial
-        {
-            deckCloseButton.SetActive(false);
-        }
-        else
-        {
-            deckCloseButton.SetActive(true);
-        }
+        //if(currentTutorial.Order == 4 || currentTutorial.Order == 5) //turn off deck close button, so player don't break the tutorial
+        //{
+        //    deckCloseButton.SetActive(false);
+        //}
+        //else
+        //{
+        //    deckCloseButton.SetActive(true);
+        //}
 
         expText.text = currentTutorial.Explanation;
         previousExpTextParent = expText.transform.parent;
@@ -117,14 +117,14 @@ public class TutorialManager : MonoBehaviour
         previousButtonParent = buttonToPress.transform.parent;
 
         if(currentTutorial.Order == 4){ return;} //We dont need to change button parent for this tutorial
-        if (currentTutorial.Order == 5) { return; } //We dont need to change button parent for this tutorial
+        //if (currentTutorial.Order == 5) { return; } //We dont need to change button parent for this tutorial
         buttonToPress.transform.SetParent(popUp.transform,true);
     }
 
     public void CompletedTutorial()
     {
         //ADD check for order if that tutId needs hero panel turn panel on or off
-        if(currentTutorial.Order < 4 || currentTutorial.Order > 5) //Since we didn't move a button to new parent no need to return it back
+        if(currentTutorial.Order != 4) //Since we didn't move a button to new parent no need to return it back
         {
             buttonToPress.transform.SetParent(previousButtonParent, true); 
         }
