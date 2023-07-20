@@ -277,7 +277,6 @@ public class Piece : NetworkBehaviour
             Vector3 lookAtTile = board[routePosition + lookTileInt].tileTransform.position;
 
             float jumpSize = 0.5f;
-            if (board[56].tileTransform.position == nextPos)
             {
                 UpdateAnimationStateServerRpc(AnimationState.Jump);
                 jumpSize = _JumpSize;

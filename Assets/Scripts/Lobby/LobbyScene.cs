@@ -154,12 +154,6 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
         if (NetworkManager.Singleton.IsListening)
         {
-            if (bots)
-            {
-                var bot = Instantiate(bot1);
-                bot.GetComponent<NetworkObject>().Spawn();
-                botsList.Add(bot);
-            }
             matchmakingWaitingScreen.SetActive(false);
         }
     }
@@ -227,12 +221,9 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public void OnLobbyStartButton()
     {
         SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
-        if (!bots)
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
-        }
 
-        NetworkManager.Singleton.SceneManager.LoadScene("BotsGame", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
+
     }
     public void OnLobbySubmitNameChange()
     {

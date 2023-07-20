@@ -64,9 +64,9 @@ public class GameManager : NetworkBehaviour
 
     // CONST
     private const int TEAM_COUNT = 4;
-    private const int TILE_COUNT = 57;
-    private const int TILE_IN_PATH_PRIOR_TO_GOAL = 52;
-    private const int TILE_OFFSET_IN_BETWEEN_TEAM = 13;
+    private const int TILE_COUNT = 48;
+    private const int TILE_IN_PATH_PRIOR_TO_GOAL = 44;
+    private const int TILE_OFFSET_IN_BETWEEN_TEAM = 10;
 
     //Timer
     public int duration;
@@ -936,7 +936,7 @@ public class GameManager : NetworkBehaviour
 
                 EatEnemyPawn(piece, targetTile,clientId); //moved here so enemy pawn is eaten when peace reach that tile
 
-                if ((piece.currentTile > 0 && piece.currentTile < 49 - piece.eatPower) &&
+                if ((piece.currentTile > 0 && piece.currentTile < 43 - piece.eatPower) &&
                     (board[piece.currentTile + piece.eatPower].GetFirstPiece() != null) && (board[piece.currentTile + piece.eatPower].GetFirstPiece().currentTeam != piece.currentTeam))
                 {
                     EnableAttackServerRpc(true, clientId);
@@ -947,12 +947,12 @@ public class GameManager : NetworkBehaviour
                     //UpdatePieceIsSelected(piece,false);
                     piece.UpdateIsSelectedStateServerRpc(false);
                 }
-                if (piece.currentTile == 56)//jump at the end
+                if (piece.currentTile == 47)//jump at the end
                 {
                     //piece.UpdateAnimationStateServerRpc(AnimationState.Jump);
                 }
 
-                if (piece.currentTile == 57)
+                if (piece.currentTile == 48)
                 {
                     piece.source.clip = piece.endSound;
                     piece.source.Play();
