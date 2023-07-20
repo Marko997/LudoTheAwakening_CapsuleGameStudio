@@ -21,8 +21,7 @@ public class TutorialManager : MonoBehaviour
     private Transform previousButtonParent;
     private Transform previousExpTextParent;
 
-    public CustomTutorialButton zeroTutorialButton;
-    public CustomTutorialButton firstTutorialButton;
+    public GameObject deckCloseButton;
 
     public bool isAllTutorialsCompleted = false;
 
@@ -95,7 +94,16 @@ public class TutorialManager : MonoBehaviour
             CompletedAllTutorials();
             return;
         }
-        
+
+        if(currentTutorial.Order == 4 || currentTutorial.Order == 5) //turn off deck close button, so player don't break the tutorial
+        {
+            deckCloseButton.SetActive(false);
+        }
+        else
+        {
+            deckCloseButton.SetActive(true);
+        }
+
         expText.text = currentTutorial.Explanation;
         previousExpTextParent = expText.transform.parent;
 
