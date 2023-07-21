@@ -64,9 +64,9 @@ public class GameManager : NetworkBehaviour
 
     // CONST
     private const int TEAM_COUNT = 4;
-    private const int TILE_COUNT = 48;
-    private const int TILE_IN_PATH_PRIOR_TO_GOAL = 44;
-    private const int TILE_OFFSET_IN_BETWEEN_TEAM = 10;
+    private const int TILE_COUNT = 49;
+    private const int TILE_IN_PATH_PRIOR_TO_GOAL = 45;
+    private const int TILE_OFFSET_IN_BETWEEN_TEAM = 11;
 
     //Timer
     public int duration;
@@ -88,7 +88,7 @@ public class GameManager : NetworkBehaviour
                 else if (i < TILE_IN_PATH_PRIOR_TO_GOAL - 1)
                     teamPath[i] = i - TILE_IN_PATH_PRIOR_TO_GOAL + offset;
                 else
-                    teamPath[i] = i + 1 + (teamId * 6);
+                    teamPath[i] = i  + (teamId * 6);
             }
 
             paths.Add(teamId, teamPath);

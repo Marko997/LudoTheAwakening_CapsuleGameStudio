@@ -95,15 +95,6 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        //if(currentTutorial.Order == 4 || currentTutorial.Order == 5) //turn off deck close button, so player don't break the tutorial
-        //{
-        //    deckCloseButton.SetActive(false);
-        //}
-        //else
-        //{
-        //    deckCloseButton.SetActive(true);
-        //}
-
         expText.text = currentTutorial.Explanation;
         previousExpTextParent = expText.transform.parent;
 
@@ -119,6 +110,9 @@ public class TutorialManager : MonoBehaviour
         if(currentTutorial.Order == 4){ return;} //We dont need to change button parent for this tutorial
         //if (currentTutorial.Order == 5) { return; } //We dont need to change button parent for this tutorial
         buttonToPress.transform.SetParent(popUp.transform,true);
+
+        //MoveArrow.Instance.buttonTransform = buttonToPress.GetComponent<RectTransform>();
+        //MoveArrow.Instance.AnimateArrowToButton();
     }
 
     public void CompletedTutorial()
