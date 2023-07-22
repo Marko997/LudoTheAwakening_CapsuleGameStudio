@@ -28,7 +28,7 @@ public class LoadInterstitial : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsS
     public void ShowAd()
     {
         print("Showing ad");
-        Advertisement.Show(adUnitId,this);
+        Advertisement.Show(adUnitId, this);
     }
 
 

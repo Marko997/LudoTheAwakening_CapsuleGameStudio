@@ -24,9 +24,9 @@ public class InitializeAds : MonoBehaviour, IUnityAdsInitializationListener
 #elif UNITY_EDITOR
         gameId = androidGameId; //for testing
 #endif
-        if(!Advertisement.isInitialized && Advertisement.isSupported)
+        if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
-            Advertisement.Initialize(gameId,isTestingMode, this);
+            Advertisement.Initialize(gameId, isTestingMode, this);
         }
 
     }
@@ -50,6 +50,6 @@ public class InitializeAds : MonoBehaviour, IUnityAdsInitializationListener
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
