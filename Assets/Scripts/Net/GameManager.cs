@@ -65,7 +65,7 @@ public class GameManager : NetworkBehaviour
     // CONST
     private const int TEAM_COUNT = 4;
     private const int TILE_COUNT = 49;
-    private const int TILE_IN_PATH_PRIOR_TO_GOAL = 45;
+    private const int TILE_IN_PATH_PRIOR_TO_GOAL = 44;
     private const int TILE_OFFSET_IN_BETWEEN_TEAM = 11;
 
     //Timer
@@ -83,12 +83,14 @@ public class GameManager : NetworkBehaviour
             for (int i = 0; i < TILE_COUNT; i++)
             {
                 int offset = (TILE_OFFSET_IN_BETWEEN_TEAM * teamId);
-                if (i + ((offset == 0) ? 1 : offset) < TILE_IN_PATH_PRIOR_TO_GOAL)
+                if (i + (offset) < TILE_IN_PATH_PRIOR_TO_GOAL)//od 0 do 49 
                     teamPath[i] = i + offset;
-                else if (i < TILE_IN_PATH_PRIOR_TO_GOAL - 1)
+                else if (i-1 < TILE_IN_PATH_PRIOR_TO_GOAL -1) // do 49 pa ispocetka; mislim da ga ovde smanji za -1
+                {
                     teamPath[i] = i - TILE_IN_PATH_PRIOR_TO_GOAL + offset;
+                }
                 else
-                    teamPath[i] = i  + (teamId * 6);
+                    teamPath[i] = i +(teamId * 5);
             }
 
             paths.Add(teamId, teamPath);
