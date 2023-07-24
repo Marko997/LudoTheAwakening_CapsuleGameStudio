@@ -111,6 +111,7 @@ public class DeckUI : MonoBehaviour
                     //Debug.Log(cardObject);
                     cardObject.transform.SetParent(deckParent[i].transform);
                     cardObject.transform.position = deckParent[i].transform.position;
+                    cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(450f,650f);
                     deckParent[i].isOccupied = true;
                     break;
                 }
@@ -154,7 +155,7 @@ public class DeckUI : MonoBehaviour
             foreach (var cardID in cardIDs.Select((value, i) => new { i, value }))
             {
                 Piece card = playerCollection.FirstOrDefault(c => c.pieceName == cardID.value);
-                GameObject cardObject = cardObjects.FirstOrDefault(x => x.name == cardID.value+"_Image(Clone)");
+                GameObject cardObject = cardObjects.FirstOrDefault(x => x.name == cardID.value + "_Image(Clone)");
 
                 if (card != null)
                 {
