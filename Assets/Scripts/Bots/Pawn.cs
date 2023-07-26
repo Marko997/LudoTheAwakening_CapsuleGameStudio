@@ -93,6 +93,11 @@ public class Pawn : MonoBehaviour
 
     IEnumerator Move(int diceNumber)
     {
+        if (BotGameManager.Instance.playerList[BotGameManager.Instance.activePlayer].playerType == BotPlayerTypes.CPU)
+        {
+            isSelected = true;
+        }
+
         if (isMoving)
         {
             yield break;
@@ -122,21 +127,11 @@ public class Pawn : MonoBehaviour
             Vector3 startPos = fullRoute[routePosition - 1].gameObject.transform.position;
             Vector3 lookAtTile = fullRoute[routePosition + lookTileInt].transform.position;
 
-            //while (MoveToNextNode(nextPos, 8f))
-            //{
-            //    yield return null;
-            //}
             while (MoveInArcToNextNode(startPos, nextPos, 8f, lookAtTile))
             {
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
-            //timeForPointToPoint = 0;
-
-            //if(routePosition > 44)
-            //{
-            //    isOut = false;
-            //}
 
             steps--;
             doneSteps++;
@@ -144,8 +139,21 @@ public class Pawn : MonoBehaviour
 
         if (steps == 0)
         {
+            //isSelected = false;
             BotGameManager.Instance.hasBeenClicked = false;
             BotGameManager.Instance.rollButton.GetComponent<Image>().sprite = BotGameManager.Instance.diceSides[6];
+
+            //if (BotGameManager.Instance.playerList[BotGameManager.Instance.activePlayer].playerType == BotPlayerTypes.CPU)
+            //{
+            //    if (fullRoute[routePosition + eatPower].isTaken && fullRoute[routePosition + eatPower].pawn.pawnId != pawnId)
+            //    {
+            //        BotGameManager.Instance.AttackSpellCast();
+            //    }
+            //    else
+            //    {
+            //        isSelected = false;
+            //    }
+            //}
         }
 
         goalNode = fullRoute[routePosition];
@@ -153,8 +161,7 @@ public class Pawn : MonoBehaviour
         if (goalNode.isTaken)
         {
             //KICK THE OTHER STONE
-            goalNode.pawn.ReturnToBase();
-            
+            goalNode.pawn.ReturnToBase();   
         }
 
         currentNode.pawn = null;
@@ -203,7 +210,16 @@ public class Pawn : MonoBehaviour
             }
             else //THIS IS FOR BOTS -- NEED TO UPDATE TO USE SPELL AND ROLL AGAIN!!!
             {
-                BotGameManager.Instance.state = States.SWITCH_PLAYER;
+                //BotGameManager.Instance.state = States.SWITCH_PLAYER;
+                if (fullRoute[routePosition + eatPower].isTaken && fullRoute[routePosition + eatPower].pawn.pawnId != pawnId)
+                {
+                    BotGameManager.Instance.AttackSpellCast();
+                }
+                else
+                {
+                    isSelected = false;
+                    BotGameManager.Instance.state = States.SWITCH_PLAYER;
+                }
             }
         }
         else
@@ -332,6 +348,23 @@ public class Pawn : MonoBehaviour
         if (fullRoute[tempPosition].isTaken)
         {
 
+            if (pawnID == fullRoute[tempPosition].pawn.pawnId)
+            {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    public bool CheckPossibleAttack(int pawnID, int diceNumber, int eatPower)
+    {
+        int tempPosition = routePosition + diceNumber + eatPower; //add eat power to calculation
+        if (tempPosition >= fullRoute.Count - eatPower) //so they dont eat pieces after final tiles
+        {
+            return false;
+        }
+        if (fullRoute[tempPosition].isTaken)
+        {
             if (pawnID == fullRoute[tempPosition].pawn.pawnId)
             {
                 return false;

@@ -37,6 +37,8 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     public Button botsPlayButton;
     public Button mpPlayButton;
 
+    public GameObject botButtonRegularParent;
+
     private bool bots;
 
     public PlayerController bot1;
@@ -54,7 +56,11 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         {
             //Destroy(botsPlayButton.gameObject.GetComponent<ScreenSwitcher>());
             botsPlayButton.GetComponent<ScreenSwitcher>().menuButton.onClick.RemoveListener(botsPlayButton.GetComponent<ScreenSwitcher>().OnButtonClicked);
-
+        }
+        else
+        {
+            botsPlayButton.transform.SetParent(botButtonRegularParent.transform);
+            botsPlayButton.transform.localPosition = new Vector3(280f,-60f,0f);
         }
 
         botsPlayButton.onClick.AddListener(StartBotGame);

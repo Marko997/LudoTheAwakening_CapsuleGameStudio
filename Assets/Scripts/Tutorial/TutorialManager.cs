@@ -111,6 +111,12 @@ public class TutorialManager : MonoBehaviour
         //if (currentTutorial.Order == 5) { return; } //We dont need to change button parent for this tutorial
         buttonToPress.transform.SetParent(popUp.transform,true);
 
+        if (buttonToPress.name == "Play-Bot__Button (1)")
+        {
+            Debug.Log("WORKSSS");
+            buttonToPress.transform.localPosition = new Vector3(280f, 55f, 0f);
+        }
+
         //MoveArrow.Instance.buttonTransform = buttonToPress.GetComponent<RectTransform>();
         //MoveArrow.Instance.AnimateArrowToButton();
     }

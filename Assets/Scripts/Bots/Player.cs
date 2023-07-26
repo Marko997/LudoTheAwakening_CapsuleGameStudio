@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     public bool hasTurn;
     public bool hasWon;
+
+    public Color playerColor;
     
     public BotPlayerTypes playerType;
 

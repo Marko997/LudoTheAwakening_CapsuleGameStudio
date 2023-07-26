@@ -5,7 +5,12 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    //public Dropdown cameraDropdown;
+    public GameObject[] menuColorChangeButtons;
+
+    private void Start()
+    {
+        SetPawnColor(PlayerPrefs.GetInt("COLOR"));
+    }
 
     //Update is called once per frame  
     public void CameraDropdown(int index)
@@ -31,4 +36,15 @@ public class Settings : MonoBehaviour
         }
     }
 
+
+    public void SetPawnColor(int playerId)
+    {
+        for (int i = 0; i < menuColorChangeButtons.Length; i++)
+        {
+            menuColorChangeButtons[i].SetActive(false);
+        }
+        menuColorChangeButtons[playerId].SetActive(true);
+        SaveSettings.playerColorId = playerId;
+        PlayerPrefs.SetInt("COLOR", playerId);
+    }
 }

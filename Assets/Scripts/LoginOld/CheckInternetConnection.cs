@@ -6,26 +6,6 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 public class CheckInternetConnection : MonoBehaviour
 {
-    //////public Canvas InternetCanvas;
-    //////public GameObject InternetImage;
-
-    //////public void Update()
-    //////{
-    //////    //StartCoroutine(CheckInternet());
-    //////    if (Application.internetReachability == NetworkReachability.NotReachable)
-    //////    {
-    //////        InternetImage.SetActive(true);
-    //////        InternetCanvas.enabled = true;
-    //////        AudioListener.volume = 0;
-    //////    }
-    //////    else
-    //////    {
-    //////        InternetImage.SetActive(false);
-    //////        InternetCanvas.enabled = false;
-    //////        AudioListener.volume = 1;
-    //////    }
-    //////}
-    ///
     public CanvasGroup InternetCanvasGroup;
 
     public void Update()

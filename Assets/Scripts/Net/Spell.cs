@@ -111,9 +111,11 @@ public class Spell : MonoBehaviour
                         var currentRotation = transform.rotation;
                         spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
                         //KICK THE OTHER STONE
+                        Debug.Log($"{spellCasterPiece} has attacked {eatNode.pawn}");
                         eatNode.pawn.ReturnToBase();
                         eatNode.isTaken = false;
                         eatNode.pawn = null;
+                        
                     }
                 }
 
@@ -128,7 +130,7 @@ public class Spell : MonoBehaviour
                     if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
                     {
                         spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
-
+                        Debug.Log($"{spellCasterPiece} has attacked {eatNode.pawn}");
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
                         eatNode.isTaken = false;
@@ -146,6 +148,7 @@ public class Spell : MonoBehaviour
                     if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
                     {
                         spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
+                        Debug.Log($"{spellCasterPiece} has attacked {eatNode.pawn}");
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
                         eatNode.isTaken = false;
@@ -164,6 +167,7 @@ public class Spell : MonoBehaviour
                     if (spellCasterPiece.pawnId != eatNode.pawn.pawnId)
                     {
                         spellCasterPiece.RotatePawn(eatNode.pawn.currentNode.transform.position);
+                        Debug.Log($"{spellCasterPiece} has attacked {eatNode.pawn}");
                         //KICK THE OTHER STONE
                         eatNode.pawn.ReturnToBase();
                         eatNode.isTaken = false;
@@ -183,5 +187,6 @@ public class Spell : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         spellCasterPiece.ChangeAnimationState(PawnAnimationState.Idle);
+        //spellCasterPiece.RotatePawn(currentNode.transform.position);
     }
 }

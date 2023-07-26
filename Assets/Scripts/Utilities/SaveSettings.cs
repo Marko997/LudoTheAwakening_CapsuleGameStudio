@@ -11,4 +11,6 @@ public static class SaveSettings
         get { return cameraState; }
         set { cameraState = value; }
     }
+
+    public static int playerColorId;
 }

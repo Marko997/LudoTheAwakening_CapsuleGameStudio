@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using NUnit.Framework.Interfaces;
 using UnityEngine.SceneManagement;
+using NUnit.Framework;
 
 public enum States
 {
@@ -60,6 +60,8 @@ public class BotGameManager : MonoBehaviour
     public GameObject diceShine;
     public GameObject endScreen;
 
+    public int colorId;
+
     private void Awake()
     {
         Instance = this;
@@ -67,6 +69,8 @@ public class BotGameManager : MonoBehaviour
 
     private void Start()
     {
+        ChangeColorAndRepositionCamera(SaveSettings.playerColorId);
+
         //prebaciti u playera
         playerList[0].playerName = PlayerPrefs.GetString("NAME");
         allPlayerNamesTexts[0].text = playerList[0].playerName;
@@ -89,10 +93,8 @@ public class BotGameManager : MonoBehaviour
         activePlayer = randomPlayer;
 
         //Turn text color and value
-        turnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId((ulong)activePlayer));
+        turnText.color = playerList[activePlayer].playerColor;
         turnText.text = playerList[activePlayer].playerName + " has turn!";
-
-        
     }
 
     private string GetRandomName(string[] nameList)
@@ -103,7 +105,7 @@ public class BotGameManager : MonoBehaviour
 
     private void Update()
     {
-        if (activePlayer == 0)
+        if (playerList[activePlayer].playerType == BotPlayerTypes.HUMAN)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -153,7 +155,7 @@ public class BotGameManager : MonoBehaviour
                     
                     break;
                 case States.ATTACK:
-
+                    AttackSpellCast();
                     break;
             }
         }
@@ -197,6 +199,62 @@ public class BotGameManager : MonoBehaviour
         }
     }
 
+    private void ChangeColorAndRepositionCamera(int clientId = 0)
+    {
+        //sets camera and bot dices color
+        switch (clientId)
+        {
+            case 0:
+                Camera.main.transform.position = new Vector3(-50f, 90f, 50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, 135f, 0f);
+                playerList[clientId].playerType = BotPlayerTypes.HUMAN;
+                break;
+            case 1:
+                Camera.main.transform.position = new Vector3(50f, 90f, 50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, -135f, 0f);
+                playerList[clientId].playerType = BotPlayerTypes.HUMAN;
+                otherPlayerDices[0].color = Color.blue;
+                otherPlayerDices[1].color = Color.yellow;
+                otherPlayerDices[2].color = Color.red;
+                break;
+            case 2:
+                Camera.main.transform.position = new Vector3(50f, 90f, -50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, -45f, 0f);
+                playerList[clientId].playerType = BotPlayerTypes.HUMAN;
+                otherPlayerDices[0].color = Color.yellow;
+                otherPlayerDices[1].color = Color.red;
+                otherPlayerDices[2].color = Color.green;
+                break;
+            case 3:
+                Camera.main.transform.position = new Vector3(-50f, 90f, -50f);
+                Camera.main.transform.rotation = Quaternion.Euler(50f, 45f, 0f);
+                playerList[clientId].playerType = BotPlayerTypes.HUMAN;
+                otherPlayerDices[0].color = Color.red;
+                otherPlayerDices[1].color = Color.green;
+                otherPlayerDices[2].color = Color.blue;
+                break;
+            default:
+                break;
+        }
+
+        //rearanges player list so human is always element 0 needed for bot dices to work
+        var tempList = new List<Player>();
+
+        // Add elements from selected index to the end
+        for (int i = clientId; i < playerList.Count; i++)
+        {
+            tempList.Add(playerList[i]);
+        }
+
+        // Add elements from the start to the selected index - 1
+        for (int i = 0; i < clientId; i++)
+        {
+            tempList.Add(playerList[i]);
+        }
+
+        playerList = tempList;
+    }
+
     public void AttackSpellCast()
     {
         SoundManager.PlayOneSound(SoundManager.Sound.AttackClick);
@@ -211,6 +269,8 @@ public class BotGameManager : MonoBehaviour
                 selectedPiece.ChangeAnimationState(PawnAnimationState.Attack);
 
                 selectedPiece.spell.CastBotSpell(); //cast spell
+
+                selectedPiece.isSelected = false;//can this be done here instead of update
             }
         }
         canRollAgain = true;
@@ -248,11 +308,11 @@ public class BotGameManager : MonoBehaviour
                 break;
         }
 
-        if(diceNumber == 6)
+        if (diceNumber == 6)
         {
-            if(activePlayer > 1)
+            if (playerList[activePlayer].playerType == BotPlayerTypes.HUMAN)
             {
-                otherPlayerDices[activePlayer - 1].GetComponent<Image>().sprite = diceSides[6];
+                otherPlayerDices[activePlayer].GetComponent<Image>().sprite = diceSides[6];
             }
             CheckStartNode(diceNumber);
         }
@@ -284,7 +344,6 @@ public class BotGameManager : MonoBehaviour
         if (startNodeFull)
         {//moving
             MoveAStone(diceNumber);
-            Debug.Log("The start node is full!");
         }
         else
         { //Leave base
@@ -307,6 +366,7 @@ public class BotGameManager : MonoBehaviour
     {
         List<Pawn> movablePawns = new List<Pawn>();
         List<Pawn> moveKickPawns = new List<Pawn>();
+        List<Pawn> attackablePawns = new List<Pawn>();
 
         //FILL THE LISTS
         for (int i = 0; i < playerList[activePlayer].allPawns.Length; i++)
@@ -319,12 +379,21 @@ public class BotGameManager : MonoBehaviour
                     moveKickPawns.Add(playerList[activePlayer].allPawns[i]);
                     continue;
                 }
+                //CHECK FOR POSSIBLE ATTACK
+                if(playerList[activePlayer].allPawns[i].
+                    CheckPossibleAttack(playerList[activePlayer].allPawns[i].pawnId, diceNumber, playerList[activePlayer].allPawns[i].eatPower))
+                {
+                    attackablePawns.Add(playerList[activePlayer].allPawns[i]);
+                    //Debug.Log(playerList[activePlayer].allPawns[i]);
+                    continue;
+                }
                 //CHECK FOR POSSIBLE MOVE
                 if (playerList[activePlayer].allPawns[i].CheckPossibleMove(diceNumber))
                 {
                     movablePawns.Add(playerList[activePlayer].allPawns[i]);
-
                 }
+                
+
             }
         }
         //PERFORM KICK IF POSSIBLE
@@ -335,20 +404,21 @@ public class BotGameManager : MonoBehaviour
             state = States.WAITING;
             return;
         }
+
+        //PERFORM ATTACK IF POSSIBLE
+        if (attackablePawns.Count > 0)
+        {
+            int num = Random.Range(0, attackablePawns.Count);
+            attackablePawns[num].StartTheMove(diceNumber);
+            state = States.WAITING;
+            return;
+        }
+
         //PERFORM MOVE IF POSSIBLE
         if (movablePawns.Count > 0)
         {
             int num = Random.Range(0, movablePawns.Count);
             movablePawns[num].StartTheMove(diceNumber);
-
-            //if (playerList[activePlayer].playerType == BotPlayerTypes.HUMAN)
-            //{
-            //    //state = States.ATTACK;
-            //}
-            //else
-            //{
-            //    state = States.WAITING;
-            //}
             return;
         }
         //NONE IS POSSIBLE
@@ -416,7 +486,7 @@ public class BotGameManager : MonoBehaviour
         //}
 
         //Show text whose turn is
-        turnText.color = Utility.TeamToColor((Team)Utility.RetrieveTeamId((ulong)activePlayer));
+        turnText.color = playerList[activePlayer].playerColor;
         turnText.text = playerList[activePlayer].playerName+ " has turn!";
 
         rollButton.GetComponent<Image>().sprite = diceSides[6];
