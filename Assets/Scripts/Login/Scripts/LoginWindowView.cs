@@ -98,7 +98,7 @@ public class LoginWindowView : MonoBehaviour
 
         PlayGamesPlatform.Activate();
 #endif
-
+        //ClearPlayerPrefs = true;
         if (ClearPlayerPrefs)
         {
             _AuthService.UnlinkSilentAuth();

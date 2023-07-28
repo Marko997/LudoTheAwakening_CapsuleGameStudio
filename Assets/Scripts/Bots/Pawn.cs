@@ -182,45 +182,56 @@ public class Pawn : MonoBehaviour
         //SWITCH THE PLAYER
         if (diceNumber < 6)
         {
-            if (BotGameManager.Instance.playerList[BotGameManager.Instance.activePlayer].playerType == BotPlayerTypes.HUMAN)
-            {
-                if(routePosition > 0 && routePosition < 43 - eatPower) //CHECK FOR ATTACK
+            //if (BotGameManager.Instance.playerList[BotGameManager.Instance.activePlayer].playerType == BotPlayerTypes.HUMAN)
+            //{
+                if(routePosition + eatPower < fullRoute.Count - 4) //CHECK FOR ATTACK
                 {
+                    Debug.Log(routePosition + eatPower);
                     if(fullRoute[routePosition + eatPower].isTaken && pawnId != fullRoute[routePosition + eatPower].pawn.pawnId)
                     {
+                    Debug.Log("Attack");
                         BotGameManager.Instance.state = States.ATTACK;
                     }
                     else if (!BotGameManager.Instance.canRollAgain) //CHECK FOR SWITCHING PLAYER
                     {
+                    Debug.Log("Switch1");
+                    isSelected = false;
                         BotGameManager.Instance.state = States.SWITCH_PLAYER;
                     }
                     else //ROLL DICE AGAIN
                     {
+                    Debug.Log("Roll 1");
+                    isSelected = false;
                         BotGameManager.Instance.state = States.ROLL_DICE;
                     }
                 }
                 else if(!BotGameManager.Instance.canRollAgain) //CHECK FOR SWITCHING PLAYER
                 {
-                    BotGameManager.Instance.state = States.SWITCH_PLAYER;
+                Debug.Log("Switch 2");
+                isSelected = false;
+                BotGameManager.Instance.state = States.SWITCH_PLAYER;
                 }
                 else //ROLL DICE AGAIN
                 {
-                    BotGameManager.Instance.state = States.ROLL_DICE; 
+                Debug.Log("Roll 2");
+                isSelected = false;
+                BotGameManager.Instance.state = States.ROLL_DICE; 
                 }
-            }
-            else //THIS IS FOR BOTS -- NEED TO UPDATE TO USE SPELL AND ROLL AGAIN!!!
-            {
-                //BotGameManager.Instance.state = States.SWITCH_PLAYER;
-                if (fullRoute[routePosition + eatPower].isTaken && fullRoute[routePosition + eatPower].pawn.pawnId != pawnId)
-                {
-                    BotGameManager.Instance.AttackSpellCast();
-                }
-                else
-                {
-                    isSelected = false;
-                    BotGameManager.Instance.state = States.SWITCH_PLAYER;
-                }
-            }
+            //isSelected = false;
+            //}
+            //else //THIS IS FOR BOTS -- NEED TO UPDATE TO USE SPELL AND ROLL AGAIN!!!
+            //{
+            //    //BotGameManager.Instance.state = States.SWITCH_PLAYER;
+            //    if (routePosition + eatPower < fullRoute.Count && fullRoute[routePosition + eatPower].isTaken && fullRoute[routePosition + eatPower].pawn.pawnId != pawnId)
+            //    {
+            //        BotGameManager.Instance.AttackSpellCast();
+            //    }
+            //    else
+            //    {
+            //        isSelected = false;
+            //        BotGameManager.Instance.state = States.SWITCH_PLAYER;
+            //    }
+            //}
         }
         else
         {
@@ -358,8 +369,10 @@ public class Pawn : MonoBehaviour
     }
     public bool CheckPossibleAttack(int pawnID, int diceNumber, int eatPower)
     {
+        //if(routePosition > fullRoute.Count - 4) { return; }
+
         int tempPosition = routePosition + diceNumber + eatPower; //add eat power to calculation
-        if (tempPosition >= fullRoute.Count - eatPower) //so they dont eat pieces after final tiles
+        if (tempPosition >= fullRoute.Count - 4 - eatPower) //so they dont eat pieces after final tiles
         {
             return false;
         }

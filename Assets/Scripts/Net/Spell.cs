@@ -187,6 +187,7 @@ public class Spell : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         spellCasterPiece.ChangeAnimationState(PawnAnimationState.Idle);
+        spellCasterPiece.isSelected = false;
         //spellCasterPiece.RotatePawn(currentNode.transform.position);
     }
 }

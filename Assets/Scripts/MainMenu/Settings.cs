@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Settings : MonoBehaviour
 {
     public GameObject[] menuColorChangeButtons;
+    public TMP_Text buildVersionText;
 
     private void Start()
     {
+        buildVersionText.text = Application.version;
         SetPawnColor(PlayerPrefs.GetInt("COLOR"));
     }
 

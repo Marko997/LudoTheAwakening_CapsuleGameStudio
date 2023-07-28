@@ -139,6 +139,7 @@ public class BotGameManager : MonoBehaviour
                 case States.ROLL_DICE:
                     if (turnPossible)
                     {
+                        canRollAgain = true; //need for bots to start rolling
                         StartCoroutine(RollDiceDelay());
                         state = States.WAITING;
                     }
@@ -289,37 +290,41 @@ public class BotGameManager : MonoBehaviour
 
     void RollDice()
     {
-        SoundManager.PlayOneSound(SoundManager.Sound.DiceRoll);
-
-        int diceNumber = Random.Range(1, 7);
-
-        switch (activePlayer)
+        if (canRollAgain)
         {
-            case 1:
-                otherPlayerDices[0].sprite = diceSides[diceNumber - 1];
-                break;
-            case 2:
-                otherPlayerDices[1].sprite = diceSides[diceNumber - 1];
-                break;
-            case 3:
-                otherPlayerDices[2].sprite = diceSides[diceNumber - 1];
-                break;
-            default:
-                break;
-        }
+            canRollAgain = false;
+            SoundManager.PlayOneSound(SoundManager.Sound.DiceRoll);
 
-        if (diceNumber == 6)
-        {
-            if (playerList[activePlayer].playerType == BotPlayerTypes.HUMAN)
+            int diceNumber = Random.Range(1, 7);
+
+            switch (activePlayer)
             {
-                otherPlayerDices[activePlayer].GetComponent<Image>().sprite = diceSides[6];
+                case 1:
+                    otherPlayerDices[0].sprite = diceSides[diceNumber - 1];
+                    break;
+                case 2:
+                    otherPlayerDices[1].sprite = diceSides[diceNumber - 1];
+                    break;
+                case 3:
+                    otherPlayerDices[2].sprite = diceSides[diceNumber - 1];
+                    break;
+                default:
+                    break;
             }
-            CheckStartNode(diceNumber);
-        }
 
-        if(diceNumber < 6)
-        {
-            MoveAStone(diceNumber);
+            if (diceNumber == 6)
+            {
+                if (playerList[activePlayer].playerType == BotPlayerTypes.HUMAN)
+                {
+                    otherPlayerDices[activePlayer].GetComponent<Image>().sprite = diceSides[6];
+                }
+                CheckStartNode(diceNumber);
+            }
+
+            if (diceNumber < 6)
+            {
+                MoveAStone(diceNumber);
+            }
         }
     }
 
