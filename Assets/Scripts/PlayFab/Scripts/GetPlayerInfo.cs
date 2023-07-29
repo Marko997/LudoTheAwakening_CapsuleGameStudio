@@ -1,8 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using PlayFab;
 using PlayFab.ClientModels;
-using PlayFab.EconomyModels;
 using TMPro; 
 
 public class GetPlayerInfo : MonoBehaviour
@@ -35,19 +33,19 @@ public class GetPlayerInfo : MonoBehaviour
     }
     #endregion
 
-    //private void Awake()
-    //{
-    //    GetAccountInfoRequest request = new GetAccountInfoRequest();
-    //    PlayFabClientAPI.GetAccountInfo(request, OnGetAccountInfoSuccess, OnGetAccountInfoError);
-
-    //}
-
-    public void Start()
+    private void Awake()
     {
-        //if (isDataRecieved) { return; }
         GetAccountInfoRequest request = new GetAccountInfoRequest();
         PlayFabClientAPI.GetAccountInfo(request, OnGetAccountInfoSuccess, OnGetAccountInfoError);
+
     }
+
+    //public void Start()
+    //{
+    //    //if (isDataRecieved) { return; }
+    //    GetAccountInfoRequest request = new GetAccountInfoRequest();
+    //    PlayFabClientAPI.GetAccountInfo(request, OnGetAccountInfoSuccess, OnGetAccountInfoError);
+    //}
 
     void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
