@@ -12,7 +12,8 @@ public static class SoundManager
         DiceRoll,
         AttackClick,
         LevelPassed,
-        PieceJump
+        PieceJump,
+        InGameBackground
     }
 
     public static Dictionary<Sound, float> soundTimerDictionary;
@@ -24,10 +25,13 @@ public static class SoundManager
         soundTimerDictionary = new Dictionary<Sound, float>();
         soundTimerDictionary[Sound.ButtonClick] = 0f;
         soundTimerDictionary[Sound.DiceRoll] = 5f;
+
+        //PlayerPrefs.SetInt("SOUND", 1);
     }
 
     public static void PlaySound(Sound sound) //this creates and destroys every time
     {
+        if (!IsSoundOn()) { return; }
         if (CanPlaySound(sound))
         {
             GameObject soundGameObject = new GameObject("Sound");
@@ -40,6 +44,8 @@ public static class SoundManager
     }
     public static void PlayOneSound(Sound sound) //more effective way
     {
+        if (!IsSoundOn()) { return; }
+
         if (CanPlaySound(sound))
         {
             if (oneSoundGameObject == null)
@@ -51,8 +57,17 @@ public static class SoundManager
         }
     }
 
+    public static void StopAllSounds()
+    {
+        if (oneSoundGameObject != null)
+        {
+            oneSoundAudioSource.Stop();
+        }
+    }
+
     private static bool CanPlaySound(Sound sound)//this is for playing sound with length
     {
+        if (!IsSoundOn()) { return true; }
         switch (sound)
         {
             default:
@@ -95,5 +110,14 @@ public static class SoundManager
     public static void AddButtonSounds(this Button button)
     {
         button.onClick.AddListener(() => SoundManager.PlayOneSound(Sound.ButtonClick));
+    }
+
+    public static bool IsSoundOn()
+    {
+        if(PlayerPrefs.GetInt("SOUND") == 0)
+        {
+            return false;
+        }
+        return true;
     }
 }

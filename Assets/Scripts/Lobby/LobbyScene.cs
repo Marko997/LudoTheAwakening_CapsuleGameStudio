@@ -47,8 +47,7 @@ public class LobbyScene : MonoSingleton<LobbyScene>
 
     private async void Start()
     {
-        SoundManager.Initialize();
-        SoundManager.PlayOneSound(SoundManager.Sound.MainMenuBackground);
+        
 
         bots = false;
 

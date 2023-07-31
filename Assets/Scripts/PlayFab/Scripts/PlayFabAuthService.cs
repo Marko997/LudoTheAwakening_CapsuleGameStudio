@@ -509,8 +509,8 @@ public class PlayFabAuthService
             _sessionTicket = result.SessionTicket;
 
             //Add currencies for new player
-            PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId, 0);
-            PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId, 0);
+            //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId, 0);
+            //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId, 0);
 
             //check if we want to get this callback directly or send to event subscribers.
             if (callback == null && OnLoginSuccess != null)

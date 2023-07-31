@@ -186,34 +186,34 @@ public class Pawn : MonoBehaviour
             //{
                 if(routePosition + eatPower < fullRoute.Count - 4) //CHECK FOR ATTACK
                 {
-                    Debug.Log(routePosition + eatPower);
+                    //Debug.Log(routePosition + eatPower);
                     if(fullRoute[routePosition + eatPower].isTaken && pawnId != fullRoute[routePosition + eatPower].pawn.pawnId)
                     {
-                    Debug.Log("Attack");
+                    //Debug.Log("Attack");
                         BotGameManager.Instance.state = States.ATTACK;
                     }
                     else if (!BotGameManager.Instance.canRollAgain) //CHECK FOR SWITCHING PLAYER
                     {
-                    Debug.Log("Switch1");
+                    //Debug.Log("Switch1");
                     isSelected = false;
                         BotGameManager.Instance.state = States.SWITCH_PLAYER;
                     }
                     else //ROLL DICE AGAIN
                     {
-                    Debug.Log("Roll 1");
+                    //Debug.Log("Roll 1");
                     isSelected = false;
                         BotGameManager.Instance.state = States.ROLL_DICE;
                     }
                 }
                 else if(!BotGameManager.Instance.canRollAgain) //CHECK FOR SWITCHING PLAYER
                 {
-                Debug.Log("Switch 2");
+                //Debug.Log("Switch 2");
                 isSelected = false;
                 BotGameManager.Instance.state = States.SWITCH_PLAYER;
                 }
                 else //ROLL DICE AGAIN
                 {
-                Debug.Log("Roll 2");
+                //Debug.Log("Roll 2");
                 isSelected = false;
                 BotGameManager.Instance.state = States.ROLL_DICE; 
                 }

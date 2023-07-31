@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameAssets : MonoBehaviour
 {
+    #region Singleton
     private static GameAssets _i;
 
     public static GameAssets instance
@@ -17,8 +18,15 @@ public class GameAssets : MonoBehaviour
             return _i;
         }
     }
+    #endregion
 
     public SoundAudioClip[] soundAudioClipArray;
+
+    public Sprite grayToggleBackground_OffState;
+    public Sprite goldToggleBackground_OnState;
+
+    public Sprite grayToggleHandle_OffState;
+    public Sprite goldToggleHandle_OnState;
 }
 
 [System.Serializable]
@@ -27,3 +35,5 @@ public class SoundAudioClip
     public SoundManager.Sound sound;
     public AudioClip audioClip;
 }
+
+

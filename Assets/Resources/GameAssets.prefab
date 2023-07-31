@@ -57,3 +57,13 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 8ccdea1eb4dc843579dc1ca0a42075e3, type: 3}
   - sound: 5
     audioClip: {fileID: 8300000, guid: 6fb22b748184747919bff3bfcb6f735f, type: 3}
+  - sound: 6
+    audioClip: {fileID: 8300000, guid: c073958d8e8c240898827f517de00a36, type: 3}
+  grayToggleBackground_OffState: {fileID: 21300000, guid: a1e436d26683241d787e58854a040e63,
+    type: 3}
+  goldToggleBackground_OnState: {fileID: 21300000, guid: 0363d21a84dc6491e831bae874edc6ad,
+    type: 3}
+  grayToggleHandle_OffState: {fileID: 21300000, guid: d1b1739b99fa046a78d969b1957e55bb,
+    type: 3}
+  goldToggleHandle_OnState: {fileID: 21300000, guid: c426b035919094016adb99e1349aa315,
+    type: 3}
