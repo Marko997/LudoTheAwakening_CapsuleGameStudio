@@ -27,6 +27,8 @@ public class GameAssets : MonoBehaviour
 
     public Sprite grayToggleHandle_OffState;
     public Sprite goldToggleHandle_OnState;
+
+    public Sprite[] soundIcons;
 }
 
 [System.Serializable]

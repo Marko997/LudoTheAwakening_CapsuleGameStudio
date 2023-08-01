@@ -9,6 +9,7 @@ public class Settings : MonoBehaviour
 {
     public GameObject[] menuColorChangeButtons;
     public TMP_Text buildVersionText;
+    public TMP_Text logText;
 
     [Header("Toggles")]
     public Toggle soundToggle;
@@ -17,6 +18,7 @@ public class Settings : MonoBehaviour
 
     public RectTransform handleSoundRectTransform;
     public Image soundToggleBackground;
+    public Image soundIcon;
     Vector2 handlePosition;
 
     private void Start()
@@ -25,7 +27,21 @@ public class Settings : MonoBehaviour
 
         SetPawnColor(PlayerPrefs.GetInt("COLOR"));
 
+        Application.logMessageReceived += LogCallback;
+
         ToggleLoad();
+    }
+
+    private void OnDestroy()
+    {
+        Application.logMessageReceived -= LogCallback;
+    }
+
+    void LogCallback(string logString, string stackTrace, LogType type)
+    {
+        //logText.text = logString;
+        //Or Append the log to the old one
+        logText.text += logString + "\r\n";
     }
 
     public void SetPawnColor(int playerId)
@@ -51,6 +67,7 @@ public class Settings : MonoBehaviour
 
         if (soundToggle.isOn)
         {
+            soundIcon.sprite = GameAssets.instance.soundIcons[0];
             if(SceneManager.GetActiveScene().name == "MainScene")
             {
                 SoundManager.PlayOneSound(SoundManager.Sound.MainMenuBackground);
@@ -62,6 +79,7 @@ public class Settings : MonoBehaviour
         }
         else
         {
+            soundIcon.sprite = GameAssets.instance.soundIcons[1];
             SoundManager.StopAllSounds();
         }
     }
@@ -71,12 +89,12 @@ public class Settings : MonoBehaviour
         PlayerPrefs.SetInt("SOUND", state ? 1 : 0);
         PlayerPrefs.Save();
 
-        Debug.Log(handlePosition);
         handleSoundRectTransform.anchoredPosition = state ? handlePosition : new Vector2(handlePosition.x *-1,handlePosition.y);
 
         handleSoundRectTransform.GetComponent<Image>().sprite = state ? GameAssets.instance.goldToggleHandle_OnState : GameAssets.instance.grayToggleHandle_OffState;
         soundToggleBackground.sprite = state ? GameAssets.instance.goldToggleBackground_OnState : GameAssets.instance.grayToggleBackground_OffState;
 
+        soundIcon.sprite = state ? soundIcon.sprite = GameAssets.instance.soundIcons[0] : soundIcon.sprite = GameAssets.instance.soundIcons[1];
         //SoundManager.PlayOneSound(SoundManager.Sound.ButtonClick);
 
         if (state)
@@ -87,7 +105,7 @@ public class Settings : MonoBehaviour
             {
                 SoundManager.PlayOneSound(SoundManager.Sound.MainMenuBackground);
             }
-            else if (SceneManager.GetActiveScene().name == "BotsGame")
+            else if (SceneManager.GetActiveScene().name == "BotsGame" || SceneManager.GetActiveScene().name == "Game")
             {
                 SoundManager.PlayOneSound(SoundManager.Sound.InGameBackground);
             }

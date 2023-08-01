@@ -67,3 +67,6 @@ MonoBehaviour:
     type: 3}
   goldToggleHandle_OnState: {fileID: 21300000, guid: c426b035919094016adb99e1349aa315,
     type: 3}
+  soundIcons:
+  - {fileID: 21300000, guid: 901d64fc6ad9d44799c2ad0fd4f182d2, type: 3}
+  - {fileID: 21300000, guid: 78757b0623f3b4309b7cc69c4769ae37, type: 3}
