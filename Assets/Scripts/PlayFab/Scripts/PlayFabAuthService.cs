@@ -341,8 +341,8 @@ public class PlayFabAuthService
                         }, null, null);
                     }
                     //Add currencies for new player
-                    PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId, 0);
-                    PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId, 0);
+                    //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId, 0);
+                    //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId, 0);
 
                     //Override the auth type to ensure next login is using this auth type.
                     AuthType = Authtypes.EmailAndPassword;
