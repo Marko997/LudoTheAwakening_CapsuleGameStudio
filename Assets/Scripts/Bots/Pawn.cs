@@ -415,6 +415,7 @@ public class Pawn : MonoBehaviour
         {
             yield return null;
         }
+        ChangeAnimationState(PawnAnimationState.Idle);
         BotGameManager.Instance.ReportTurnPossible(true);
     }
 

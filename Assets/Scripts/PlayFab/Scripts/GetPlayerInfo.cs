@@ -50,8 +50,6 @@ public class GetPlayerInfo : MonoBehaviour
     void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
         PlayFabManager.Instance.GetVirtualCurrencies();
-        //PlayFabManager.Instance.AddVirtualCurrency("f7c88f86-c896-42a2-96fa-ec9f0cab12c9",10);
-        //PlayFabManager.Instance.AddVirtualCurrency("d6f4ae84-dd6e-4f9e-b38d-0249fbd3d1a4", 10);
         string displayName = result.AccountInfo.TitleInfo.DisplayName;
         string playerId = result.AccountInfo.PlayFabId;
 

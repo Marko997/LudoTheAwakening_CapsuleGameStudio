@@ -340,9 +340,6 @@ public class PlayFabAuthService
                             ForceLink = ForceLink
                         }, null, null);
                     }
-                    //Add currencies for new player
-                    //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId, 0);
-                    //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId, 0);
 
                     //Override the auth type to ensure next login is using this auth type.
                     AuthType = Authtypes.EmailAndPassword;
@@ -459,7 +456,8 @@ public class PlayFabAuthService
             TitleId = PlayFabSettings.TitleId,
             AndroidDevice = SystemInfo.deviceModel,
             OS = SystemInfo.operatingSystem,
-            AndroidDeviceId = deviceId,
+            //AndroidDeviceId = deviceId,
+            AndroidDeviceId = Guid.NewGuid().ToString(),
             CreateAccount = true,
             InfoRequestParameters = InfoRequestParams
         }, (result) => {
@@ -467,10 +465,6 @@ public class PlayFabAuthService
             //Store Identity and session
             _playFabId = result.PlayFabId;
             _sessionTicket = result.SessionTicket;
-
-            //Add currencies for new player
-                    PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId,0);
-                    PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId,0);
 
             //check if we want to get this callback directly or send to event subscribers.
             if (callback == null && OnLoginSuccess != null)
@@ -496,11 +490,13 @@ public class PlayFabAuthService
         });
 
 #elif  UNITY_IPHONE || UNITY_IOS && !UNITY_EDITOR
-        PlayFabClientAPI.LoginWithIOSDeviceID(new LoginWithIOSDeviceIDRequest() {
+        PlayFabClientAPI.LoginWithIOSDeviceID(new LoginWithIOSDeviceIDRequest()
+        {
             TitleId = PlayFabSettings.TitleId,
-            DeviceModel = SystemInfo.deviceModel, 
+            DeviceModel = SystemInfo.deviceModel,
             OS = SystemInfo.operatingSystem,
-            DeviceId = SystemInfo.deviceUniqueIdentifier,
+            //DeviceId = SystemInfo.deviceUniqueIdentifier,
+            DeviceId = Guid.NewGuid().ToString(),
             CreateAccount = true,
             InfoRequestParameters = InfoRequestParams
         }, (result) => {
@@ -508,25 +504,25 @@ public class PlayFabAuthService
             _playFabId = result.PlayFabId;
             _sessionTicket = result.SessionTicket;
 
-            //Add currencies for new player
-            //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId, 0);
-            //PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId, 0);
-
             //check if we want to get this callback directly or send to event subscribers.
             if (callback == null && OnLoginSuccess != null)
             {
                 //report login result back to the subscriber
                 OnLoginSuccess.Invoke(result);
-            }else if (callback != null)
+            }
+            else if (callback != null)
             {
                 //report login result back to the caller
                 callback.Invoke(result);
             }
         }, (error) => {
             //report errro back to the subscriber
-            if(callback == null && OnPlayFabError != null){
+            if (callback == null && OnPlayFabError != null)
+            {
                 OnPlayFabError.Invoke(error);
-            }else{
+            }
+            else
+            {
                 //make sure the loop completes, callback with null
                 callback.Invoke(null);
                 //Output what went wrong to the console.
@@ -541,6 +537,7 @@ public class PlayFabAuthService
 
             TitleId = PlayFabSettings.TitleId,
             CustomId = SystemInfo.deviceUniqueIdentifier,
+            //CustomId = Guid.NewGuid().ToString();
             CreateAccount = true,
            
 
@@ -551,10 +548,6 @@ public class PlayFabAuthService
             _playFabId = result.PlayFabId;
             _sessionTicket = result.SessionTicket;
             //
-
-            //Add currencies for new player
-                    PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.coinId,0);
-                    PlayFabManager.Instance.AddVirtualCurrency(PlayFabManager.Instance.rubyId,0);
            
             //check if we want to get this callback directly or send to event subscribers.
             if (callback == null && OnLoginSuccess != null)

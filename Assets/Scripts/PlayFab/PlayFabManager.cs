@@ -4,6 +4,7 @@ using PlayFab;
 using PlayFab.EconomyModels;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayFabManager : MonoBehaviour
 {
@@ -29,8 +30,8 @@ public class PlayFabManager : MonoBehaviour
     public TMP_Text coinText;
     public TMP_Text rubyText;
 
-    public string rubyId = "d6f4ae84-dd6e-4f9e-b38d-0249fbd3d1a4";
-    public string coinId = "f7c88f86-c896-42a2-96fa-ec9f0cab12c9";
+    public string rubyId = "fb8ac24b-c500-44c0-89ff-48758bf9c222";
+    public string coinId = "5e20b312-8e7f-44d8-bc92-0083793786bf";
 
     public void AddVirtualCurrency(string id, int amount)
     {
@@ -64,15 +65,23 @@ public class PlayFabManager : MonoBehaviour
     {
         for (int i = 0; i < response.Items.Count; i++)
         {
-            if (response.Items[i].Id == "d6f4ae84-dd6e-4f9e-b38d-0249fbd3d1a4") //ruby
+            if (response.Items[i].Id == "fb8ac24b-c500-44c0-89ff-48758bf9c222") //ruby
             {
                 int rubies = response.Items[i].Amount;
-                rubyText.text = $"{rubies}";
+                if(SceneManager.GetActiveScene().name == "MainScene")
+                {
+                    rubyText.text = $"{rubies}";
+                }
+                
             }
-            if (response.Items[i].Id == "f7c88f86-c896-42a2-96fa-ec9f0cab12c9") // coin
+            if (response.Items[i].Id == "5e20b312-8e7f-44d8-bc92-0083793786bf") // coin
             {
                 int coins = response.Items[i].Amount;
-                coinText.text = $"{coins}";
+                if (SceneManager.GetActiveScene().name == "MainScene")
+                {
+                    coinText.text = $"{coins}";
+                }
+                
             }
         }
     }

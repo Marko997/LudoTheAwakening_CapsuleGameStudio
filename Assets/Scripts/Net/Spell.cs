@@ -14,7 +14,7 @@ public class Spell : MonoBehaviour
     }
 
     public SpellType spell;
-
+    #region Multiplayer
     public void CastSpell(int targetTile, LudoTile[] board)
     {
         Piece spellCasterPiece = gameObject.GetComponent<Piece>();
@@ -88,8 +88,9 @@ public class Spell : MonoBehaviour
             p.transform.Rotate(0, 180, 0);
         }
     }
+    #endregion
 
-
+    #region Bots
     public void CastBotSpell()
     {
         Pawn spellCasterPiece = gameObject.GetComponent<Pawn>();
@@ -190,4 +191,5 @@ public class Spell : MonoBehaviour
         spellCasterPiece.isSelected = false;
         //spellCasterPiece.RotatePawn(currentNode.transform.position);
     }
+    #endregion
 }

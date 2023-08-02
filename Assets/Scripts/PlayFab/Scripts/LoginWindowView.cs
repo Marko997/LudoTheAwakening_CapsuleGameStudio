@@ -98,7 +98,7 @@ public class LoginWindowView : MonoBehaviour
 
         PlayGamesPlatform.Activate();
 #endif
-        //ClearPlayerPrefs = true;
+
         if (ClearPlayerPrefs)
         {
             _AuthService.UnlinkSilentAuth();
@@ -263,9 +263,9 @@ public class LoginWindowView : MonoBehaviour
         }
 #else
         //Here we have choses what to do when AuthType is None.
-       
+
         Panel.SetActive(true);
-        
+
 #endif
         /*
          * Optionally we could Not do the above and force login silently
