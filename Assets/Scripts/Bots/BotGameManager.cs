@@ -43,6 +43,7 @@ public class BotGameManager : MonoBehaviour
 
     private Camera mainCamera;
     public Image[] otherPlayerDices;
+    public GameObject[] otherPlayerGlow;
 
     public GameObject gameOverScreen;
 
@@ -93,8 +94,8 @@ public class BotGameManager : MonoBehaviour
         activePlayer = randomPlayer;
 
         //Turn text color and value
-        turnText.color = playerList[activePlayer].playerColor;
-        turnText.text = playerList[activePlayer].playerName + " has turn!";
+        //turnText.color = playerList[activePlayer].playerColor;
+        //turnText.text = playerList[activePlayer].playerName + " has turn!";
     }
 
     private string GetRandomName(string[] nameList)
@@ -202,6 +203,10 @@ public class BotGameManager : MonoBehaviour
 
     private void ChangeColorAndRepositionCamera(int clientId = 0)
     {
+        ParticleSystem.MainModule firstBotGlow = otherPlayerGlow[0].transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        ParticleSystem.MainModule secondBotGlow = otherPlayerGlow[1].transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        ParticleSystem.MainModule thirdBotGlow = otherPlayerGlow[2].transform.GetChild(0).GetComponent<ParticleSystem>().main;
+        
         //sets camera and bot dices color
         switch (clientId)
         {
@@ -217,6 +222,11 @@ public class BotGameManager : MonoBehaviour
                 otherPlayerDices[0].color = Color.blue;
                 otherPlayerDices[1].color = Color.yellow;
                 otherPlayerDices[2].color = Color.red;
+
+                firstBotGlow.startColor = Color.blue;
+                secondBotGlow.startColor = Color.yellow;
+                thirdBotGlow.startColor = Color.red;
+
                 break;
             case 2:
                 Camera.main.transform.position = new Vector3(50f, 90f, -50f);
@@ -225,6 +235,10 @@ public class BotGameManager : MonoBehaviour
                 otherPlayerDices[0].color = Color.yellow;
                 otherPlayerDices[1].color = Color.red;
                 otherPlayerDices[2].color = Color.green;
+
+                firstBotGlow.startColor = Color.yellow;
+                secondBotGlow.startColor = Color.red;
+                thirdBotGlow.startColor = Color.green;
                 break;
             case 3:
                 Camera.main.transform.position = new Vector3(-50f, 90f, -50f);
@@ -233,6 +247,11 @@ public class BotGameManager : MonoBehaviour
                 otherPlayerDices[0].color = Color.red;
                 otherPlayerDices[1].color = Color.green;
                 otherPlayerDices[2].color = Color.blue;
+
+                firstBotGlow.startColor = Color.red;
+                secondBotGlow.startColor = Color.green;
+                thirdBotGlow.startColor = Color.blue;
+
                 break;
             default:
                 break;
@@ -301,12 +320,16 @@ public class BotGameManager : MonoBehaviour
             {
                 case 1:
                     otherPlayerDices[0].sprite = diceSides[diceNumber - 1];
+                    
+                    otherPlayerGlow[0].SetActive(true);
                     break;
                 case 2:
                     otherPlayerDices[1].sprite = diceSides[diceNumber - 1];
+                    otherPlayerGlow[1].SetActive(true);
                     break;
                 case 3:
                     otherPlayerDices[2].sprite = diceSides[diceNumber - 1];
+                    otherPlayerGlow[2].SetActive(true);
                     break;
                 default:
                     break;
@@ -451,6 +474,11 @@ public class BotGameManager : MonoBehaviour
 
     void SetNextActivePlayer()
     {
+        for (int i = 0; i < otherPlayerGlow.Length; i++)
+        {
+            otherPlayerGlow[i].SetActive(false);
+        }
+
         activePlayer++;
         activePlayer %= playerList.Count;
 
@@ -491,8 +519,8 @@ public class BotGameManager : MonoBehaviour
         //}
 
         //Show text whose turn is
-        turnText.color = playerList[activePlayer].playerColor;
-        turnText.text = playerList[activePlayer].playerName+ " has turn!";
+        //turnText.color = playerList[activePlayer].playerColor;
+        //turnText.text = playerList[activePlayer].playerName+ " has turn!";
 
         rollButton.GetComponent<Image>().sprite = diceSides[6];
 

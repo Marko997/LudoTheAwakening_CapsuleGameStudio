@@ -21,11 +21,13 @@ public class QuestManager : MonoBehaviour
             GameObject questObject = Instantiate(questPrefab, questContent);
             questObject.transform.Find("Icon").GetComponent<Image>().sprite = quest.Information.Icon;
 
-            questObject.GetComponent<Button>().onClick.AddListener(delegate
-            {
-                questHolder.GetComponent<QuestWindow>().Initialize(quest);
-                questHolder.SetActive(true);
-	        });
+            questObject.GetComponent<QuestWindow>().Initialize(quest);
+
+         //   questObject.GetComponent<Button>().onClick.AddListener(delegate
+         //   {
+         //       questHolder.GetComponent<QuestWindow>().Initialize(quest);
+         //       questHolder.SetActive(true);
+	        //});
         }
     }
 
