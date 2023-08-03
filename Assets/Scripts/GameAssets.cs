@@ -29,6 +29,9 @@ public class GameAssets : MonoBehaviour
     public Sprite goldToggleHandle_OnState;
 
     public Sprite[] soundIcons;
+
+    public Sprite completedQuestBackground;
+    public Sprite completedQuestIcon;
 }
 
 [System.Serializable]

@@ -70,3 +70,6 @@ MonoBehaviour:
   soundIcons:
   - {fileID: 21300000, guid: 901d64fc6ad9d44799c2ad0fd4f182d2, type: 3}
   - {fileID: 21300000, guid: 78757b0623f3b4309b7cc69c4769ae37, type: 3}
+  completedQuestBackground: {fileID: 21300000, guid: ccb9cb3d26ff0491da27678834d72789,
+    type: 3}
+  completedQuestIcon: {fileID: 21300000, guid: bd76787ed8d1343b484338868b821683, type: 3}

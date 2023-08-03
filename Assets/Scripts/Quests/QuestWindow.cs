@@ -25,17 +25,24 @@ public class QuestWindow : MonoBehaviour
             goalObject.transform.Find("Text").GetComponent<TMP_Text>().text = goal.GetDescription();
 
             GameObject countObj = goalObject.transform.Find("Count").gameObject;
+            GameObject sliderObj = goalObject.transform.Find("Slider").gameObject;
+
             GameObject skipObj = goalObject.transform.Find("Skip").gameObject;
 
             if (goal.Completed)
             {
                 countObj.SetActive(false);
                 skipObj.SetActive(false);
-                goalObject.transform.Find("Done").gameObject.SetActive(true);
+                sliderObj.SetActive(false);
+                goalObject.transform.Find("Text").GetComponent<TMP_Text>().text = "Reward granted!";
+                //goalObject.transform.transform.parent.GetComponent<Image>().sprite = GameAssets.instance.completedQuestBackground;
+                //goalObject.transform.Find("Done").gameObject.SetActive(true);
             }
             else
             {
                 countObj.GetComponent<TMP_Text>().text = goal.CurrentAmount + "/" + goal.RequiredAmount;
+                sliderObj.GetComponent<Slider>().maxValue = goal.RequiredAmount;
+                sliderObj.GetComponent<Slider>().value = goal.CurrentAmount;
 
                 skipObj.GetComponent<Button>().onClick.AddListener(delegate
                 {
@@ -43,7 +50,12 @@ public class QuestWindow : MonoBehaviour
 
                     countObj.SetActive(false);
                     skipObj.SetActive(false);
-                    goalObject.transform.Find("Done").gameObject.SetActive(true);
+                    sliderObj.SetActive(false);
+
+                    goalObject.transform.Find("Text").GetComponent<TMP_Text>().text = "Reward granted!";
+                    //goalObject.transform.transform.parent.GetComponent<Image>().sprite = GameAssets.instance.completedQuestBackground;
+
+                    //goalObject.transform.Find("Done").gameObject.SetActive(true);
 
                 });
             }

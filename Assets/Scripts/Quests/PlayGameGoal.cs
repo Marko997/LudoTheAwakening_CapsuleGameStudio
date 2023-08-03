@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayGameGoal : Quest.QuestGoal
 {
-    public string PlayGame;
+    public string NumberOfGamesToPlay;
 
     public override string GetDescription()
     {
-        return $"Play {PlayGame} games";
+        return $"Play {NumberOfGamesToPlay} games";
     }
 
     public override void Initialize()
@@ -21,7 +21,7 @@ public class PlayGameGoal : Quest.QuestGoal
 
     public void OnPlay(PlayGameEvent eventInfo)
     {
-        if (eventInfo.NumberOfGames == PlayGame)
+        if (eventInfo.NumberOfGames == NumberOfGamesToPlay)
         {
             CurrentAmount++;
             Evaluate();

@@ -319,15 +319,17 @@ public class BotGameManager : MonoBehaviour
             switch (activePlayer)
             {
                 case 1:
+                    otherPlayerDices[0].GetComponentInChildren<TMP_Text>().text = "";
                     otherPlayerDices[0].sprite = diceSides[diceNumber - 1];
-                    
                     otherPlayerGlow[0].SetActive(true);
                     break;
                 case 2:
+                    otherPlayerDices[1].GetComponentInChildren<TMP_Text>().text = "";
                     otherPlayerDices[1].sprite = diceSides[diceNumber - 1];
                     otherPlayerGlow[1].SetActive(true);
                     break;
                 case 3:
+                    otherPlayerDices[2].GetComponentInChildren<TMP_Text>().text = "";
                     otherPlayerDices[2].sprite = diceSides[diceNumber - 1];
                     otherPlayerGlow[2].SetActive(true);
                     break;
@@ -340,6 +342,7 @@ public class BotGameManager : MonoBehaviour
                 if (playerList[activePlayer].playerType == BotPlayerTypes.HUMAN)
                 {
                     otherPlayerDices[activePlayer].GetComponent<Image>().sprite = diceSides[6];
+                    otherPlayerDices[activePlayer].GetComponentInChildren<TMP_Text>().text = "ROLL!";
                 }
                 CheckStartNode(diceNumber);
             }
@@ -523,14 +526,17 @@ public class BotGameManager : MonoBehaviour
         //turnText.text = playerList[activePlayer].playerName+ " has turn!";
 
         rollButton.GetComponent<Image>().sprite = diceSides[6];
+        rollButton.GetComponentInChildren<TMP_Text>().text = "ROLL!";
 
         if (activePlayer > 1) //reset dice sprite when player finish rolling
         {
             otherPlayerDices[activePlayer - 2].sprite = diceSides[6];
+            otherPlayerDices[activePlayer - 2].GetComponentInChildren<TMP_Text>().text = "ROLL!";
         }
         else// case when player 0 has turn, reset player 3 dice
         {
             otherPlayerDices[2].sprite = diceSides[6];
+            otherPlayerDices[2].GetComponentInChildren<TMP_Text>().text = "ROLL!";
         }
 
         state = States.ROLL_DICE;
@@ -608,6 +614,7 @@ public class BotGameManager : MonoBehaviour
     public void HumanRollDice(int forceDice = -1)
     {
         SoundManager.PlayOneSound(SoundManager.Sound.DiceRoll);
+        rollButton.GetComponentInChildren<TMP_Text>().text = "";
 
         if (hasBeenClicked) { return; }
         if (sixRollCountPerTurn == 0 || canRollAgain)

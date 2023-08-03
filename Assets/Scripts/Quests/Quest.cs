@@ -51,8 +51,7 @@ public class Quest : ScriptableObject
 
         protected void Evaluate()
         {
-            if(CurrentAmount >= RequiredAmount)
-            {
+            if (CurrentAmount >= RequiredAmount) { 
                 Complete();
             }
         }
@@ -60,6 +59,7 @@ public class Quest : ScriptableObject
         private void Complete()
         {
             Completed = true;
+            GoalCompleted.Invoke();
             GoalCompleted.RemoveAllListeners();
         }
 

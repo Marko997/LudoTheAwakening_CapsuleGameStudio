@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,10 @@ public class QuestManager : MonoBehaviour
 
     private void OnQuestCompleted(Quest quest)
     {
-        questContent.GetChild(CurrentQuests.IndexOf(quest)).Find("Checkmark").gameObject.SetActive(true);
+        Debug.Log("Quest completed");
+        //questContent.GetChild(CurrentQuests.IndexOf(quest)).Find("Checkmark").gameObject.SetActive(true);
+        questContent.GetChild(CurrentQuests.IndexOf(quest)).Find("Reward_Gem").GetChild(0).GetComponent<Image>().sprite = GameAssets.instance.completedQuestIcon;
+        questContent.GetChild(CurrentQuests.IndexOf(quest)).Find("Reward_Gem").GetChild(1).GetComponent<TMP_Text>().text = "DONE";
+        questContent.GetChild(CurrentQuests.IndexOf(quest)).GetComponent<Image>().sprite = GameAssets.instance.completedQuestBackground;
     }
 }
