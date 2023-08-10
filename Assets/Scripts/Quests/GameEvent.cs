@@ -17,3 +17,13 @@ public class PlayGameEvent : GameEvent
 
 
 }
+public class UseSpellEvent : GameEvent
+{
+    public string NumberOfUsedSpells;
+    public UseSpellEvent(string number)
+    {
+        NumberOfUsedSpells = number;
+    }
+
+
+}

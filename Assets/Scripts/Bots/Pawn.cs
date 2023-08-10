@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
@@ -142,6 +143,8 @@ public class Pawn : MonoBehaviour
             //isSelected = false;
             BotGameManager.Instance.hasBeenClicked = false;
             BotGameManager.Instance.rollButton.GetComponent<Image>().sprite = BotGameManager.Instance.diceSides[6];
+
+            BotGameManager.Instance.rollButton.GetComponentInChildren<TMP_Text>().text = "ROLL!";
 
             //if (BotGameManager.Instance.playerList[BotGameManager.Instance.activePlayer].playerType == BotPlayerTypes.CPU)
             //{
@@ -312,6 +315,8 @@ public class Pawn : MonoBehaviour
         {
             BotGameManager.Instance.hasBeenClicked = false;
             BotGameManager.Instance.rollButton.GetComponent<Image>().sprite = BotGameManager.Instance.diceSides[6];
+
+            BotGameManager.Instance.rollButton.GetComponentInChildren<TMP_Text>().text = "ROLL!";
         }
 
         goalNode.pawn = this;

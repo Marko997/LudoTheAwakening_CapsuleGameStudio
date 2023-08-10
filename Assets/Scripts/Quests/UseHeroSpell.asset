@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394a67e4001a04648b4729735fed0921, type: 3}
+  m_Name: UseHeroSpell
+  m_EditorClassIdentifier: 
+  Information:
+    Name: Hero showdown
+    Icon: {fileID: 21300000, guid: 285075c996fc243b9b937c7b59cfbaa5, type: 3}
+    Description: User Jester spell 3 times!
+  Reward:
+    Currency: 10
+    XP: 10
+  Goals:
+  - {fileID: 53120454721385346}
+--- !u!114 &53120454721385346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3679b16423ccd4b18ba9dbf6f8fb17c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RequiredAmount: 3
+  GoalCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  NumberOfSpecificSpells: 3
+  HeroName: Jester

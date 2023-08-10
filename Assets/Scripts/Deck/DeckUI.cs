@@ -112,6 +112,7 @@ public class DeckUI : MonoBehaviour
                     cardObject.transform.SetParent(deckParent[i].transform);
                     cardObject.transform.position = deckParent[i].transform.position;
                     cardObject.GetComponent<RectTransform>().sizeDelta = new Vector2(450f,650f);
+                    cardObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f,1f);
                     deckParent[i].isOccupied = true;
                     break;
                 }
@@ -123,6 +124,7 @@ public class DeckUI : MonoBehaviour
         {
             cardObject.GetComponentInParent<DeckParentTransformItem>().isOccupied = false;
             cardObject.transform.SetParent(collectionParent);
+            cardObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 1f);
 
             int index = playerDeck.IndexOf(card);
             playerDeck.RemoveAt(index);
