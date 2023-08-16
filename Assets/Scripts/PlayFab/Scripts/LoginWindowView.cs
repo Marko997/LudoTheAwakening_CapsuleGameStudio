@@ -263,10 +263,11 @@ public class LoginWindowView : MonoBehaviour
         }
 #else
         //Here we have choses what to do when AuthType is None.
-
-        Panel.SetActive(true);
+        //_AuthService.Authenticate(Authtypes.Silent);
+        //Panel.SetActive(true);
 
 #endif
+        _AuthService.Authenticate(Authtypes.Silent);
         /*
          * Optionally we could Not do the above and force login silently
          * 

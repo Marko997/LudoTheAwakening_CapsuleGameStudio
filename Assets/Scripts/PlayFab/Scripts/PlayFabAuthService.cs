@@ -158,6 +158,8 @@ public class PlayFabAuthService
                 if (OnDisplayAuthentication != null)
                 {
                     OnDisplayAuthentication.Invoke();
+                    //SilentlyAuthenticate();
+                    //PlayerPrefs.SetInt(_LoginRememberKey, 1);
                 }
                 break;
 
@@ -456,8 +458,8 @@ public class PlayFabAuthService
             TitleId = PlayFabSettings.TitleId,
             AndroidDevice = SystemInfo.deviceModel,
             OS = SystemInfo.operatingSystem,
-            //AndroidDeviceId = deviceId,
-            AndroidDeviceId = Guid.NewGuid().ToString(),
+            AndroidDeviceId = deviceId,
+            //AndroidDeviceId = Guid.NewGuid().ToString(),
             CreateAccount = true,
             InfoRequestParameters = InfoRequestParams
         }, (result) => {
@@ -495,8 +497,8 @@ public class PlayFabAuthService
             TitleId = PlayFabSettings.TitleId,
             DeviceModel = SystemInfo.deviceModel,
             OS = SystemInfo.operatingSystem,
-            //DeviceId = SystemInfo.deviceUniqueIdentifier,
-            DeviceId = Guid.NewGuid().ToString(),
+            DeviceId = SystemInfo.deviceUniqueIdentifier,
+            //DeviceId = Guid.NewGuid().ToString(),
             CreateAccount = true,
             InfoRequestParameters = InfoRequestParams
         }, (result) => {
@@ -509,6 +511,7 @@ public class PlayFabAuthService
             {
                 //report login result back to the subscriber
                 OnLoginSuccess.Invoke(result);
+                Debug.Log("logged in");
             }
             else if (callback != null)
             {

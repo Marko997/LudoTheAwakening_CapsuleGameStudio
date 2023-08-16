@@ -262,7 +262,7 @@ public class Piece : NetworkBehaviour
             source.Play();
             routePosition++;
 
-            if (routePosition == 50)
+            if (routePosition == 44)
             {
                 lookTileInt = 1;
             }
@@ -271,11 +271,9 @@ public class Piece : NetworkBehaviour
                 lookTileInt = 0;
             }
 
-
-            Vector3 startPos = board[routePosition-1].tileTransform.position;
+            Vector3 startPos = board[routePosition - 1].tileTransform.position;
             Vector3 nextPos = board[routePosition].tileTransform.position;
             Vector3 lookAtTile = board[routePosition + lookTileInt].tileTransform.position;
-
             float jumpSize = 0.5f;
             {
                 UpdateAnimationStateServerRpc(AnimationState.Jump);
